@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Riganti.Utils.Infrastructure.Core;
 
 namespace DAL.Entities
 {
     /// <summary>
     /// Represents information about user's costs.
     /// </summary>
-    public class CostInfo
+    public class CostInfo : IEntity<int>
     {
         /// <summary>
         /// Id of the cost info.

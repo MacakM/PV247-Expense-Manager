@@ -1,12 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Riganti.Utils.Infrastructure.Core;
 
 namespace DAL.Entities
 {
     /// <summary>
     /// Represents plan.
     /// </summary>
-    public class Plan
+    public class Plan : IEntity<int>
     {
         /// <summary>
         /// Id of the plan.

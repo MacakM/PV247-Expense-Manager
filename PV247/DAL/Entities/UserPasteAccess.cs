@@ -1,12 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Riganti.Utils.Infrastructure.Core;
 
 namespace DAL.Entities
 {
     /// <summary>
     /// Represents table that stores which user can access which paste.
     /// </summary>
-    public class UserPasteAccess
+    public class UserPasteAccess : IEntity<int>
     {
         /// <summary>
         /// Id of the access.

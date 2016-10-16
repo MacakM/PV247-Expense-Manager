@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Riganti.Utils.Infrastructure.Core;
 
 namespace DAL.Entities
 {
     /// <summary>
     /// Class representing user.
     /// </summary>
-    public class User
+    public class User : IEntity<int>
     {
         /// <summary>
         /// Id of the user.

@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Riganti.Utils.Infrastructure.Core;
 
 namespace DAL.Entities
 {
     /// <summary>
     /// Class representing paste.
     /// </summary>
-    public class Paste
+    public class Paste : IEntity<int>
     {
         /// <summary>
         /// Id of the paste.
