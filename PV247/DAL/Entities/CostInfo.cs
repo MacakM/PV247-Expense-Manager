@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Entities
 {
@@ -21,14 +22,24 @@ namespace DAL.Entities
         /// </summary>
         public int Money { get; set; }
         /// <summary>
+        /// User id.
+        /// </summary>
+        public int UserId { get; set; }
+        /// <summary>
         /// User whom this cost belongs.
         /// </summary>
         [Required]
+        [ForeignKey("UserId")]
         public User User { get; set; }
+        /// <summary>
+        /// Type id.
+        /// </summary>
+        public int TypeId { get; set; }
         /// <summary>
         /// Type of the cost.
         /// </summary>
         [Required]
+        [ForeignKey("TypeId")]
         public CostType Type { get; set; }
         /// <summary>
         /// State whether this cost is periodic each month.

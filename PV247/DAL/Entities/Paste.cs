@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Entities
 {
@@ -14,9 +15,14 @@ namespace DAL.Entities
         /// </summary>
         public int Id { get; set; }
         /// <summary>
+        /// Owner id.
+        /// </summary>
+        public int OwnerId { get; set; }
+        /// <summary>
         /// Author of this paste.
         /// </summary>
         [Required]
+        [ForeignKey("OwnerId")]
         public User Owner { get; set; }
         /// <summary>
         /// All users that have access to this paste.

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Entities
 {
@@ -12,9 +13,14 @@ namespace DAL.Entities
         /// </summary>
         public int Id { get; set; }
         /// <summary>
+        /// Id of the user that created this plan.
+        /// </summary>
+        public int UserId { get; set; }
+        /// <summary>
         /// User that created this plan.
         /// </summary>
         [Required]
+        [ForeignKey("UserId")]
         public User User { get; set; }
         /// <summary>
         /// Description of the plan.
