@@ -1,4 +1,4 @@
-# PV247-Expense-Manager
+# Expense-Manager
 School project for PV247 (FI MUNI Brno)
 
 ## Team members ##
