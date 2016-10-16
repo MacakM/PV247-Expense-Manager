@@ -61,6 +61,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTOs\PlanDTO.cs" />
+    <Compile Include="Infrastructure\ExpenseManagerDTO.cs" />
+    <Compile Include="Infrastructure\ExpenseManagerQuery.cs" />
+    <Compile Include="Infrastructure\ExpenseManagerUnitOfWork.cs" />
+    <Compile Include="Infrastructure\ExpenseManagerUnitOfWorkProvider.cs" />
+    <Compile Include="Infrastructure\Mapping\EntityDTOMapper.cs" />
+    <Compile Include="Infrastructure\Mapping\IEntityDTOMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\CostInfoRepository.cs" />
     <Compile Include="Repositories\CostTypeRepository.cs" />
@@ -68,6 +75,9 @@
     <Compile Include="Repositories\PlanRepository.cs" />
     <Compile Include="Repositories\UserPasteAccessRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
+    <Compile Include="Infrastructure\ExpenseManagerCrudServiceBase.cs" />
+    <Compile Include="Infrastructure\ExpenseManagerServiceBase.cs" />
+    <Compile Include="Services\PlanService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -81,9 +91,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Facades\" />
-    <Folder Include="Infrastructure\" />
     <Folder Include="Queries\" />
-    <Folder Include="Services\" />
     <Folder Include="Startup\" />
     <Folder Include="Utils\" />
   </ItemGroup>
