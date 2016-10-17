@@ -3,7 +3,7 @@ using System.Data.Entity;
 using Riganti.Utils.Infrastructure.Core;
 using Riganti.Utils.Infrastructure.EntityFramework;
 
-namespace BL.Infrastructure
+namespace BL.Infrastructure.UnitOfWork
 {
     public class ExpenseManagerUnitOfWorkProvider : EntityFrameworkUnitOfWorkProvider
     {

@@ -2,7 +2,7 @@
 using Riganti.Utils.Infrastructure.Core;
 using Riganti.Utils.Infrastructure.EntityFramework;
 
-namespace BL.Infrastructure
+namespace BL.Infrastructure.Queries
 {
     public abstract class ExpenseManagerQuery<T> : EntityFrameworkQuery<T>
     {

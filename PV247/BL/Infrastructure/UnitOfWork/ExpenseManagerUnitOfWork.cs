@@ -4,7 +4,7 @@ using DAL;
 using Riganti.Utils.Infrastructure.Core;
 using Riganti.Utils.Infrastructure.EntityFramework;
 
-namespace BL.Infrastructure
+namespace BL.Infrastructure.UnitOfWork
 {
     public class ExpenseManagerUnitOfWork : EntityFrameworkUnitOfWork
     {

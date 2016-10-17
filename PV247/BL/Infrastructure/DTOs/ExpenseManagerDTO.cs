@@ -1,4 +1,4 @@
-﻿namespace BL.Infrastructure
+﻿namespace BL.Infrastructure.DTOs
 {
     public abstract class ExpenseManagerDTO<TKey>
     {

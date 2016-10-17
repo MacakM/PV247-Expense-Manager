@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using BL.Infrastructure.DTOs;
 using BL.Infrastructure.Mapping;
 using Riganti.Utils.Infrastructure.Core;
 
-namespace BL.Infrastructure
+namespace BL.Infrastructure.Services
 {
     /// <summary>
     /// A base class for CRUD-enabled service, taken from unreleased project of RigantiInfrastructure solution, all credit goes to Tomas Herceg.
@@ -147,7 +148,7 @@ namespace BL.Infrastructure
         }
 
         /// <summary>
-        /// Gets a list of navigation property expressions that should be included when the facade loads the entity.
+        /// Gets a list of navigation property expressions that should be included when the service loads the entity.
         /// </summary>
         protected virtual Expression<Func<TEntity, object>>[] EntityIncludes => new Expression<Func<TEntity, object>>[] { };
 
