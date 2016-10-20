@@ -13,7 +13,7 @@ School project for PV247 (FI MUNI Brno)
 * After **if**, **while**, **else**, **using**, etc. always use braces
 * Braces should always be on the new line
 * Every LINQ clause have to be put on new line
-* Use only maximum one empty line beetween code
+* Use only maximum one empty line between code
 
 ### Naming ###
 * Every identifier must be named in english
@@ -21,4 +21,4 @@ School project for PV247 (FI MUNI Brno)
 * Fields are in camelCase, they start with underscore (\_skillLevel)
 * Local variables, arguments are in camelCase
 * Don't use very short names that does not clearly imply meaning (exceptions: using (var sb = new StringBuilder()) or LINQ lambdas)
-* Don't user very long names, they should not contain prepositions, conjunctions and similiar words (instead of numberOfPlayersThatAreOnline use onlinePlayersCount)
+* Don't use very long names, they should not contain prepositions, conjunctions and similar words (instead of numberOfPlayersThatAreOnline use onlinePlayersCount)
