@@ -29,8 +29,16 @@ namespace DAL.Entities
         [MaxLength(256)]
         public string Description { get; set; }
         /// <summary>
+        /// How much money is needed to achieve this plan.
+        /// </summary>
+        public int PlannedMoney { get; set; }
+        /// <summary>
+        /// Which type of cost is assigned to this plan.
+        /// </summary>
+        public CostType PlannedType { get; set; }
+        /// <summary>
         /// States whether this plan is achieved.
         /// </summary>
-        public bool IsAchieved { get; set; }
+        public bool IsCompleted { get; set; }
     }
 }

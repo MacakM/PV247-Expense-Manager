@@ -47,8 +47,8 @@ namespace DAL.Entities
         /// </summary>
         public bool IsPeriodic { get; set; }
         /// <summary>
-        /// List of pastes that contains is this cost info.
+        /// List of pastes that contains this cost info.
         /// </summary>
-        public virtual List<Paste> Pastes { get; set; }
+        public virtual List<CostInfoPaste> Pastes { get; set; }
     }
 }

@@ -32,7 +32,7 @@ namespace DAL.Entities
         /// <summary>
         /// List of costs that are in this paste.
         /// </summary>
-        public virtual List<CostInfo> Costs { get; set; }
+        public virtual List<CostInfoPaste> Costs { get; set; }
         /// <summary>
         /// Expiration date of this paste.
         /// </summary>

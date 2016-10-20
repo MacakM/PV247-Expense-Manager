@@ -21,7 +21,7 @@ namespace DAL.Entities
         /// <summary>
         /// User's costs.
         /// </summary>
-        public virtual List<CostType> Costs { get; set; }
+        public virtual List<CostInfo> Costs { get; set; }
 
         /// <summary>
         /// All pastes of the user.
@@ -36,5 +36,9 @@ namespace DAL.Entities
         /// All plans of the user.
         /// </summary>
         public virtual List<Plan> Plans { get; set; }
+        /// <summary>
+        /// All badges of the user.
+        /// </summary>
+        public virtual List<UserBadge> Badges { get; set; }
     }
 }

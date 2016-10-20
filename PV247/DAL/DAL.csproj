@@ -53,10 +53,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\Badge.cs" />
     <Compile Include="Entities\CostInfo.cs" />
+    <Compile Include="Entities\CostInfoPaste.cs" />
     <Compile Include="Entities\Paste.cs" />
     <Compile Include="Entities\Plan.cs" />
     <Compile Include="Entities\CostType.cs" />
+    <Compile Include="Entities\UserBadge.cs" />
     <Compile Include="Entities\UserPasteAccess.cs" />
     <Compile Include="ExpenseDbContext.cs" />
     <Compile Include="ExpenseDbInitializer.cs" />
