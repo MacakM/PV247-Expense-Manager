@@ -1,11 +1,7 @@
-﻿{
-  "userSecretsId": "aspnet-PL-e45b5a1a-58ff-441e-bc0c-5846a44d5e9b",
+{
+  "userSecretsId": "aspnet-PL-5539870c-b031-4d5d-8938-3b0e461dde49",
 
   "dependencies": {
-    "Microsoft.NETCore.App": {
-      "version": "1.0.1",
-      "type": "platform"
-    },
     "Microsoft.AspNetCore.Authentication.Cookies": "1.0.0",
     "Microsoft.AspNetCore.Diagnostics": "1.0.0",
     "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "1.0.0",
@@ -61,23 +57,18 @@
   },
 
   "frameworks": {
-    "netcoreapp1.0": {
-      "imports": [
-        "dotnet5.6",
-        "portable-net45+win8"
-      ]
+    "net462": {
+      "dependencies": {
+        "BL": {
+          "target": "project"
+        }
+      }
     }
   },
 
   "buildOptions": {
     "emitEntryPoint": true,
     "preserveCompilationContext": true
-  },
-
-  "runtimeOptions": {
-    "configProperties": {
-      "System.GC.Server": true
-    }
   },
 
   "publishOptions": {
