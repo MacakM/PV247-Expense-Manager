@@ -1,10 +1,12 @@
-﻿namespace BL.Startup
+﻿using Microsoft.Extensions.DependencyInjection;
+
+namespace BL.Startup
 {
     public static class BLInstaller
     {
-        public static void Install()
+        public static void Install(IServiceCollection services)
         {
-            // DI configuration for BL project goes here (if we use custom DI, otherwise this class will be removed)
+            
         }
     }
 }
