@@ -61,6 +61,9 @@
       "dependencies": {
         "BL": {
           "target": "project"
+        },
+        "IdentityStore": {
+          "target": "project"
         }
       }
     }

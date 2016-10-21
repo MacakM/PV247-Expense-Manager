@@ -7,9 +7,9 @@ using Riganti.Utils.Infrastructure.Core;
 
 namespace BL.Services
 {
-    public class PlanService : ExpenseManagerCrudServiceBase<Plan, int, IList<PlanDTO>, PlanDTO>
+    public class PlanAndCrudService : ExpenseManagerQueryAndCrudServiceBase<Plan, int, IList<PlanDTO>, PlanDTO>
     {
-        public PlanService(IQuery<IList<PlanDTO>> query, IRepository<Plan, int> repository, IEntityDTOMapper<Plan, PlanDTO> mapper) : base(query, repository, mapper)
+        public PlanAndCrudService(IQuery<IList<PlanDTO>> query, IRepository<Plan, int> repository, IEntityDTOMapper<Plan, PlanDTO> mapper) : base(query, repository, mapper)
         {
         }
 

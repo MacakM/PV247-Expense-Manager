@@ -62,11 +62,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTOs\CostTypeDTO.cs" />
     <Compile Include="DTOs\Filters\PlanFilterDTO.cs" />
     <Compile Include="DTOs\PlanDTO.cs" />
     <Compile Include="Facades\PlanFacade.cs" />
     <Compile Include="Infrastructure\DTOs\ExpenseManagerDTO.cs" />
     <Compile Include="Infrastructure\Queries\ExpenseManagerQuery.cs" />
+    <Compile Include="Infrastructure\Services\ExpenseManagerQueryAndCrudServiceBase.cs" />
     <Compile Include="Infrastructure\UnitOfWork\ExpenseManagerUnitOfWork.cs" />
     <Compile Include="Infrastructure\UnitOfWork\ExpenseManagerUnitOfWorkProvider.cs" />
     <Compile Include="Infrastructure\Mapping\EntityDTOMapper.cs" />

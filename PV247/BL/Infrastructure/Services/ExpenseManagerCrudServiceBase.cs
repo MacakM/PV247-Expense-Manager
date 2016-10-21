@@ -12,15 +12,9 @@ namespace BL.Infrastructure.Services
     /// </summary>
     /// <typeparam name="TEntity">The type of the entity.</typeparam>
     /// <typeparam name="TKey">The type of the entity primary key.</typeparam>
-    /// <typeparam name="TListDTO">The type of the DTO used in the list of records, e.g. in the GridView control.</typeparam>
     /// <typeparam name="TDetailDTO">The type of the DTO used in the detail form.</typeparam>
-    public abstract class ExpenseManagerCrudServiceBase<TEntity, TKey, TListDTO, TDetailDTO> : ExpenseManagerServiceBase where TEntity : IEntity<TKey> where TDetailDTO : ExpenseManagerDTO<TKey>
+    public abstract class ExpenseManagerCrudServiceBase<TEntity, TKey, TDetailDTO> : ExpenseManagerServiceBase where TEntity : IEntity<TKey> where TDetailDTO : ExpenseManagerDTO<TKey>
     {
-        /// <summary>
-        /// Gets the query object used to populate the list or records.
-        /// </summary>
-        public IQuery<TListDTO> Query { get; private set; }
-
         /// <summary>
         /// Gets the repository used to perform database operations with the entity.
         /// </summary>
@@ -35,9 +29,8 @@ namespace BL.Infrastructure.Services
         /// <summary>
         /// Initializes a new instance of the <see cref="CrudFacadeBase{TEntity, TKey, TListDTO, TDetailDTO}"/> class.
         /// </summary>
-        public ExpenseManagerCrudServiceBase(IQuery<TListDTO> query, IRepository<TEntity, TKey> repository, IEntityDTOMapper<TEntity, TDetailDTO> mapper)
+        protected ExpenseManagerCrudServiceBase(IRepository<TEntity, TKey> repository, IEntityDTOMapper<TEntity, TDetailDTO> mapper)
         {
-            this.Query = query;
             this.Repository = repository;
             this.Mapper = mapper;
         }
@@ -105,17 +98,6 @@ namespace BL.Infrastructure.Services
             {
                 Repository.Delete(id);
                 uow.Commit();
-            }
-        }
-
-        /// <summary>
-        /// Gets the list of the DTOs using the Query object.
-        /// </summary>
-        public virtual IEnumerable<TListDTO> GetList()
-        {
-            using (UnitOfWorkProvider.Create())
-            {
-                return Query.Execute();
             }
         }
 
