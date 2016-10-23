@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BL.Startup;
+﻿using BL.Startup;
+using IdentityDAL;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -25,7 +20,6 @@ namespace PL
 
             if (env.IsDevelopment())
             {
-                // For more details on using the user secret store see http://go.microsoft.com/fwlink/?LinkID=532709
                 builder.AddUserSecrets();
             }
 
@@ -37,15 +31,9 @@ namespace PL
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {           
-            services.AddDbContext<IdentityDAL.IdentityDbContext>((Action<DbContextOptionsBuilder>) null);
-
-            services.AddIdentity<IdentityDAL.Entities.ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<IdentityDAL.IdentityDbContext>()
-                .AddDefaultTokenProviders();
-
-
-            //IdentityStoreInstaller.Install(services, Configuration);
+        {  
+            // Configure persistence         
+            IdentityDALInstaller.Install(services);
 
             services.AddMvc(options =>
             {
