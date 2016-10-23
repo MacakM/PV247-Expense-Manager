@@ -1,25 +1,20 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BL.Facades;
+using Microsoft.AspNetCore.Mvc;
 
 namespace PL.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly UserFacade _userFacade;
+
+        public HomeController(UserFacade userFacade)
         {
-            return View();
+            _userFacade = userFacade;
         }
 
-        public IActionResult About()
+        public IActionResult Index( )
         {
-            ViewData["Message"] = "Your application description page.";
-
-            return View();
-        }
-
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
+            var usr = _userFacade.GetCurrentlySignedUser("demo@demo.com");
             return View();
         }
 

@@ -32,15 +32,17 @@ namespace PL
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {  
-            // Configure persistence         
+            // Configure Identity persistence         
             IdentityDALInstaller.Install(services);
 
+            // Configure BL
+            BLInstaller.Install(services);
+
+            // Configure PL
             services.AddMvc(options =>
             {
                 options.Filters.Add(new RequireHttpsAttribute());
             });
-
-            BLInstaller.Install(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

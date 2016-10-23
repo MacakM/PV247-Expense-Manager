@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 using BL.Infrastructure.DTOs;
 using BL.Infrastructure.Mapping;
@@ -13,8 +12,10 @@ namespace BL.Infrastructure.Services
     /// <typeparam name="TEntity">The type of the entity.</typeparam>
     /// <typeparam name="TKey">The type of the entity primary key.</typeparam>
     /// <typeparam name="TDetailDTO">The type of the DTO used in the detail form.</typeparam>
-    public abstract class ExpenseManagerCrudServiceBase<TEntity, TKey, TDetailDTO> : ExpenseManagerServiceBase where TEntity : IEntity<TKey> where TDetailDTO : ExpenseManagerDTO<TKey>
+    public abstract class ExpenseManagerCrudServiceBase<TEntity, TKey, TDetailDTO> where TEntity : IEntity<TKey> where TDetailDTO : ExpenseManagerDTO<TKey>
     {
+        public IUnitOfWorkProvider UnitOfWorkProvider { get; private set; }
+
         /// <summary>
         /// Gets the repository used to perform database operations with the entity.
         /// </summary>
@@ -29,8 +30,9 @@ namespace BL.Infrastructure.Services
         /// <summary>
         /// Initializes a new instance of the <see cref="CrudFacadeBase{TEntity, TKey, TListDTO, TDetailDTO}"/> class.
         /// </summary>
-        protected ExpenseManagerCrudServiceBase(IRepository<TEntity, TKey> repository, IEntityDTOMapper<TEntity, TDetailDTO> mapper)
+        protected ExpenseManagerCrudServiceBase(IRepository<TEntity, TKey> repository, IEntityDTOMapper<TEntity, TDetailDTO> mapper, IUnitOfWorkProvider unitOfWorkProvider)
         {
+            this.UnitOfWorkProvider = unitOfWorkProvider;
             this.Repository = repository;
             this.Mapper = mapper;
         }

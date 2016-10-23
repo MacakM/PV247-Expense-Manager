@@ -1,5 +1,4 @@
-﻿using System.Data.Entity;
-using System.Linq;
+﻿using System.Linq;
 using AutoMapper.QueryableExtensions;
 using BL.DTOs;
 using BL.DTOs.Filters;

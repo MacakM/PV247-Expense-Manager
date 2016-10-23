@@ -16,7 +16,7 @@ namespace BL.Infrastructure.Services
         /// </summary>
         public IQuery<TListDTO> Query { get; private set; }
 
-        protected ExpenseManagerQueryAndCrudServiceBase(IQuery<TListDTO> query, IRepository<TEntity, TKey> repository, IEntityDTOMapper<TEntity, TDetailDTO> mapper) : base(repository, mapper)
+        protected ExpenseManagerQueryAndCrudServiceBase(IQuery<TListDTO> query, IRepository<TEntity, TKey> repository, IEntityDTOMapper<TEntity, TDetailDTO> mapper, IUnitOfWorkProvider unitOfWorkProvider) : base(repository, mapper, unitOfWorkProvider)
         {
             this.Query = query;
         }

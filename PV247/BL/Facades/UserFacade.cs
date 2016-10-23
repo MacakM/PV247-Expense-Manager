@@ -1,5 +1,4 @@
 ﻿using BL.DTOs;
-using BL.Infrastructure.Facades;
 using BL.Services;
 
 namespace BL.Facades
@@ -7,9 +6,9 @@ namespace BL.Facades
     /// <summary>
     /// Provides access to user related functionality
     /// </summary>
-    public class UserFacade : IExpenseManagerFacade
+    public class UserFacade
     {
-        private readonly UserService _userService;
+        private readonly IUserService _userService;
 
         public UserFacade(UserService userService)
         {

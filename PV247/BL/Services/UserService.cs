@@ -13,9 +13,10 @@ namespace BL.Services
     /// <summary>
     /// Provides user related functionality
     /// </summary>
-    public class UserService : ExpenseManagerCrudServiceBase<User, int, UserDTO>
+    public class UserService : ExpenseManagerCrudServiceBase<User, int, UserDTO>, IUserService
     {
-        public UserService(IRepository<User, int> repository, IEntityDTOMapper<User, UserDTO> mapper) : base(repository, mapper) { }
+        public UserService(IRepository<User, int> repository, IEntityDTOMapper<User, UserDTO> mapper, IUnitOfWorkProvider unitOfWorkProvider) 
+            : base(repository, mapper, unitOfWorkProvider) { }
 
         private UserRepository UserRepository => (UserRepository)Repository;
 
