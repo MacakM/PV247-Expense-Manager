@@ -23,11 +23,10 @@ namespace DAL.Entities
         /// <summary>
         /// Owner id.
         /// </summary>
-        public int OwnerId { get; set; }
+        public int? OwnerId { get; set; }
         /// <summary>
         /// Author of this paste.
         /// </summary>
-        [Required]
         [ForeignKey("OwnerId")]
         public User Owner { get; set; }
         /// <summary>

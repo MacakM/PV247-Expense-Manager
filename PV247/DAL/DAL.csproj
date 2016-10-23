@@ -65,12 +65,22 @@
     <Compile Include="Enums\PlanType.cs" />
     <Compile Include="ExpenseDbContext.cs" />
     <Compile Include="ExpenseDbInitializer.cs" />
+    <Compile Include="Migrations\201610231256282_Initial.cs" />
+    <Compile Include="Migrations\201610231256282_Initial.Designer.cs">
+      <DependentUpon>201610231256282_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entities\User.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201610231256282_Initial.resx">
+      <DependentUpon>201610231256282_Initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

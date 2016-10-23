@@ -19,6 +19,11 @@ namespace DAL.Entities
         [Required]
         public string Name { get; set; }
         /// <summary>
+        /// Email of the user.
+        /// </summary>
+        [Required]
+        public string Email { get; set; }
+        /// <summary>
         /// User's costs.
         /// </summary>
         public virtual List<CostInfo> Costs { get; set; }
