@@ -26,13 +26,23 @@ namespace BL.Facades
         }
 
         /// <summary>
+        /// Updates existing user according to provided information
+        /// </summary>
+        /// <param name="modifiedUserDTO">Updated user information</param>
+        public void UpdatesUser(UserDTO modifiedUserDTO)
+        {
+            _userService.UpdatesUser(modifiedUserDTO);
+        }
+
+        /// <summary>
         /// Gets currently signed user according to its email
         /// </summary>
         /// <param name="email">User unique email</param>
+        /// <param name="includeAllProperties">Decides whether all properties should be included</param>
         /// <returns>UserDTO with user details</returns>
-        public UserDTO GetCurrentlySignedUser(string email)
+        public UserDTO GetCurrentlySignedUser(string email, bool includeAllProperties = false)
         {
-            return _userService.GetCurrentlySignedUser(email);
+            return _userService.GetCurrentlySignedUser(email, includeAllProperties);
         }
     }
 }
