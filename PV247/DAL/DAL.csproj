@@ -62,6 +62,7 @@
     <Compile Include="Entities\CostType.cs" />
     <Compile Include="Entities\UserBadge.cs" />
     <Compile Include="Entities\UserPasteAccess.cs" />
+    <Compile Include="Enums\PlanType.cs" />
     <Compile Include="ExpenseDbContext.cs" />
     <Compile Include="ExpenseDbInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

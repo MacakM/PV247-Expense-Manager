@@ -16,6 +16,10 @@ namespace DAL.Entities
         /// </summary>
         public int Id { get; set; }
         /// <summary>
+        /// Guid that is in link to the paste.
+        /// </summary>
+        public string Guid { get; set; }
+        /// <summary>
         /// Owner id.
         /// </summary>
         public int OwnerId { get; set; }

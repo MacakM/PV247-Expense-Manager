@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using DAL.Enums;
 using Riganti.Utils.Infrastructure.Core;
 
 namespace DAL.Entities
@@ -29,7 +30,11 @@ namespace DAL.Entities
         [MaxLength(256)]
         public string Description { get; set; }
         /// <summary>
-        /// How much money is needed to achieve this plan.
+        /// Type of this plan.
+        /// </summary>
+        public PlanType PlanType { get; set; }
+        /// <summary>
+        /// How much money is desired to achieve this plan.
         /// </summary>
         public int PlannedMoney { get; set; }
         /// <summary>
