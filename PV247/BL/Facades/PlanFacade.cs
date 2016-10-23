@@ -1,6 +1,8 @@
-﻿namespace BL.Facades
+﻿using BL.Infrastructure.Facades;
+
+namespace BL.Facades
 {
-    public class PlanFacade
+    public class PlanFacade : IExpenseManagerFacade
     {
     }
 }

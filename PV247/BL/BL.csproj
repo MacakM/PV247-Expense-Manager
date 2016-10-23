@@ -81,8 +81,11 @@
     <Compile Include="DTOs\CostTypeDTO.cs" />
     <Compile Include="DTOs\Filters\PlanFilterDTO.cs" />
     <Compile Include="DTOs\PlanDTO.cs" />
+    <Compile Include="DTOs\UserDTO.cs" />
     <Compile Include="Facades\PlanFacade.cs" />
+    <Compile Include="Facades\UserFacade.cs" />
     <Compile Include="Infrastructure\DTOs\ExpenseManagerDTO.cs" />
+    <Compile Include="Infrastructure\Facades\IExpenseManagerFacade.cs" />
     <Compile Include="Infrastructure\Queries\ExpenseManagerQuery.cs" />
     <Compile Include="Infrastructure\Services\ExpenseManagerQueryAndCrudServiceBase.cs" />
     <Compile Include="Infrastructure\UnitOfWork\ExpenseManagerUnitOfWork.cs" />
@@ -103,6 +106,7 @@
     <Compile Include="Infrastructure\Services\ExpenseManagerCrudServiceBase.cs" />
     <Compile Include="Infrastructure\Services\ExpenseManagerServiceBase.cs" />
     <Compile Include="Services\PlanService.cs" />
+    <Compile Include="Services\UserService.cs" />
     <Compile Include="Startup\BLInstaller.cs" />
     <Compile Include="Startup\MappingInit.cs" />
   </ItemGroup>
