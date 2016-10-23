@@ -11,7 +11,7 @@ School project for PV247 (FI MUNI Brno)
 ### Formatting ###
 * Use default formatting of Visual Studio
 * After **if**, **while**, **else**, **using**, etc. always use braces
-* Braces should always be on the new line
+* Braces should always be on the new line (except from empty constructor body)
 * Every LINQ clause have to be put on new line
 * Use only maximum one empty line between code
 
