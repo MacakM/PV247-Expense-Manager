@@ -18,6 +18,7 @@ namespace DAL.Entities
         /// <summary>
         /// Guid that is in link to the paste.
         /// </summary>
+        [Required]
         public string Guid { get; set; }
         /// <summary>
         /// Owner id.
