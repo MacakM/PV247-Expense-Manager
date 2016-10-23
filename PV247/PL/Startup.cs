@@ -6,12 +6,11 @@ using BL.Startup;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using PL.Data;
-using PL.Models;
 
 namespace PL
 {
@@ -38,16 +37,20 @@ namespace PL
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {
-            // Add framework services.
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+        {           
+            services.AddDbContext<IdentityDAL.IdentityDbContext>((Action<DbContextOptionsBuilder>) null);
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
+            services.AddIdentity<IdentityDAL.Entities.ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<IdentityDAL.IdentityDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddMvc();
+
+            //IdentityStoreInstaller.Install(services, Configuration);
+
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(new RequireHttpsAttribute());
+            });
 
             BLInstaller.Install(services);
         }
@@ -73,7 +76,11 @@ namespace PL
 
             app.UseIdentity();
 
-            // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
+            app.UseFacebookAuthentication(new FacebookOptions
+            {
+                ClientId = Configuration["Authentication:Facebook:AppId"],
+                ClientSecret = Configuration["Authentication:Facebook:AppSecret"]
+            });
 
             app.UseMvc(routes =>
             {

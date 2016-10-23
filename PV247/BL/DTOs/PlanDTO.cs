@@ -6,11 +6,6 @@ namespace BL.DTOs
     public class PlanDTO : ExpenseManagerDTO<int>
     {
         /// <summary>
-        /// Id of the plan.
-        /// </summary>
-        public int Id { get; set; }
-
-        /// <summary>
         /// User that created this plan.
         /// </summary>
         public int UserId { get; set; }
