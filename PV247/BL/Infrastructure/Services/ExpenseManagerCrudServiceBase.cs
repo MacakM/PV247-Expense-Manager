@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
+using AutoMapper;
 using BL.Infrastructure.DTOs;
-using BL.Infrastructure.Mapping;
 using Riganti.Utils.Infrastructure.Core;
 
 namespace BL.Infrastructure.Services
@@ -24,17 +24,17 @@ namespace BL.Infrastructure.Services
         /// <summary>
         /// Gets the service that can map entities to DTOs and populate entities with changes made on DTOs.
         /// </summary>
-        public IEntityDTOMapper<TEntity, TDetailDTO> Mapper { get; private set; }
+        public IRuntimeMapper ExpenseManagerMapper { get; private set; }
 
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CrudFacadeBase{TEntity, TKey, TListDTO, TDetailDTO}"/> class.
         /// </summary>
-        protected ExpenseManagerCrudServiceBase(IRepository<TEntity, TKey> repository, IEntityDTOMapper<TEntity, TDetailDTO> mapper, IUnitOfWorkProvider unitOfWorkProvider)
+        protected ExpenseManagerCrudServiceBase(IRepository<TEntity, TKey> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider)
         {
             this.UnitOfWorkProvider = unitOfWorkProvider;
             this.Repository = repository;
-            this.Mapper = mapper;
+            this.ExpenseManagerMapper = expenseManagerMapper.DefaultContext.Mapper;
         }
 
         /// <summary>
@@ -45,8 +45,7 @@ namespace BL.Infrastructure.Services
             using (UnitOfWorkProvider.Create())
             {
                 var entity = Repository.GetById(id, EntityIncludes);
-                var detail = Mapper.MapToDTO(entity);
-                return detail;
+                return ExpenseManagerMapper.Map<TEntity, TDetailDTO>(entity);
             }
         }
 
@@ -58,8 +57,7 @@ namespace BL.Infrastructure.Services
             using (UnitOfWorkProvider.Create())
             {
                 var entity = Repository.InitializeNew();
-                var detail = Mapper.MapToDTO(entity);
-                return detail;
+                return ExpenseManagerMapper.Map<TEntity, TDetailDTO>(entity);
             }
         }
 
@@ -108,7 +106,7 @@ namespace BL.Infrastructure.Services
         /// </summary>
         protected virtual void PopulateDetailToEntity(TDetailDTO detail, TEntity entity)
         {
-            Mapper.PopulateEntity(detail, entity);
+            ExpenseManagerMapper.Map(detail, entity);
         }
 
         /// <summary>

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
+using AutoMapper;
 using BL.Infrastructure.DTOs;
-using BL.Infrastructure.Mapping;
 using Riganti.Utils.Infrastructure.Core;
 
 namespace BL.Infrastructure.Services
@@ -16,7 +16,7 @@ namespace BL.Infrastructure.Services
         /// </summary>
         public IQuery<TListDTO> Query { get; private set; }
 
-        protected ExpenseManagerQueryAndCrudServiceBase(IQuery<TListDTO> query, IRepository<TEntity, TKey> repository, IEntityDTOMapper<TEntity, TDetailDTO> mapper, IUnitOfWorkProvider unitOfWorkProvider) : base(repository, mapper, unitOfWorkProvider)
+        protected ExpenseManagerQueryAndCrudServiceBase(IQuery<TListDTO> query, IRepository<TEntity, TKey> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) : base(repository, expenseManagerMapper, unitOfWorkProvider)
         {
             this.Query = query;
         }

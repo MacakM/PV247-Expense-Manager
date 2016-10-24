@@ -10,7 +10,7 @@ namespace BL.Facades
     {
         private readonly IUserService _userService;
 
-        public UserFacade(UserService userService)
+        public UserFacade(IUserService userService)
         {
             _userService = userService;
         }

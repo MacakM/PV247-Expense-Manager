@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq.Expressions;
+using AutoMapper;
 using BL.DTOs;
-using BL.Infrastructure.Mapping;
 using BL.Infrastructure.Services;
 using BL.Repositories;
 using DAL.Entities;
@@ -15,8 +15,8 @@ namespace BL.Services
     /// </summary>
     public class UserService : ExpenseManagerCrudServiceBase<User, int, UserDTO>, IUserService
     {
-        public UserService(IRepository<User, int> repository, IEntityDTOMapper<User, UserDTO> mapper, IUnitOfWorkProvider unitOfWorkProvider) 
-            : base(repository, mapper, unitOfWorkProvider) { }
+        public UserService(IRepository<User, int> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) 
+            : base(repository, expenseManagerMapper, unitOfWorkProvider) { }
 
         private UserRepository UserRepository => (UserRepository)Repository;
 
@@ -61,7 +61,7 @@ namespace BL.Services
             using (UnitOfWorkProvider.Create())
             {
                 var user = UserRepository.GetUserByEmail(email);
-                return Mapper.MapToDTO(user);
+                return ExpenseManagerMapper.Map<User, UserDTO>(user);
             }          
         }
 
@@ -78,7 +78,7 @@ namespace BL.Services
                 var user = includeAllProperties ? 
                     UserRepository.GetUserByEmailIncludingAll(email) : 
                     UserRepository.GetUserByEmail(email);
-                return Mapper.MapToDTO(user);
+                return ExpenseManagerMapper.Map<User, UserDTO>(user);
             }
         }
     }

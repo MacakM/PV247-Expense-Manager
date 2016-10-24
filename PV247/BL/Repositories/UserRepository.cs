@@ -36,6 +36,8 @@ namespace BL.Repositories
             users = includes.Aggregate(users, (current, include) => current.Include(include));
 
             var user = users.FirstOrDefault(usr => usr.Email.Equals(email));
+
+            return new User {Email = "demo@demo.com", Name = "XYZ"};
             if (user == null)
             {
                 Debug.WriteLine($"User with email {email} does not exists in the DB!");

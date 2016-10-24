@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
+using AutoMapper;
 using BL.DTOs;
 using BL.Facades;
-using BL.Infrastructure.Mapping;
 using BL.Infrastructure.Queries;
 using BL.Infrastructure.Services;
 using BL.Infrastructure.UnitOfWork;
 using BL.Queries;
 using BL.Repositories;
 using BL.Services;
+using BL.Startup.Mapping.Profiles;
 using DAL;
 using DAL.Entities;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,14 +26,8 @@ namespace BL.Startup
         /// <param name="services">Collection of the service descriptions</param>
         public static void Install(IServiceCollection services)
         {
-            // Currently NOT working
             Func<DbContext> dbContextFactory = () => new ExpenseDbContext();
-            Func<IServiceProvider, Func<DbContext>> prov = provider => dbContextFactory;
-            services.AddTransient(prov);
-
-            //services.AddTransient(typeof(Func<DbContext>), typeof(() => ExpenseDbContext));
-
-            //services.AddTransient<Func<DbContext>>(,new Func<IServiceProvider, Func<DbContext>>((provider)=> dbContextFactory));
+            services.AddTransient(provider => dbContextFactory);
 
             services.AddSingleton<IUnitOfWorkRegistry>(new HttpContextUnitOfWorkRegistry(new ThreadLocalUnitOfWorkRegistry()));
 
@@ -41,11 +35,14 @@ namespace BL.Startup
 
             services.AddTransient(typeof(IRepository<,>),typeof(EntityFrameworkRepository<,>));
 
-            services.AddTransient(typeof(IEntityDTOMapper<,>), typeof(EntityDTOMapper<,>));
-
-            //services.AddTransient(typeof(ExpenseManagerServiceBase), typeof(ExpenseManagerCrudServiceBase<,,>));
-
-            //services.AddTransient(typeof(ExpenseManagerCrudServiceBase<,,>), typeof(ExpenseManagerQueryAndCrudServiceBase<,,,>));
+            services.AddSingleton(typeof(Mapper), 
+                provider => {
+                    var config = new MapperConfiguration(cfg => 
+                    {
+                        cfg.AddProfile<StandardMappingProfile>();
+                    });
+                    return config.CreateMapper();
+            });
 
             // Register all repositories
             services.AddTransient<IRepository<Badge, int>, BadgeRepository>();
@@ -63,8 +60,8 @@ namespace BL.Startup
             //TODO add more query objects
 
             // Register all services
-            //services.AddTransient<IUserService, UserService>();
-            services.AddTransient<UserService>();
+            services.AddTransient(typeof(ExpenseManagerCrudServiceBase<User,int,UserDTO>), typeof(UserService));
+            services.AddTransient<IUserService, UserService>();
             //TODO add more services
 
             // Register all facades
