@@ -22,3 +22,16 @@ School project for PV247 (FI MUNI Brno)
 * Local variables, arguments are in camelCase
 * Don't use very short names that does not clearly imply meaning (exceptions: using (var sb = new StringBuilder()) or LINQ lambdas)
 * Don't use very long names, they should not contain prepositions, conjunctions and similar words (instead of numberOfPlayersThatAreOnline use onlinePlayersCount)
+
+## Use cases ##
+### User ###
+* add new expenses
+  - expense can be add as periodic
+* filter expenses
+* create new plans
+   - based on spending or saving
+* create current paste of expenses and share it with other people
+* manage my pastes
+
+### Other: ###
+* plans are automatically marked as finished when the given goal is achieved ... user receives badge
