@@ -33,5 +33,6 @@ School project for PV247 (FI MUNI Brno)
 * create current paste of expenses and share it with other people
 * manage my pastes
 
-### Other: ###
-* plans are automatically marked as finished when the given goal is achieved ... user receives badge
+### Time ###
+* plans are automatically marked as finished when the given goal is achieved
+* user automatically receives badge when he fulfil the condition
