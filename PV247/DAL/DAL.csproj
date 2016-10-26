@@ -94,11 +94,13 @@
     <Compile Include="ExpenseDbContext.cs" />
     <Compile Include="Infrastructure\ExpenseManagerCrudServiceBase.cs" />
     <Compile Include="Infrastructure\ExpenseManagerQueryAndCrudServiceBase.cs" />
-    <Compile Include="Infrastructure\Configuration\ConnectionOptions.cs" />
+    <Compile Include="Infrastructure\ConnectionConfiguration\ConnectionOptions.cs" />
     <Compile Include="Infrastructure\ExpenseManagerQuery.cs" />
     <Compile Include="Infrastructure\ExpenseManagerRepository.cs" />
     <Compile Include="Infrastructure\ExpenseManagerUnitOfWork.cs" />
     <Compile Include="Infrastructure\EntityFrameworkUnitOfWorkProvider.cs" />
+    <Compile Include="Infrastructure\IRepository.cs" />
+    <Compile Include="Infrastructure\Mapping\Profiles\StandardMappingProfile.cs" />
     <Compile Include="Migrations\201610262011217_Initial.cs" />
     <Compile Include="Migrations\201610262011217_Initial.Designer.cs">
       <DependentUpon>201610262011217_Initial.cs</DependentUpon>
@@ -106,16 +108,16 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entities\User.cs" />
-    <Compile Include="Queries\ListUserPlansQuery.cs" />
-    <Compile Include="Repositories\BadgeRepository.cs" />
-    <Compile Include="Repositories\CostInfoPasteRepository.cs" />
-    <Compile Include="Repositories\CostInfoRepository.cs" />
-    <Compile Include="Repositories\CostTypeRepository.cs" />
-    <Compile Include="Repositories\PasteRepository.cs" />
-    <Compile Include="Repositories\PlanRepository.cs" />
-    <Compile Include="Repositories\UserBadgeRepository.cs" />
-    <Compile Include="Repositories\UserPasteAccessRepository.cs" />
-    <Compile Include="Repositories\UserRepository.cs" />
+    <Compile Include="DataAccess\Queries\ListUserPlansQuery.cs" />
+    <Compile Include="DataAccess\Repositories\BadgeRepository.cs" />
+    <Compile Include="DataAccess\Repositories\CostInfoPasteRepository.cs" />
+    <Compile Include="DataAccess\Repositories\CostInfoRepository.cs" />
+    <Compile Include="DataAccess\Repositories\CostTypeRepository.cs" />
+    <Compile Include="DataAccess\Repositories\PasteRepository.cs" />
+    <Compile Include="DataAccess\Repositories\PlanRepository.cs" />
+    <Compile Include="DataAccess\Repositories\UserBadgeRepository.cs" />
+    <Compile Include="DataAccess\Repositories\UserPasteAccessRepository.cs" />
+    <Compile Include="DataAccess\Repositories\UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

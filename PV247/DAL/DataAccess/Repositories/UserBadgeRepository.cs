@@ -2,7 +2,7 @@
 using DAL.Infrastructure;
 using Riganti.Utils.Infrastructure.Core;
 
-namespace DAL.Repositories
+namespace DAL.DataAccess.Repositories
 {
     public class UserBadgeRepository : ExpenseManagerRepository<UserBadge, int>
     {

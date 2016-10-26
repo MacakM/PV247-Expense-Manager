@@ -1,4 +1,4 @@
-using DAL.Infrastructure.Configuration;
+using DAL.Infrastructure.ConnectionConfiguration;
 using Microsoft.Extensions.Options;
 using Riganti.Utils.Infrastructure.Core;
 

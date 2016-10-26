@@ -1,4 +1,4 @@
-﻿namespace DAL.Infrastructure.Configuration
+﻿namespace DAL.Infrastructure.ConnectionConfiguration
 {
     /// <summary>
     /// Class is used to deliver application-level configuration to EF contexts.

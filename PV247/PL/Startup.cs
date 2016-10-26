@@ -2,13 +2,13 @@
 using AutoMapper;
 using BL.Facades;
 using BL.Services;
-using BL.Startup.Mapping.Profiles;
 using DAL;
+using DAL.DataAccess.Queries;
+using DAL.DataAccess.Repositories;
 using DAL.Entities;
 using DAL.Infrastructure;
-using DAL.Infrastructure.Configuration;
-using DAL.Queries;
-using DAL.Repositories;
+using DAL.Infrastructure.ConnectionConfiguration;
+using DAL.Infrastructure.Mapping.Profiles;
 using IdentityDAL;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

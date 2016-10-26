@@ -4,9 +4,9 @@ using System.Linq.Expressions;
 using APILayer.DTOs;
 using AutoMapper;
 using DAL;
+using DAL.DataAccess.Repositories;
 using DAL.Entities;
 using DAL.Infrastructure;
-using DAL.Repositories;
 using Riganti.Utils.Infrastructure.Core;
 
 namespace BL.Services

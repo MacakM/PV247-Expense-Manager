@@ -2,7 +2,7 @@
 using AutoMapper;
 using DAL.Entities;
 
-namespace BL.Startup.Mapping.Profiles
+namespace DAL.Infrastructure.Mapping.Profiles
 {
     public class StandardMappingProfile : Profile
     {

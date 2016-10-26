@@ -64,17 +64,12 @@
     <Compile Include="Services\IUserService.cs" />
     <Compile Include="Services\PlanService.cs" />
     <Compile Include="Services\UserService.cs" />
-    <Compile Include="Startup\Mapping\Profiles\StandardMappingProfile.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Infrastructure\DTOs\" />
-    <Folder Include="Infrastructure\Queries\" />
-    <Folder Include="Infrastructure\Services\" />
-    <Folder Include="Infrastructure\UnitOfWork\" />
     <Folder Include="Utils\" />
   </ItemGroup>
   <ItemGroup>

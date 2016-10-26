@@ -12,23 +12,20 @@ namespace DAL.Infrastructure
     /// </summary>
     public class ExpenseManagerRepository<TEntity, TKey> : IRepository<TEntity, TKey> where TEntity : class, IEntity<TKey>, new()
     {
-        private readonly IUnitOfWorkProvider provider;
+        private readonly IUnitOfWorkProvider _provider;
 
         /// <summary>
         /// Gets the <see cref="DbContext"/>.
         /// </summary>
-        protected DbContext Context
-        {
-            get { return ExpenseManagerUnitOfWork.TryGetDbContext(provider); }
-        }
+        protected DbContext Context => ExpenseManagerUnitOfWork.TryGetDbContext(_provider);
 
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ExpenseManagerRepository{TEntity,TKey}"/> class.
+        /// Initializes a new instance of the <see cref="ExpenseManagerRepository{TEntity, TDTO, TKey}"/> class.
         /// </summary>
         public ExpenseManagerRepository(IUnitOfWorkProvider provider)
         {
-            this.provider = provider;
+            this._provider = provider;
         }
 
         /// <summary>

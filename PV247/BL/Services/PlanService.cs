@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using APILayer.DTOs;
 using AutoMapper;
-using DAL;
 using DAL.Entities;
 using DAL.Infrastructure;
 using Riganti.Utils.Infrastructure.Core;

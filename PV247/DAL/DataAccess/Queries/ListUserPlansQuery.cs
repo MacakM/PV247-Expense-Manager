@@ -6,7 +6,7 @@ using DAL.Entities;
 using DAL.Infrastructure;
 using Riganti.Utils.Infrastructure.Core;
 
-namespace DAL.Queries
+namespace DAL.DataAccess.Queries
 {
     public class ListUserPlansQuery : ExpenseManagerQuery<PlanDTO>
     {
