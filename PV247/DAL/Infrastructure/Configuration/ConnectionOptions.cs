@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DAL.Infrastructure
+﻿namespace DAL.Infrastructure.Configuration
 {
     /// <summary>
     /// Class is used to deliver application-level configuration to EF contexts.

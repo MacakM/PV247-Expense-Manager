@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using APILayer;
 using AutoMapper;
 using Riganti.Utils.Infrastructure.Core;
 
-namespace DAL
+namespace DAL.Infrastructure
 {
     /// <summary>
     /// A base class for Query-enabled service, taken from unreleased project of RigantiInfrastructure solution, all credit goes to Tomas Herceg.
@@ -13,7 +14,7 @@ namespace DAL
         /// <summary>
         /// Gets the query object used to populate the list or records.
         /// </summary>
-        public IQuery<TListDTO> Query { get; private set; }
+        public IQuery<TListDTO> Query { get; }
 
         protected ExpenseManagerQueryAndCrudServiceBase(IQuery<TListDTO> query, IRepository<TEntity, TKey> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) : base(repository, expenseManagerMapper, unitOfWorkProvider)
         {

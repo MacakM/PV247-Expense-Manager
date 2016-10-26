@@ -1,4 +1,4 @@
-﻿namespace DAL.DTOs.Filters
+﻿namespace APILayer.DTOs.Filters
 {
     public class PlanFilterDTO
     {

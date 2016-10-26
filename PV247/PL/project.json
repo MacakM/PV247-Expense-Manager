@@ -62,6 +62,9 @@
   "frameworks": {
     "net462": {
       "dependencies": {
+        "APILayer": {
+          "target": "project"
+        },
         "BL": {
           "target": "project"
         },

@@ -1,11 +1,12 @@
-﻿using AutoMapper;
+﻿using APILayer.DTOs;
+using AutoMapper;
 using BL.Facades;
 using BL.Services;
 using BL.Startup.Mapping.Profiles;
 using DAL;
-using DAL.DTOs;
 using DAL.Entities;
 using DAL.Infrastructure;
+using DAL.Infrastructure.Configuration;
 using DAL.Queries;
 using DAL.Repositories;
 using IdentityDAL;
@@ -102,7 +103,7 @@ namespace PL
 
             services.AddSingleton<IUnitOfWorkProvider, ExpenseManagerUnitOfWorkProvider>();
 
-            services.AddTransient(typeof(IRepository<,>),typeof(EntityFrameworkRepository<,>));
+            services.AddTransient(typeof(IRepository<,>),typeof(ExpenseManagerRepository<,>));
 
             services.AddSingleton(typeof(Mapper), 
                 provider => {

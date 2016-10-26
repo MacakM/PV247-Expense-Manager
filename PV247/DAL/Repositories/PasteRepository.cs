@@ -4,7 +4,7 @@ using Riganti.Utils.Infrastructure.Core;
 
 namespace DAL.Repositories
 {
-    public class PasteRepository : EntityFrameworkRepository<Paste, int>
+    public class PasteRepository : ExpenseManagerRepository<Paste, int>
     {
         public PasteRepository(IUnitOfWorkProvider provider) : base(provider) { }
     }

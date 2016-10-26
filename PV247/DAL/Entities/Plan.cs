@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using DAL.Enums;
+using APILayer.Enums;
 using Riganti.Utils.Infrastructure.Core;
 
 namespace DAL.Entities

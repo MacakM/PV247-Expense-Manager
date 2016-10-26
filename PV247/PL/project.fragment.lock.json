@@ -1,6 +1,23 @@
 {
   "version": 2,
   "exports": {
+    "APILayer/1.0.0": {
+      "type": "project",
+      "framework": ".NETFramework,Version=v4.6.2",
+      "compile": {
+        "bin/Debug/APILayer.dll": {}
+      },
+      "runtime": {
+        "bin/Debug/APILayer.dll": {}
+      },
+      "contentFiles": {
+        "bin/Debug/APILayer.pdb": {
+          "buildAction": "None",
+          "codeLanguage": "any",
+          "copyToOutput": true
+        }
+      }
+    },
     "BL/1.0.0": {
       "type": "project",
       "framework": ".NETFramework,Version=v4.6.2",

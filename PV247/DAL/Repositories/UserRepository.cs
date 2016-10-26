@@ -9,7 +9,7 @@ using Riganti.Utils.Infrastructure.Core;
 
 namespace DAL.Repositories
 {
-    public class UserRepository : EntityFrameworkRepository<User, int>
+    public class UserRepository : ExpenseManagerRepository<User, int>
     {
         public UserRepository(IUnitOfWorkProvider provider) : base(provider) { }
 

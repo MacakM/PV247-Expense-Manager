@@ -1,4 +1,4 @@
-﻿namespace DAL.DTOs
+﻿namespace APILayer.DTOs
 {
     public class CostTypeDTO
     {

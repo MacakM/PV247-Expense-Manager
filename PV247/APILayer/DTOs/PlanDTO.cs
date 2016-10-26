@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace DAL.DTOs
+﻿namespace APILayer.DTOs
 {
     public class PlanDTO : ExpenseManagerDTO<int>
     {
@@ -12,7 +10,6 @@ namespace DAL.DTOs
         /// <summary>
         /// Description of the plan.
         /// </summary>
-        [MaxLength(256)]
         public string Description { get; set; }
 
         /// <summary>

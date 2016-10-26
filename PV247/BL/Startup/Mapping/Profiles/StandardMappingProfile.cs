@@ -1,5 +1,5 @@
-﻿using AutoMapper;
-using DAL.DTOs;
+﻿using APILayer.DTOs;
+using AutoMapper;
 using DAL.Entities;
 
 namespace BL.Startup.Mapping.Profiles

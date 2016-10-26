@@ -1,4 +1,4 @@
-﻿namespace DAL
+﻿namespace APILayer
 {
     public abstract class ExpenseManagerDTO<TKey>
     {

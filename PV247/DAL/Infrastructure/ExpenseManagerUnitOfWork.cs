@@ -1,7 +1,6 @@
 using System;
 using System.Data.Entity;
 using System.Diagnostics;
-using DAL.Enums;
 using Riganti.Utils.Infrastructure.Core;
 
 namespace DAL.Infrastructure
@@ -9,23 +8,23 @@ namespace DAL.Infrastructure
     /// <summary>
     /// An implementation of unit of work in Entity ramework.
     /// </summary>
-    public class EntityFrameworkUnitOfWork : UnitOfWorkBase
+    public class ExpenseManagerUnitOfWork : UnitOfWorkBase
     {
         private bool hasOwnContext;
 
         /// <summary>
         /// Gets the <see cref="DbContext"/>.
         /// </summary>
-        public DbContext Context { get; }
+        internal ExpenseDbContext Context { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EntityFrameworkUnitOfWork"/> class.
+        /// Initializes a new instance of the <see cref="ExpenseManagerUnitOfWork"/> class.
         /// </summary>
-        public EntityFrameworkUnitOfWork(IUnitOfWorkProvider provider, DbContextOptions options)
+        public ExpenseManagerUnitOfWork(IUnitOfWorkProvider provider, bool reuseParentContext)
         {
-            if (options == DbContextOptions.ReuseParentContext)
+            if (reuseParentContext)
             {
-                var parentUow = provider.GetCurrent() as EntityFrameworkUnitOfWork;
+                var parentUow = provider.GetCurrent() as ExpenseManagerUnitOfWork;
                 if (parentUow != null)
                 {
                     this.Context = parentUow.Context;
@@ -82,7 +81,7 @@ namespace DAL.Infrastructure
         /// </summary>
         public static DbContext TryGetDbContext(IUnitOfWorkProvider provider)
         {
-            var uow = provider.GetCurrent() as EntityFrameworkUnitOfWork;
+            var uow = provider.GetCurrent() as ExpenseManagerUnitOfWork;
             if (uow == null)
             {
                 throw new InvalidOperationException("The EntityFrameworkRepository must be used in a unit of work of type EntityFrameworkUnitOfWork!");

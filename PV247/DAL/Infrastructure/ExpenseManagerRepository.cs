@@ -8,9 +8,9 @@ using Riganti.Utils.Infrastructure.Core;
 namespace DAL.Infrastructure
 {
     /// <summary>
-    /// A base implementation of a repository in Entity Framework.
+    /// A base implementation of a repository.
     /// </summary>
-    public class EntityFrameworkRepository<TEntity, TKey> : IRepository<TEntity, TKey> where TEntity : class, IEntity<TKey>, new()
+    public class ExpenseManagerRepository<TEntity, TKey> : IRepository<TEntity, TKey> where TEntity : class, IEntity<TKey>, new()
     {
         private readonly IUnitOfWorkProvider provider;
 
@@ -19,14 +19,14 @@ namespace DAL.Infrastructure
         /// </summary>
         protected DbContext Context
         {
-            get { return EntityFrameworkUnitOfWork.TryGetDbContext(provider); }
+            get { return ExpenseManagerUnitOfWork.TryGetDbContext(provider); }
         }
 
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EntityFrameworkRepository{TEntity, TKey}"/> class.
+        /// Initializes a new instance of the <see cref="ExpenseManagerRepository{TEntity,TKey}"/> class.
         /// </summary>
-        public EntityFrameworkRepository(IUnitOfWorkProvider provider)
+        public ExpenseManagerRepository(IUnitOfWorkProvider provider)
         {
             this.provider = provider;
         }

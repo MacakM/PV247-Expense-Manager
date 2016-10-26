@@ -1,8 +1,9 @@
 ﻿using System.Linq;
+using APILayer.DTOs;
+using APILayer.DTOs.Filters;
 using AutoMapper.QueryableExtensions;
-using DAL.DTOs;
-using DAL.DTOs.Filters;
 using DAL.Entities;
+using DAL.Infrastructure;
 using Riganti.Utils.Infrastructure.Core;
 
 namespace DAL.Queries

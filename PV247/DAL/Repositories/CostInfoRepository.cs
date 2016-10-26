@@ -4,7 +4,7 @@ using Riganti.Utils.Infrastructure.Core;
 
 namespace DAL.Repositories
 {
-    public class CostInfoRepository : EntityFrameworkRepository<CostInfo, int>
+    public class CostInfoRepository : ExpenseManagerRepository<CostInfo, int>
     {
         public CostInfoRepository(IUnitOfWorkProvider provider) : base(provider) { }
     }

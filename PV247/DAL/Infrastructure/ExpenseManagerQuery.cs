@@ -6,14 +6,14 @@ namespace DAL.Infrastructure
     /// <summary>
     /// A base implementation of query object in Entity Framework.
     /// </summary>
-    public abstract class EntityFrameworkQuery<TResult> : QueryBase<TResult>
+    public abstract class ExpenseManagerQuery<TResult> : QueryBase<TResult>
     {
         private readonly IUnitOfWorkProvider provider;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EntityFrameworkQuery{TResult}"/> class.
+        /// Initializes a new instance of the <see cref="ExpenseManagerQuery{TResult}"/> class.
         /// </summary>
-        public EntityFrameworkQuery(IUnitOfWorkProvider provider)
+        public ExpenseManagerQuery(IUnitOfWorkProvider provider)
         {
             this.provider = provider;
         }
@@ -21,9 +21,9 @@ namespace DAL.Infrastructure
         /// <summary>
         /// Gets the <see cref="DbContext"/>.
         /// </summary>
-        protected DbContext Context
+        internal ExpenseDbContext Context
         {
-            get { return EntityFrameworkUnitOfWork.TryGetDbContext(provider); }
+            get { return (ExpenseDbContext)ExpenseManagerUnitOfWork.TryGetDbContext(provider); }
         }
 
     }

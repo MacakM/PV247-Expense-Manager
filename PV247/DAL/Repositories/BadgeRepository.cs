@@ -4,7 +4,7 @@ using Riganti.Utils.Infrastructure.Core;
 
 namespace DAL.Repositories
 {
-    public class BadgeRepository : EntityFrameworkRepository<Badge, int>
+    public class BadgeRepository : ExpenseManagerRepository<Badge, int>
     {
         public BadgeRepository(IUnitOfWorkProvider provider) : base(provider) { }
     }

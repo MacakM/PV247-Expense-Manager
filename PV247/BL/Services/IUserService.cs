@@ -1,6 +1,6 @@
 using System;
 using System.Linq.Expressions;
-using DAL.DTOs;
+using APILayer.DTOs;
 using DAL.Entities;
 
 namespace BL.Services

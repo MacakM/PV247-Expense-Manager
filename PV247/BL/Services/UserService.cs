@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq.Expressions;
+using APILayer.DTOs;
 using AutoMapper;
 using DAL;
-using DAL.DTOs;
 using DAL.Entities;
+using DAL.Infrastructure;
 using DAL.Repositories;
 using Riganti.Utils.Infrastructure.Core;
 

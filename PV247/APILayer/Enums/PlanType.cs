@@ -1,4 +1,4 @@
-﻿namespace DAL.Enums
+﻿namespace APILayer.Enums
 {
     public enum PlanType
     {

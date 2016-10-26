@@ -1,5 +1,5 @@
-﻿using BL.Services;
-using DAL.DTOs;
+﻿using APILayer.DTOs;
+using BL.Services;
 
 namespace BL.Facades
 {

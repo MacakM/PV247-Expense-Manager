@@ -1,4 +1,4 @@
-using DAL.Enums;
+using DAL.Infrastructure.Configuration;
 using Microsoft.Extensions.Options;
 using Riganti.Utils.Infrastructure.Core;
 
@@ -7,19 +7,23 @@ namespace DAL.Infrastructure
     /// <summary>
     /// An implementation of unit of work provider in Entity Framework.
     /// </summary>
-    public class EntityFrameworkUnitOfWorkProvider : UnitOfWorkProviderBase
+    public class ExpenseManagerUnitOfWorkProvider : UnitOfWorkProviderBase
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="EntityFrameworkUnitOfWorkProvider"/> class.
-        /// </summary>
-        protected EntityFrameworkUnitOfWorkProvider(IUnitOfWorkRegistry registry) : base(registry) { }
+        internal IOptions<ConnectionOptions> ConnectionOptions { get; }
+
+        public ExpenseManagerUnitOfWorkProvider(IOptions<ConnectionOptions> connectionOptions,
+            IUnitOfWorkRegistry registry)
+            : base(registry)
+        {
+            ConnectionOptions = connectionOptions;
+        }
 
         /// <summary>
         /// Creates the unit of work with specified options.
         /// </summary>
-        public IUnitOfWork Create(DbContextOptions options)
+        public IUnitOfWork Create(bool reuseParentContext = true)
         {
-            return CreateCore(options);
+            return CreateCore(reuseParentContext);
         }
 
         /// <summary>
@@ -27,16 +31,15 @@ namespace DAL.Infrastructure
         /// </summary>
         protected sealed override IUnitOfWork CreateUnitOfWork(object parameter)
         {
-            var options = (parameter as DbContextOptions?) ?? DbContextOptions.ReuseParentContext;
-            return CreateUnitOfWork(options);
+            return parameter is bool ? CreateUnitOfWork((bool) parameter) : CreateUnitOfWork(true);
         }
 
         /// <summary>
         /// Creates the unit of work.
         /// </summary>
-        protected virtual EntityFrameworkUnitOfWork CreateUnitOfWork(DbContextOptions options)
+        protected virtual ExpenseManagerUnitOfWork CreateUnitOfWork(bool reuseParentContext)
         {
-            return new EntityFrameworkUnitOfWork(this, options);
+            return new ExpenseManagerUnitOfWork(this, reuseParentContext);
         }
     }
 }
