@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=5.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.5.1.1\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -39,13 +43,38 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.1.0.0\lib\netstandard1.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Options, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Options.1.0.0\lib\netstandard1.0\Microsoft.Extensions.Options.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Primitives, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Primitives.1.0.0\lib\netstandard1.0\Microsoft.Extensions.Primitives.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Riganti.Utils.Infrastructure.Core, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Riganti.Utils.Infrastructure.Core.1.0.3\lib\net45\Riganti.Utils.Infrastructure.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Reflection, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Reflection.4.1.0\lib\net462\System.Reflection.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.4.1.0\lib\net462\System.Runtime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Extensions, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.Extensions.4.1.0\lib\net462\System.Runtime.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -54,6 +83,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTOs\CostTypeDTO.cs" />
+    <Compile Include="DTOs\Filters\PlanFilterDTO.cs" />
+    <Compile Include="DTOs\PlanDTO.cs" />
+    <Compile Include="DTOs\UserDTO.cs" />
     <Compile Include="Entities\Badge.cs" />
     <Compile Include="Entities\CostInfo.cs" />
     <Compile Include="Entities\CostInfoPaste.cs" />
@@ -62,24 +95,46 @@
     <Compile Include="Entities\CostType.cs" />
     <Compile Include="Entities\UserBadge.cs" />
     <Compile Include="Entities\UserPasteAccess.cs" />
+    <Compile Include="Enums\DbContextOptions.cs" />
     <Compile Include="Enums\PlanType.cs" />
     <Compile Include="ExpenseDbContext.cs" />
     <Compile Include="ExpenseDbInitializer.cs" />
-    <Compile Include="Migrations\201610231256282_Initial.cs" />
-    <Compile Include="Migrations\201610231256282_Initial.Designer.cs">
-      <DependentUpon>201610231256282_Initial.cs</DependentUpon>
+    <Compile Include="ExpenseManagerCrudServiceBase.cs" />
+    <Compile Include="ExpenseManagerDTO.cs" />
+    <Compile Include="ExpenseManagerQuery.cs" />
+    <Compile Include="ExpenseManagerQueryAndCrudServiceBase.cs" />
+    <Compile Include="ExpenseManagerUnitOfWork.cs" />
+    <Compile Include="ExpenseManagerUnitOfWorkProvider.cs" />
+    <Compile Include="Infrastructure\ConnectionOptions.cs" />
+    <Compile Include="Infrastructure\EntityFrameworkQuery.cs" />
+    <Compile Include="Infrastructure\EntityFrameworkRepository.cs" />
+    <Compile Include="Infrastructure\EntityFrameworkUnitOfWork.cs" />
+    <Compile Include="Infrastructure\EntityFrameworkUnitOfWorkProvider.cs" />
+    <Compile Include="Migrations\201610262011217_Initial.cs" />
+    <Compile Include="Migrations\201610262011217_Initial.Designer.cs">
+      <DependentUpon>201610262011217_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entities\User.cs" />
+    <Compile Include="Queries\ListUserPlansQuery.cs" />
+    <Compile Include="Repositories\BadgeRepository.cs" />
+    <Compile Include="Repositories\CostInfoPasteRepository.cs" />
+    <Compile Include="Repositories\CostInfoRepository.cs" />
+    <Compile Include="Repositories\CostTypeRepository.cs" />
+    <Compile Include="Repositories\PasteRepository.cs" />
+    <Compile Include="Repositories\PlanRepository.cs" />
+    <Compile Include="Repositories\UserBadgeRepository.cs" />
+    <Compile Include="Repositories\UserPasteAccessRepository.cs" />
+    <Compile Include="Repositories\UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201610231256282_Initial.resx">
-      <DependentUpon>201610231256282_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201610262011217_Initial.resx">
+      <DependentUpon>201610262011217_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

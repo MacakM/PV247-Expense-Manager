@@ -2,10 +2,10 @@
 using System.Diagnostics;
 using System.Linq.Expressions;
 using AutoMapper;
-using BL.DTOs;
-using BL.Infrastructure.Services;
-using BL.Repositories;
+using DAL;
+using DAL.DTOs;
 using DAL.Entities;
+using DAL.Repositories;
 using Riganti.Utils.Infrastructure.Core;
 
 namespace BL.Services

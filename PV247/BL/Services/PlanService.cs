@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using AutoMapper;
-using BL.DTOs;
-using BL.Infrastructure.Services;
+using DAL;
+using DAL.DTOs;
 using DAL.Entities;
 using Riganti.Utils.Infrastructure.Core;
 

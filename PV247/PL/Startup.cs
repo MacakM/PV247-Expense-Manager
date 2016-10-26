@@ -1,4 +1,13 @@
-﻿using BL.Startup;
+﻿using AutoMapper;
+using BL.Facades;
+using BL.Services;
+using BL.Startup.Mapping.Profiles;
+using DAL;
+using DAL.DTOs;
+using DAL.Entities;
+using DAL.Infrastructure;
+using DAL.Queries;
+using DAL.Repositories;
 using IdentityDAL;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -6,6 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Riganti.Utils.Infrastructure.Core;
 
 namespace PL
 {
@@ -32,11 +42,13 @@ namespace PL
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {  
+            services.Configure<ConnectionOptions>(options => options.ConnectionString = Configuration.GetConnectionString("DefaultConnection"));
+
             // Configure Identity persistence         
             IdentityDALInstaller.Install(services);
 
             // Configure BL
-            BLInstaller.Install(services);
+            RegisterBusinessLayerDependencies(services);
 
             // Configure PL
             services.AddMvc(options =>
@@ -78,6 +90,54 @@ namespace PL
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+        }
+
+        /// <summary>
+        /// Performs BL DI configuration
+        /// </summary>
+        /// <param name="services">Collection of the service descriptions</param>
+        private static void RegisterBusinessLayerDependencies(IServiceCollection services)
+        {
+            services.AddSingleton<IUnitOfWorkRegistry>(new HttpContextUnitOfWorkRegistry(new ThreadLocalUnitOfWorkRegistry()));
+
+            services.AddSingleton<IUnitOfWorkProvider, ExpenseManagerUnitOfWorkProvider>();
+
+            services.AddTransient(typeof(IRepository<,>),typeof(EntityFrameworkRepository<,>));
+
+            services.AddSingleton(typeof(Mapper), 
+                provider => {
+                    var config = new MapperConfiguration(cfg => 
+                    {
+                        cfg.AddProfile<StandardMappingProfile>();
+                    });
+                    return config.CreateMapper();
+            });
+
+            // Register all repositories
+            services.AddTransient<IRepository<Badge, int>, BadgeRepository>();
+            services.AddTransient<IRepository<CostInfo, int>, CostInfoRepository>();
+            services.AddTransient<IRepository<CostInfoPaste, int>, CostInfoPasteRepository>();
+            services.AddTransient<IRepository<CostType, int>, CostTypeRepository>();
+            services.AddTransient<IRepository<Paste, int>, PasteRepository>();
+            services.AddTransient<IRepository<Plan, int>, PlanRepository>();
+            services.AddTransient<IRepository<User, int>, UserRepository>();
+            services.AddTransient<IRepository<UserBadge, int>, UserBadgeRepository>();
+            services.AddTransient<IRepository<UserPasteAccess, int>, UserPasteAccessRepository>();
+
+            // Register all query objects
+            services.AddTransient<ExpenseManagerQuery<PlanDTO>, ListUserPlansQuery>();
+            //TODO add more query objects
+
+            // Register all services
+            services.AddTransient(typeof(ExpenseManagerCrudServiceBase<User,int,UserDTO>), typeof(UserService));
+            services.AddTransient<IUserService, UserService>();
+            //TODO add more services
+
+            // Register all facades
+            services.AddTransient<UserFacade>();
+            services.AddTransient<PlanFacade>();
+            //TODO add more facades
+            
         }
     }
 }

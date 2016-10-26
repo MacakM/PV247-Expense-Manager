@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using BL.DTOs;
+using DAL.DTOs;
 using DAL.Entities;
 
 namespace BL.Startup.Mapping.Profiles

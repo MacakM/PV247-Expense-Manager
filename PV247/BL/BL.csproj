@@ -35,28 +35,8 @@
       <HintPath>..\packages\AutoMapper.5.1.1\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.Extensions.DependencyInjection, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.1.0.0\lib\netstandard1.1\Microsoft.Extensions.DependencyInjection.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.1.0.0\lib\netstandard1.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Riganti.Utils.Infrastructure.Core, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Riganti.Utils.Infrastructure.Core.1.0.3\lib\net45\Riganti.Utils.Infrastructure.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Riganti.Utils.Infrastructure.EntityFramework, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Riganti.Utils.Infrastructure.EntityFramework.1.0.3\lib\net45\Riganti.Utils.Infrastructure.EntityFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -78,33 +58,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DTOs\CostTypeDTO.cs" />
-    <Compile Include="DTOs\Filters\PlanFilterDTO.cs" />
-    <Compile Include="DTOs\PlanDTO.cs" />
-    <Compile Include="DTOs\UserDTO.cs" />
     <Compile Include="Facades\PlanFacade.cs" />
     <Compile Include="Facades\UserFacade.cs" />
-    <Compile Include="Infrastructure\DTOs\ExpenseManagerDTO.cs" />
-    <Compile Include="Infrastructure\Queries\ExpenseManagerQuery.cs" />
-    <Compile Include="Infrastructure\Services\ExpenseManagerQueryAndCrudServiceBase.cs" />
-    <Compile Include="Infrastructure\UnitOfWork\ExpenseManagerUnitOfWork.cs" />
-    <Compile Include="Infrastructure\UnitOfWork\ExpenseManagerUnitOfWorkProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Queries\ListUserPlansQuery.cs" />
-    <Compile Include="Repositories\BadgeRepository.cs" />
-    <Compile Include="Repositories\CostInfoPasteRepository.cs" />
-    <Compile Include="Repositories\CostInfoRepository.cs" />
-    <Compile Include="Repositories\CostTypeRepository.cs" />
-    <Compile Include="Repositories\PasteRepository.cs" />
-    <Compile Include="Repositories\PlanRepository.cs" />
-    <Compile Include="Repositories\UserBadgeRepository.cs" />
-    <Compile Include="Repositories\UserPasteAccessRepository.cs" />
-    <Compile Include="Repositories\UserRepository.cs" />
-    <Compile Include="Infrastructure\Services\ExpenseManagerCrudServiceBase.cs" />
     <Compile Include="Services\IUserService.cs" />
     <Compile Include="Services\PlanService.cs" />
     <Compile Include="Services\UserService.cs" />
-    <Compile Include="Startup\BLInstaller.cs" />
     <Compile Include="Startup\Mapping\Profiles\StandardMappingProfile.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -112,6 +71,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Infrastructure\DTOs\" />
+    <Folder Include="Infrastructure\Queries\" />
+    <Folder Include="Infrastructure\Services\" />
+    <Folder Include="Infrastructure\UnitOfWork\" />
     <Folder Include="Utils\" />
   </ItemGroup>
   <ItemGroup>

@@ -2,10 +2,9 @@
   "userSecretsId": "aspnet-PL-5539870c-b031-4d5d-8938-3b0e461dde49",
 
   "dependencies": {
-    "Microsoft.AspNet.Identity.AspNetCoreCompat": "0.1.0",
+    "AutoMapper": "5.1.1",
     "Microsoft.AspNetCore.Authentication.Cookies": "1.0.0",
     "Microsoft.AspNetCore.Authentication.Facebook": "1.0.0",
-    "Microsoft.AspNetCore.Authentication.Google": "1.0.0",
     "Microsoft.AspNetCore.Diagnostics": "1.0.0",
     "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "1.0.0",
     "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "1.0.0",
@@ -18,7 +17,6 @@
     "Microsoft.AspNetCore.Server.IISIntegration": "1.0.0",
     "Microsoft.AspNetCore.Server.Kestrel": "1.0.1",
     "Microsoft.AspNetCore.StaticFiles": "1.0.0",
-    "Microsoft.EntityFrameworkCore.Relational": "1.0.1",
     "Microsoft.EntityFrameworkCore.SqlServer": "1.0.1",
     "Microsoft.EntityFrameworkCore.SqlServer.Design": {
       "version": "1.0.1",
@@ -43,7 +41,8 @@
     "Microsoft.VisualStudio.Web.CodeGenerators.Mvc": {
       "version": "1.0.0-preview2-final",
       "type": "build"
-    }
+    },
+    "Riganti.Utils.Infrastructure.Core": "1.0.3"
   },
 
   "tools": {
@@ -68,7 +67,8 @@
         },
         "IdentityDAL": {
           "target": "project"
-        }      }
+        }
+      }
     }
   },
 
