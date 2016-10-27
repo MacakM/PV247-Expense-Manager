@@ -39,7 +39,7 @@ namespace BL.Services
             using (var uow = UnitOfWorkProvider.Create())
             {
                 uow.RegisterAfterCommitAction(() => Debug.WriteLine($"Successfully modified user with email: {modifiedUserDTO.Email}"));
-                var user = UserRepository.GetUserByEmailIncludingAll(modifiedUserDTO.Email);
+                var user = UserRepository.GetUserByEmail(modifiedUserDTO.Email, EntityIncludes);
                 if (user == null)
                 {
                     throw new InvalidOperationException($"Cannot update user with email: { modifiedUserDTO.Email }, the user is not persisted yet!");      
@@ -57,11 +57,11 @@ namespace BL.Services
         /// <param name="email">User unique email</param>
         /// <param name="includes">Property to include with obtained user</param>
         /// <returns>UserDTO with user details</returns>
-        public UserDTO GetCurrentlySignedUser(string email, params Expression<Func<User, object>>[] includes)
+        public UserDTO GetCurrentlySignedUser(string email, params Expression<Func<UserDTO, object>>[] includes)
         {
             using (UnitOfWorkProvider.Create())
             {
-                return UserRepository.GetUserByEmail(email);
+                return UserRepository.GetUserByEmail(email, includes);
             }          
         }
 
@@ -71,12 +71,12 @@ namespace BL.Services
         /// <param name="email">User unique email</param>
         /// <param name="includeAllProperties">Decides whether all properties should be included</param>
         /// <returns>UserDTO with user details</returns>
-        public UserDTO GetCurrentlySignedUser(string email, bool includeAllProperties = false)
+        public UserDTO GetCurrentlySignedUser(string email, bool includeAllProperties = true)
         {
             using (UnitOfWorkProvider.Create())
             {              
                 return includeAllProperties ? 
-                    UserRepository.GetUserByEmailIncludingAll(email) : 
+                    UserRepository.GetUserByEmail(email, EntityIncludes) : 
                     UserRepository.GetUserByEmail(email);
             }
         }
