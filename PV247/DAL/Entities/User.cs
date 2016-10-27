@@ -41,6 +41,7 @@ namespace DAL.Entities
         /// All plans of the user.
         /// </summary>
         public virtual List<Plan> Plans { get; set; }
+        
         /// <summary>
         /// All badges of the user.
         /// </summary>

@@ -2,6 +2,7 @@
 using AutoMapper;
 using DAL.Entities;
 using DAL.Infrastructure;
+using DAL.Infrastructure.Repository;
 using Riganti.Utils.Infrastructure.Core;
 
 namespace DAL.DataAccess.Repositories

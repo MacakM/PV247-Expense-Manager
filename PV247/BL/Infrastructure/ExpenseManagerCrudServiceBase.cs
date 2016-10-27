@@ -2,7 +2,7 @@
 using System.Linq.Expressions;
 using APILayer;
 using AutoMapper;
-using DAL.Infrastructure;
+using DAL.Infrastructure.Repository;
 using Riganti.Utils.Infrastructure.Core;
 
 namespace BL.Infrastructure
@@ -71,6 +71,6 @@ namespace BL.Infrastructure
         /// <summary>
         /// Gets a list of navigation property expressions that should be included when the service loads the entity.
         /// </summary>
-        protected virtual Expression<Func<TDTO, object>>[] EntityIncludes => new Expression<Func<TDTO, object>>[] { };
+        protected abstract Expression<Func<TDTO, object>>[] EntityIncludes { get; }
     }
 }

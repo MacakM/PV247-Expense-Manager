@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 using APILayer.DTOs;
 using AutoMapper;
 using DAL.Entities;
-using DAL.Infrastructure;
+using DAL.Infrastructure.Repository;
 using Riganti.Utils.Infrastructure.Core;
 
 namespace DAL.DataAccess.Repositories
@@ -30,12 +30,12 @@ namespace DAL.DataAccess.Repositories
         /// <param name="email">User unique email</param>
         /// <param name="includes">Property to include with obtained user</param>
         /// <returns>UserDTO with user details</returns>
-        public UserDTO GetUserByEmail(string email, params Expression<Func<User, object>>[] includes)
+        public UserDTO GetUserByEmail(string email, params Expression<Func<UserDTO, object>>[] includes)
         {
             IQueryable<User> users = Context.Set<User>();
-
+            var processedIncludes = ProcessIncludesList(includes);
             // Include all required properties
-            users = includes.Aggregate(users, (current, include) => current.Include(include));
+            users = processedIncludes.Aggregate(users, (current, include) => current.Include(include));
 
             var user = users.FirstOrDefault(usr => usr.Email.Equals(email));
 
@@ -54,7 +54,7 @@ namespace DAL.DataAccess.Repositories
         /// <returns>UserDTO with user details</returns>
         public UserDTO GetUserByEmailIncludingAll(string email)
         {
-            return GetUserByEmail(email, _includes);
+            return GetUserByEmail(email);
         }
     }
 }

@@ -6,7 +6,7 @@ using AutoMapper;
 using BL.Infrastructure;
 using DAL.DataAccess.Repositories;
 using DAL.Entities;
-using DAL.Infrastructure;
+using DAL.Infrastructure.Repository;
 using Riganti.Utils.Infrastructure.Core;
 
 namespace BL.Services
@@ -73,14 +73,6 @@ namespace BL.Services
         /// <returns>UserDTO with user details</returns>
         public UserDTO GetCurrentlySignedUser(string email, bool includeAllProperties = false)
         {
-            /*using (UnitOfWorkProvider.Create())
-            {
-                var user = UserRepository.GetUserByEmailIncludingAll(email);
-                user.Name = "Jon Doe";
-                Repository.InsertOrUpdate(user);
-                user = UserRepository.GetUserByEmailIncludingAll(email);
-            }*/
-
             using (UnitOfWorkProvider.Create())
             {              
                 return includeAllProperties ? 
@@ -88,5 +80,10 @@ namespace BL.Services
                     UserRepository.GetUserByEmail(email);
             }
         }
+
+        protected override Expression<Func<UserDTO, object>>[] EntityIncludes => new Expression<Func<UserDTO, object>>[]
+        {
+            /*userDTO => userDTO.UserBadges*/
+        };
     }
 }

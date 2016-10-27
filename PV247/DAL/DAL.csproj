@@ -93,11 +93,11 @@
     <Compile Include="Entities\UserPasteAccess.cs" />
     <Compile Include="ExpenseDbContext.cs" />
     <Compile Include="Infrastructure\ConnectionConfiguration\ConnectionOptions.cs" />
-    <Compile Include="Infrastructure\ExpenseManagerQuery.cs" />
-    <Compile Include="Infrastructure\ExpenseManagerRepository.cs" />
-    <Compile Include="Infrastructure\ExpenseManagerUnitOfWork.cs" />
-    <Compile Include="Infrastructure\EntityFrameworkUnitOfWorkProvider.cs" />
-    <Compile Include="Infrastructure\IRepository.cs" />
+    <Compile Include="Infrastructure\Query\ExpenseManagerQuery.cs" />
+    <Compile Include="Infrastructure\Repository\ExpenseManagerRepository.cs" />
+    <Compile Include="Infrastructure\UnitOfWork\ExpenseManagerUnitOfWork.cs" />
+    <Compile Include="Infrastructure\UnitOfWork\EntityFrameworkUnitOfWorkProvider.cs" />
+    <Compile Include="Infrastructure\Repository\IRepository.cs" />
     <Compile Include="Infrastructure\Mapping\Profiles\StandardMappingProfile.cs" />
     <Compile Include="Migrations\201610262011217_Initial.cs" />
     <Compile Include="Migrations\201610262011217_Initial.Designer.cs">

@@ -4,13 +4,12 @@ using System.Data.Entity;
 using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
 using APILayer;
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
+using DAL.Infrastructure.UnitOfWork;
 using Riganti.Utils.Infrastructure.Core;
 
-namespace DAL.Infrastructure
+namespace DAL.Infrastructure.Repository
 {
     /// <summary>
     /// A base implementation of a repository.
@@ -65,7 +64,7 @@ namespace DAL.Infrastructure
             return query.Where(i => ids.Contains(i.Id)).ToList();
         }
 
-        private static IEnumerable<string> ProcessIncludesList(Expression<Func<TDTO, object>>[] includes)
+        protected static IEnumerable<string> ProcessIncludesList(Expression<Func<TDTO, object>>[] includes)
         {
             var includeList = new List<string>();
             foreach (var expressionBodyData in includes

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using APILayer;
 using AutoMapper;
-using DAL.Infrastructure;
+using DAL.Infrastructure.Repository;
 using Riganti.Utils.Infrastructure.Core;
 
 namespace BL.Infrastructure

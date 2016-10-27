@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using APILayer;
 
-namespace DAL.Infrastructure
+namespace DAL.Infrastructure.Repository
 {
     public interface IRepository<TEntity, TDTO, in TKey> 
         where TDTO : ExpenseManagerDTO<TKey>, new()

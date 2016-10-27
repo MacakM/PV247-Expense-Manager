@@ -1,4 +1,6 @@
-﻿namespace APILayer.DTOs
+﻿using System.Collections.Generic;
+
+namespace APILayer.DTOs
 {
     public class UserDTO : ExpenseManagerDTO<int>
     {
@@ -11,5 +13,6 @@
         /// Email of the user.
         /// </summary>
         public string Email { get; set; }
+
     }
 }

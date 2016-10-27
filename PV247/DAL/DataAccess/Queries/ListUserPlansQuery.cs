@@ -4,6 +4,7 @@ using APILayer.DTOs.Filters;
 using AutoMapper.QueryableExtensions;
 using DAL.Entities;
 using DAL.Infrastructure;
+using DAL.Infrastructure.Query;
 using Riganti.Utils.Infrastructure.Core;
 
 namespace DAL.DataAccess.Queries

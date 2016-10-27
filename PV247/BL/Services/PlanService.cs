@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 using APILayer.DTOs;
 using AutoMapper;
 using BL.Infrastructure;
 using DAL.Entities;
-using DAL.Infrastructure;
+using DAL.Infrastructure.Repository;
 using Riganti.Utils.Infrastructure.Core;
 
 namespace BL.Services
@@ -19,5 +21,11 @@ namespace BL.Services
         }
 
         // TODO add more functionality
+
+
+        protected override Expression<Func<PlanDTO, object>>[] EntityIncludes => new Expression<Func<PlanDTO, object>>[]
+        {
+            
+        };
     }
 }
