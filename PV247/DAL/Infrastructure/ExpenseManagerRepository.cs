@@ -1,8 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
+using APILayer;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Riganti.Utils.Infrastructure.Core;
 
 namespace DAL.Infrastructure
@@ -10,8 +15,12 @@ namespace DAL.Infrastructure
     /// <summary>
     /// A base implementation of a repository.
     /// </summary>
-    public class ExpenseManagerRepository<TEntity, TKey> : IRepository<TEntity, TKey> where TEntity : class, IEntity<TKey>, new()
+    public class ExpenseManagerRepository<TEntity, TDTO, TKey> : IRepository<TEntity, TDTO, TKey> 
+        where TEntity : class, IEntity<TKey>, new() 
+        where TDTO : ExpenseManagerDTO<TKey>, new()
     {
+        private const char ExpressionSeparator = '.';
+
         private readonly IUnitOfWorkProvider _provider;
 
         /// <summary>
@@ -19,101 +28,140 @@ namespace DAL.Infrastructure
         /// </summary>
         protected DbContext Context => ExpenseManagerUnitOfWork.TryGetDbContext(_provider);
 
+        protected IRuntimeMapper ExpenseManagerMapper { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ExpenseManagerRepository{TEntity, TDTO, TKey}"/> class.
         /// </summary>
-        public ExpenseManagerRepository(IUnitOfWorkProvider provider)
+        public ExpenseManagerRepository(IUnitOfWorkProvider provider, Mapper expenseManagerMapper)
         {
             this._provider = provider;
+            ExpenseManagerMapper = expenseManagerMapper.DefaultContext.Mapper;
         }
 
-        /// <summary>
-        /// Gets the entity with specified ID.
-        /// </summary>
-        public TEntity GetById(TKey id, params Expression<Func<TEntity, object>>[] includes)
+        public TDTO GetById(TKey id, params Expression<Func<TDTO, object>>[] includes)
         {
             return GetByIds(new[] { id }, includes).FirstOrDefault();
         }
 
         /// <summary>
-        /// Gets a list of entities with specified IDs.
+        /// Gets a list of dtos with specified IDs.
         /// </summary>
         /// <remarks>
         /// This method is not suitable for large amounts of entities - the reasonable limit of number of IDs is 30.
         /// </remarks>
-        public virtual IList<TEntity> GetByIds(IEnumerable<TKey> ids, params Expression<Func<TEntity, object>>[] includes)
+        public IList<TDTO> GetByIds(IEnumerable<TKey> ids, params Expression<Func<TDTO, object>>[] includes)
+        {
+            return GetEntitiesByIds(ids, includes)
+                .Select(entity => ExpenseManagerMapper.Map<TEntity, TDTO>(entity))
+                .ToList();
+        }
+
+        private IList<TEntity> GetEntitiesByIds(IEnumerable<TKey> ids, params Expression<Func<TDTO, object>>[] includes)
         {
             IQueryable<TEntity> query = Context.Set<TEntity>();
-            foreach (var include in includes)
-            {
-                query = query.Include(include);
-            }
+            var includeList = ProcessIncludesList(includes);
+            query = includeList.Aggregate(query, (current, include) => current.Include(include));
             return query.Where(i => ids.Contains(i.Id)).ToList();
         }
 
-        /// <summary>
-        /// Initializes a new entity with appropriate default values.
-        /// </summary>
-        public virtual TEntity InitializeNew()
+        private static IEnumerable<string> ProcessIncludesList(Expression<Func<TDTO, object>>[] includes)
         {
-            return new TEntity();
+            var includeList = new List<string>();
+            foreach (var expressionBodyData in includes
+                .Select(include => include.Body.ToString())
+                .Where(expressionBodyString => expressionBodyString.Contains(ExpressionSeparator))
+                .Select(expressionBodyString => expressionBodyString.Split(ExpressionSeparator)))
+            {
+                if (expressionBodyData.Length != 2)
+                {
+                    Debug.WriteLine("GetByIds(...) - includes do not currently support multiple nesting");
+                    continue;
+                }
+                includeList.Add(expressionBodyData[1]);
+            }
+            return CheckIncludes(includeList);
+        }
+
+        private static IEnumerable<string> CheckIncludes(List<string> includeList)
+        {
+            var entityPropertyNames = typeof (TEntity).GetProperties().Select(propInfo => propInfo.Name);
+            var checkedIncludes = includeList.Where(include => entityPropertyNames.Contains(include)).ToList();
+            var badIncludes = includeList.Except(checkedIncludes).ToList();
+            foreach (var badInclude in badIncludes)
+            {
+                Debug.WriteLine($"WARNING: Property named {badInclude} does not exists.");
+            }
+            return includeList;
         }
 
         /// <summary>
-        /// Inserts the specified entity into the table.
+        /// Inserts the specified entity into the table according to given dto.
         /// </summary>
-        public virtual void Insert(TEntity entity)
+        public void Insert(TDTO dto)
         {
+            var entity = ExpenseManagerMapper.Map<TDTO, TEntity>(dto);
             Context.Set<TEntity>().Add(entity);
         }
 
         /// <summary>
-        /// Inserts the specified entity into the table.
+        /// Inserts the specified entities into the table according to given dtos.
         /// </summary>
-        public void Insert(IEnumerable<TEntity> entities)
+        public void Insert(IEnumerable<TDTO> dtos)
         {
-            foreach (var entity in entities.ToList())
+            foreach (var dto in dtos.ToList())
             {
-                Insert(entity);
+                Insert(dto);
             }
         }
 
-        /// <summary>
-        /// Marks the specified entity as updated.
-        /// </summary>
-        public virtual void Update(TEntity entity)
+        public void Update(TDTO dto, params Expression<Func<TDTO, object>>[] entityIncludes)
         {
+            var entity = GetEntitiesByIds(new[] {dto.Id}, entityIncludes).FirstOrDefault();
+            ExpenseManagerMapper.Map(dto, entity);
             Context.Entry(entity).State = EntityState.Modified;
         }
 
-        /// <summary>
-        /// Marks the specified entity as updated.
-        /// </summary>
-        public void Update(IEnumerable<TEntity> entities)
+        public void Update(IEnumerable<TDTO> dtos, params Expression<Func<TDTO, object>>[] entityIncludes)
         {
-            foreach (var entity in entities.ToList())
+            foreach (var dto in dtos.ToList())
             {
-                Update(entity);
+                Update(dto);
             }
         }
 
         /// <summary>
-        /// Deletes the specified entity.
+        /// Saves the changes on the specified DTO to the database.
         /// </summary>
-        public virtual void Delete(TEntity entity)
+        public void InsertOrUpdate(TDTO dto, params Expression<Func<TDTO, object>>[] entityIncludes)
         {
-            Context.Set<TEntity>().Remove(entity);
+            var isNew = dto.Id.Equals(default(TKey));
+            if (isNew)
+            {
+                Insert(dto);
+            }
+            else
+            {
+                Update(dto, entityIncludes);
+            }
         }
 
         /// <summary>
-        /// Deletes the specified entity.
+        /// Deletes the specified dto.
         /// </summary>
-        public void Delete(IEnumerable<TEntity> entities)
+        public void Delete(TDTO dto)
         {
-            foreach (var entity in entities.ToList())
+            Delete(dto.Id);
+        }
+
+        /// <summary>
+        /// Deletes the specified entities according to given dtos.
+        /// </summary>
+        public void Delete(IEnumerable<TDTO> dtos)
+        {
+            foreach (var dto in dtos.ToList())
             {
-                Delete(entity);
+                Delete(dto);
             }
         }
 
@@ -122,7 +170,7 @@ namespace DAL.Infrastructure
         /// </summary>
         public virtual void Delete(TKey id)
         {
-            var entity = GetById(id);
+            var entity = GetEntitiesByIds(new[] { id }).FirstOrDefault();
             Context.Set<TEntity>().Remove(entity);
         }
 

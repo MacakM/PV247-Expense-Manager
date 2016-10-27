@@ -1,6 +1,7 @@
 ﻿using APILayer.DTOs;
 using AutoMapper;
 using BL.Facades;
+using BL.Infrastructure;
 using BL.Services;
 using DAL;
 using DAL.DataAccess.Queries;
@@ -103,7 +104,7 @@ namespace PL
 
             services.AddSingleton<IUnitOfWorkProvider, ExpenseManagerUnitOfWorkProvider>();
 
-            services.AddTransient(typeof(IRepository<,>),typeof(ExpenseManagerRepository<,>));
+            services.AddTransient(typeof(IRepository<,>),typeof(ExpenseManagerRepository<,,>));
 
             services.AddSingleton(typeof(Mapper), 
                 provider => {
@@ -115,15 +116,15 @@ namespace PL
             });
 
             // Register all repositories
-            services.AddTransient<IRepository<Badge, int>, BadgeRepository>();
-            services.AddTransient<IRepository<CostInfo, int>, CostInfoRepository>();
-            services.AddTransient<IRepository<CostInfoPaste, int>, CostInfoPasteRepository>();
-            services.AddTransient<IRepository<CostType, int>, CostTypeRepository>();
-            services.AddTransient<IRepository<Paste, int>, PasteRepository>();
-            services.AddTransient<IRepository<Plan, int>, PlanRepository>();
-            services.AddTransient<IRepository<User, int>, UserRepository>();
-            services.AddTransient<IRepository<UserBadge, int>, UserBadgeRepository>();
-            services.AddTransient<IRepository<UserPasteAccess, int>, UserPasteAccessRepository>();
+            services.AddTransient<IRepository<Badge, BadgeDTO, int>, BadgeRepository>();
+            services.AddTransient<IRepository<CostInfo, CostInfoDTO, int>, CostInfoRepository>();
+            services.AddTransient<IRepository<CostInfoPaste, CostInfoPasteDTO, int>, CostInfoPasteRepository>();
+            services.AddTransient<IRepository<CostType, CostTypeDTO, int>, CostTypeRepository>();
+            services.AddTransient<IRepository<Paste, PasteDTO, int>, PasteRepository>();
+            services.AddTransient<IRepository<Plan, PlanDTO, int>, PlanRepository>();
+            services.AddTransient<IRepository<User, UserDTO, int>, UserRepository>();
+            services.AddTransient<IRepository<UserBadge, UserBadgeDTO, int>, UserBadgeRepository>();
+            services.AddTransient<IRepository<UserPasteAccess, UserPasteAccessDTO, int>, UserPasteAccessRepository>();
 
             // Register all query objects
             services.AddTransient<ExpenseManagerQuery<PlanDTO>, ListUserPlansQuery>();

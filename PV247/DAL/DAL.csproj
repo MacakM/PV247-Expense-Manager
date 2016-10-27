@@ -92,8 +92,6 @@
     <Compile Include="Entities\UserBadge.cs" />
     <Compile Include="Entities\UserPasteAccess.cs" />
     <Compile Include="ExpenseDbContext.cs" />
-    <Compile Include="Infrastructure\ExpenseManagerCrudServiceBase.cs" />
-    <Compile Include="Infrastructure\ExpenseManagerQueryAndCrudServiceBase.cs" />
     <Compile Include="Infrastructure\ConnectionConfiguration\ConnectionOptions.cs" />
     <Compile Include="Infrastructure\ExpenseManagerQuery.cs" />
     <Compile Include="Infrastructure\ExpenseManagerRepository.cs" />

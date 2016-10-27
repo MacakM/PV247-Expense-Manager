@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Linq.Expressions;
 using APILayer.DTOs;
 using AutoMapper;
-using DAL;
+using BL.Infrastructure;
 using DAL.DataAccess.Repositories;
 using DAL.Entities;
 using DAL.Infrastructure;
@@ -16,7 +16,7 @@ namespace BL.Services
     /// </summary>
     public class UserService : ExpenseManagerCrudServiceBase<User, int, UserDTO>, IUserService
     {
-        public UserService(IRepository<User, int> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) 
+        public UserService(IRepository<User, UserDTO, int> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) 
             : base(repository, expenseManagerMapper, unitOfWorkProvider) { }
 
         private UserRepository UserRepository => (UserRepository)Repository;
@@ -61,8 +61,7 @@ namespace BL.Services
         {
             using (UnitOfWorkProvider.Create())
             {
-                var user = UserRepository.GetUserByEmail(email);
-                return ExpenseManagerMapper.Map<User, UserDTO>(user);
+                return UserRepository.GetUserByEmail(email);
             }          
         }
 
@@ -74,12 +73,19 @@ namespace BL.Services
         /// <returns>UserDTO with user details</returns>
         public UserDTO GetCurrentlySignedUser(string email, bool includeAllProperties = false)
         {
-            using (UnitOfWorkProvider.Create())
+            /*using (UnitOfWorkProvider.Create())
             {
-                var user = includeAllProperties ? 
+                var user = UserRepository.GetUserByEmailIncludingAll(email);
+                user.Name = "Jon Doe";
+                Repository.InsertOrUpdate(user);
+                user = UserRepository.GetUserByEmailIncludingAll(email);
+            }*/
+
+            using (UnitOfWorkProvider.Create())
+            {              
+                return includeAllProperties ? 
                     UserRepository.GetUserByEmailIncludingAll(email) : 
                     UserRepository.GetUserByEmail(email);
-                return ExpenseManagerMapper.Map<User, UserDTO>(user);
             }
         }
     }
