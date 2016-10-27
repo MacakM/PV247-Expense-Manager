@@ -1,16 +1,20 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace IdentityDAL
 {
     public static class IdentityDALInstaller
     {
-        public static void Install(IServiceCollection services)
-        {
-            services.AddDbContext<IdentityDAL.IdentityDbContext>();
+        public const string IdentityConnectionStringName = "IdentityConnection";
 
-            services.AddIdentity<IdentityDAL.Entities.ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<IdentityDAL.IdentityDbContext>()
+        public static void Install(IServiceCollection services, IConfigurationRoot config)
+        {
+            services.AddDbContext<IdentityDbContext>(builder => builder.UseSqlServer(config.GetConnectionString(IdentityConnectionStringName))).BuildServiceProvider();
+
+            services.AddIdentity<Entities.ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<IdentityDbContext>()
                 .AddDefaultTokenProviders();
         }
     }

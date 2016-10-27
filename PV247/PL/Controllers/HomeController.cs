@@ -14,7 +14,6 @@ namespace PL.Controllers
 
         public IActionResult Index( )
         {
-            var usr = _userFacade.GetCurrentlySignedUser("demo@demo.com");
             return View();
         }
 

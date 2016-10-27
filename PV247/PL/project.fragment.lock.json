@@ -46,6 +46,7 @@
         "bin/Debug/IdentityDAL.dll": {}
       },
       "runtime": {
+        "../../../../Users/Jaros/.nuget/packages/Microsoft.Extensions.Configuration/1.0.0/lib/netstandard1.1/Microsoft.Extensions.Configuration.dll": {},
         "../packages/Microsoft.AspNetCore.Authentication.1.0.0/lib/net451/Microsoft.AspNetCore.Authentication.dll": {},
         "../packages/Microsoft.AspNetCore.Authentication.Cookies.1.0.0/lib/net451/Microsoft.AspNetCore.Authentication.Cookies.dll": {},
         "../packages/Microsoft.AspNetCore.Cryptography.Internal.1.0.0/lib/net451/Microsoft.AspNetCore.Cryptography.Internal.dll": {},

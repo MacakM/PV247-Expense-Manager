@@ -3,11 +3,9 @@ using AutoMapper;
 using BL.Facades;
 using BL.Infrastructure;
 using BL.Services;
-using DAL;
 using DAL.DataAccess.Queries;
 using DAL.DataAccess.Repositories;
 using DAL.Entities;
-using DAL.Infrastructure;
 using DAL.Infrastructure.ConnectionConfiguration;
 using DAL.Infrastructure.Mapping.Profiles;
 using DAL.Infrastructure.Query;
@@ -47,10 +45,10 @@ namespace PL
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {  
-            services.Configure<ConnectionOptions>(options => options.ConnectionString = Configuration.GetConnectionString("DefaultConnection"));
+            services.Configure<ConnectionOptions>(options => options.ConnectionString = Configuration.GetConnectionString(ConnectionOptions.ExpenseManagerConnectionStringName));
 
             // Configure Identity persistence         
-            IdentityDALInstaller.Install(services);
+            IdentityDALInstaller.Install(services, Configuration);
 
             // Configure BL
             RegisterBusinessLayerDependencies(services);
