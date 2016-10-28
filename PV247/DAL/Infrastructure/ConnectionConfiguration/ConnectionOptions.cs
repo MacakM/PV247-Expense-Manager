@@ -5,6 +5,8 @@
     /// </summary>
     public class ConnectionOptions
     {
+        public const string ExpenseManagerConnectionStringName = "DefaultConnection";
+
         public string ConnectionString { get; set; }
     }
 }

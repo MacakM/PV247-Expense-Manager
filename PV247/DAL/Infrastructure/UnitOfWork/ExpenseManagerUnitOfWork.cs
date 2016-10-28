@@ -3,7 +3,7 @@ using System.Data.Entity;
 using System.Diagnostics;
 using Riganti.Utils.Infrastructure.Core;
 
-namespace DAL.Infrastructure
+namespace DAL.Infrastructure.UnitOfWork
 {
     /// <summary>
     /// An implementation of unit of work in Entity ramework.

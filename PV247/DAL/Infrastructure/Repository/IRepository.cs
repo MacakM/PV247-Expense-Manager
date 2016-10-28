@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using APILayer;
 
-namespace DAL.Infrastructure
+namespace DAL.Infrastructure.Repository
 {
     public interface IRepository<TEntity, TDTO, in TKey> 
         where TDTO : ExpenseManagerDTO<TKey>, new()
@@ -21,11 +21,6 @@ namespace DAL.Infrastructure
         IList<TDTO> GetByIds(IEnumerable<TKey> ids, params Expression<Func<TDTO, object>>[] includes);
 
         /// <summary>
-        /// Initializes a new entity with appropriate default values.
-        /// </summary>
-        TDTO InitializeNew();
-
-        /// <summary>
         /// Inserts the specified entity into the table.
         /// </summary>
         void Insert(TDTO entity);
@@ -38,12 +33,12 @@ namespace DAL.Infrastructure
         /// <summary>
         /// Marks the specified entity as updated.
         /// </summary>
-        void Update(TDTO entity);
+        void Update(TDTO entity, params Expression<Func<TDTO, object>>[] entityIncludes);
 
         /// <summary>
         /// Marks the specified entities as updated.
         /// </summary>
-        void Update(IEnumerable<TDTO> entities);
+        void Update(IEnumerable<TDTO> entities, params Expression<Func<TDTO, object>>[] entityIncludes);
 
         /// <summary>
         /// Deletes the specified entity.
@@ -65,5 +60,9 @@ namespace DAL.Infrastructure
         /// </summary>
         void Delete(IEnumerable<TKey> ids);
 
+        /// <summary>
+        /// Saves the changes on the specified DTO to the database.
+        /// </summary>
+        void InsertOrUpdate(TDTO dto, params Expression<Func<TDTO, object>>[] entityIncludes);
     }
 }

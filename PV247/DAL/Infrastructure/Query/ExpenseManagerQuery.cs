@@ -1,7 +1,8 @@
 ﻿using System.Data.Entity;
+using DAL.Infrastructure.UnitOfWork;
 using Riganti.Utils.Infrastructure.Core;
 
-namespace DAL.Infrastructure
+namespace DAL.Infrastructure.Query
 {
     /// <summary>
     /// A base implementation of query object in Entity Framework.

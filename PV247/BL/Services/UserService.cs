@@ -3,10 +3,10 @@ using System.Diagnostics;
 using System.Linq.Expressions;
 using APILayer.DTOs;
 using AutoMapper;
-using DAL;
+using BL.Infrastructure;
 using DAL.DataAccess.Repositories;
 using DAL.Entities;
-using DAL.Infrastructure;
+using DAL.Infrastructure.Repository;
 using Riganti.Utils.Infrastructure.Core;
 
 namespace BL.Services
@@ -16,7 +16,7 @@ namespace BL.Services
     /// </summary>
     public class UserService : ExpenseManagerCrudServiceBase<User, int, UserDTO>, IUserService
     {
-        public UserService(IRepository<User, int> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) 
+        public UserService(IRepository<User, UserDTO, int> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) 
             : base(repository, expenseManagerMapper, unitOfWorkProvider) { }
 
         private UserRepository UserRepository => (UserRepository)Repository;
@@ -39,7 +39,7 @@ namespace BL.Services
             using (var uow = UnitOfWorkProvider.Create())
             {
                 uow.RegisterAfterCommitAction(() => Debug.WriteLine($"Successfully modified user with email: {modifiedUserDTO.Email}"));
-                var user = UserRepository.GetUserByEmailIncludingAll(modifiedUserDTO.Email);
+                var user = UserRepository.GetUserByEmail(modifiedUserDTO.Email, EntityIncludes);
                 if (user == null)
                 {
                     throw new InvalidOperationException($"Cannot update user with email: { modifiedUserDTO.Email }, the user is not persisted yet!");      
@@ -57,12 +57,11 @@ namespace BL.Services
         /// <param name="email">User unique email</param>
         /// <param name="includes">Property to include with obtained user</param>
         /// <returns>UserDTO with user details</returns>
-        public UserDTO GetCurrentlySignedUser(string email, params Expression<Func<User, object>>[] includes)
+        public UserDTO GetCurrentlySignedUser(string email, params Expression<Func<UserDTO, object>>[] includes)
         {
             using (UnitOfWorkProvider.Create())
             {
-                var user = UserRepository.GetUserByEmail(email);
-                return ExpenseManagerMapper.Map<User, UserDTO>(user);
+                return UserRepository.GetUserByEmail(email, includes);
             }          
         }
 
@@ -72,15 +71,19 @@ namespace BL.Services
         /// <param name="email">User unique email</param>
         /// <param name="includeAllProperties">Decides whether all properties should be included</param>
         /// <returns>UserDTO with user details</returns>
-        public UserDTO GetCurrentlySignedUser(string email, bool includeAllProperties = false)
+        public UserDTO GetCurrentlySignedUser(string email, bool includeAllProperties = true)
         {
             using (UnitOfWorkProvider.Create())
-            {
-                var user = includeAllProperties ? 
-                    UserRepository.GetUserByEmailIncludingAll(email) : 
+            {              
+                return includeAllProperties ? 
+                    UserRepository.GetUserByEmail(email, EntityIncludes) : 
                     UserRepository.GetUserByEmail(email);
-                return ExpenseManagerMapper.Map<User, UserDTO>(user);
             }
         }
+
+        protected override Expression<Func<UserDTO, object>>[] EntityIncludes => new Expression<Func<UserDTO, object>>[]
+        {
+            /*userDTO => userDTO.UserBadges*/
+        };
     }
 }

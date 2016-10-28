@@ -1,12 +1,7 @@
 ﻿namespace APILayer.DTOs
 {
-    public class CostTypeDTO
+    public class CostTypeDTO : ExpenseManagerDTO<int>
     {
-        /// <summary>
-        /// Id of the cost type.
-        /// </summary>
-        public int Id { get; set; }
-
         /// <summary>
         /// Name of this type.
         /// </summary>

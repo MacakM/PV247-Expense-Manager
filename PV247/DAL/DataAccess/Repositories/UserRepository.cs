@@ -3,24 +3,17 @@ using System.Data.Entity;
 using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
+using APILayer.DTOs;
+using AutoMapper;
 using DAL.Entities;
-using DAL.Infrastructure;
+using DAL.Infrastructure.Repository;
 using Riganti.Utils.Infrastructure.Core;
 
 namespace DAL.DataAccess.Repositories
 {
-    public class UserRepository : ExpenseManagerRepository<User, int>
+    public class UserRepository : ExpenseManagerRepository<User, UserDTO, int>
     {
-        public UserRepository(IUnitOfWorkProvider provider) : base(provider) { }
-
-        private static readonly Expression<Func<User, object>>[] _includes = 
-            {
-                usr => usr.Badges,
-                usr => usr.Costs,
-                usr => usr.OwnPastes,
-                usr => usr.Plans,
-                usr => usr.VisiblePastes
-            };
+        public UserRepository(IUnitOfWorkProvider provider, Mapper mapper) : base(provider, mapper) { }
 
         /// <summary>
         /// Gets currently signed user according to its email
@@ -28,30 +21,22 @@ namespace DAL.DataAccess.Repositories
         /// <param name="email">User unique email</param>
         /// <param name="includes">Property to include with obtained user</param>
         /// <returns>UserDTO with user details</returns>
-        public User GetUserByEmail(string email, params Expression<Func<User, object>>[] includes)
+        public UserDTO GetUserByEmail(string email, params Expression<Func<UserDTO, object>>[] includes)
         {
             IQueryable<User> users = Context.Set<User>();
+            var processedIncludes = ProcessIncludesList(includes);
 
             // Include all required properties
-            users = includes.Aggregate(users, (current, include) => current.Include(include));
+            users = processedIncludes.Aggregate(users, (current, include) => current.Include(include));
 
             var user = users.FirstOrDefault(usr => usr.Email.Equals(email));
 
             if (user == null)
             {
                 Debug.WriteLine($"User with email {email} does not exists in the DB!");
+                return null;
             }
-            return user;
-        }
-
-        /// <summary>
-        /// Gets currently signed user (with all initialized properties) according to its email
-        /// </summary>
-        /// <param name="email">User unique email</param>
-        /// <returns>UserDTO with user details</returns>
-        public User GetUserByEmailIncludingAll(string email)
-        {
-            return GetUserByEmail(email, _includes);
+            return ExpenseManagerMapper.Map<User, UserDTO>(user);
         }
     }
 }

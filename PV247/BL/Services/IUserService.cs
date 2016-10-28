@@ -25,7 +25,7 @@ namespace BL.Services
         /// <param name="email">User unique email</param>
         /// <param name="includes">Property to include with obtained user</param>
         /// <returns>UserDTO with user details</returns>
-        UserDTO GetCurrentlySignedUser(string email, params Expression<Func<User, object>>[] includes);
+        UserDTO GetCurrentlySignedUser(string email, params Expression<Func<UserDTO, object>>[] includes);
 
         /// <summary>
         /// Gets currently signed user according to its email

@@ -1,14 +1,16 @@
 ﻿using APILayer.DTOs;
 using AutoMapper;
 using BL.Facades;
+using BL.Infrastructure;
 using BL.Services;
-using DAL;
 using DAL.DataAccess.Queries;
 using DAL.DataAccess.Repositories;
 using DAL.Entities;
-using DAL.Infrastructure;
 using DAL.Infrastructure.ConnectionConfiguration;
 using DAL.Infrastructure.Mapping.Profiles;
+using DAL.Infrastructure.Query;
+using DAL.Infrastructure.Repository;
+using DAL.Infrastructure.UnitOfWork;
 using IdentityDAL;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -43,10 +45,10 @@ namespace PL
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {  
-            services.Configure<ConnectionOptions>(options => options.ConnectionString = Configuration.GetConnectionString("DefaultConnection"));
+            services.Configure<ConnectionOptions>(options => options.ConnectionString = Configuration.GetConnectionString(ConnectionOptions.ExpenseManagerConnectionStringName));
 
             // Configure Identity persistence         
-            IdentityDALInstaller.Install(services);
+            IdentityDALInstaller.Install(services, Configuration);
 
             // Configure BL
             RegisterBusinessLayerDependencies(services);
@@ -103,7 +105,7 @@ namespace PL
 
             services.AddSingleton<IUnitOfWorkProvider, ExpenseManagerUnitOfWorkProvider>();
 
-            services.AddTransient(typeof(IRepository<,>),typeof(ExpenseManagerRepository<,>));
+            services.AddTransient(typeof(IRepository<,>),typeof(ExpenseManagerRepository<,,>));
 
             services.AddSingleton(typeof(Mapper), 
                 provider => {
@@ -115,15 +117,15 @@ namespace PL
             });
 
             // Register all repositories
-            services.AddTransient<IRepository<Badge, int>, BadgeRepository>();
-            services.AddTransient<IRepository<CostInfo, int>, CostInfoRepository>();
-            services.AddTransient<IRepository<CostInfoPaste, int>, CostInfoPasteRepository>();
-            services.AddTransient<IRepository<CostType, int>, CostTypeRepository>();
-            services.AddTransient<IRepository<Paste, int>, PasteRepository>();
-            services.AddTransient<IRepository<Plan, int>, PlanRepository>();
-            services.AddTransient<IRepository<User, int>, UserRepository>();
-            services.AddTransient<IRepository<UserBadge, int>, UserBadgeRepository>();
-            services.AddTransient<IRepository<UserPasteAccess, int>, UserPasteAccessRepository>();
+            services.AddTransient<IRepository<Badge, BadgeDTO, int>, BadgeRepository>();
+            services.AddTransient<IRepository<CostInfo, CostInfoDTO, int>, CostInfoRepository>();
+            services.AddTransient<IRepository<CostInfoPaste, CostInfoPasteDTO, int>, CostInfoPasteRepository>();
+            services.AddTransient<IRepository<CostType, CostTypeDTO, int>, CostTypeRepository>();
+            services.AddTransient<IRepository<Paste, PasteDTO, int>, PasteRepository>();
+            services.AddTransient<IRepository<Plan, PlanDTO, int>, PlanRepository>();
+            services.AddTransient<IRepository<User, UserDTO, int>, UserRepository>();
+            services.AddTransient<IRepository<UserBadge, UserBadgeDTO, int>, UserBadgeRepository>();
+            services.AddTransient<IRepository<UserPasteAccess, UserPasteAccessDTO, int>, UserPasteAccessRepository>();
 
             // Register all query objects
             services.AddTransient<ExpenseManagerQuery<PlanDTO>, ListUserPlansQuery>();
