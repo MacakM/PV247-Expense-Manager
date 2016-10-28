@@ -81,10 +81,12 @@ namespace PL
 
             app.UseIdentity();
 
+            var x = Configuration.GetSection("FacebookAuthentication")["ClientId"];
+
             app.UseFacebookAuthentication(new FacebookOptions
             {
-                ClientId = Configuration["Authentication:Facebook:AppId"],
-                ClientSecret = Configuration["Authentication:Facebook:AppSecret"]
+                ClientId = Configuration.GetSection("FacebookAuthentication")["ClientId"],
+                ClientSecret = Configuration.GetSection("FacebookAuthentication")["ClientSecret"]
             });
 
             app.UseMvc(routes =>
