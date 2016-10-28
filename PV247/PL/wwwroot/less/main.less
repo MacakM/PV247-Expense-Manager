@@ -1,0 +1,284 @@
+﻿@import "variables.less";
+@import "mixins.less";
+
+@headerHeight: 50px;
+@menuWidth: 200px;
+
+body, html {
+    height: 100%;
+}
+
+header {
+    background-color: @mainColor;
+    width: 100%;
+    height: @headerHeight;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    color: @textOnMainColor;
+    line-height: @headerHeight;
+    vertical-align: middle;
+    padding-right: 20px;
+
+    a, a:hover, a:active, a:focus {
+        color: @textOnMainColor;
+    }
+
+    #left-menu-opener {
+        height: @headerHeight;
+        line-height: @headerHeight;
+        width: @headerHeight;
+        font-size: 20px;
+        margin-right: 20px;
+        cursor: pointer;
+        vertical-align: middle;
+        text-align: center;
+        float: left;
+
+        &:hover {
+            background-color: @darkerMainColor;
+        }
+    }
+
+    .project-name {
+        font-size: 20px;
+    }
+
+    .right-part {
+        float: right;
+        
+        .username {
+            margin-right: 20px;
+            font-size: 15px;
+        }
+
+        .logout {
+            font-size: 20px;
+        }
+    }
+}
+
+#left-menu {
+    height: 100%; 
+    float: left;
+    padding-top: @headerHeight;
+    background-color: @leftMenuColor;
+    width: 200px;
+    margin-left: -200px;
+
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        li {
+            position: relative;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 44px;
+            line-height: 44px;
+            vertical-align: middle;
+            padding-left: 20px;
+            border-left: 5px solid @leftMenuColor;
+
+            &:hover {
+                background-color: @darkerLeftMenuColor;
+                color: white;
+                border-left: 5px solid @mainColor;
+            }
+
+            a, a:hover, a:active, a:focus {
+                color: @textOnLeftMenuColor;
+                display: block;
+            }
+        }
+    }
+}
+
+.container-fluid {
+    padding: 0px;    
+    padding-top: @headerHeight;
+    height: 100%;
+}
+
+.sidebar {
+    background: @sidebarColor;
+    height: 100%;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.sidebar.left {
+
+    .datepicker-separator {
+        display: none;
+    }
+
+    .datepicker {
+        width: 90px;
+        padding-left: 5px;
+        display: inline-block;
+        margin: 5px;
+
+        &:nth-of-type(1) {
+            margin-right: 5px;
+        }
+    }
+
+    .search {
+        background-color: @mainColor;
+        color: @textOnMainColor;
+    }
+}
+
+.main-content {
+    padding: 30px;
+    height: 100%;
+    overflow: auto;
+    .apply-scrollbar();
+
+    h1 {
+        float: left;
+        margin-bottom: 20px;
+        color: @mainColor;
+    }
+
+    .add-new {
+        @addNewSize: 50px;
+
+        position: absolute;
+        right: 30px;
+        margin-top: 10px;
+        display: block;
+        border-radius: 50%;
+        background-color: @mainColor;
+        color: @textOnMainColor;
+        width: @addNewSize;
+        height: @addNewSize;
+        text-align: center;
+        vertical-align: middle;
+        font-size: 30px;
+        line-height: @addNewSize;
+        margin-bottom: 20px;
+    }
+
+    .table {
+        margin-bottom: 0px;
+    }
+
+    .expense-pagination {
+        text-align: center;
+        margin: 0px auto;
+    }
+}
+
+.sidebar.right {
+    .apply-scrollbar();
+
+    h3 {
+        font-size: 18px;
+        color: @mainColor;
+        font-weight: bold;
+    }
+
+    .money-info {
+        color: @mainColor;
+        font-size: 12px;
+        font-weight: bold;
+
+        .remaining-money {
+            display: block;
+            font-weight: normal;
+            font-size: 60px;
+            clear: both;
+        }
+
+        h3 {
+            margin: 0px;
+        }
+    }
+
+    .achievements {
+
+        .achievement {
+            margin: 3px;
+            clear: both;
+
+            img, .img-holder {
+                width: 20px;
+                min-height: 1px;
+                float: left;
+            }
+            
+            span {
+                margin-left: 5px;
+            }
+        }
+    }
+
+    .plans {
+        div {
+            margin-top: 3px;
+        }
+    }
+
+    a, a:hover, a:active, a:focus {
+        color: @mainColor;
+    }
+
+    .add-new {
+        font-weight: bold;
+        display: block;
+        clear: both;
+    }
+
+    hr {
+        margin-top: 10px;
+        margin-bottom: 0px;
+        border-top: 2px solid white;
+    }
+}
+    
+a:hover, a:active, a:focus {
+    text-decoration: none;
+}
+
+.pagination {
+    li {
+        border-color: @mainColor;
+
+        a {
+            color: @mainColor;
+        }
+
+        &.active a, &.active a:hover {
+            background-color: @mainColor;
+            border-color: @mainColor;
+        }
+    }
+}
+
+// changes datepicker default colors
+.ui-state-active {
+    background-color: @mainColor !important;
+    border-color: @mainColor !important;
+}
+
+@media screen and (max-width: 1400px) {
+    .sidebar.left br.datepicker-separator {
+        display: inherit;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .remaining-money {
+        font-size: 30px !important;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .sidebar {
+        height: auto !important;
+    }
+}

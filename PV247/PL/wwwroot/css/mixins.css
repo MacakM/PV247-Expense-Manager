@@ -1,0 +1,14 @@
+.apply-scrollbar {
+  overflow: hidden;
+}
+.apply-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  background-color: white;
+}
+.apply-scrollbar:hover {
+  overflow: auto;
+}
+.apply-scrollbar::-webkit-scrollbar-thumb {
+  width: 5px;
+  background-color: #008D4C;
+}

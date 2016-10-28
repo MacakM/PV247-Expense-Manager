@@ -1,0 +1,241 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Expense Manager</title>
+    
+    <!-- Third party CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <!-- Own CSS -->
+    <link rel="stylesheet" href="../wwwroot/css/main.css"> <!-- TODO update this to probably some function -->
+    
+    <!-- Third party JS -->
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <!-- Own JS -->
+    <script src="../wwwroot/js/main.js"></script>
+
+    <!--[if lt IE 9]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <header>
+        <div id="left-menu-opener" href=""><i class="fa fa-bars" aria-hidden="true"></i></div>
+        <a href="#" class="project-name">Expense Manager</a>
+        <span class="right-part">
+            <span class="username">Username</span>
+            <a href="#" class="logout"><i class="fa fa-power-off" aria-hidden="true"></i></a>
+        </span>
+    </header>
+    <div id="left-menu">
+        <ul>
+            <li><a href="#">Access to account</a></li>
+            <li><a href="#">Permanent expenses</a></li>
+            <li><a href="#">Categories</a></li>
+            <li><a href="#">Plans</a></li>
+            <li><a href="#">Achievements</a></li>
+        </ul>
+    </div>
+    <div class="container-fluid">
+        <div class="col-sm-3 sidebar left">
+            <form class="form">
+                <label for="search-from">From: </label><input class="form-control datepicker" id="search-from" type="text"/>
+                <br class="datepicker-separator"/>
+                <label for="search-to">To: </label><input class="form-control datepicker" id="search-to" type="text"/>
+                
+                <br/> TODO vložiť range slider na sumu <br/>
+                <div class="form-group">
+                    <label>Category:</label> <br/>
+                    <select class="form-control">
+                        <option>Strava</option>
+                        <option>Zábava</option>
+                        <option>other</option>
+                        <option>other</option>
+                    </select>
+                </div>
+                <input type="submit" class="search form-control" value="Search"/>
+            </form>
+        </div>
+        <div class="col-sm-6 main-content">
+            <h1>Expenses</h1>
+            <a href="#" class="add-new">+</a>
+            <table class="table">
+                <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                    <th>Date</th>
+                    <th>Cost</th>
+                </tr>
+                <tr>
+                    <td>Strava</td>
+                    <td>10 rohlíkov</td>
+                    <td>27.10.2016</td>
+                    <td>12kč</td>
+                </tr>
+                <tr>
+                    <td>Strava</td>
+                    <td>10 rohlíkov</td>
+                    <td>27.10.2016</td>
+                    <td>12kč</td>
+                </tr>
+                <tr>
+                    <td>Strava</td>
+                    <td>10 rohlíkov</td>
+                    <td>27.10.2016</td>
+                    <td>12kč</td>
+                </tr>
+                <tr>
+                    <td>Strava</td>
+                    <td>10 rohlíkov</td>
+                    <td>27.10.2016</td>
+                    <td>12kč</td>
+                </tr>
+                <tr>
+                    <td>Strava</td>
+                    <td>10 rohlíkov</td>
+                    <td>27.10.2016</td>
+                    <td>12kč</td>
+                </tr>
+                <tr>
+                    <td>Strava</td>
+                    <td>10 rohlíkov</td>
+                    <td>27.10.2016</td>
+                    <td>12kč</td>
+                </tr>
+                <tr>
+                    <td>Strava</td>
+                    <td>10 rohlíkov</td>
+                    <td>27.10.2016</td>
+                    <td>12kč</td>
+                </tr>
+                <tr>
+                    <td>Strava</td>
+                    <td>10 rohlíkov</td>
+                    <td>27.10.2016</td>
+                    <td>12kč</td>
+                </tr>
+                <tr>
+                    <td>Strava</td>
+                    <td>10 rohlíkov</td>
+                    <td>27.10.2016</td>
+                    <td>12kč</td>
+                </tr>
+                <tr>
+                    <td>Strava</td>
+                    <td>10 rohlíkov</td>
+                    <td>27.10.2016</td>
+                    <td>12kč</td>
+                </tr>
+                <tr>
+                    <td>Strava</td>
+                    <td>10 rohlíkov</td>
+                    <td>27.10.2016</td>
+                    <td>12kč</td>
+                </tr>
+                <tr>
+                    <td>Strava</td>
+                    <td>10 rohlíkov</td>
+                    <td>27.10.2016</td>
+                    <td>12kč</td>
+                </tr>
+                <tr>
+                    <td>Strava</td>
+                    <td>10 rohlíkov</td>
+                    <td>27.10.2016</td>
+                    <td>12kč</td>
+                </tr>
+                <tr>
+                    <td>Strava</td>
+                    <td>10 rohlíkov</td>
+                    <td>27.10.2016</td>
+                    <td>12kč</td>
+                </tr>
+                <tr>
+                    <td>Strava</td>
+                    <td>10 rohlíkov</td>
+                    <td>27.10.2016</td>
+                    <td>12kč</td>
+                </tr>
+                <tr>
+                    <td>Strava</td>
+                    <td>10 rohlíkov</td>
+                    <td>27.10.2016</td>
+                    <td>12kč</td>
+                </tr>
+                <tr>
+                    <td>Strava</td>
+                    <td>10 rohlíkov</td>
+                    <td>27.10.2016</td>
+                    <td>12kč</td>
+                </tr>
+            </table>
+            <div class="expense-pagination">
+                <ul class="pagination">
+                    <li><a href="#">1</a></li>
+                    <li class="active"><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">5</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-3 sidebar right">
+            <div class="money-info">
+                <h3>Money remaining:</h3>
+                <span class="remaining-money">5000 kč</span>
+                <span>Total money for this month: 30000kč</span>
+            </div>
+            <hr />
+            <div class="achievements">
+                <h3>Latest achievements</h3>
+                <div class="achievement">
+                    <img src="../wwwroot/images/badge.png"/>
+                    <span>Ušetrenie 5000kč</span>
+                </div>
+                <div class="achievement">
+                    <img src="../wwwroot/images/badge.png" />
+                    <span>Minutie menej než 15000kč</span>
+                </div>
+                <div class="achievement">
+                    <img src="../wwwroot/images/badge.png" />
+                    <span>Ušetrenie 5000kč</span>
+                </div>
+                <div class="achievement">
+                    <img src="../wwwroot/images/badge.png" />
+                    <span>Minutie menej než 15000kč</span>
+                </div>
+                <div class="achievement">
+                    <div class="img-holder"></div>
+                    <span><a class="more" href="#">More...</a></span>
+                </div>
+                <a class="add-new" href="#">Add new</a>
+            </div>
+            <hr/>
+            <div class="plans">
+                <h3>Plans</h3>
+                <div>Ušetriť 5000kč</div>
+                <div>Ušetriť 5000kč</div>
+                <div>Ušetriť 5000kč</div>
+                <div>Ušetriť 5000kč</div>
+                <div>Ušetriť 5000kč</div>
+                <div>Ušetriť 5000kč</div>
+                <div>Ušetriť 5000kč</div>
+                <div>Ušetriť 5000kč</div>
+                <div>Ušetriť 5000kč</div>
+                <div>Ušetriť 5000kč</div>
+                <div>Ušetriť 5000kč</div>
+                <div>Ušetriť 5000kč</div>
+                <div><a href="#" class="add-new">Add new</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

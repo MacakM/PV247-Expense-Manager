@@ -9,13 +9,6 @@
       },
       "runtime": {
         "bin/Debug/APILayer.dll": {}
-      },
-      "contentFiles": {
-        "bin/Debug/APILayer.pdb": {
-          "buildAction": "None",
-          "codeLanguage": "any",
-          "copyToOutput": true
-        }
       }
     },
     "BL/1.0.0": {
@@ -30,13 +23,6 @@
         "../packages/System.Reflection.4.1.0/lib/net462/System.Reflection.dll": {},
         "../packages/System.Runtime.Extensions.4.1.0/lib/net462/System.Runtime.Extensions.dll": {},
         "bin/Debug/BL.dll": {}
-      },
-      "contentFiles": {
-        "bin/Debug/BL.pdb": {
-          "buildAction": "None",
-          "codeLanguage": "any",
-          "copyToOutput": true
-        }
       }
     },
     "IdentityDAL/1.0.0": {
@@ -93,13 +79,6 @@
         "../packages/System.Runtime.InteropServices.4.1.0/lib/net462/System.Runtime.InteropServices.dll": {},
         "../packages/System.Text.Encodings.Web.4.0.0/lib/netstandard1.0/System.Text.Encodings.Web.dll": {},
         "bin/Debug/IdentityDAL.dll": {}
-      },
-      "contentFiles": {
-        "bin/Debug/IdentityDAL.pdb": {
-          "buildAction": "None",
-          "codeLanguage": "any",
-          "copyToOutput": true
-        }
       }
     },
     "DAL/1.0.0": {
@@ -120,13 +99,6 @@
         "../packages/System.Runtime.4.1.0/lib/net462/System.Runtime.dll": {},
         "../packages/System.Runtime.Extensions.4.1.0/lib/net462/System.Runtime.Extensions.dll": {},
         "bin/Debug/DAL.dll": {}
-      },
-      "contentFiles": {
-        "bin/Debug/DAL.pdb": {
-          "buildAction": "None",
-          "codeLanguage": "any",
-          "copyToOutput": true
-        }
       }
     }
   }

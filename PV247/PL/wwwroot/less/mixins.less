@@ -1,0 +1,19 @@
+﻿@import "variables.less";
+
+.apply-scrollbar {
+    overflow: hidden;
+
+    &::-webkit-scrollbar {
+        width: 8px;
+        background-color: white;
+    }
+
+    &:hover {
+        overflow: auto;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        width: 5px;
+        background-color: @darkerMainColor;
+    }
+}
