@@ -33,6 +33,10 @@ namespace DAL.Entities
         [ForeignKey("UserId")]
         public User User { get; set; }
         /// <summary>
+        /// Users that are allowed to see this cost information.
+        /// </summary>
+        public List<CostInfoUserAccess> AllowedUsers { get; set; }
+        /// <summary>
         /// Type id.
         /// </summary>
         public int TypeId { get; set; }
@@ -46,9 +50,5 @@ namespace DAL.Entities
         /// State whether this cost is periodic each month.
         /// </summary>
         public bool IsPeriodic { get; set; }
-        /// <summary>
-        /// List of pastes that contains this cost info.
-        /// </summary>
-        public virtual List<CostInfoPaste> Pastes { get; set; }
     }
 }

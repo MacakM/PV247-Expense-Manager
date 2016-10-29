@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace APILayer.DTOs
 {
-    public class UserPasteAccessDTO : ExpenseManagerDTO<int>
+    public class CostInfoUserAccessDTO : ExpenseManagerDTO<int>
     {
     }
 }

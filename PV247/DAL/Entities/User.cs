@@ -29,15 +29,6 @@ namespace DAL.Entities
         public virtual List<CostInfo> Costs { get; set; }
 
         /// <summary>
-        /// All pastes of the user.
-        /// </summary>
-        public virtual List<Paste> OwnPastes { get; set; }
-
-        /// <summary>
-        /// All pastes of other users which user can see.
-        /// </summary>
-        public virtual List<UserPasteAccess> VisiblePastes { get; set; }
-        /// <summary>
         /// All plans of the user.
         /// </summary>
         public virtual List<Plan> Plans { get; set; }

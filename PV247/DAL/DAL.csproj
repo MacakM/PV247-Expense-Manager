@@ -84,14 +84,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataAccess\Repositories\CostInfoUserAccessRepository.cs" />
     <Compile Include="Entities\Badge.cs" />
     <Compile Include="Entities\CostInfo.cs" />
-    <Compile Include="Entities\CostInfoPaste.cs" />
-    <Compile Include="Entities\Paste.cs" />
+    <Compile Include="Entities\CostInfoUserAccess.cs" />
     <Compile Include="Entities\Plan.cs" />
     <Compile Include="Entities\CostType.cs" />
     <Compile Include="Entities\UserBadge.cs" />
-    <Compile Include="Entities\UserPasteAccess.cs" />
     <Compile Include="ExpenseDbContext.cs" />
     <Compile Include="Infrastructure\ConnectionConfiguration\ConnectionOptions.cs" />
     <Compile Include="Infrastructure\Query\ExpenseManagerQuery.cs" />
@@ -109,13 +108,10 @@
     <Compile Include="Entities\User.cs" />
     <Compile Include="DataAccess\Queries\ListUserPlansQuery.cs" />
     <Compile Include="DataAccess\Repositories\BadgeRepository.cs" />
-    <Compile Include="DataAccess\Repositories\CostInfoPasteRepository.cs" />
     <Compile Include="DataAccess\Repositories\CostInfoRepository.cs" />
     <Compile Include="DataAccess\Repositories\CostTypeRepository.cs" />
-    <Compile Include="DataAccess\Repositories\PasteRepository.cs" />
     <Compile Include="DataAccess\Repositories\PlanRepository.cs" />
     <Compile Include="DataAccess\Repositories\UserBadgeRepository.cs" />
-    <Compile Include="DataAccess\Repositories\UserPasteAccessRepository.cs" />
     <Compile Include="DataAccess\Repositories\UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>

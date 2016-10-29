@@ -121,13 +121,11 @@ namespace PL
             // Register all repositories
             services.AddTransient<IRepository<Badge, BadgeDTO, int>, BadgeRepository>();
             services.AddTransient<IRepository<CostInfo, CostInfoDTO, int>, CostInfoRepository>();
-            services.AddTransient<IRepository<CostInfoPaste, CostInfoPasteDTO, int>, CostInfoPasteRepository>();
             services.AddTransient<IRepository<CostType, CostTypeDTO, int>, CostTypeRepository>();
-            services.AddTransient<IRepository<Paste, PasteDTO, int>, PasteRepository>();
             services.AddTransient<IRepository<Plan, PlanDTO, int>, PlanRepository>();
             services.AddTransient<IRepository<User, UserDTO, int>, UserRepository>();
             services.AddTransient<IRepository<UserBadge, UserBadgeDTO, int>, UserBadgeRepository>();
-            services.AddTransient<IRepository<UserPasteAccess, UserPasteAccessDTO, int>, UserPasteAccessRepository>();
+            services.AddTransient<IRepository<CostInfoUserAccess, CostInfoUserAccessDTO, int>, CostInfoUserAccessRepository>();
 
             // Register all query objects
             services.AddTransient<ExpenseManagerQuery<PlanDTO>, ListUserPlansQuery>();
