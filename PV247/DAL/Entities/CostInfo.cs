@@ -35,7 +35,7 @@ namespace DAL.Entities
         /// <summary>
         /// Users that are allowed to see this cost information.
         /// </summary>
-        public List<CostInfoUserAccess> AllowedUsers { get; set; }
+        public virtual List<CostInfoUserAccess> AllowedUsers { get; set; }
         /// <summary>
         /// Type id.
         /// </summary>

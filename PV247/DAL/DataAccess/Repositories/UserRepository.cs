@@ -11,8 +11,16 @@ using Riganti.Utils.Infrastructure.Core;
 
 namespace DAL.DataAccess.Repositories
 {
+    /// <summary>
+    /// Implementation of Repository for User entity.
+    /// </summary>
     public class UserRepository : ExpenseManagerRepository<User, UserDTO, int>
     {
+        /// <summary>
+        /// Create repository.
+        /// </summary>
+        /// <param name="provider">UoW provider</param>
+        /// <param name="mapper">Mapper</param>
         public UserRepository(IUnitOfWorkProvider provider, Mapper mapper) : base(provider, mapper) { }
 
         /// <summary>

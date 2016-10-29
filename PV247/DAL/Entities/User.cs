@@ -27,7 +27,10 @@ namespace DAL.Entities
         /// User's costs.
         /// </summary>
         public virtual List<CostInfo> Costs { get; set; }
-
+        /// <summary>
+        /// User's accesses to others' information.
+        /// </summary>
+        public virtual List<CostInfoUserAccess> Accesses { get; set; }
         /// <summary>
         /// All plans of the user.
         /// </summary>

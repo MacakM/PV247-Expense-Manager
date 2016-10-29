@@ -99,9 +99,9 @@
     <Compile Include="Infrastructure\UnitOfWork\EntityFrameworkUnitOfWorkProvider.cs" />
     <Compile Include="Infrastructure\Repository\IRepository.cs" />
     <Compile Include="Infrastructure\Mapping\Profiles\StandardMappingProfile.cs" />
-    <Compile Include="Migrations\201610262011217_Initial.cs" />
-    <Compile Include="Migrations\201610262011217_Initial.Designer.cs">
-      <DependentUpon>201610262011217_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201610290858580_Initial.cs" />
+    <Compile Include="Migrations\201610290858580_Initial.Designer.cs">
+      <DependentUpon>201610290858580_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -119,15 +119,15 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201610262011217_Initial.resx">
-      <DependentUpon>201610262011217_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\APILayer\APILayer.csproj">
       <Project>{c81a9fab-46f1-42f5-b788-00ff24296aca}</Project>
       <Name>APILayer</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201610290858580_Initial.resx">
+      <DependentUpon>201610290858580_Initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

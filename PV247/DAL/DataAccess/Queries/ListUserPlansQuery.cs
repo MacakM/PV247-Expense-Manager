@@ -9,12 +9,23 @@ using Riganti.Utils.Infrastructure.Core;
 
 namespace DAL.DataAccess.Queries
 {
+    /// <summary>
+    /// Implementation of Query for user's plans.
+    /// </summary>
     public class ListUserPlansQuery : ExpenseManagerQuery<PlanDTO>
     {
         public PlanFilterDTO Filter { get; set; }
 
+        /// <summary>
+        /// Create query.
+        /// </summary>
+        /// <param name="provider">UoW provider</param>
         public ListUserPlansQuery(IUnitOfWorkProvider provider) : base(provider) { }
 
+        /// <summary>
+        /// Return IQueryable.
+        /// </summary>
+        /// <returns>IQueryable</returns>
         protected override IQueryable<PlanDTO> GetQueryable()
         {
             IQueryable<Plan> plans = Context.Plans;

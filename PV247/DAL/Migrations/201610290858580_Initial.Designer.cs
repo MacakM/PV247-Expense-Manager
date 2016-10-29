@@ -13,7 +13,7 @@ namespace DAL.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201610262011217_Initial"; }
+            get { return "201610290858580_Initial"; }
         }
         
         string IMigrationMetadata.Source
