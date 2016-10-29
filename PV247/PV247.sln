@@ -1,25 +1,25 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{DC7D8469-E72E-46B6-9D12-F5102EFD49B1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpenseManager.Database", "ExpenseManager.Database\ExpenseManager.Database.csproj", "{DC7D8469-E72E-46B6-9D12-F5102EFD49B1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{C6D43C3E-DEE1-4842-9B97-37A3ADB0E030}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLUnitTests", "BLUnitTests\BLUnitTests.csproj", "{6D1E497F-9091-421A-B79E-AA49896AED32}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpenseManager.Bussines.Tests", "ExpenseManager.Bussines.Tests\ExpenseManager.Bussines.Tests.csproj", "{6D1E497F-9091-421A-B79E-AA49896AED32}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PLUnitTests", "PLUnitTests\PLUnitTests.csproj", "{0E5F048A-C520-4E66-B455-6129CBCEB589}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpenseManager.Presentation.Tests", "ExpenseManager.Presentation.Tests\ExpenseManager.Presentation.Tests.csproj", "{0E5F048A-C520-4E66-B455-6129CBCEB589}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BL", "BL\BL.csproj", "{AA56A845-D942-49F1-830A-FDDD40C8DF66}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpenseManager.Bussines", "ExpenseManager.Bussines\ExpenseManager.Bussines.csproj", "{AA56A845-D942-49F1-830A-FDDD40C8DF66}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "PL", "PL\PL.xproj", "{BED60DF6-C1D4-4367-B057-100B9801EE11}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ExpenseManager.Presentation", "ExpenseManager.Presentation\ExpenseManager.Presentation.xproj", "{BED60DF6-C1D4-4367-B057-100B9801EE11}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{BE305CE3-5894-4028-9C07-C2FD50C97210}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityDAL", "IdentityDAL\IdentityDAL.csproj", "{6E8FC672-58DD-426C-8D2C-D5F277186473}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpenseManager.Identity", "ExpenseManager.Identity\ExpenseManager.Identity.csproj", "{6E8FC672-58DD-426C-8D2C-D5F277186473}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APILayer", "APILayer\APILayer.csproj", "{C81A9FAB-46F1-42F5-B788-00FF24296ACA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpenseManager.Contract", "ExpenseManager.Contract\ExpenseManager.Contract.csproj", "{C81A9FAB-46F1-42F5-B788-00FF24296ACA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
