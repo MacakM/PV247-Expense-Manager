@@ -11,6 +11,11 @@ namespace DAL.Infrastructure.UnitOfWork
     {
         internal IOptions<ConnectionOptions> ConnectionOptions { get; }
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="connectionOptions">connection options</param>
+        /// <param name="registry">UoW registry</param>
         public ExpenseManagerUnitOfWorkProvider(IOptions<ConnectionOptions> connectionOptions,
             IUnitOfWorkRegistry registry)
             : base(registry)

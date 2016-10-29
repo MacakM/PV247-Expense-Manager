@@ -27,6 +27,9 @@ namespace DAL.Infrastructure.Repository
         /// </summary>
         protected DbContext Context => ExpenseManagerUnitOfWork.TryGetDbContext(_provider);
 
+        /// <summary>
+        /// Expense manager Mapper
+        /// </summary>
         protected IRuntimeMapper ExpenseManagerMapper { get; }
 
         /// <summary>
@@ -38,6 +41,12 @@ namespace DAL.Infrastructure.Repository
             ExpenseManagerMapper = expenseManagerMapper.DefaultContext.Mapper;
         }
 
+        /// <summary>
+        /// Get DTO with specified ID.
+        /// </summary>
+        /// <param name="id">id of object</param>
+        /// <param name="includes">includes</param>
+        /// <returns></returns>
         public TDTO GetById(TKey id, params Expression<Func<TDTO, object>>[] includes)
         {
             return GetByIds(new[] { id }, includes).FirstOrDefault();
@@ -64,6 +73,10 @@ namespace DAL.Infrastructure.Repository
             return query.Where(i => ids.Contains(i.Id)).ToList();
         }
 
+        /// <summary>
+        /// Process list of includes.
+        /// </summary>
+        /// <param name="includes">includes</param>
         protected static IEnumerable<string> ProcessIncludesList(Expression<Func<TDTO, object>>[] includes)
         {
             var includeList = new List<string>();
@@ -114,6 +127,11 @@ namespace DAL.Infrastructure.Repository
             }
         }
 
+        /// <summary>
+        /// Updates entity.
+        /// </summary>
+        /// <param name="dto">used DTO</param>
+        /// <param name="entityIncludes">includes</param>
         public void Update(TDTO dto, params Expression<Func<TDTO, object>>[] entityIncludes)
         {
             var entity = GetEntitiesByIds(new[] {dto.Id}, entityIncludes).FirstOrDefault();
@@ -121,6 +139,11 @@ namespace DAL.Infrastructure.Repository
             Context.Entry(entity).State = EntityState.Modified;
         }
 
+        /// <summary>
+        /// Updates entities.
+        /// </summary>
+        /// <param name="dtos">DTOs</param>
+        /// <param name="entityIncludes">includes</param>
         public void Update(IEnumerable<TDTO> dtos, params Expression<Func<TDTO, object>>[] entityIncludes)
         {
             foreach (var dto in dtos.ToList())

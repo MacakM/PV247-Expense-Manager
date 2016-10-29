@@ -4,6 +4,9 @@ using Riganti.Utils.Infrastructure.Core;
 
 namespace DAL.Entities
 {
+    /// <summary>
+    /// Represents table of achieved badges by users.
+    /// </summary>
     public class UserBadge : IEntity<int>
     {
         /// <summary>

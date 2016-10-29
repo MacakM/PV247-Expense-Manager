@@ -5,6 +5,12 @@ using APILayer;
 
 namespace DAL.Infrastructure.Repository
 {
+    /// <summary>
+    /// Interface for Repository.
+    /// </summary>
+    /// <typeparam name="TEntity">entity</typeparam>
+    /// <typeparam name="TDTO">DTO</typeparam>
+    /// <typeparam name="TKey">primary key</typeparam>
     public interface IRepository<TEntity, TDTO, in TKey> 
         where TDTO : ExpenseManagerDTO<TKey>, new()
     {

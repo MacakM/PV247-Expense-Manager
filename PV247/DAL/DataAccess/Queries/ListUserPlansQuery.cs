@@ -14,6 +14,9 @@ namespace DAL.DataAccess.Queries
     /// </summary>
     public class ListUserPlansQuery : ExpenseManagerQuery<PlanDTO>
     {
+        /// <summary>
+        /// Plan filter.
+        /// </summary>
         public PlanFilterDTO Filter { get; set; }
 
         /// <summary>
