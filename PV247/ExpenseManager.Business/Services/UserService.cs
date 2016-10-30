@@ -3,13 +3,13 @@ using System.Diagnostics;
 using System.Linq.Expressions;
 using ExpenseManager.Contract.DTOs;
 using AutoMapper;
-using ExpenseManager.Bussines.Infrastructure;
+using ExpenseManager.Business.Infrastructure;
 using ExpenseManager.Database.DataAccess.Repositories;
 using ExpenseManager.Database.Entities;
 using ExpenseManager.Database.Infrastructure.Repository;
 using Riganti.Utils.Infrastructure.Core;
 
-namespace ExpenseManager.Bussines.Services
+namespace ExpenseManager.Business.Services
 {
     /// <summary>
     /// Provides user related functionality

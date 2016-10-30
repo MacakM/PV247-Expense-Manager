@@ -1,7 +1,7 @@
 ﻿using ExpenseManager.Contract.DTOs;
-using ExpenseManager.Bussines.Services;
+using ExpenseManager.Business.Services;
 
-namespace ExpenseManager.Bussines.Facades
+namespace ExpenseManager.Business.Facades
 {
     /// <summary>
     /// Provides access to user related functionality

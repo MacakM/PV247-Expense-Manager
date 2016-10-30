@@ -6,8 +6,8 @@
     <ProjectGuid>{6D1E497F-9091-421A-B79E-AA49896AED32}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ExpenseManager.Bussines.Tests</RootNamespace>
-    <AssemblyName>ExpenseManager.Bussines.Tests</AssemblyName>
+    <RootNamespace>ExpenseManager.Business.Tests</RootNamespace>
+    <AssemblyName>ExpenseManager.Business.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -26,7 +26,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\ExpenseManager.Bussines.Tests.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\ExpenseManager.Business.Tests.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -52,11 +52,12 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\PlanServiceTests.cs" />
+    <Compile Include="Services\UserServiceTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ExpenseManager.Bussines\ExpenseManager.Bussines.csproj">
+    <ProjectReference Include="..\ExpenseManager.Business\ExpenseManager.Business.csproj">
       <Project>{aa56a845-d942-49f1-830a-fddd40c8df66}</Project>
       <Name>ExpenseManager.Bussines</Name>
     </ProjectReference>
@@ -64,6 +65,7 @@
   <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
