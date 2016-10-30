@@ -1,0 +1,15 @@
+.achievement-zoom {
+  width: 130px;
+  height: 200px;
+  float: left;
+  text-align: center;
+}
+.achievement-zoom img {
+  max-width: 130px;
+  max-height: 100px;
+  display: inline-block;
+}
+.achievement-zoom span {
+  clear: both;
+  display: block;
+}
