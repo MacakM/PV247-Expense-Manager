@@ -1,8 +1,8 @@
 ﻿using ExpenseManager.Contract.DTOs;
 using AutoMapper;
-using ExpenseManager.Bussines.Facades;
-using ExpenseManager.Bussines.Infrastructure;
-using ExpenseManager.Bussines.Services;
+using ExpenseManager.Business.Facades;
+using ExpenseManager.Business.Infrastructure;
+using ExpenseManager.Business.Services;
 using ExpenseManager.Database.DataAccess.Queries;
 using ExpenseManager.Database.DataAccess.Repositories;
 using ExpenseManager.Database.Entities;

@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using ExpenseManager.Contract.DTOs;
 using AutoMapper;
-using ExpenseManager.Bussines.Infrastructure;
+using ExpenseManager.Business.Infrastructure;
 using ExpenseManager.Database.Entities;
 using ExpenseManager.Database.Infrastructure.Repository;
 using Riganti.Utils.Infrastructure.Core;
 
-namespace ExpenseManager.Bussines.Services
+namespace ExpenseManager.Business.Services
 {
     public class PlanAndCrudService : ExpenseManagerQueryAndCrudServiceBase<Plan, int, IList<PlanDTO>, PlanDTO>
     {

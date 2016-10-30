@@ -1,21 +1,21 @@
 {
   "version": 2,
   "exports": {
-    "ExpenseManager.Bussines/1.0.0": {
+    "ExpenseManager.Business/1.0.0": {
       "type": "project",
       "framework": ".NETFramework,Version=v4.6.2",
       "compile": {
-        "bin/Release/ExpenseManager.Bussines.dll": {}
+        "bin/Debug/ExpenseManager.Business.dll": {}
       },
       "runtime": {
         "../packages/AutoMapper.5.1.1/lib/net45/AutoMapper.dll": {},
         "../packages/Riganti.Utils.Infrastructure.Core.1.0.3/lib/net45/Riganti.Utils.Infrastructure.Core.dll": {},
         "../packages/System.Reflection.4.1.0/lib/net462/System.Reflection.dll": {},
         "../packages/System.Runtime.Extensions.4.1.0/lib/net462/System.Runtime.Extensions.dll": {},
-        "bin/Release/ExpenseManager.Bussines.dll": {}
+        "bin/Debug/ExpenseManager.Business.dll": {}
       },
       "contentFiles": {
-        "bin/Release/ExpenseManager.Bussines.pdb": {
+        "bin/Debug/ExpenseManager.Business.pdb": {
           "buildAction": "None",
           "codeLanguage": "any",
           "copyToOutput": true
@@ -26,13 +26,13 @@
       "type": "project",
       "framework": ".NETFramework,Version=v4.6.2",
       "compile": {
-        "bin/Release/ExpenseManager.Contract.dll": {}
+        "bin/Debug/ExpenseManager.Contract.dll": {}
       },
       "runtime": {
-        "bin/Release/ExpenseManager.Contract.dll": {}
+        "bin/Debug/ExpenseManager.Contract.dll": {}
       },
       "contentFiles": {
-        "bin/Release/ExpenseManager.Contract.pdb": {
+        "bin/Debug/ExpenseManager.Contract.pdb": {
           "buildAction": "None",
           "codeLanguage": "any",
           "copyToOutput": true
@@ -43,7 +43,7 @@
       "type": "project",
       "framework": ".NETFramework,Version=v4.6.2",
       "compile": {
-        "bin/Release/ExpenseManager.Database.dll": {}
+        "bin/Debug/ExpenseManager.Database.dll": {}
       },
       "runtime": {
         "../packages/AutoMapper.5.1.1/lib/net45/AutoMapper.dll": {},
@@ -56,10 +56,10 @@
         "../packages/System.Reflection.4.1.0/lib/net462/System.Reflection.dll": {},
         "../packages/System.Runtime.4.1.0/lib/net462/System.Runtime.dll": {},
         "../packages/System.Runtime.Extensions.4.1.0/lib/net462/System.Runtime.Extensions.dll": {},
-        "bin/Release/ExpenseManager.Database.dll": {}
+        "bin/Debug/ExpenseManager.Database.dll": {}
       },
       "contentFiles": {
-        "bin/Release/ExpenseManager.Database.pdb": {
+        "bin/Debug/ExpenseManager.Database.pdb": {
           "buildAction": "None",
           "codeLanguage": "any",
           "copyToOutput": true
@@ -70,7 +70,7 @@
       "type": "project",
       "framework": ".NETFramework,Version=v4.6.2",
       "compile": {
-        "bin/Release/ExpenseManager.Identity.dll": {}
+        "bin/Debug/ExpenseManager.Identity.dll": {}
       },
       "runtime": {
         "../packages/Microsoft.AspNetCore.Authentication.1.0.0/lib/net451/Microsoft.AspNetCore.Authentication.dll": {},
@@ -119,10 +119,10 @@
         "../packages/System.Runtime.Extensions.4.1.0/lib/net462/System.Runtime.Extensions.dll": {},
         "../packages/System.Runtime.InteropServices.4.1.0/lib/net462/System.Runtime.InteropServices.dll": {},
         "../packages/System.Text.Encodings.Web.4.0.0/lib/netstandard1.0/System.Text.Encodings.Web.dll": {},
-        "bin/Release/ExpenseManager.Identity.dll": {}
+        "bin/Debug/ExpenseManager.Identity.dll": {}
       },
       "contentFiles": {
-        "bin/Release/ExpenseManager.Identity.pdb": {
+        "bin/Debug/ExpenseManager.Identity.pdb": {
           "buildAction": "None",
           "codeLanguage": "any",
           "copyToOutput": true

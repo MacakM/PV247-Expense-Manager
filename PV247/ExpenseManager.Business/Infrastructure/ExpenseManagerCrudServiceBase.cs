@@ -5,7 +5,7 @@ using AutoMapper;
 using ExpenseManager.Database.Infrastructure.Repository;
 using Riganti.Utils.Infrastructure.Core;
 
-namespace ExpenseManager.Bussines.Infrastructure
+namespace ExpenseManager.Business.Infrastructure
 {
     /// <summary>
     /// A base class for CRUD-enabled service, taken from unreleased project of RigantiInfrastructure solution, all credit goes to Tomas Herceg.

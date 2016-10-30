@@ -1,4 +1,4 @@
-﻿using ExpenseManager.Bussines.Facades;
+﻿using ExpenseManager.Business.Facades;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExpenseManager.Presentation.Controllers

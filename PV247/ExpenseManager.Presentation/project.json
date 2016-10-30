@@ -61,7 +61,7 @@
   "frameworks": {
     "net462": {
       "dependencies": {
-        "ExpenseManager.Bussines": {
+        "ExpenseManager.Business": {
           "target": "project"
         },
         "ExpenseManager.Contract": {
