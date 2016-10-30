@@ -1,0 +1,11 @@
+.account-settings .income {
+  font-size: 25px;
+}
+.account-settings .change-income {
+  color: #00A65A;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.account-settings .income-form {
+  display: none;
+}

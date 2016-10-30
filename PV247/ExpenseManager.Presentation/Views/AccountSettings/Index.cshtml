@@ -1,0 +1,76 @@
+﻿@{
+    Layout = "_layout";
+}
+
+@section title
+{
+    Account Settings
+}
+
+<div class="col-sm-9 content-holder account-settings">
+    <h1>Account settings</h1>
+    <h2>Access to account</h2>
+    <table class="table">
+        <tr>
+            <td>User with access</td>
+        </tr>
+        <tr>
+            <td>User with access</td>
+        </tr>
+        <tr>
+            <td>User with access</td>
+        </tr>
+        <tr>
+            <td>User with access</td>
+        </tr>
+        <tr>
+            <td>
+                <form class="floating-inputs">
+                    <input class="form-control" placeholder="Username" type="text" />
+                    <input class="form-control" type="submit" value="Add new" />
+                </form>
+            </td>
+        </tr>
+    </table>
+    
+    
+    <h2>Monthly income</h2>
+    <div class="income-holder">
+        <span class="income">30 000kč</span> <span class="change-income">change</span>    
+    </div>
+    <div class="income-form">
+        <form class="floating-inputs">
+            <input class="form-control" type="text" value="30000" name="income"/>
+            <input class="form-control" type="submit" value="Change"/>
+        </form>
+    </div>
+    
+    <h2>Permanent expenses</h2>
+    <table class="table">
+        <tr>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Cost</th>
+        </tr>
+        <tr>
+            <td>Ubytovanie</td>
+            <td>Nájom za byt</td>
+            <td>12000kč</td>
+        </tr>
+        <tr>
+            <td>Ubytovanie</td>
+            <td>Voda</td>
+            <td>1200kč</td>
+        </tr>
+        <tr>
+            <td>Auto</td>
+            <td>Poistka</td>
+            <td>1200kč</td>
+        </tr>
+        <tr class="add-new-permanent-expense">
+            <td colspan="3">
+                <a href="#">Add new</a>
+            </td>
+        </tr>
+    </table>
+</div>
