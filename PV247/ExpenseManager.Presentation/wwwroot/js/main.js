@@ -27,8 +27,9 @@
             }, 500);
     });
 
-    //$("#left-menu-opener").click(function () {
-    //    $(".container-fluid").toggleClass("menu-opened", 1000);
-    //    $("#left-menu").toggleClass("menu-opened", 1000);
-    //});
+    $(".change-income")
+        .click(function() {
+            $(".income-holder").hide();
+            $(".income-form").show();
+        });
 });

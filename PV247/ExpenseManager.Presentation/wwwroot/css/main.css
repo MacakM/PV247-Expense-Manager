@@ -16,6 +16,12 @@ body,
 html {
   height: 100%;
 }
+a {
+  color: #00A65A;
+}
+a:hover {
+  color: #008D4C;
+}
 header {
   background-color: #00A65A;
   width: 100%;
@@ -245,14 +251,68 @@ a:focus {
 .pagination li a {
   color: #00A65A;
 }
+.pagination li:hover a {
+  color: #00A65A;
+}
 .pagination li.active a,
 .pagination li.active a:hover {
   background-color: #00A65A;
   border-color: #00A65A;
 }
+h1,
+h2,
+h3 {
+  color: #00A65A;
+}
+h1 {
+  margin-top: 5px;
+}
+input[type=submit] {
+  background-color: #00A65A;
+  color: white;
+}
 .ui-state-active {
   background-color: #00A65A !important;
   border-color: #00A65A !important;
+}
+.content-holder {
+  padding: 50px;
+  height: 100%;
+  overflow: hidden;
+}
+.content-holder::-webkit-scrollbar {
+  width: 8px;
+  background-color: white;
+}
+.content-holder:hover {
+  overflow: auto;
+}
+.content-holder::-webkit-scrollbar-thumb {
+  width: 5px;
+  background-color: #008D4C;
+}
+.content-holder h1 {
+  font-size: 30px;
+}
+.content-holder h2 {
+  font-size: 22px;
+}
+.floating-inputs input[type=text] {
+  float: left;
+  width: 150px;
+  margin-right: 5px;
+}
+.floating-inputs input[type=submit] {
+  width: 100px;
+}
+.positive {
+  color: #00A65A;
+}
+.negative {
+  color: #c10c1c;
+}
+.neutral {
+  color: #4948a9;
 }
 @media screen and (max-width: 1400px) {
   .sidebar.left br.datepicker-separator {
@@ -268,4 +328,30 @@ a:focus {
   .sidebar {
     height: auto !important;
   }
+}
+.account-settings .income {
+  font-size: 25px;
+}
+.account-settings .change-income {
+  color: #00A65A;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.account-settings .income-form {
+  display: none;
+}
+.achievement-zoom {
+  width: 130px;
+  height: 200px;
+  float: left;
+  text-align: center;
+}
+.achievement-zoom img {
+  max-width: 130px;
+  max-height: 100px;
+  display: inline-block;
+}
+.achievement-zoom span {
+  clear: both;
+  display: block;
 }

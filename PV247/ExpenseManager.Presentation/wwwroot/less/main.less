@@ -8,6 +8,14 @@ body, html {
     height: 100%;
 }
 
+a {
+    color: @mainColor;
+
+    &:hover {
+        color: @darkerMainColor;
+    }
+}
+
 header {
     background-color: @mainColor;
     width: 100%;
@@ -252,6 +260,10 @@ a:hover, a:active, a:focus {
             color: @mainColor;
         }
 
+        &:hover a {
+            color: @mainColor;
+        }
+
         &.active a, &.active a:hover {
             background-color: @mainColor;
             border-color: @mainColor;
@@ -259,10 +271,62 @@ a:hover, a:active, a:focus {
     }
 }
 
+h1, h2, h3 {
+    color: @mainColor;
+}
+
+h1 {
+    margin-top: 5px;
+}
+
+input[type=submit] {
+    background-color: @mainColor;
+    color: @textOnMainColor;
+}
+
 // changes datepicker default colors
 .ui-state-active {
     background-color: @mainColor !important;
     border-color: @mainColor !important;
+}
+
+.content-holder {
+    padding: 50px;
+    height: 100%;
+
+    .apply-scrollbar();
+
+    h1 {
+        font-size: 30px;
+    }
+
+    h2 {
+        font-size: 22px;
+    }
+}
+
+.floating-inputs {
+    input[type=text] {
+        float: left;
+        width: 150px;
+        margin-right: 5px;
+    }
+
+    input[type=submit] {
+        width: 100px;
+    }
+}
+
+.positive {
+    color: @greenColor;
+}
+
+.negative {
+    color: @redColor;
+}
+
+.neutral {
+    color: @blueColor;
 }
 
 @media screen and (max-width: 1400px) {
@@ -282,3 +346,6 @@ a:hover, a:active, a:focus {
         height: auto !important;
     }
 }
+
+@import "account.less";
+@import "achievement.less";
