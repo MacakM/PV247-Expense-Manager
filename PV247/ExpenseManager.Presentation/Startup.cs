@@ -124,9 +124,8 @@ namespace ExpenseManager.Presentation
             services.AddTransient<IRepository<CostType, CostTypeDTO, int>, CostTypeRepository>();
             services.AddTransient<IRepository<Plan, PlanDTO, int>, PlanRepository>();
             services.AddTransient<IRepository<User, UserDTO, int>, UserRepository>();
-            services.AddTransient<IRepository<UserBadge, UserBadgeDTO, int>, UserBadgeRepository>();
-            services.AddTransient<IRepository<CostInfoUserAccess, CostInfoUserAccessDTO, int>, CostInfoUserAccessRepository>();
-
+            services.AddTransient<IRepository<AccountBadge, UserBadgeDTO, int>, AccountBadgeRepository>();
+            
             // Register all query objects
             services.AddTransient<ExpenseManagerQuery<PlanDTO>, ListUserPlansQuery>();
             //TODO add more query objects
