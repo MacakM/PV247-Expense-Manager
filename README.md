@@ -26,6 +26,7 @@ School project for PV247 (FI MUNI Brno)
 ## Tools ##
 ### Productivity ###
 * Resharper Ultimate 2016.2.2
+
 ### Static code analysis & profiling ###
 * In-built VS 2015 Update 3 tools
 
