@@ -15,7 +15,8 @@ namespace ExpenseManager.Database
         public DbSet<CostType> CostTypes { get; set; }
         public DbSet<Plan> Plans { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<UserBadge> UserBadges { get; set; }
+        public DbSet<Account> Accounts { get; set; }
+        public DbSet<AccountBadge> AccountBadges { get; set; }
         
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Riganti.Utils.Infrastructure.Core;
 
@@ -7,22 +8,22 @@ namespace ExpenseManager.Database.Entities
     /// <summary>
     /// Represents table of achieved badges by users.
     /// </summary>
-    public class UserBadge : IEntity<int>
+    public class AccountBadge : IEntity<int>
     {
         /// <summary>
         /// Id of the achievement of user.
         /// </summary>
         public int Id { get; set; }
         /// <summary>
-        /// User Id.
+        /// Account Id.
         /// </summary>
-        public int UserId { get; set; }
+        public int AccountId { get; set; }
         /// <summary>
-        /// User.
+        /// Account.
         /// </summary>
         [Required]
-        [ForeignKey("UserId")]
-        public User User { get; set; }
+        [ForeignKey("AccountId")]
+        public virtual Account Account { get; set; }
         /// <summary>
         /// Badge id.
         /// </summary>
@@ -32,6 +33,12 @@ namespace ExpenseManager.Database.Entities
         /// </summary>
         [Required]
         [ForeignKey("BadgeId")]
-        public Badge Badge { get; set; }
+        public virtual Badge Badge { get; set; }
+        /// <summary>
+        /// Date when the badge was achieved.
+        /// </summary>
+        [DataType(DataType.Date)]
+        [Required]
+        public DateTime? Achieved { get; set; } = DateTime.Now;
     }
 }

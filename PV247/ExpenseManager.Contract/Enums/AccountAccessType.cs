@@ -9,7 +9,7 @@ namespace ExpenseManager.Contract.Enums
     /// <summary>
     /// Types of access to the cost information.
     /// </summary>
-    public enum CostAccessType
+    public enum AccountAccessType
     {
         /// <summary>
         /// User can read.

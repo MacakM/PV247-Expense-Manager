@@ -2,6 +2,6 @@
 {
     public class PlanFilterDTO
     {
-        public int UserId { get; set; }
+        public int AccountId { get; set; }
     }
 }

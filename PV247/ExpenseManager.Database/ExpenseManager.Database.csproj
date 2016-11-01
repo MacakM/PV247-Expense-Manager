@@ -84,13 +84,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataAccess\Repositories\CostInfoUserAccessRepository.cs" />
+    <Compile Include="Entities\Account.cs" />
     <Compile Include="Entities\Badge.cs" />
     <Compile Include="Entities\CostInfo.cs" />
-    <Compile Include="Entities\CostInfoUserAccess.cs" />
     <Compile Include="Entities\Plan.cs" />
     <Compile Include="Entities\CostType.cs" />
-    <Compile Include="Entities\UserBadge.cs" />
+    <Compile Include="Entities\AccountBadge.cs" />
     <Compile Include="ExpenseDbContext.cs" />
     <Compile Include="Infrastructure\ConnectionConfiguration\ConnectionOptions.cs" />
     <Compile Include="Infrastructure\Query\ExpenseManagerQuery.cs" />
@@ -99,9 +98,9 @@
     <Compile Include="Infrastructure\UnitOfWork\EntityFrameworkUnitOfWorkProvider.cs" />
     <Compile Include="Infrastructure\Repository\IRepository.cs" />
     <Compile Include="Infrastructure\Mapping\Profiles\StandardMappingProfile.cs" />
-    <Compile Include="Migrations\201610290858580_Initial.cs" />
-    <Compile Include="Migrations\201610290858580_Initial.Designer.cs">
-      <DependentUpon>201610290858580_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201611011950166_Initial.cs" />
+    <Compile Include="Migrations\201611011950166_Initial.Designer.cs">
+      <DependentUpon>201611011950166_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -111,7 +110,7 @@
     <Compile Include="DataAccess\Repositories\CostInfoRepository.cs" />
     <Compile Include="DataAccess\Repositories\CostTypeRepository.cs" />
     <Compile Include="DataAccess\Repositories\PlanRepository.cs" />
-    <Compile Include="DataAccess\Repositories\UserBadgeRepository.cs" />
+    <Compile Include="DataAccess\Repositories\AccountBadgeRepository.cs" />
     <Compile Include="DataAccess\Repositories\UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -125,8 +124,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201610290858580_Initial.resx">
-      <DependentUpon>201610290858580_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201611011950166_Initial.resx">
+      <DependentUpon>201611011950166_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

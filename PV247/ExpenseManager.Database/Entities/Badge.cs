@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Riganti.Utils.Infrastructure.Core;
 
@@ -28,6 +29,6 @@ namespace ExpenseManager.Database.Entities
         /// <summary>
         /// Users that achieved this Badge.
         /// </summary>
-        public virtual List<UserBadge> Users { get; set; }
+        public virtual List<AccountBadge> Users { get; set; }
     }
 }

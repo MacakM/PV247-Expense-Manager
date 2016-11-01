@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using ExpenseManager.Contract.Enums;
 using Riganti.Utils.Infrastructure.Core;
@@ -15,15 +16,15 @@ namespace ExpenseManager.Database.Entities
         /// </summary>
         public int Id { get; set; }
         /// <summary>
-        /// Id of the user that created this plan.
+        /// Id of the account that created this plan.
         /// </summary>
-        public int UserId { get; set; }
+        public int AccountId { get; set; }
         /// <summary>
-        /// User that created this plan.
+        /// Account that created this plan.
         /// </summary>
         [Required]
-        [ForeignKey("UserId")]
-        public User User { get; set; }
+        [ForeignKey("AccountId")]
+        public Account Account { get; set; }
         /// <summary>
         /// Description of the plan.
         /// </summary>
@@ -41,6 +42,11 @@ namespace ExpenseManager.Database.Entities
         /// Which type of cost is assigned to this plan.
         /// </summary>
         public CostType PlannedType { get; set; }
+        /// <summary>
+        /// Date when is the deadline of the plan.
+        /// </summary>
+        [DataType(DataType.Date)]
+        public DateTime? Deadline { get; set; }
         /// <summary>
         /// States whether this plan is achieved.
         /// </summary>

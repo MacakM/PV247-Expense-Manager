@@ -32,9 +32,9 @@ namespace ExpenseManager.Database.DataAccess.Queries
         protected override IQueryable<PlanDTO> GetQueryable()
         {
             IQueryable<Plan> plans = Context.Plans;
-            if (Filter.UserId > 0)
+            if (Filter.AccountId > 0)
             {
-                plans = plans.Where(plan => plan.UserId == Filter.UserId);
+                plans = plans.Where(plan => plan.AccountId == Filter.AccountId);
             }
 
             // TODO add other filter criteria, ...

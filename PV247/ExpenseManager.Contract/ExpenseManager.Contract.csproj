@@ -44,13 +44,12 @@
   <ItemGroup>
     <Compile Include="DTOs\BadgeDTO.cs" />
     <Compile Include="DTOs\CostInfoDTO.cs" />
-    <Compile Include="DTOs\CostInfoUserAccessDTO.cs" />
     <Compile Include="DTOs\CostTypeDTO.cs" />
     <Compile Include="DTOs\Filters\PlanFilterDTO.cs" />
     <Compile Include="DTOs\PlanDTO.cs" />
     <Compile Include="DTOs\UserBadgeDTO.cs" />
     <Compile Include="DTOs\UserDTO.cs" />
-    <Compile Include="Enums\CostAccessType.cs" />
+    <Compile Include="Enums\AccountAccessType.cs" />
     <Compile Include="Enums\PlanType.cs" />
     <Compile Include="ExpenseManagerDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

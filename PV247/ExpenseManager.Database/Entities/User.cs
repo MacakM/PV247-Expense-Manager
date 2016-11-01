@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using ExpenseManager.Contract.Enums;
 using Riganti.Utils.Infrastructure.Core;
 
 namespace ExpenseManager.Database.Entities
@@ -24,21 +25,14 @@ namespace ExpenseManager.Database.Entities
         [Required]
         public string Email { get; set; }
         /// <summary>
-        /// User's costs.
+        /// Account of the user.
         /// </summary>
-        public virtual List<CostInfo> Costs { get; set; }
+        [Required]
+        public Account Account { get; set; }
         /// <summary>
-        /// User's accesses to others' information.
+        /// Access type of the user.
         /// </summary>
-        public virtual List<CostInfoUserAccess> Accesses { get; set; }
-        /// <summary>
-        /// All plans of the user.
-        /// </summary>
-        public virtual List<Plan> Plans { get; set; }
-        
-        /// <summary>
-        /// All badges of the user.
-        /// </summary>
-        public virtual List<UserBadge> Badges { get; set; }
+        [Required]
+        public AccountAccessType AccessType { get; set; }
     }
 }

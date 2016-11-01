@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Riganti.Utils.Infrastructure.Core;
@@ -23,19 +24,21 @@ namespace ExpenseManager.Database.Entities
         /// </summary>
         public int Money { get; set; }
         /// <summary>
-        /// User id.
+        /// Account id.
         /// </summary>
-        public int UserId { get; set; }
+        public int AccountId { get; set; }
         /// <summary>
-        /// User whom this cost belongs.
+        /// Date when the cost info was created.
+        /// </summary>
+        [DataType(DataType.Date)]
+        [Required]
+        public DateTime? Created { get; set; } = DateTime.Now;
+        /// <summary>
+        /// Account whom this cost belongs.
         /// </summary>
         [Required]
-        [ForeignKey("UserId")]
-        public User User { get; set; }
-        /// <summary>
-        /// Users that are allowed to see this cost information.
-        /// </summary>
-        public virtual List<CostInfoUserAccess> AllowedUsers { get; set; }
+        [ForeignKey("AccountId")]
+        public Account Account { get; set; }
         /// <summary>
         /// Type id.
         /// </summary>
