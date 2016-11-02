@@ -1,5 +1,4 @@
-﻿using ExpenseManager.Contract.DTOs;
-using AutoMapper;
+﻿using AutoMapper;
 using ExpenseManager.Database.Entities;
 
 namespace ExpenseManager.Database.Infrastructure.Mapping.Profiles

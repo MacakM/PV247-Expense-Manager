@@ -2,7 +2,6 @@
 using System.Linq.Expressions;
 using ExpenseManager.Contract;
 using AutoMapper;
-using ExpenseManager.Database.Infrastructure.Repository;
 using Riganti.Utils.Infrastructure.Core;
 
 namespace ExpenseManager.Business.Infrastructure
@@ -19,7 +18,7 @@ namespace ExpenseManager.Business.Infrastructure
         /// <summary>
         /// Gets the repository used to perform database operations with the entity.
         /// </summary>
-        public IRepository<TEntity, TDTO, TKey> Repository { get; }
+        public IRepository<TEntity, TKey> Repository { get; }
 
         /// <summary>
         /// Gets the service that can map entities to DTOs and populate entities with changes made on DTOs.
@@ -27,7 +26,7 @@ namespace ExpenseManager.Business.Infrastructure
         public IRuntimeMapper ExpenseManagerMapper { get; }
 
 
-        protected ExpenseManagerCrudServiceBase(IRepository<TEntity, TDTO, TKey> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider)
+        protected ExpenseManagerCrudServiceBase(IRepository<TEntity, TKey> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider)
         {
             this.UnitOfWorkProvider = unitOfWorkProvider;
             this.Repository = repository;
@@ -64,7 +63,15 @@ namespace ExpenseManager.Business.Infrastructure
         {
             using (var uow = UnitOfWorkProvider.Create())
             {
-                Repository.InsertOrUpdate(dto, EntityIncludes);
+                var isNew = dto.Id.Equals(default(TKey));
+                if (isNew)
+                {
+                    Repository.Insert(entity);
+                }
+                else
+                {
+                    Repository.Update(entity);
+                }
             }
         }
 

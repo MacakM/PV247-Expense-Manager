@@ -1,5 +1,4 @@
 ﻿using System.Data.Entity;
-using System.Data.Entity.ModelConfiguration.Conventions;
 using ExpenseManager.Database.Entities;
 
 namespace ExpenseManager.Database

@@ -32,10 +32,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AutoMapper, Version=5.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <HintPath>..\packages\AutoMapper.5.1.1\lib\net45\AutoMapper.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -84,6 +80,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataAccess\Repositories\AccountRepository.cs" />
     <Compile Include="Entities\Account.cs" />
     <Compile Include="Entities\Badge.cs" />
     <Compile Include="Entities\CostInfo.cs" />
@@ -93,13 +90,12 @@
     <Compile Include="Enums\AccountAccessType.cs" />
     <Compile Include="Enums\PlanType.cs" />
     <Compile Include="ExpenseDbContext.cs" />
+    <Compile Include="Filters\PlanFilter.cs" />
     <Compile Include="Infrastructure\ConnectionConfiguration\ConnectionOptions.cs" />
     <Compile Include="Infrastructure\Query\ExpenseManagerQuery.cs" />
     <Compile Include="Infrastructure\Repository\ExpenseManagerRepository.cs" />
     <Compile Include="Infrastructure\UnitOfWork\ExpenseManagerUnitOfWork.cs" />
     <Compile Include="Infrastructure\UnitOfWork\EntityFrameworkUnitOfWorkProvider.cs" />
-    <Compile Include="Infrastructure\Repository\IRepository.cs" />
-    <Compile Include="Infrastructure\Mapping\Profiles\StandardMappingProfile.cs" />
     <Compile Include="Migrations\201611011950166_Initial.cs" />
     <Compile Include="Migrations\201611011950166_Initial.Designer.cs">
       <DependentUpon>201611011950166_Initial.cs</DependentUpon>
@@ -118,12 +114,6 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ExpenseManager.Contract\ExpenseManager.Contract.csproj">
-      <Project>{c81a9fab-46f1-42f5-b788-00ff24296aca}</Project>
-      <Name>ExpenseManager.Contract</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201611011950166_Initial.resx">

@@ -23,7 +23,7 @@ namespace ExpenseManager.Business.Services
         // TODO add more functionality
 
 
-        protected override Expression<Func<PlanDTO, object>>[] EntityIncludes => new Expression<Func<PlanDTO, object>>[]
+        protected override string[] EntityIncludes => new string[]
         {
             
         };

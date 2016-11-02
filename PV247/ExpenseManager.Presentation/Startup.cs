@@ -107,7 +107,7 @@ namespace ExpenseManager.Presentation
 
             services.AddSingleton<IUnitOfWorkProvider, ExpenseManagerUnitOfWorkProvider>();
 
-            services.AddTransient(typeof(IRepository<,>),typeof(ExpenseManagerRepository<,,>));
+            services.AddTransient(typeof(IRepository<,>),typeof(ExpenseManagerRepository<,>));
 
             services.AddSingleton(typeof(Mapper), 
                 provider => {
@@ -119,15 +119,15 @@ namespace ExpenseManager.Presentation
             });
 
             // Register all repositories
-            services.AddTransient<IRepository<Badge, BadgeDTO, int>, BadgeRepository>();
-            services.AddTransient<IRepository<CostInfo, CostInfoDTO, int>, CostInfoRepository>();
-            services.AddTransient<IRepository<CostType, CostTypeDTO, int>, CostTypeRepository>();
-            services.AddTransient<IRepository<Plan, PlanDTO, int>, PlanRepository>();
-            services.AddTransient<IRepository<User, UserDTO, int>, UserRepository>();
-            services.AddTransient<IRepository<AccountBadge, UserBadgeDTO, int>, AccountBadgeRepository>();
+            services.AddTransient<IRepository<Badge, int>, BadgeRepository>();
+            services.AddTransient<IRepository<CostInfo, int>, CostInfoRepository>();
+            services.AddTransient<IRepository<CostType, int>, CostTypeRepository>();
+            services.AddTransient<IRepository<Plan, int>, PlanRepository>();
+            services.AddTransient<IRepository<User, int>, UserRepository>();
+            services.AddTransient<IRepository<AccountBadge, int>, AccountBadgeRepository>();
             
             // Register all query objects
-            services.AddTransient<ExpenseManagerQuery<PlanDTO>, ListUserPlansQuery>();
+            services.AddTransient<ExpenseManagerQuery<Plan>, ListUserPlansQuery>();
             //TODO add more query objects
 
             // Register all services

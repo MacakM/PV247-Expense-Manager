@@ -19,7 +19,7 @@ namespace ExpenseManager.Business.Infrastructure
         /// </summary>
         public IQuery<TListDTO> Query { get; }
 
-        protected ExpenseManagerQueryAndCrudServiceBase(IQuery<TListDTO> query, IRepository<TEntity, TDTO, TKey> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) : base(repository, expenseManagerMapper, unitOfWorkProvider)
+        protected ExpenseManagerQueryAndCrudServiceBase(IQuery<TListDTO> query, IRepository<TEntity, TKey> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) : base(repository, expenseManagerMapper, unitOfWorkProvider)
         {
             this.Query = query;
         }

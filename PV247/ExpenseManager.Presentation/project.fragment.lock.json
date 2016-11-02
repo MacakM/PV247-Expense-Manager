@@ -13,30 +13,6 @@
         "../packages/System.Reflection.4.1.0/lib/net462/System.Reflection.dll": {},
         "../packages/System.Runtime.Extensions.4.1.0/lib/net462/System.Runtime.Extensions.dll": {},
         "bin/Debug/ExpenseManager.Business.dll": {}
-      },
-      "contentFiles": {
-        "bin/Debug/ExpenseManager.Business.pdb": {
-          "buildAction": "None",
-          "codeLanguage": "any",
-          "copyToOutput": true
-        }
-      }
-    },
-    "ExpenseManager.Contract/1.0.0": {
-      "type": "project",
-      "framework": ".NETFramework,Version=v4.6.2",
-      "compile": {
-        "bin/Debug/ExpenseManager.Contract.dll": {}
-      },
-      "runtime": {
-        "bin/Debug/ExpenseManager.Contract.dll": {}
-      },
-      "contentFiles": {
-        "bin/Debug/ExpenseManager.Contract.pdb": {
-          "buildAction": "None",
-          "codeLanguage": "any",
-          "copyToOutput": true
-        }
       }
     },
     "ExpenseManager.Database/1.0.0": {
@@ -57,13 +33,6 @@
         "../packages/System.Runtime.4.1.0/lib/net462/System.Runtime.dll": {},
         "../packages/System.Runtime.Extensions.4.1.0/lib/net462/System.Runtime.Extensions.dll": {},
         "bin/Debug/ExpenseManager.Database.dll": {}
-      },
-      "contentFiles": {
-        "bin/Debug/ExpenseManager.Database.pdb": {
-          "buildAction": "None",
-          "codeLanguage": "any",
-          "copyToOutput": true
-        }
       }
     },
     "ExpenseManager.Identity/1.0.0": {

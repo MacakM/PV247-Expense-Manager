@@ -64,9 +64,6 @@
         "ExpenseManager.Business": {
           "target": "project"
         },
-        "ExpenseManager.Contract": {
-          "target": "project"
-        },
         "ExpenseManager.Database": {
           "target": "project"
         },
