@@ -8,144 +8,144 @@
 }
 
 <div class="col-sm-3 sidebar left">
-    <form class="form">
-        <label for="search-from">From: </label><input class="form-control datepicker" id="search-from" type="text" />
-        <br class="datepicker-separator" />
-        <label for="search-to">To: </label><input class="form-control datepicker" id="search-to" type="text" />
+        <form class="form">
+            <label for="search-from">From: </label><input class="form-control datepicker" id="search-from" type="text" />
+            <br class="datepicker-separator" />
+            <label for="search-to">To: </label><input class="form-control datepicker" id="search-to" type="text" />
 
-        <br /> TODO vložiť range slider na sumu <br />
-        <div class="form-group">
-            <label>Category:</label> <br />
-            <select class="form-control">
-                <option>Strava</option>
-                <option>Zábava</option>
-                <option>other</option>
-                <option>other</option>
-            </select>
-        </div>
-        <input type="submit" class="search form-control" value="Search" />
-    </form>
-</div>
-<div class="col-sm-6 main-content">
-    <h1>Expenses</h1>
-    <a href="#" class="add-new">+</a>
-    <table class="table">
-        <tr>
-            <th>Type</th>
-            <th>Description</th>
-            <th>Date</th>
-            <th>Cost</th>
-        </tr>
-        <tr>
-            <td>Strava</td>
-            <td>10 rohlíkov</td>
-            <td>27.10.2016</td>
-            <td>12kč</td>
-        </tr>
-        <tr>
-            <td>Strava</td>
-            <td>10 rohlíkov</td>
-            <td>27.10.2016</td>
-            <td>12kč</td>
-        </tr>
-        <tr>
-            <td>Strava</td>
-            <td>10 rohlíkov</td>
-            <td>27.10.2016</td>
-            <td>12kč</td>
-        </tr>
-        <tr>
-            <td>Strava</td>
-            <td>10 rohlíkov</td>
-            <td>27.10.2016</td>
-            <td>12kč</td>
-        </tr>
-        <tr>
-            <td>Strava</td>
-            <td>10 rohlíkov</td>
-            <td>27.10.2016</td>
-            <td>12kč</td>
-        </tr>
-        <tr>
-            <td>Strava</td>
-            <td>10 rohlíkov</td>
-            <td>27.10.2016</td>
-            <td>12kč</td>
-        </tr>
-        <tr>
-            <td>Strava</td>
-            <td>10 rohlíkov</td>
-            <td>27.10.2016</td>
-            <td>12kč</td>
-        </tr>
-        <tr>
-            <td>Strava</td>
-            <td>10 rohlíkov</td>
-            <td>27.10.2016</td>
-            <td>12kč</td>
-        </tr>
-        <tr>
-            <td>Strava</td>
-            <td>10 rohlíkov</td>
-            <td>27.10.2016</td>
-            <td>12kč</td>
-        </tr>
-        <tr>
-            <td>Strava</td>
-            <td>10 rohlíkov</td>
-            <td>27.10.2016</td>
-            <td>12kč</td>
-        </tr>
-        <tr>
-            <td>Strava</td>
-            <td>10 rohlíkov</td>
-            <td>27.10.2016</td>
-            <td>12kč</td>
-        </tr>
-        <tr>
-            <td>Strava</td>
-            <td>10 rohlíkov</td>
-            <td>27.10.2016</td>
-            <td>12kč</td>
-        </tr>
-        <tr>
-            <td>Strava</td>
-            <td>10 rohlíkov</td>
-            <td>27.10.2016</td>
-            <td>12kč</td>
-        </tr>
-        <tr>
-            <td>Strava</td>
-            <td>10 rohlíkov</td>
-            <td>27.10.2016</td>
-            <td>12kč</td>
-        </tr>
-        <tr>
-            <td>Strava</td>
-            <td>10 rohlíkov</td>
-            <td>27.10.2016</td>
-            <td>12kč</td>
-        </tr>
-        <tr>
-            <td>Strava</td>
-            <td>10 rohlíkov</td>
-            <td>27.10.2016</td>
-            <td>12kč</td>
-        </tr>
-        <tr>
-            <td>Strava</td>
-            <td>10 rohlíkov</td>
-            <td>27.10.2016</td>
-            <td>12kč</td>
-        </tr>
-    </table>
-    <div class="expense-pagination">
-        <ul class="pagination">
-            <li><a href="#">1</a></li>
-            <li class="active"><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-            <li><a href="#">5</a></li>
-        </ul>
+            <br /> TODO vložiť range slider na sumu <br />
+            <div class="form-group">
+                <label>Category:</label> <br />
+                <select class="form-control">
+                    <option>Strava</option>
+                    <option>Zábava</option>
+                    <option>other</option>
+                    <option>other</option>
+                </select>
+            </div>
+            <input type="submit" class="search form-control" value="Search" />
+        </form>
     </div>
-</div>
+    <div class="col-sm-6 main-content">
+        <h1>Expenses</h1>
+        @Html.ActionLink("+", "Index", "Expense", null, new { @class = "add-new" })
+        <table class="table">
+            <tr>
+                <th>Type</th>
+                <th>Description</th>
+                <th>Date</th>
+                <th>Cost</th>
+            </tr>
+            <tr>
+                <td>Strava</td>
+                <td>10 rohlíkov</td>
+                <td>27.10.2016</td>
+                <td>12kč</td>
+            </tr>
+            <tr>
+                <td>Strava</td>
+                <td>10 rohlíkov</td>
+                <td>27.10.2016</td>
+                <td>12kč</td>
+            </tr>
+            <tr>
+                <td>Strava</td>
+                <td>10 rohlíkov</td>
+                <td>27.10.2016</td>
+                <td>12kč</td>
+            </tr>
+            <tr>
+                <td>Strava</td>
+                <td>10 rohlíkov</td>
+                <td>27.10.2016</td>
+                <td>12kč</td>
+            </tr>
+            <tr>
+                <td>Strava</td>
+                <td>10 rohlíkov</td>
+                <td>27.10.2016</td>
+                <td>12kč</td>
+            </tr>
+            <tr>
+                <td>Strava</td>
+                <td>10 rohlíkov</td>
+                <td>27.10.2016</td>
+                <td>12kč</td>
+            </tr>
+            <tr>
+                <td>Strava</td>
+                <td>10 rohlíkov</td>
+                <td>27.10.2016</td>
+                <td>12kč</td>
+            </tr>
+            <tr>
+                <td>Strava</td>
+                <td>10 rohlíkov</td>
+                <td>27.10.2016</td>
+                <td>12kč</td>
+            </tr>
+            <tr>
+                <td>Strava</td>
+                <td>10 rohlíkov</td>
+                <td>27.10.2016</td>
+                <td>12kč</td>
+            </tr>
+            <tr>
+                <td>Strava</td>
+                <td>10 rohlíkov</td>
+                <td>27.10.2016</td>
+                <td>12kč</td>
+            </tr>
+            <tr>
+                <td>Strava</td>
+                <td>10 rohlíkov</td>
+                <td>27.10.2016</td>
+                <td>12kč</td>
+            </tr>
+            <tr>
+                <td>Strava</td>
+                <td>10 rohlíkov</td>
+                <td>27.10.2016</td>
+                <td>12kč</td>
+            </tr>
+            <tr>
+                <td>Strava</td>
+                <td>10 rohlíkov</td>
+                <td>27.10.2016</td>
+                <td>12kč</td>
+            </tr>
+            <tr>
+                <td>Strava</td>
+                <td>10 rohlíkov</td>
+                <td>27.10.2016</td>
+                <td>12kč</td>
+            </tr>
+            <tr>
+                <td>Strava</td>
+                <td>10 rohlíkov</td>
+                <td>27.10.2016</td>
+                <td>12kč</td>
+            </tr>
+            <tr>
+                <td>Strava</td>
+                <td>10 rohlíkov</td>
+                <td>27.10.2016</td>
+                <td>12kč</td>
+            </tr>
+            <tr>
+                <td>Strava</td>
+                <td>10 rohlíkov</td>
+                <td>27.10.2016</td>
+                <td>12kč</td>
+            </tr>
+        </table>
+        <div class="expense-pagination">
+            <ul class="pagination">
+                <li><a href="#">1</a></li>
+                <li class="active"><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+            </ul>
+        </div>
+    </div>
