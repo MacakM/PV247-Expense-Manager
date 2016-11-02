@@ -90,6 +90,8 @@
     <Compile Include="Entities\Plan.cs" />
     <Compile Include="Entities\CostType.cs" />
     <Compile Include="Entities\AccountBadge.cs" />
+    <Compile Include="Enums\AccountAccessType.cs" />
+    <Compile Include="Enums\PlanType.cs" />
     <Compile Include="ExpenseDbContext.cs" />
     <Compile Include="Infrastructure\ConnectionConfiguration\ConnectionOptions.cs" />
     <Compile Include="Infrastructure\Query\ExpenseManagerQuery.cs" />

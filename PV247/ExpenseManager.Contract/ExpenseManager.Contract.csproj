@@ -49,8 +49,6 @@
     <Compile Include="DTOs\PlanDTO.cs" />
     <Compile Include="DTOs\UserBadgeDTO.cs" />
     <Compile Include="DTOs\UserDTO.cs" />
-    <Compile Include="Enums\AccountAccessType.cs" />
-    <Compile Include="Enums\PlanType.cs" />
     <Compile Include="ExpenseManagerDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

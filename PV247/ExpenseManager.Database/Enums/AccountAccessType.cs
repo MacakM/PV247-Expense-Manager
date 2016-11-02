@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ExpenseManager.Contract.Enums
+﻿namespace ExpenseManager.Database.Enums
 {
     /// <summary>
     /// Types of access to the cost information.

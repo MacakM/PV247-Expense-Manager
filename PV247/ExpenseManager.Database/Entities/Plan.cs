@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using ExpenseManager.Contract.Enums;
+using ExpenseManager.Database.Enums;
 using Riganti.Utils.Infrastructure.Core;
 
 namespace ExpenseManager.Database.Entities
