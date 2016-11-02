@@ -1,4 +1,5 @@
-﻿namespace ExpenseManager.Business.DTOs
+﻿
+namespace ExpenseManager.Business.DTOs
 {
     public class UserDTO : ExpenseManagerDTO<int>
     {
@@ -12,5 +13,14 @@
         /// </summary>
         public string Email { get; set; }
 
+        /// <summary>
+        /// Account of the user.
+        /// </summary>
+        public AccountDTO Account { get; set; }
+
+        /// <summary>
+        /// Access type of the user.
+        /// </summary>
+        public AccountAccessTypeDTO AccessType { get; set; }
     }
 }

@@ -45,10 +45,10 @@ namespace ExpenseManager.Presentation
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {  
-            services.Configure<ConnectionOptions>(options => options.ConnectionString = Configuration.GetConnectionString(ConnectionOptions.ExpenseManagerConnectionStringName));
+            services.Configure<ConnectionOptions>(options => options.ConnectionString = Configuration.GetConnectionString("DefaultConnection"));
 
             // Configure Identity persistence         
-            IdentityDALInstaller.Install(services, Configuration);
+            IdentityDALInstaller.Install(services, Configuration.GetConnectionString("IdentityConnection"));
 
             // Configure BL
             RegisterBusinessLayerDependencies(services);
