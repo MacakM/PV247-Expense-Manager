@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace ExpenseManager.Contract.DTOs
+﻿namespace ExpenseManager.Business.DTOs
 {
     public class UserDTO : ExpenseManagerDTO<int>
     {

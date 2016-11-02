@@ -1,7 +1,5 @@
-﻿using System;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
-using System.Linq.Expressions;
 using ExpenseManager.Database.Entities;
 using ExpenseManager.Database.Infrastructure.Repository;
 using Riganti.Utils.Infrastructure.Core;
@@ -25,7 +23,7 @@ namespace ExpenseManager.Database.DataAccess.Repositories
         /// <param name="email">User unique email</param>
         /// <param name="includes">Property to include with obtained user</param>
         /// <returns>UserDTO with user details</returns>
-        public User GetUserByEmail(string email, params Expression<Func<User, object>>[] includes)
+        public User GetUserByEmail(string email, params string[] includes)
         {
             IQueryable<User> users = Context.Set<User>();
 

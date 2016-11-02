@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Linq.Expressions;
 using ExpenseManager.Database.Infrastructure.UnitOfWork;
 using Riganti.Utils.Infrastructure.Core;
 
@@ -11,7 +9,7 @@ namespace ExpenseManager.Database.Infrastructure.Repository
     /// <summary>
     /// A base implementation of a repository.
     /// </summary>
-    public class ExpenseManagerRepository<TEntity, TKey> : IRepository<TEntity, TKey> 
+    public class ExpenseManagerRepository<TEntity, TKey> 
         where TEntity : class, IEntity<TKey>, new() 
     {
         private readonly IUnitOfWorkProvider _provider;
@@ -35,7 +33,7 @@ namespace ExpenseManager.Database.Infrastructure.Repository
         /// <param name="id">id of object</param>
         /// <param name="includes">includes</param>
         /// <returns></returns>
-        public TEntity GetById(TKey id, params Expression<Func<TEntity, object>>[] includes)
+        public TEntity GetById(TKey id, params string[] includes)
         {
             return GetByIds(new[] { id }, includes).FirstOrDefault();
         }
@@ -46,16 +44,11 @@ namespace ExpenseManager.Database.Infrastructure.Repository
         /// <remarks>
         /// This method is not suitable for large amounts of entities - the reasonable limit of number of IDs is 30.
         /// </remarks>
-        public IList<TEntity> GetByIds(IEnumerable<TKey> ids, params Expression<Func<TEntity, object>>[] includes)
+        public IList<TEntity> GetByIds(IEnumerable<TKey> ids, params string[] includes)
         {
             IQueryable<TEntity> query = Context.Set<TEntity>();
             query = includes.Aggregate(query, (current, include) => current.Include(include));
             return query.Where(i => ids.Contains(i.Id)).ToList();
-        }
-
-        public TEntity InitializeNew()
-        {
-            return new TEntity();
         }
 
         /// <summary>

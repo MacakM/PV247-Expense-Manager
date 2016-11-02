@@ -1,13 +1,13 @@
-﻿using ExpenseManager.Contract.DTOs;
-using AutoMapper;
+﻿using AutoMapper;
+using ExpenseManager.Business.DTOs;
 using ExpenseManager.Business.Facades;
 using ExpenseManager.Business.Infrastructure;
+using ExpenseManager.Business.Infrastructure.Mapping.Profiles;
 using ExpenseManager.Business.Services;
 using ExpenseManager.Database.DataAccess.Queries;
 using ExpenseManager.Database.DataAccess.Repositories;
 using ExpenseManager.Database.Entities;
 using ExpenseManager.Database.Infrastructure.ConnectionConfiguration;
-using ExpenseManager.Database.Infrastructure.Mapping.Profiles;
 using ExpenseManager.Database.Infrastructure.Query;
 using ExpenseManager.Database.Infrastructure.Repository;
 using ExpenseManager.Database.Infrastructure.UnitOfWork;
@@ -119,12 +119,12 @@ namespace ExpenseManager.Presentation
             });
 
             // Register all repositories
-            services.AddTransient<IRepository<Badge, int>, BadgeRepository>();
-            services.AddTransient<IRepository<CostInfo, int>, CostInfoRepository>();
-            services.AddTransient<IRepository<CostType, int>, CostTypeRepository>();
-            services.AddTransient<IRepository<Plan, int>, PlanRepository>();
-            services.AddTransient<IRepository<User, int>, UserRepository>();
-            services.AddTransient<IRepository<AccountBadge, int>, AccountBadgeRepository>();
+            services.AddTransient<ExpenseManagerRepository<Badge, int>, BadgeRepository>();
+            services.AddTransient<ExpenseManagerRepository<CostInfo, int>, CostInfoRepository>();
+            services.AddTransient<ExpenseManagerRepository<CostType, int>, CostTypeRepository>();
+            services.AddTransient<ExpenseManagerRepository<Plan, int>, PlanRepository>();
+            services.AddTransient<ExpenseManagerRepository<User, int>, UserRepository>();
+            services.AddTransient<ExpenseManagerRepository<AccountBadge, int>, AccountBadgeRepository>();
             
             // Register all query objects
             services.AddTransient<ExpenseManagerQuery<Plan>, ListUserPlansQuery>();

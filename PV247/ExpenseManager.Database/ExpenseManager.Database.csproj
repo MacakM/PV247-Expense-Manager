@@ -96,6 +96,7 @@
     <Compile Include="Infrastructure\Repository\ExpenseManagerRepository.cs" />
     <Compile Include="Infrastructure\UnitOfWork\ExpenseManagerUnitOfWork.cs" />
     <Compile Include="Infrastructure\UnitOfWork\EntityFrameworkUnitOfWorkProvider.cs" />
+    <Compile Include="Infrastructure\Utils\IncludesHelper.cs" />
     <Compile Include="Migrations\201611011950166_Initial.cs" />
     <Compile Include="Migrations\201611011950166_Initial.Designer.cs">
       <DependentUpon>201611011950166_Initial.cs</DependentUpon>

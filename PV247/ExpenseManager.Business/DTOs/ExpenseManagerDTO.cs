@@ -1,4 +1,4 @@
-﻿namespace ExpenseManager.Contract
+﻿namespace ExpenseManager.Business.DTOs
 {
     public abstract class ExpenseManagerDTO<TKey>
     {

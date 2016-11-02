@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using ExpenseManager.Contract;
 using AutoMapper;
+using ExpenseManager.Business.DTOs;
 using ExpenseManager.Database.Infrastructure.Repository;
 using Riganti.Utils.Infrastructure.Core;
 
@@ -11,7 +11,7 @@ namespace ExpenseManager.Business.Infrastructure
     /// </summary>
     /// <typeparam name="TListDTO">The type of the DTO used in the list of records, e.g. in the GridView control.</typeparam>
     public abstract class ExpenseManagerQueryAndCrudServiceBase<TEntity, TKey, TListDTO, TDTO> : ExpenseManagerCrudServiceBase<TEntity, TKey, TDTO> 
-        where TEntity : IEntity<TKey>, new() 
+        where TEntity : class, IEntity<TKey>, new() 
         where TDTO : ExpenseManagerDTO<TKey>, new()
     {
         /// <summary>
@@ -19,7 +19,7 @@ namespace ExpenseManager.Business.Infrastructure
         /// </summary>
         public IQuery<TListDTO> Query { get; }
 
-        protected ExpenseManagerQueryAndCrudServiceBase(IQuery<TListDTO> query, IRepository<TEntity, TKey> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) : base(repository, expenseManagerMapper, unitOfWorkProvider)
+        protected ExpenseManagerQueryAndCrudServiceBase(IQuery<TListDTO> query, ExpenseManagerRepository<TEntity, TKey> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) : base(repository, expenseManagerMapper, unitOfWorkProvider)
         {
             this.Query = query;
         }
