@@ -37,8 +37,7 @@ School project for PV247 (FI MUNI Brno)
 * filter expenses
 * create new plans
    - based on spending or saving
-* create current paste of expenses and share it with other people
-* manage my pastes
+* add other user to the account
 
 ### Time ###
 * plans are automatically marked as finished when the given goal is achieved
