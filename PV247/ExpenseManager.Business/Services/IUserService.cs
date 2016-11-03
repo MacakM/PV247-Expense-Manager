@@ -1,6 +1,6 @@
 using System;
 using System.Linq.Expressions;
-using ExpenseManager.Contract.DTOs;
+using ExpenseManager.Business.DTOs;
 
 namespace ExpenseManager.Business.Services
 {

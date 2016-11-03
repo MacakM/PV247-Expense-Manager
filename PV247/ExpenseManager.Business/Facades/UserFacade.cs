@@ -1,4 +1,4 @@
-﻿using ExpenseManager.Contract.DTOs;
+﻿using ExpenseManager.Business.DTOs;
 using ExpenseManager.Business.Services;
 
 namespace ExpenseManager.Business.Facades

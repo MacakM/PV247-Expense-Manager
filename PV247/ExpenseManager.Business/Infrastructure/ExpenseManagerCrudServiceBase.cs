@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Linq.Expressions;
-using ExpenseManager.Contract;
 using AutoMapper;
+using ExpenseManager.Business.DTOs;
 using ExpenseManager.Database.Infrastructure.Repository;
+using ExpenseManager.Database.Infrastructure.Utils;
 using Riganti.Utils.Infrastructure.Core;
 
 namespace ExpenseManager.Business.Infrastructure
@@ -12,14 +13,16 @@ namespace ExpenseManager.Business.Infrastructure
     /// </summary>
     /// <typeparam name="TKey">The type of the entity primary key.</typeparam>
     /// <typeparam name="TDTO">The type of the DTO used in the detail form.</typeparam>
-    public abstract class ExpenseManagerCrudServiceBase<TEntity, TKey, TDTO> where TEntity : IEntity<TKey>, new() where TDTO : ExpenseManagerDTO<TKey>, new()
+    public abstract class ExpenseManagerCrudServiceBase<TEntity, TKey, TDTO> 
+        where TEntity : class, IEntity<TKey>, new() 
+        where TDTO : ExpenseManagerDTO<TKey>, new()
     {
         public IUnitOfWorkProvider UnitOfWorkProvider { get; }
 
         /// <summary>
         /// Gets the repository used to perform database operations with the entity.
         /// </summary>
-        public IRepository<TEntity, TDTO, TKey> Repository { get; }
+        public ExpenseManagerRepository<TEntity, TKey> Repository { get; }
 
         /// <summary>
         /// Gets the service that can map entities to DTOs and populate entities with changes made on DTOs.
@@ -27,7 +30,7 @@ namespace ExpenseManager.Business.Infrastructure
         public IRuntimeMapper ExpenseManagerMapper { get; }
 
 
-        protected ExpenseManagerCrudServiceBase(IRepository<TEntity, TDTO, TKey> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider)
+        protected ExpenseManagerCrudServiceBase(ExpenseManagerRepository<TEntity, TKey> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider)
         {
             this.UnitOfWorkProvider = unitOfWorkProvider;
             this.Repository = repository;
@@ -41,7 +44,8 @@ namespace ExpenseManager.Business.Infrastructure
         {
             using (UnitOfWorkProvider.Create())
             {
-                return Repository.GetById(id, EntityIncludes);
+                var entity = Repository.GetById(id, IncludesHelper.ProcessIncludesList<TDTO, TEntity>(EntityIncludes));
+                return ExpenseManagerMapper.Map<TEntity, TDTO>(entity);
             }
         }
 
@@ -62,9 +66,18 @@ namespace ExpenseManager.Business.Infrastructure
         /// </summary>
         public virtual void Save(TDTO dto)
         {
-            using (var uow = UnitOfWorkProvider.Create())
+            var entity = ExpenseManagerMapper.Map<TDTO, TEntity>(dto);
+            using (UnitOfWorkProvider.Create())
             {
-                Repository.InsertOrUpdate(dto, EntityIncludes);
+                var isNew = dto.Id.Equals(default(TKey));
+                if (isNew)
+                {
+                    Repository.Insert(entity);
+                }
+                else
+                {
+                    Repository.Update(entity);
+                }
             }
         }
 

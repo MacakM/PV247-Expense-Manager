@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq.Expressions;
-using ExpenseManager.Contract.DTOs;
 using AutoMapper;
+using ExpenseManager.Business.DTOs;
 using ExpenseManager.Business.Infrastructure;
 using ExpenseManager.Database.DataAccess.Repositories;
 using ExpenseManager.Database.Entities;
 using ExpenseManager.Database.Infrastructure.Repository;
+using ExpenseManager.Database.Infrastructure.Utils;
 using Riganti.Utils.Infrastructure.Core;
 
 namespace ExpenseManager.Business.Services
@@ -16,7 +17,7 @@ namespace ExpenseManager.Business.Services
     /// </summary>
     public class UserService : ExpenseManagerCrudServiceBase<User, int, UserDTO>, IUserService
     {
-        public UserService(IRepository<User, UserDTO, int> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) 
+        public UserService(ExpenseManagerRepository<User, int> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) 
             : base(repository, expenseManagerMapper, unitOfWorkProvider) { }
 
         private UserRepository UserRepository => (UserRepository)Repository;
@@ -39,7 +40,7 @@ namespace ExpenseManager.Business.Services
             using (var uow = UnitOfWorkProvider.Create())
             {
                 uow.RegisterAfterCommitAction(() => Debug.WriteLine($"Successfully modified user with email: {modifiedUserDTO.Email}"));
-                var user = UserRepository.GetUserByEmail(modifiedUserDTO.Email, EntityIncludes);
+                var user = UserRepository.GetUserByEmail(modifiedUserDTO.Email, IncludesHelper.ProcessIncludesList<UserDTO, User>(EntityIncludes));
                 if (user == null)
                 {
                     throw new InvalidOperationException($"Cannot update user with email: { modifiedUserDTO.Email }, the user is not persisted yet!");      
@@ -61,7 +62,8 @@ namespace ExpenseManager.Business.Services
         {
             using (UnitOfWorkProvider.Create())
             {
-                return UserRepository.GetUserByEmail(email, includes);
+                var entity = UserRepository.GetUserByEmail(email, IncludesHelper.ProcessIncludesList<UserDTO, User>(includes));
+                return ExpenseManagerMapper.Map<User, UserDTO>(entity);
             }          
         }
 
@@ -75,15 +77,17 @@ namespace ExpenseManager.Business.Services
         {
             using (UnitOfWorkProvider.Create())
             {              
-                return includeAllProperties ? 
-                    UserRepository.GetUserByEmail(email, EntityIncludes) : 
+                var entity = includeAllProperties ? 
+                    UserRepository.GetUserByEmail(email, IncludesHelper.ProcessIncludesList<UserDTO, User>(EntityIncludes)) : 
                     UserRepository.GetUserByEmail(email);
+                return ExpenseManagerMapper.Map<User, UserDTO>(entity);
             }
         }
 
         protected override Expression<Func<UserDTO, object>>[] EntityIncludes => new Expression<Func<UserDTO, object>>[]
         {
-            /*userDTO => userDTO.UserBadges*/
+            userDTO => userDTO.Account,
+            userDTO => userDTO.AccessType
         };
     }
 }

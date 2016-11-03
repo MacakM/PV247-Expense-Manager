@@ -1,4 +1,4 @@
-﻿namespace ExpenseManager.Contract.DTOs
+﻿namespace ExpenseManager.Business.DTOs
 {
     public class CostTypeDTO : ExpenseManagerDTO<int>
     {

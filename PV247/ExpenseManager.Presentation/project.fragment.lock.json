@@ -22,23 +22,6 @@
         }
       }
     },
-    "ExpenseManager.Contract/1.0.0": {
-      "type": "project",
-      "framework": ".NETFramework,Version=v4.6.2",
-      "compile": {
-        "bin/Debug/ExpenseManager.Contract.dll": {}
-      },
-      "runtime": {
-        "bin/Debug/ExpenseManager.Contract.dll": {}
-      },
-      "contentFiles": {
-        "bin/Debug/ExpenseManager.Contract.pdb": {
-          "buildAction": "None",
-          "codeLanguage": "any",
-          "copyToOutput": true
-        }
-      }
-    },
     "ExpenseManager.Database/1.0.0": {
       "type": "project",
       "framework": ".NETFramework,Version=v4.6.2",
@@ -46,7 +29,6 @@
         "bin/Debug/ExpenseManager.Database.dll": {}
       },
       "runtime": {
-        "../packages/AutoMapper.5.1.1/lib/net45/AutoMapper.dll": {},
         "../packages/EntityFramework.6.1.3/lib/net45/EntityFramework.SqlServer.dll": {},
         "../packages/EntityFramework.6.1.3/lib/net45/EntityFramework.dll": {},
         "../packages/Microsoft.Extensions.DependencyInjection.Abstractions.1.0.0/lib/netstandard1.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {},

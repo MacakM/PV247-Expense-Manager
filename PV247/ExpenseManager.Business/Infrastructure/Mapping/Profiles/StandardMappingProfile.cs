@@ -1,8 +1,8 @@
-﻿using ExpenseManager.Contract.DTOs;
-using AutoMapper;
+﻿using AutoMapper;
+using ExpenseManager.Business.DTOs;
 using ExpenseManager.Database.Entities;
 
-namespace ExpenseManager.Database.Infrastructure.Mapping.Profiles
+namespace ExpenseManager.Business.Infrastructure.Mapping.Profiles
 {
     /// <summary>
     /// Standard mapping profile.

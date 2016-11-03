@@ -1,4 +1,4 @@
-﻿namespace ExpenseManager.Contract.Enums
+﻿namespace ExpenseManager.Database.Enums
 {
     public enum PlanType
     {

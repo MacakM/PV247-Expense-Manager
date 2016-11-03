@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Riganti.Utils.Infrastructure.Core;
 
 namespace ExpenseManager.Database.Entities
 {
     /// <summary>
     /// Represents account of the user.
     /// </summary>
-    public class Account
+    public class Account : IEntity<int>
     {
         /// <summary>
         /// Identifier.
