@@ -9,8 +9,9 @@ using ExpenseManager.Database.Entities;
 using ExpenseManager.Database.Infrastructure.Repository;
 using ExpenseManager.Database.Infrastructure.Utils;
 using Riganti.Utils.Infrastructure.Core;
+using ExpenseManager.Business.Services.Interfaces;
 
-namespace ExpenseManager.Business.Services
+namespace ExpenseManager.Business.Services.Implementations
 {
     /// <summary>
     /// Provides user related functionality
@@ -28,6 +29,7 @@ namespace ExpenseManager.Business.Services
         /// <param name="userRegistration">User registration information</param>
         public void RegisterNewUser(UserDTO userRegistration)
         {
+            // create account too or join to another?
             Save(userRegistration);
         }
 

@@ -74,9 +74,14 @@
     <Compile Include="Infrastructure\ExpenseManagerQueryAndCrudServiceBase.cs" />
     <Compile Include="Infrastructure\Mapping\Profiles\StandardMappingProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\IUserService.cs" />
-    <Compile Include="Services\PlanService.cs" />
-    <Compile Include="Services\UserService.cs" />
+    <Compile Include="Services\Implementations\BadgeAndCrudService.cs" />
+    <Compile Include="Services\Implementations\CostInfoAndCrudService.cs" />
+    <Compile Include="Services\Interfaces\IBadgeAndCrudService.cs" />
+    <Compile Include="Services\Interfaces\ICostInfoAndCrudService.cs" />
+    <Compile Include="Services\Interfaces\IPlanAndCrudService.cs" />
+    <Compile Include="Services\Interfaces\IUserService.cs" />
+    <Compile Include="Services\Implementations\PlanAndCrudService.cs" />
+    <Compile Include="Services\Implementations\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

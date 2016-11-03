@@ -1,5 +1,6 @@
 ﻿using ExpenseManager.Business.DTOs;
 using ExpenseManager.Business.Services;
+using ExpenseManager.Business.Services.Interfaces;
 
 namespace ExpenseManager.Business.Facades
 {

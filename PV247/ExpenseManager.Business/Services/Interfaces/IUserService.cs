@@ -2,7 +2,7 @@ using System;
 using System.Linq.Expressions;
 using ExpenseManager.Business.DTOs;
 
-namespace ExpenseManager.Business.Services
+namespace ExpenseManager.Business.Services.Interfaces
 {
     public interface IUserService
     {
