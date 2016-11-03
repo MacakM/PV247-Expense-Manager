@@ -2,10 +2,10 @@
 School project for PV247 (FI MUNI Brno)
 
 ## Team members ##
-* Martin Macák
-* Jaroslav Davídek
-* Marek Turis
-* Ondřej Gasior
+* Martin Macák - Managing, DAL Design, PL Support, BL Support, Tests
+* Jaroslav Davídek - Architecture Design, BL Support
+* Marek Turis - UI Design, PL
+* Ondřej Gasior - BL, Tests
 
 ## Coding Rules ##
 ### Formatting ###
