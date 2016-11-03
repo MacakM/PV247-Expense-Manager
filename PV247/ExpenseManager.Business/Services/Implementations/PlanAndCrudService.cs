@@ -33,7 +33,7 @@ namespace ExpenseManager.Business.Services.Implementations
         {
             using (var uow = UnitOfWorkProvider.Create())
             {
-                var plan = _planRepository.GetById(planDto.Id, "Account", "CostType");
+                var plan = _planRepository.GetById(planDto.Id, EntityIncludes);
                 Mapper.Map(planDto, plan);
                 _planRepository.Update(plan);
                 uow.Commit();
@@ -63,9 +63,10 @@ namespace ExpenseManager.Business.Services.Implementations
             throw new NotImplementedException();
         }
 
-        protected override Expression<Func<PlanDTO, object>>[] EntityIncludes => new Expression<Func<PlanDTO, object>>[]
+        protected override string[] EntityIncludes { get; } =
         {
-            
+            nameof(Plan.Account),
+            nameof(Plan.PlannedType)
         };
     }
 }

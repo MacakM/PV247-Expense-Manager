@@ -42,13 +42,11 @@ namespace ExpenseManager.Business.Services.Implementations
             using (var uow = UnitOfWorkProvider.Create())
             {
                 uow.RegisterAfterCommitAction(() => Debug.WriteLine($"Successfully modified user with email: {modifiedUserDTO.Email}"));
-                var user = UserRepository.GetUserByEmail(modifiedUserDTO.Email, IncludesHelper.ProcessIncludesList<UserDTO, User>(EntityIncludes));
+                var user = UserRepository.GetUserByEmail(modifiedUserDTO.Email, EntityIncludes);
                 if (user == null)
                 {
-                    throw new InvalidOperationException($"Cannot update user with email: { modifiedUserDTO.Email }, the user is not persisted yet!");      
+                    throw new InvalidOperationException($"Cannot update user with email: { modifiedUserDTO.Email }, the user is not persisted yet!");
                 }
-                //user.Badges = ...
-
                 UserRepository.Update(user);
                 uow.Commit();
             }
@@ -80,16 +78,15 @@ namespace ExpenseManager.Business.Services.Implementations
             using (UnitOfWorkProvider.Create())
             {              
                 var entity = includeAllProperties ? 
-                    UserRepository.GetUserByEmail(email, IncludesHelper.ProcessIncludesList<UserDTO, User>(EntityIncludes)) : 
+                    UserRepository.GetUserByEmail(email, nameof(User.Account)) : 
                     UserRepository.GetUserByEmail(email);
                 return ExpenseManagerMapper.Map<User, UserDTO>(entity);
             }
         }
 
-        protected override Expression<Func<UserDTO, object>>[] EntityIncludes => new Expression<Func<UserDTO, object>>[]
+        protected override string[] EntityIncludes { get; } =
         {
-            userDTO => userDTO.AccountDTO,
-            userDTO => userDTO.AccessType
+            nameof(User.Account)
         };
     }
 }

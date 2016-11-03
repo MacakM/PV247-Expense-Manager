@@ -1,9 +1,6 @@
-﻿using System;
-using System.Linq.Expressions;
-using AutoMapper;
+﻿using AutoMapper;
 using ExpenseManager.Business.DTOs;
 using ExpenseManager.Database.Infrastructure.Repository;
-using ExpenseManager.Database.Infrastructure.Utils;
 using Riganti.Utils.Infrastructure.Core;
 
 namespace ExpenseManager.Business.Infrastructure
@@ -29,7 +26,12 @@ namespace ExpenseManager.Business.Infrastructure
         /// </summary>
         public IRuntimeMapper ExpenseManagerMapper { get; }
 
-
+        /// <summary>
+        /// Ctor for ExpenseManagerCrudServiceBase
+        /// </summary>
+        /// <param name="repository">repository used by this service</param>
+        /// <param name="expenseManagerMapper">mapper</param>
+        /// <param name="unitOfWorkProvider">uow provider</param>
         protected ExpenseManagerCrudServiceBase(ExpenseManagerRepository<TEntity, TKey> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider)
         {
             this.UnitOfWorkProvider = unitOfWorkProvider;
@@ -44,7 +46,7 @@ namespace ExpenseManager.Business.Infrastructure
         {
             using (UnitOfWorkProvider.Create())
             {
-                var entity = Repository.GetById(id, IncludesHelper.ProcessIncludesList<TDTO, TEntity>(EntityIncludes));
+                var entity = Repository.GetById(id, EntityIncludes);
                 return ExpenseManagerMapper.Map<TEntity, TDTO>(entity);
             }
         }
@@ -84,6 +86,6 @@ namespace ExpenseManager.Business.Infrastructure
         /// <summary>
         /// Gets a list of navigation property expressions that should be included when the service loads the entity.
         /// </summary>
-        protected abstract Expression<Func<TDTO, object>>[] EntityIncludes { get; }
+        protected abstract string[] EntityIncludes { get; }
     }
 }

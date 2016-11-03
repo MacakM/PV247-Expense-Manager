@@ -26,8 +26,7 @@ namespace ExpenseManager.Business.Services.Implementations
         {
             _costInfoRepository = costInfoRepository;
         }
-
-        protected override Expression<Func<CostInfoDTO, object>>[] EntityIncludes { get; }
+       
         public void CreateCost(CostInfoDTO costDto)
         {
             // insert new CostType too?
@@ -52,6 +51,10 @@ namespace ExpenseManager.Business.Services.Implementations
             }
         }
 
-        
+        protected override string[] EntityIncludes { get; } =
+        {
+            nameof(CostInfo.Account),
+            nameof(CostInfo.Type)
+        };
     }
 }

@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using AutoMapper;
 using ExpenseManager.Business.DTOs;
 using ExpenseManager.Business.Infrastructure;
@@ -27,7 +23,6 @@ namespace ExpenseManager.Business.Services.Implementations
             _badgeRepository = badgeRepository;
         }
 
-        protected override Expression<Func<BadgeDTO, object>>[] EntityIncludes { get; }
         public void CreateBadge(BadgeDTO badgeDto)
         {
             Save(badgeDto);
@@ -37,7 +32,7 @@ namespace ExpenseManager.Business.Services.Implementations
         {
             using (var uow = UnitOfWorkProvider.Create())
             {
-                var badge = _badgeRepository.GetById(badgeDto.Id);
+                var badge = _badgeRepository.GetById(badgeDto.Id, EntityIncludes);
                 Mapper.Map(badgeDto, badge);
                 _badgeRepository.Update(badge);
                 uow.Commit();
@@ -71,5 +66,10 @@ namespace ExpenseManager.Business.Services.Implementations
         {
             throw new NotImplementedException();
         }
+
+        protected override string[] EntityIncludes { get; } =
+        {
+            nameof(Badge.Users)
+        };
     }
 }
