@@ -88,7 +88,7 @@ namespace ExpenseManager.Business.Services.Implementations
 
         protected override Expression<Func<UserDTO, object>>[] EntityIncludes => new Expression<Func<UserDTO, object>>[]
         {
-            userDTO => userDTO.Account,
+            userDTO => userDTO.AccountDTO,
             userDTO => userDTO.AccessType
         };
     }

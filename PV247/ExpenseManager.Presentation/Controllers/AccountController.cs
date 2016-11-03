@@ -1,6 +1,10 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using ExpenseManager.Business.DTOs;
+using ExpenseManager.Business.Facades;
+using ExpenseManager.Database.Enums;
 using ExpenseManager.Identity.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -14,15 +18,18 @@ namespace ExpenseManager.Presentation.Controllers
     [Authorize]
     public class AccountController : Controller
     {
+        private readonly UserFacade _userFacade;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger _logger;
 
         public AccountController(
+            UserFacade userFacade,
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILoggerFactory loggerFactory)
         {
+            _userFacade = userFacade;
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = loggerFactory.CreateLogger<AccountController>();
@@ -65,11 +72,8 @@ namespace ExpenseManager.Presentation.Controllers
                     _logger.LogWarning(2, "User account locked out.");
                     return View("Lockout");
                 }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                    return View(model);
-                }
+                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                return View(model);
             }
 
             // If we got this far, something failed, redisplay form
@@ -100,12 +104,8 @@ namespace ExpenseManager.Presentation.Controllers
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=532713
-                    // Send an email with this link
-                    //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    //var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
-                    //await _emailSender.SendEmailAsync(model.Email, "Confirm your account",
-                    //    $"Please confirm your account by clicking this link: <a href='{callbackUrl}'>link</a>");
+                    CreateExpenseManagerUser(model.Email);
+
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation(3, "User created a new account with password.");
                     return RedirectToLocal(returnUrl);
@@ -115,6 +115,17 @@ namespace ExpenseManager.Presentation.Controllers
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+        private void CreateExpenseManagerUser(string email)
+        {
+            _userFacade.RegisterNewUser(new UserDTO
+            {
+                AccessType = AccountAccessType.Full,
+                AccountDTO = new AccountDTO(),
+                Email = email,
+                Name = email.Substring(0, email.IndexOf("@", StringComparison.Ordinal))
+            });
         }
 
         //
@@ -205,6 +216,8 @@ namespace ExpenseManager.Presentation.Controllers
                     result = await _userManager.AddLoginAsync(user, info);
                     if (result.Succeeded)
                     {
+                        CreateExpenseManagerUser(model.Email);
+
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         _logger.LogInformation(6, "User created an account using {Name} provider.", info.LoginProvider);
                         return RedirectToLocal(returnUrl);
