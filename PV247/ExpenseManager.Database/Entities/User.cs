@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using ExpenseManager.Database.Enums;
 using Riganti.Utils.Infrastructure.Core;
 

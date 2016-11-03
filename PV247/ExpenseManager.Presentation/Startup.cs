@@ -1,13 +1,13 @@
-﻿using ExpenseManager.Contract.DTOs;
-using AutoMapper;
+﻿using AutoMapper;
+using ExpenseManager.Business.DTOs;
 using ExpenseManager.Business.Facades;
 using ExpenseManager.Business.Infrastructure;
+using ExpenseManager.Business.Infrastructure.Mapping.Profiles;
 using ExpenseManager.Business.Services;
 using ExpenseManager.Database.DataAccess.Queries;
 using ExpenseManager.Database.DataAccess.Repositories;
 using ExpenseManager.Database.Entities;
 using ExpenseManager.Database.Infrastructure.ConnectionConfiguration;
-using ExpenseManager.Database.Infrastructure.Mapping.Profiles;
 using ExpenseManager.Database.Infrastructure.Query;
 using ExpenseManager.Database.Infrastructure.Repository;
 using ExpenseManager.Database.Infrastructure.UnitOfWork;
@@ -45,10 +45,10 @@ namespace ExpenseManager.Presentation
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {  
-            services.Configure<ConnectionOptions>(options => options.ConnectionString = Configuration.GetConnectionString(ConnectionOptions.ExpenseManagerConnectionStringName));
+            services.Configure<ConnectionOptions>(options => options.ConnectionString = Configuration.GetConnectionString("DefaultConnection"));
 
             // Configure Identity persistence         
-            IdentityDALInstaller.Install(services, Configuration);
+            IdentityDALInstaller.Install(services, Configuration.GetConnectionString("IdentityConnection"));
 
             // Configure BL
             RegisterBusinessLayerDependencies(services);
@@ -107,7 +107,7 @@ namespace ExpenseManager.Presentation
 
             services.AddSingleton<IUnitOfWorkProvider, ExpenseManagerUnitOfWorkProvider>();
 
-            services.AddTransient(typeof(IRepository<,>),typeof(ExpenseManagerRepository<,,>));
+            services.AddTransient(typeof(IRepository<,>),typeof(ExpenseManagerRepository<,>));
 
             services.AddSingleton(typeof(Mapper), 
                 provider => {
@@ -119,15 +119,15 @@ namespace ExpenseManager.Presentation
             });
 
             // Register all repositories
-            services.AddTransient<IRepository<Badge, BadgeDTO, int>, BadgeRepository>();
-            services.AddTransient<IRepository<CostInfo, CostInfoDTO, int>, CostInfoRepository>();
-            services.AddTransient<IRepository<CostType, CostTypeDTO, int>, CostTypeRepository>();
-            services.AddTransient<IRepository<Plan, PlanDTO, int>, PlanRepository>();
-            services.AddTransient<IRepository<User, UserDTO, int>, UserRepository>();
-            services.AddTransient<IRepository<AccountBadge, UserBadgeDTO, int>, AccountBadgeRepository>();
+            services.AddTransient<ExpenseManagerRepository<Badge, int>, BadgeRepository>();
+            services.AddTransient<ExpenseManagerRepository<CostInfo, int>, CostInfoRepository>();
+            services.AddTransient<ExpenseManagerRepository<CostType, int>, CostTypeRepository>();
+            services.AddTransient<ExpenseManagerRepository<Plan, int>, PlanRepository>();
+            services.AddTransient<ExpenseManagerRepository<User, int>, UserRepository>();
+            services.AddTransient<ExpenseManagerRepository<AccountBadge, int>, AccountBadgeRepository>();
             
             // Register all query objects
-            services.AddTransient<ExpenseManagerQuery<PlanDTO>, ListUserPlansQuery>();
+            services.AddTransient<ExpenseManagerQuery<Plan>, ListUserPlansQuery>();
             //TODO add more query objects
 
             // Register all services

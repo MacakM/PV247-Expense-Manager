@@ -1,6 +1,6 @@
-﻿using Microsoft.Build.Framework;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace ExpenseManager.Contract.DTOs
+namespace ExpenseManager.Business.DTOs
 {
     public class BadgeDTO : ExpenseManagerDTO<int>
     {

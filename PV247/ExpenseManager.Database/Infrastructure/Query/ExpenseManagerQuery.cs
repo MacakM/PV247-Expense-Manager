@@ -22,10 +22,6 @@ namespace ExpenseManager.Database.Infrastructure.Query
         /// <summary>
         /// Gets the <see cref="DbContext"/>.
         /// </summary>
-        internal ExpenseDbContext Context
-        {
-            get { return (ExpenseDbContext)ExpenseManagerUnitOfWork.TryGetDbContext(provider); }
-        }
-
+        internal ExpenseDbContext Context => (ExpenseDbContext)ExpenseManagerUnitOfWork.TryGetDbContext(provider);
     }
 }
