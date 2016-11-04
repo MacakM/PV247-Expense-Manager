@@ -7,7 +7,7 @@ namespace ExpenseManager.Database.DataAccess.Repositories
     /// <summary>
     /// Implementation of Repository for CostInfo entity.
     /// </summary>
-    public class CostInfoRepository : ExpenseManagerRepository<CostInfo, int>
+    public class CostInfoRepository : ExpenseManagerRepository<CostInfoModel, int>
     {
         /// <summary>
         /// Create repository.

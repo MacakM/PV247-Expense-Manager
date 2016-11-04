@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Linq.Expressions;
 using AutoMapper;
-using ExpenseManager.Business.DTOs;
+using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.Infrastructure;
 using ExpenseManager.Database.DataAccess.Repositories;
 using ExpenseManager.Database.Entities;
@@ -16,9 +16,9 @@ namespace ExpenseManager.Business.Services.Implementations
     /// <summary>
     /// Provides user related functionality
     /// </summary>
-    public class UserService : ExpenseManagerCrudServiceBase<User, int, UserDTO>, IUserService
+    public class UserService : ExpenseManagerCrudServiceBase<UserModel, int, User>, IUserService
     {
-        public UserService(ExpenseManagerRepository<User, int> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) 
+        public UserService(ExpenseManagerRepository<UserModel, int> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) 
             : base(repository, expenseManagerMapper, unitOfWorkProvider) { }
 
         private UserRepository UserRepository => (UserRepository)Repository;
@@ -27,7 +27,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// Registers user according to provided information
         /// </summary>
         /// <param name="userRegistration">User registration information</param>
-        public void RegisterNewUser(UserDTO userRegistration)
+        public void RegisterNewUser(User userRegistration)
         {
             // create account too or join to another?
             Save(userRegistration);
@@ -36,16 +36,16 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <summary>
         /// Updates existing user according to provided information
         /// </summary>
-        /// <param name="modifiedUserDTO">Updated user information</param>
-        public void UpdatesUser(UserDTO modifiedUserDTO)
+        /// <param name="modifiedUser">Updated user information</param>
+        public void UpdatesUser(User modifiedUser)
         {
             using (var uow = UnitOfWorkProvider.Create())
             {
-                uow.RegisterAfterCommitAction(() => Debug.WriteLine($"Successfully modified user with email: {modifiedUserDTO.Email}"));
-                var user = UserRepository.GetUserByEmail(modifiedUserDTO.Email, EntityIncludes);
+                uow.RegisterAfterCommitAction(() => Debug.WriteLine($"Successfully modified user with email: {modifiedUser.Email}"));
+                var user = UserRepository.GetUserByEmail(modifiedUser.Email, EntityIncludes);
                 if (user == null)
                 {
-                    throw new InvalidOperationException($"Cannot update user with email: { modifiedUserDTO.Email }, the user is not persisted yet!");
+                    throw new InvalidOperationException($"Cannot update user with email: { modifiedUser.Email }, the user is not persisted yet!");
                 }
                 UserRepository.Update(user);
                 uow.Commit();
@@ -57,13 +57,13 @@ namespace ExpenseManager.Business.Services.Implementations
         /// </summary>
         /// <param name="email">User unique email</param>
         /// <param name="includes">Property to include with obtained user</param>
-        /// <returns>UserDTO with user details</returns>
-        public UserDTO GetCurrentlySignedUser(string email, params Expression<Func<UserDTO, object>>[] includes)
+        /// <returns>User with user details</returns>
+        public User GetCurrentlySignedUser(string email, params Expression<Func<User, object>>[] includes)
         {
             using (UnitOfWorkProvider.Create())
             {
-                var entity = UserRepository.GetUserByEmail(email, IncludesHelper.ProcessIncludesList<UserDTO, User>(includes));
-                return ExpenseManagerMapper.Map<User, UserDTO>(entity);
+                var entity = UserRepository.GetUserByEmail(email, IncludesHelper.ProcessIncludesList<User, UserModel>(includes));
+                return ExpenseManagerMapper.Map<UserModel, User>(entity);
             }          
         }
 
@@ -72,21 +72,21 @@ namespace ExpenseManager.Business.Services.Implementations
         /// </summary>
         /// <param name="email">User unique email</param>
         /// <param name="includeAllProperties">Decides whether all properties should be included</param>
-        /// <returns>UserDTO with user details</returns>
-        public UserDTO GetCurrentlySignedUser(string email, bool includeAllProperties = true)
+        /// <returns>User with user details</returns>
+        public User GetCurrentlySignedUser(string email, bool includeAllProperties = true)
         {
             using (UnitOfWorkProvider.Create())
             {              
                 var entity = includeAllProperties ? 
-                    UserRepository.GetUserByEmail(email, nameof(User.Account)) : 
+                    UserRepository.GetUserByEmail(email, nameof(UserModel.Account)) : 
                     UserRepository.GetUserByEmail(email);
-                return ExpenseManagerMapper.Map<User, UserDTO>(entity);
+                return ExpenseManagerMapper.Map<UserModel, User>(entity);
             }
         }
 
         protected override string[] EntityIncludes { get; } =
         {
-            nameof(User.Account)
+            nameof(UserModel.Account)
         };
     }
 }

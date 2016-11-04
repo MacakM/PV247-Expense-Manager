@@ -1,6 +1,6 @@
 using System;
 using System.Linq.Expressions;
-using ExpenseManager.Business.DTOs;
+using ExpenseManager.Business.DataTransferObjects;
 
 namespace ExpenseManager.Business.Services.Interfaces
 {
@@ -10,28 +10,28 @@ namespace ExpenseManager.Business.Services.Interfaces
         /// Registers user according to provided information
         /// </summary>
         /// <param name="userRegistration">User registration information</param>
-        void RegisterNewUser(UserDTO userRegistration);
+        void RegisterNewUser(User userRegistration);
 
         /// <summary>
         /// Updates existing user according to provided information
         /// </summary>
-        /// <param name="modifiedUserDTO">Updated user information</param>
-        void UpdatesUser(UserDTO modifiedUserDTO);
+        /// <param name="modifiedUser">Updated user information</param>
+        void UpdatesUser(User modifiedUser);
 
         /// <summary>
         /// Gets currently signed user according to its email
         /// </summary>
         /// <param name="email">User unique email</param>
         /// <param name="includes">Property to include with obtained user</param>
-        /// <returns>UserDTO with user details</returns>
-        UserDTO GetCurrentlySignedUser(string email, params Expression<Func<UserDTO, object>>[] includes);
+        /// <returns>User with user details</returns>
+        User GetCurrentlySignedUser(string email, params Expression<Func<User, object>>[] includes);
 
         /// <summary>
         /// Gets currently signed user according to its email
         /// </summary>
         /// <param name="email">User unique email</param>
         /// <param name="includeAllProperties">Decides whether all properties should be included</param>
-        /// <returns>UserDTO with user details</returns>
-        UserDTO GetCurrentlySignedUser(string email, bool includeAllProperties = false);
+        /// <returns>User with user details</returns>
+        User GetCurrentlySignedUser(string email, bool includeAllProperties = false);
     }
 }

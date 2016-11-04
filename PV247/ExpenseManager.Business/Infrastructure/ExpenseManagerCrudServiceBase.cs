@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using ExpenseManager.Business.DTOs;
+using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Database.Infrastructure.Repository;
 using Riganti.Utils.Infrastructure.Core;
 
@@ -9,10 +9,10 @@ namespace ExpenseManager.Business.Infrastructure
     /// A base class for CRUD-enabled service, taken from unreleased project of RigantiInfrastructure solution, all credit goes to Tomas Herceg.
     /// </summary>
     /// <typeparam name="TKey">The type of the entity primary key.</typeparam>
-    /// <typeparam name="TDTO">The type of the DTO used in the detail form.</typeparam>
-    public abstract class ExpenseManagerCrudServiceBase<TEntity, TKey, TDTO> 
+    /// <typeparam name="T">The type of the  used in the detail form.</typeparam>
+    public abstract class ExpenseManagerCrudServiceBase<TEntity, TKey, T> 
         where TEntity : class, IEntity<TKey>, new() 
-        where TDTO : ExpenseManagerDTO<TKey>, new()
+        where T : ExpenseManager<TKey>, new()
     {
         public IUnitOfWorkProvider UnitOfWorkProvider { get; }
 
@@ -22,7 +22,7 @@ namespace ExpenseManager.Business.Infrastructure
         public ExpenseManagerRepository<TEntity, TKey> Repository { get; }
 
         /// <summary>
-        /// Gets the service that can map entities to DTOs and populate entities with changes made on DTOs.
+        /// Gets the service that can map entities to s and populate entities with changes made on s.
         /// </summary>
         public IRuntimeMapper ExpenseManagerMapper { get; }
 
@@ -40,14 +40,14 @@ namespace ExpenseManager.Business.Infrastructure
         }
 
         /// <summary>
-        /// Gets the detail DTO for an entity with the specified ID.
+        /// Gets the detail  for an entity with the specified ID.
         /// </summary>
-        public virtual TDTO GetDetail(TKey id)
+        public virtual T GetDetail(TKey id)
         {
             using (UnitOfWorkProvider.Create())
             {
                 var entity = Repository.GetById(id, EntityIncludes);
-                return ExpenseManagerMapper.Map<TEntity, TDTO>(entity);
+                return ExpenseManagerMapper.Map<TEntity, T>(entity);
             }
         }
 
@@ -64,14 +64,14 @@ namespace ExpenseManager.Business.Infrastructure
         }
         
         /// <summary>
-        /// Saves the changes on the specified DTO to the database.
+        /// Saves the changes on the specified  to the database.
         /// </summary>
-        public virtual void Save(TDTO dto)
+        public virtual void Save(T item)
         {
-            var entity = ExpenseManagerMapper.Map<TDTO, TEntity>(dto);
+            var entity = ExpenseManagerMapper.Map<T, TEntity>(item);
             using (UnitOfWorkProvider.Create())
             {
-                var isNew = dto.Id.Equals(default(TKey));
+                var isNew = item.Id.Equals(default(TKey));
                 if (isNew)
                 {
                     Repository.Insert(entity);

@@ -4,7 +4,7 @@ using Riganti.Utils.Infrastructure.Core;
 
 namespace ExpenseManager.Database.DataAccess.Repositories
 {
-    public class AccountRepository : ExpenseManagerRepository<Account, int>
+    public class AccountRepository : ExpenseManagerRepository<AccountModel, int>
     {
         public AccountRepository(IUnitOfWorkProvider provider) : base(provider) { }
     }

@@ -8,7 +8,7 @@ namespace ExpenseManager.Database.Entities
     /// <summary>
     /// Represents table of achieved badges by users.
     /// </summary>
-    public class AccountBadge : IEntity<int>
+    public class AccountBadgeModel : IEntity<int>
     {
         /// <summary>
         /// Id of the achievement of user.
@@ -23,7 +23,7 @@ namespace ExpenseManager.Database.Entities
         /// </summary>
         [Required]
         [ForeignKey("AccountId")]
-        public virtual Account Account { get; set; }
+        public virtual AccountModel Account { get; set; }
         /// <summary>
         /// Badge id.
         /// </summary>
@@ -33,7 +33,7 @@ namespace ExpenseManager.Database.Entities
         /// </summary>
         [Required]
         [ForeignKey("BadgeId")]
-        public virtual Badge Badge { get; set; }
+        public virtual BadgeModel Badge { get; set; }
         /// <summary>
         /// Date when the badge was achieved.
         /// </summary>

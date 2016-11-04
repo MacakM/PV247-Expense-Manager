@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using ExpenseManager.Business.DTOs;
+using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.Facades;
 using ExpenseManager.Database.Enums;
 using ExpenseManager.Identity.Entities;
@@ -119,10 +119,10 @@ namespace ExpenseManager.Presentation.Controllers
 
         private void CreateExpenseManagerUser(string email)
         {
-            _userFacade.RegisterNewUser(new UserDTO
+            _userFacade.RegisterNewUser(new User
             {
                 AccessType = AccountAccessType.Full,
-                AccountDTO = new AccountDTO(),
+                Account = new Account(),
                 Email = email,
                 Name = email.Substring(0, email.IndexOf("@", StringComparison.Ordinal))
             });

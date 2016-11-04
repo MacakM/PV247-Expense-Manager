@@ -9,7 +9,7 @@ namespace ExpenseManager.Database.Entities
     /// <summary>
     /// Represents plan.
     /// </summary>
-    public class Plan : IEntity<int>
+    public class PlanModel : IEntity<int>
     {
         /// <summary>
         /// Id of the plan.
@@ -24,7 +24,7 @@ namespace ExpenseManager.Database.Entities
         /// </summary>
         [Required]
         [ForeignKey("AccountId")]
-        public Account Account { get; set; }
+        public AccountModel Account { get; set; }
         /// <summary>
         /// Description of the plan.
         /// </summary>
@@ -41,7 +41,7 @@ namespace ExpenseManager.Database.Entities
         /// <summary>
         /// Which type of cost is assigned to this plan.
         /// </summary>
-        public CostType PlannedType { get; set; }
+        public CostTypeModel PlannedType { get; set; }
         /// <summary>
         /// Date when is the deadline of the plan.
         /// </summary>

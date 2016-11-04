@@ -7,7 +7,7 @@ namespace ExpenseManager.Database.Entities
     /// <summary>
     /// Represents account of the user.
     /// </summary>
-    public class Account : IEntity<int>
+    public class AccountModel : IEntity<int>
     {
         /// <summary>
         /// Identifier.
@@ -21,18 +21,18 @@ namespace ExpenseManager.Database.Entities
         /// <summary>
         /// List of users that have access to this account.
         /// </summary>
-        public virtual List<User> Users { get; set; }
+        public virtual List<UserModel> Users { get; set; }
         /// <summary>
         /// User's costs.
         /// </summary>
-        public virtual List<CostInfo> Costs { get; set; }
+        public virtual List<CostInfoModel> Costs { get; set; }
         /// <summary>
         /// All plans of the user.
         /// </summary>
-        public virtual List<Plan> Plans { get; set; }
+        public virtual List<PlanModel> Plans { get; set; }
         /// <summary>
         /// All badges of the user.
         /// </summary>
-        public virtual List<AccountBadge> Badges { get; set; }
+        public virtual List<AccountBadgeModel> Badges { get; set; }
     }
 }

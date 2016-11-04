@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using AutoMapper;
-using ExpenseManager.Business.DTOs;
+using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.Infrastructure;
 using ExpenseManager.Business.Services.Interfaces;
 using ExpenseManager.Database.DataAccess.Repositories;
@@ -15,22 +10,22 @@ using Riganti.Utils.Infrastructure.Core;
 
 namespace ExpenseManager.Business.Services.Implementations
 {
-    public class CostInfoAndCrudService : ExpenseManagerQueryAndCrudServiceBase<CostInfo, int, IList<CostInfoDTO>, CostInfoDTO>, ICostInfoAndCrudService
+    public class CostInfoService : ExpenseManagerQueryAndCrudServiceBase<CostInfoModel, int, IList<CostInfo>, CostInfo>, ICostInfoService
     {
         private readonly CostInfoRepository _costInfoRepository;
 
-        public CostInfoAndCrudService(IQuery<IList<CostInfoDTO>> query,
-            ExpenseManagerRepository<CostInfo, int> repository, Mapper expenseManagerMapper,
+        public CostInfoService(IQuery<IList<CostInfo>> query,
+            ExpenseManagerRepository<CostInfoModel, int> repository, Mapper expenseManagerMapper,
             IUnitOfWorkProvider unitOfWorkProvider, CostInfoRepository costInfoRepository)
             : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
         {
             _costInfoRepository = costInfoRepository;
         }
        
-        public void CreateCost(CostInfoDTO costDto)
+        public void CreateCost(CostInfo cost)
         {
             // insert new CostType too?
-            Save(costDto);
+            Save(cost);
         }
 
         public void DeleteCost(int costId)
@@ -42,19 +37,19 @@ namespace ExpenseManager.Business.Services.Implementations
             }
         }
 
-        public CostInfoDTO GetCost(int costId)
+        public CostInfo GetCost(int costId)
         {
             using (UnitOfWorkProvider.Create())
             {
                 var plan = _costInfoRepository.GetById(costId);
-                return plan != null ? Mapper.Map<CostInfoDTO>(plan) : null;
+                return plan != null ? Mapper.Map<CostInfo>(plan) : null;
             }
         }
 
         protected override string[] EntityIncludes { get; } =
         {
-            nameof(CostInfo.Account),
-            nameof(CostInfo.Type)
+            nameof(CostInfoModel.Account),
+            nameof(CostInfoModel.Type)
         };
     }
 }

@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
-using ExpenseManager.Business.DTOs;
+using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.Facades;
 using ExpenseManager.Business.Infrastructure;
 using ExpenseManager.Business.Infrastructure.Mapping.Profiles;
-using ExpenseManager.Business.Services;
 using ExpenseManager.Business.Services.Implementations;
 using ExpenseManager.Business.Services.Interfaces;
 using ExpenseManager.Database.DataAccess.Queries;
@@ -121,19 +120,19 @@ namespace ExpenseManager.Presentation
             });
 
             // Register all repositories
-            services.AddTransient<ExpenseManagerRepository<Badge, int>, BadgeRepository>();
-            services.AddTransient<ExpenseManagerRepository<CostInfo, int>, CostInfoRepository>();
-            services.AddTransient<ExpenseManagerRepository<CostType, int>, CostTypeRepository>();
-            services.AddTransient<ExpenseManagerRepository<Plan, int>, PlanRepository>();
-            services.AddTransient<ExpenseManagerRepository<User, int>, UserRepository>();
-            services.AddTransient<ExpenseManagerRepository<AccountBadge, int>, AccountBadgeRepository>();
+            services.AddTransient<ExpenseManagerRepository<BadgeModel, int>, BadgeRepository>();
+            services.AddTransient<ExpenseManagerRepository<CostInfoModel, int>, CostInfoRepository>();
+            services.AddTransient<ExpenseManagerRepository<CostTypeModel, int>, CostTypeRepository>();
+            services.AddTransient<ExpenseManagerRepository<PlanModel, int>, PlanRepository>();
+            services.AddTransient<ExpenseManagerRepository<UserModel, int>, UserRepository>();
+            services.AddTransient<ExpenseManagerRepository<AccountBadgeModel, int>, AccountBadgeRepository>();
             
             // Register all query objects
-            services.AddTransient<ExpenseManagerQuery<Plan>, ListUserPlansQuery>();
+            services.AddTransient<ExpenseManagerQuery<PlanModel>, ListUserPlansQuery>();
             //TODO add more query objects
 
             // Register all services
-            services.AddTransient(typeof(ExpenseManagerCrudServiceBase<User,int,UserDTO>), typeof(UserService));
+            services.AddTransient(typeof(ExpenseManagerCrudServiceBase<UserModel, int,User>), typeof(UserService));
             services.AddTransient<IUserService, UserService>();
             //TODO add more services
 

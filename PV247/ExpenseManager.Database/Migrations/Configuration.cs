@@ -13,7 +13,7 @@ namespace ExpenseManager.Database.Migrations
 
         protected override void Seed(ExpenseDbContext context)
         {
-            context.Users.AddOrUpdate(new User { Name = "Demo user", Email = "demo@demo.com"});
+            context.Users.AddOrUpdate(new UserModel { Name = "Demo user", Email = "demo@demo.com"});
         }
     }
 }
