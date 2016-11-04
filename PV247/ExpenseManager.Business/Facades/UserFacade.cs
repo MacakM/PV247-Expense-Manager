@@ -1,4 +1,4 @@
-﻿using ExpenseManager.Business.DTOs;
+﻿using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.Services;
 using ExpenseManager.Business.Services.Interfaces;
 
@@ -20,7 +20,7 @@ namespace ExpenseManager.Business.Facades
         /// Registers user according to provided information
         /// </summary>
         /// <param name="userRegistration">User registration information</param>
-        public void RegisterNewUser(UserDTO userRegistration)
+        public void RegisterNewUser(User userRegistration)
         {
             _userService.RegisterNewUser(userRegistration);
         }
@@ -28,10 +28,10 @@ namespace ExpenseManager.Business.Facades
         /// <summary>
         /// Updates existing user according to provided information
         /// </summary>
-        /// <param name="modifiedUserDTO">Updated user information</param>
-        public void UpdatesUser(UserDTO modifiedUserDTO)
+        /// <param name="modifiedUser">Updated user information</param>
+        public void UpdatesUser(User modifiedUser)
         {
-            _userService.UpdatesUser(modifiedUserDTO);
+            _userService.UpdatesUser(modifiedUser);
         }
 
         /// <summary>
@@ -39,8 +39,8 @@ namespace ExpenseManager.Business.Facades
         /// </summary>
         /// <param name="email">User unique email</param>
         /// <param name="includeAllProperties">Decides whether all properties should be included</param>
-        /// <returns>UserDTO with user details</returns>
-        public UserDTO GetCurrentlySignedUser(string email, bool includeAllProperties = false)
+        /// <returns>User with user details</returns>
+        public User GetCurrentlySignedUser(string email, bool includeAllProperties = false)
         {
             return _userService.GetCurrentlySignedUser(email, includeAllProperties);
         }

@@ -7,7 +7,7 @@ namespace ExpenseManager.Database.Entities
     /// <summary>
     /// Represents some badge that can users achieve.
     /// </summary>
-    public class Badge : IEntity<int>
+    public class BadgeModel : IEntity<int>
     {
         /// <summary>
         /// Badge id.
@@ -28,6 +28,6 @@ namespace ExpenseManager.Database.Entities
         /// <summary>
         /// Users that achieved this Badge.
         /// </summary>
-        public virtual List<AccountBadge> Users { get; set; }
+        public virtual List<AccountBadgeModel> Users { get; set; }
     }
 }

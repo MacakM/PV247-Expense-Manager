@@ -1,6 +1,6 @@
-﻿namespace ExpenseManager.Business.DTOs
+﻿namespace ExpenseManager.Business.DataTransferObjects
 {
-    public class PlanDTO : ExpenseManagerDTO<int>
+    public class Plan : ExpenseManager<int>
     {
         /// <summary>
         /// User that created this plan.
@@ -20,14 +20,14 @@
         /// <summary>
         /// Which type of cost is assigned to this plan.
         /// </summary>
-        public CostTypeDTO PlannedType { get; set; }
+        public CostType PlannedType { get; set; }
 
         /// <summary>
         /// States whether this plan is achieved.
         /// </summary>
         public bool IsCompleted { get; set; }
 
-        protected bool Equals(PlanDTO other)
+        protected bool Equals(Plan other)
         {
             return Id == other.Id && UserId == other.UserId && string.Equals(Description, other.Description) && PlannedMoney == other.PlannedMoney && Equals(PlannedType, other.PlannedType) && IsCompleted == other.IsCompleted;
         }
@@ -37,7 +37,7 @@
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != this.GetType()) return false;
-            return Equals((PlanDTO)obj);
+            return Equals((Plan)obj);
         }
 
         public override int GetHashCode()

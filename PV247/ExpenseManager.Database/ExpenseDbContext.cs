@@ -9,13 +9,13 @@ namespace ExpenseManager.Database
 
         public ExpenseDbContext(string nameOrConnectionString) : base(nameOrConnectionString) { }
 
-        public DbSet<Badge> Badges { get; set; }
-        public DbSet<CostInfo> CostInfos { get; set; }
-        public DbSet<CostType> CostTypes { get; set; }
-        public DbSet<Plan> Plans { get; set; }
-        public DbSet<User> Users { get; set; }
-        public DbSet<Account> Accounts { get; set; }
-        public DbSet<AccountBadge> AccountBadges { get; set; }
+        public DbSet<BadgeModel> Badges { get; set; }
+        public DbSet<CostInfoModel> CostInfos { get; set; }
+        public DbSet<CostTypeModel> CostTypes { get; set; }
+        public DbSet<PlanModel> Plans { get; set; }
+        public DbSet<UserModel> Users { get; set; }
+        public DbSet<AccountModel> Accounts { get; set; }
+        public DbSet<AccountBadgeModel> AccountBadges { get; set; }
         
     }
 }

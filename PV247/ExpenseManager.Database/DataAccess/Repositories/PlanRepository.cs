@@ -7,7 +7,7 @@ namespace ExpenseManager.Database.DataAccess.Repositories
     /// <summary>
     /// Implementation of Repository for Plan entity.
     /// </summary>
-    public class PlanRepository : ExpenseManagerRepository<Plan, int>
+    public class PlanRepository : ExpenseManagerRepository<PlanModel, int>
     {
         /// <summary>
         /// Create repository.

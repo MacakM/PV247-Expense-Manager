@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 namespace ExpenseManager.Database.Infrastructure.Utils
 {
     /// <summary>
-    /// Helper class for converting DTO property includes into entity property paths
+    /// Helper class for converting  property includes into entity property paths
     /// </summary>
     public static class IncludesHelper
     {
@@ -17,7 +17,7 @@ namespace ExpenseManager.Database.Infrastructure.Utils
         /// Process list of includes.
         /// </summary>
         /// <param name="includes">includes</param>
-        public static string[] ProcessIncludesList<TDTO,TEntity>(Expression<Func<TDTO, object>>[] includes)
+        public static string[] ProcessIncludesList<T,TEntity>(Expression<Func<T, object>>[] includes)
         {
             var includeList = new List<string>();
             foreach (var expressionBodyData in includes

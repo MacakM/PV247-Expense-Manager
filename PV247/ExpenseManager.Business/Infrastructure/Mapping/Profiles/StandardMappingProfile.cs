@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using ExpenseManager.Business.DTOs;
+using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Database.Entities;
 
 namespace ExpenseManager.Business.Infrastructure.Mapping.Profiles
@@ -14,8 +14,8 @@ namespace ExpenseManager.Business.Infrastructure.Mapping.Profiles
         /// </summary>
         public StandardMappingProfile()
         {
-            CreateMap<User, UserDTO>().ReverseMap();
-            CreateMap<Plan, PlanDTO>().ReverseMap();
+            CreateMap<UserModel, User>().ReverseMap();
+            CreateMap<PlanModel, Plan>().ReverseMap();
         }
     }
 }

@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ExpenseManager.Business.DTOs
+namespace ExpenseManager.Business.DataTransferObjects
 {
-    public class BadgeDTO : ExpenseManagerDTO<int>
+    public class Badge : ExpenseManager<int>
     {
         /// <summary>
         /// Description how achieve this badge.

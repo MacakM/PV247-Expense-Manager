@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ExpenseManager.Business.DTOs;
+using ExpenseManager.Business.DataTransferObjects;
 
 namespace ExpenseManager.Business.Services.Interfaces
 {
-    public interface ICostInfoAndCrudService
+    public interface ICostInfoService
     {
-        void CreateCost(CostInfoDTO costDto);
+        void CreateCost(CostInfo cost);
         void DeleteCost(int costId);
-        CostInfoDTO GetCost(int costId);
+        CostInfo GetCost(int costId);
     }
 }

@@ -1,6 +1,6 @@
-﻿namespace ExpenseManager.Business.DTOs
+﻿namespace ExpenseManager.Business.DataTransferObjects
 {
-    public class CostTypeDTO : ExpenseManagerDTO<int>
+    public class CostType : ExpenseManager<int>
     {
         /// <summary>
         /// Name of this type.

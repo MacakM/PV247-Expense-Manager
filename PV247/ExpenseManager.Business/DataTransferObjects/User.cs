@@ -1,9 +1,10 @@
 ﻿
 using ExpenseManager.Database.Enums;
+using Riganti.Utils.Infrastructure.Core;
 
-namespace ExpenseManager.Business.DTOs
+namespace ExpenseManager.Business.DataTransferObjects
 {
-    public class UserDTO : ExpenseManagerDTO<int>
+    public class User : ExpenseManager<int>
     {
         /// <summary>
         /// Name of the user.
@@ -18,17 +19,17 @@ namespace ExpenseManager.Business.DTOs
         /// <summary>
         /// Account of the user.
         /// </summary>
-        public AccountDTO AccountDTO { get; set; }
+        public Account Account { get; set; }
 
         /// <summary>
         /// Access type of the user.
         /// </summary>
         public AccountAccessType AccessType { get; set; }
 
-        protected bool Equals(UserDTO other)
+        protected bool Equals(User other)
         {
             return string.Equals(Name, other.Name) && string.Equals(Email, other.Email) &&
-                Equals(AccountDTO, other.AccountDTO) && AccessType == other.AccessType;
+                Equals(Account, other.Account) && AccessType == other.AccessType;
         }
 
         public override bool Equals(object obj)
@@ -41,7 +42,7 @@ namespace ExpenseManager.Business.DTOs
             {
                 return true;
             }
-            return obj.GetType() == GetType() && Equals((UserDTO) obj);
+            return obj.GetType() == GetType() && Equals((User) obj);
         }
 
         public override int GetHashCode()
@@ -50,7 +51,7 @@ namespace ExpenseManager.Business.DTOs
             {
                 var hashCode = Name?.GetHashCode() ?? 0;
                 hashCode = (hashCode*397) ^ (Email?.GetHashCode() ?? 0);
-                hashCode = (hashCode*397) ^ (AccountDTO?.GetHashCode() ?? 0);
+                hashCode = (hashCode*397) ^ (Account?.GetHashCode() ?? 0);
                 hashCode = (hashCode*397) ^ (int) AccessType;
                 return hashCode;
             }

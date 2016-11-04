@@ -7,7 +7,7 @@ namespace ExpenseManager.Database.DataAccess.Repositories
     /// <summary>
     /// Implementation of Repository for UserBadge entity.
     /// </summary>
-    public class AccountBadgeRepository : ExpenseManagerRepository<AccountBadge, int>
+    public class AccountBadgeRepository : ExpenseManagerRepository<AccountBadgeModel, int>
     {
         /// <summary>
         /// Create repository.

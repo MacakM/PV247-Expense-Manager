@@ -9,7 +9,7 @@ namespace ExpenseManager.Database.DataAccess.Repositories
     /// <summary>
     /// Implementation of Repository for User entity.
     /// </summary>
-    public class UserRepository : ExpenseManagerRepository<User, int>
+    public class UserRepository : ExpenseManagerRepository<UserModel, int>
     {
         /// <summary>
         /// Create repository.
@@ -22,10 +22,10 @@ namespace ExpenseManager.Database.DataAccess.Repositories
         /// </summary>
         /// <param name="email">User unique email</param>
         /// <param name="includes">Property to include with obtained user</param>
-        /// <returns>UserDTO with user details</returns>
-        public User GetUserByEmail(string email, params string[] includes)
+        /// <returns>User with user details</returns>
+        public UserModel GetUserByEmail(string email, params string[] includes)
         {
-            IQueryable<User> users = Context.Set<User>();
+            IQueryable<UserModel> users = Context.Set<UserModel>();
 
             // Include all required properties
             users = includes.Aggregate(users, (current, include) => current.Include(include));

@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using AutoMapper;
-using ExpenseManager.Business.DTOs;
+using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.Infrastructure;
 using ExpenseManager.Business.Services.Interfaces;
 using ExpenseManager.Database.DataAccess.Repositories;
@@ -13,28 +12,28 @@ using Riganti.Utils.Infrastructure.Core;
 
 namespace ExpenseManager.Business.Services.Implementations
 {
-    public class PlanAndCrudService : ExpenseManagerQueryAndCrudServiceBase<Plan, int, IList<PlanDTO>, PlanDTO>, IPlanAndCrudService
+    public class PlanService : ExpenseManagerQueryAndCrudServiceBase<PlanModel, int, IList<Plan>, Plan>, IPlanService
     {
         private readonly PlanRepository _planRepository;
 
-        public PlanAndCrudService(IQuery<IList<PlanDTO>> query, ExpenseManagerRepository<Plan, int> repository,
+        public PlanService(IQuery<IList<Plan>> query, ExpenseManagerRepository<PlanModel, int> repository,
             Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider, PlanRepository planRepository)
             : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
         {
             _planRepository = planRepository;
         }
 
-        public void CreatePlan(PlanDTO planDto)
+        public void CreatePlan(Plan plan)
         {
-            Save(planDto);
+            Save(plan);
         }
 
-        public void EditPlan(PlanDTO planDto)
+        public void EditPlan(Plan planEdited)
         {
             using (var uow = UnitOfWorkProvider.Create())
             {
-                var plan = _planRepository.GetById(planDto.Id, EntityIncludes);
-                Mapper.Map(planDto, plan);
+                var plan = _planRepository.GetById(planEdited.Id, EntityIncludes);
+                Mapper.Map(plan, plan);
                 _planRepository.Update(plan);
                 uow.Commit();
             }
@@ -49,24 +48,24 @@ namespace ExpenseManager.Business.Services.Implementations
             }
         }
 
-        public PlanDTO GetPlan(int planId)
+        public Plan GetPlan(int planId)
         {
             using (UnitOfWorkProvider.Create())
             {
                 var plan = _planRepository.GetById(planId);
-                return plan != null ? Mapper.Map<PlanDTO>(plan) : null;
+                return plan != null ? Mapper.Map<Plan>(plan) : null;
             }
         }
 
-        public IEnumerable<PlanDTO> ListPlans(PlanFilter filter, int requiredPage = 1)
+        public IEnumerable<Plan> ListPlans(PlanFilter filter, int requiredPage = 1)
         {
             throw new NotImplementedException();
         }
 
         protected override string[] EntityIncludes { get; } =
         {
-            nameof(Plan.Account),
-            nameof(Plan.PlannedType)
+            nameof(PlanModel.Account),
+            nameof(PlanModel.PlannedType)
         };
     }
 }

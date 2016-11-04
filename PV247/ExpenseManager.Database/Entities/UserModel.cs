@@ -7,7 +7,7 @@ namespace ExpenseManager.Database.Entities
     /// <summary>
     /// Class representing user.
     /// </summary>
-    public class User : IEntity<int>
+    public class UserModel : IEntity<int>
     {
         /// <summary>
         /// Id of the user.
@@ -27,7 +27,7 @@ namespace ExpenseManager.Database.Entities
         /// Account of the user.
         /// </summary>
         [Required]
-        public Account Account { get; set; }
+        public AccountModel Account { get; set; }
         /// <summary>
         /// Access type of the user.
         /// </summary>

@@ -8,7 +8,7 @@ namespace ExpenseManager.Database.Entities
     /// <summary>
     /// Represents information about user's costs.
     /// </summary>
-    public class CostInfo : IEntity<int>
+    public class CostInfoModel : IEntity<int>
     {
         /// <summary>
         /// Id of the cost info.
@@ -37,7 +37,7 @@ namespace ExpenseManager.Database.Entities
         /// </summary>
         [Required]
         [ForeignKey("AccountId")]
-        public Account Account { get; set; }
+        public AccountModel Account { get; set; }
         /// <summary>
         /// Type id.
         /// </summary>
@@ -47,7 +47,7 @@ namespace ExpenseManager.Database.Entities
         /// </summary>
         [Required]
         [ForeignKey("TypeId")]
-        public CostType Type { get; set; }
+        public CostTypeModel Type { get; set; }
         /// <summary>
         /// State whether this cost is periodic each month.
         /// </summary>

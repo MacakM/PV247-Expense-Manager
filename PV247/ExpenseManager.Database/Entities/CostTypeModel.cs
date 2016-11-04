@@ -7,7 +7,7 @@ namespace ExpenseManager.Database.Entities
     /// <summary>
     /// Represents type of the cost information.
     /// </summary>
-    public class CostType : IEntity<int>
+    public class CostTypeModel : IEntity<int>
     {
         /// <summary>
         /// Id of the cost type.
@@ -21,6 +21,6 @@ namespace ExpenseManager.Database.Entities
         /// <summary>
         /// All costs of this type.
         /// </summary>
-        public virtual List<CostInfo> CostInfoList { get; set; }
+        public virtual List<CostInfoModel> CostInfoList { get; set; }
     }
 }

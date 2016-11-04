@@ -9,7 +9,7 @@ namespace ExpenseManager.Database.DataAccess.Queries
     /// <summary>
     /// Implementation of Query for user's plans.
     /// </summary>
-    public class ListUserPlansQuery : ExpenseManagerQuery<Plan>
+    public class ListUserPlansQuery : ExpenseManagerQuery<PlanModel>
     {
         /// <summary>
         /// Plan filter.
@@ -26,9 +26,9 @@ namespace ExpenseManager.Database.DataAccess.Queries
         /// Return IQueryable.
         /// </summary>
         /// <returns>IQueryable</returns>
-        protected override IQueryable<Plan> GetQueryable()
+        protected override IQueryable<PlanModel> GetQueryable()
         {
-            IQueryable<Plan> plans = Context.Plans;
+            IQueryable<PlanModel> plans = Context.Plans;
             if (Filter.AccountId > 0)
             {
                 plans = plans.Where(plan => plan.AccountId == Filter.AccountId);
