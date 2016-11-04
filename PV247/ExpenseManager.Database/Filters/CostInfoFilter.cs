@@ -17,7 +17,7 @@ namespace ExpenseManager.Database.Filters
         public int? AccountId { get; set; }
         public DateTime? CreatedFrom { get; set; }
         public DateTime? CreatedTo { get; set; }
-        public int TypeId { get; set; }
+        public int? TypeId { get; set; }
         public bool? IsPeriodic { get; set; }
     }
 }

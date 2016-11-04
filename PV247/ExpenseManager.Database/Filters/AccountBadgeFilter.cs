@@ -11,8 +11,8 @@ namespace ExpenseManager.Database.Filters
 {
     public class AccountBadgeFilter : FilterBase
     {
-        public int AccountId { get; set; }
-        public int BadgeId { get; set; }
+        public int? AccountId { get; set; }
+        public int? BadgeId { get; set; }
         public DateTime? AchievedFrom { get; set; }
         public DateTime? AchievedTo { get; set; }
     }

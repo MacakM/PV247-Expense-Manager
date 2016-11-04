@@ -8,7 +8,7 @@ namespace ExpenseManager.Database.Filters
 {
     public abstract class FilterBase
     {
-        private int _pageSize;
+        private int _pageSize = 10;
         public int PageSize
         {
             get { return PageNumber == null ? int.MaxValue : _pageSize; }

@@ -86,9 +86,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Utils\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\ExpenseManager.Database\ExpenseManager.Database.csproj">
       <Project>{dc7d8469-e72e-46b6-9d12-f5102efd49b1}</Project>

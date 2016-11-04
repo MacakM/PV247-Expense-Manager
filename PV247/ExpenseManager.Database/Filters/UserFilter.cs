@@ -11,22 +11,9 @@ namespace ExpenseManager.Database.Filters
 {
     public class UserFilter : FilterBase
     {
-        /// <summary>
-        /// Name of the user.
-        /// </summary>
-        [Required]
         public string Name { get; set; }
-        /// <summary>
-        /// Email of the user.
-        /// </summary>
-        [Required]
         public string Email { get; set; }
-        /// <summary>
-        /// Account of the user.
-        /// </summary>
-        [Required]
-        public AccountModel Account { get; set; }
-        public AccountAccessType AccessType { get; set; }
-
+        public bool ExactMatch { get; set; }
+        public AccountAccessType? AccessType { get; set; }
     }
 }
