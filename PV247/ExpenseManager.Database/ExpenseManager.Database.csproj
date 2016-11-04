@@ -90,8 +90,14 @@
     <Compile Include="Enums\AccountAccessType.cs" />
     <Compile Include="Enums\PlanType.cs" />
     <Compile Include="ExpenseDbContext.cs" />
+    <Compile Include="Filters\AccountBadgeFilter.cs" />
+    <Compile Include="Filters\AccountFilter.cs" />
     <Compile Include="Filters\BadgeFilter.cs" />
+    <Compile Include="Filters\CostInfoFilter.cs" />
+    <Compile Include="Filters\CostTypeFilter.cs" />
+    <Compile Include="Filters\FilterBase.cs" />
     <Compile Include="Filters\PlanFilter.cs" />
+    <Compile Include="Filters\UserFilter.cs" />
     <Compile Include="Infrastructure\ConnectionConfiguration\ConnectionOptions.cs" />
     <Compile Include="Infrastructure\Query\ExpenseManagerQuery.cs" />
     <Compile Include="Infrastructure\Repository\ExpenseManagerRepository.cs" />
