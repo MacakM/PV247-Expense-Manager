@@ -8,9 +8,9 @@ using ExpenseManager.Database.Entities;
 
 namespace ExpenseManager.Database.Filters
 {
-    public class BadgeFilter : FilterBase
+    public class AccountFilter : FilterBase
     {
-        public string Description { get; set; }
+        public string Name { get; set; }
         public bool DoExactMatch { get; set; }
     }
 }
