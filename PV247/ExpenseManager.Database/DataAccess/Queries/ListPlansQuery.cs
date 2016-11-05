@@ -78,9 +78,15 @@ namespace ExpenseManager.Database.DataAccess.Queries
             {
                 plans = plans.Where(plan => plan.PlannedMoney <= Filter.PlannedMoneyTo.Value);
             }
-            if (Filter.OrderByDesc == null || string.IsNullOrEmpty(Filter.OrderByPropertyName)) return plans;
+            if (Filter.OrderByDesc == null || string.IsNullOrEmpty(Filter.OrderByPropertyName))
+            {
+                return plans;
+            }
             System.Reflection.PropertyInfo prop = typeof(AccountBadgeModel).GetProperty(Filter.OrderByPropertyName);
-            if (prop == null) return plans.Take(Filter.PageSize);
+            if (prop == null)
+            {
+                return plans.Take(Filter.PageSize);
+            }
             plans = Filter.OrderByDesc.Value ? plans.OrderByDescending(x => prop.GetValue(x, null)) : plans.OrderBy(x => prop.GetValue(x, null));
             if (Filter.PageNumber != null)
             {

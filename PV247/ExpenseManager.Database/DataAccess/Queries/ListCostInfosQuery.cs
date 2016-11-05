@@ -63,9 +63,15 @@ namespace ExpenseManager.Database.DataAccess.Queries
             {
                 costInfos = costInfos.Where(costInfo => costInfo.Money <= Filter.MoneyTo.Value);
             }
-            if (Filter.OrderByDesc == null || string.IsNullOrEmpty(Filter.OrderByPropertyName)) return costInfos;
+            if (Filter.OrderByDesc == null || string.IsNullOrEmpty(Filter.OrderByPropertyName))
+            {
+                return costInfos;
+            }
             System.Reflection.PropertyInfo prop = typeof(AccountBadgeModel).GetProperty(Filter.OrderByPropertyName);
-            if (prop == null) return costInfos.Take(Filter.PageSize);
+            if (prop == null)
+            {
+                return costInfos.Take(Filter.PageSize);
+            }
             costInfos = Filter.OrderByDesc.Value ? costInfos.OrderByDescending(x => prop.GetValue(x, null)) : costInfos.OrderBy(x => prop.GetValue(x, null));
             if (Filter.PageNumber != null)
             {

@@ -27,9 +27,15 @@ namespace ExpenseManager.Database.DataAccess.Queries
             {
                 accounts = Filter.DoExactMatch ? accounts.Where(account => account.Name.Equals(Filter.Name)) : accounts.Where(account => account.Name.Contains(Filter.Name));
             }
-            if (Filter.OrderByDesc == null || string.IsNullOrEmpty(Filter.OrderByPropertyName)) return accounts;
+            if (Filter.OrderByDesc == null || string.IsNullOrEmpty(Filter.OrderByPropertyName))
+            {
+                return accounts;
+            }
             System.Reflection.PropertyInfo prop = typeof(AccountModel).GetProperty(Filter.OrderByPropertyName);
-            if (prop == null) return accounts.Take(Filter.PageSize);
+            if (prop == null)
+            {
+                return accounts.Take(Filter.PageSize);
+            }
             accounts = Filter.OrderByDesc.Value ? accounts.OrderByDescending(x => prop.GetValue(x, null)) : accounts.OrderBy(x => prop.GetValue(x, null));
             if (Filter.PageNumber != null)
             {

@@ -27,9 +27,15 @@ namespace ExpenseManager.Database.DataAccess.Queries
             {
                 costTypes = Filter.DoExactMatch ? costTypes.Where(costType => costType.Name.Equals(Filter.Name)) : costTypes.Where(costType => costType.Name.Contains(Filter.Name));
             }
-            if (Filter.OrderByDesc == null || string.IsNullOrEmpty(Filter.OrderByPropertyName)) return costTypes;
+            if (Filter.OrderByDesc == null || string.IsNullOrEmpty(Filter.OrderByPropertyName))
+            {
+                return costTypes;
+            }
             System.Reflection.PropertyInfo prop = typeof(AccountBadgeModel).GetProperty(Filter.OrderByPropertyName);
-            if (prop == null) return costTypes.Take(Filter.PageSize);
+            if (prop == null)
+            {
+                return costTypes.Take(Filter.PageSize);
+            }
             costTypes = Filter.OrderByDesc.Value ? costTypes.OrderByDescending(x => prop.GetValue(x, null)) : costTypes.OrderBy(x => prop.GetValue(x, null));
             if (Filter.PageNumber != null)
             {

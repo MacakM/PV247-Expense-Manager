@@ -44,9 +44,15 @@ namespace ExpenseManager.Database.DataAccess.Queries
             {
                 users = users.Where(user => user.AccessType == Filter.AccessType.Value);
             }
-            if (Filter.OrderByDesc == null || string.IsNullOrEmpty(Filter.OrderByPropertyName)) return users;
+            if (Filter.OrderByDesc == null || string.IsNullOrEmpty(Filter.OrderByPropertyName))
+            {
+                return users;
+            }
             System.Reflection.PropertyInfo prop = typeof(AccountBadgeModel).GetProperty(Filter.OrderByPropertyName);
-            if (prop == null) return users.Take(Filter.PageSize);
+            if (prop == null)
+            {
+                return users.Take(Filter.PageSize);
+            }
             users = Filter.OrderByDesc.Value ? users.OrderByDescending(x => prop.GetValue(x, null)) : users.OrderBy(x => prop.GetValue(x, null));
             if (Filter.PageNumber != null)
             {

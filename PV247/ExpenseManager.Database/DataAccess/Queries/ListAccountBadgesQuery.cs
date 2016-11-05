@@ -47,9 +47,15 @@ namespace ExpenseManager.Database.DataAccess.Queries
             {
                 accountBadges = accountBadges.Where(plan => plan.Achieved <= Filter.AchievedTo);
             }
-            if (Filter.OrderByDesc == null || string.IsNullOrEmpty(Filter.OrderByPropertyName)) return accountBadges;
+            if (Filter.OrderByDesc == null || string.IsNullOrEmpty(Filter.OrderByPropertyName))
+            {
+                return accountBadges;
+            }
             System.Reflection.PropertyInfo prop = typeof(AccountBadgeModel).GetProperty(Filter.OrderByPropertyName);
-            if (prop == null) return accountBadges.Take(Filter.PageSize);
+            if (prop == null)
+            {
+                return accountBadges.Take(Filter.PageSize);
+            }
             accountBadges = Filter.OrderByDesc.Value ? accountBadges.OrderByDescending(x => prop.GetValue(x, null)) : accountBadges.OrderBy(x => prop.GetValue(x, null));
             if (Filter.PageNumber != null)
             {
