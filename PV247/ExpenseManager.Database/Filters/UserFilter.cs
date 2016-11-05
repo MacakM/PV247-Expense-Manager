@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ExpenseManager.Database.Entities;
-using ExpenseManager.Database.Enums;
+﻿using ExpenseManager.Database.Enums;
 
 namespace ExpenseManager.Database.Filters
 {
@@ -13,6 +6,8 @@ namespace ExpenseManager.Database.Filters
     {
         public string Name { get; set; }
         public string Email { get; set; }
+        public int? AccountId { get; set; }
+        public string AccountName { get; set; }
         public bool DoExactMatch { get; set; }
         public AccountAccessType? AccessType { get; set; }
     }

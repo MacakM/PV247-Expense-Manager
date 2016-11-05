@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using ExpenseManager.Database.Entities;
 using ExpenseManager.Database.Filters;
 using ExpenseManager.Database.Infrastructure.Query;
@@ -26,7 +27,15 @@ namespace ExpenseManager.Database.DataAccess.Queries
             {
                 accounts = Filter.DoExactMatch ? accounts.Where(account => account.Name.Equals(Filter.Name)) : accounts.Where(account => account.Name.Contains(Filter.Name));
             }
-            return accounts;
+            if (Filter.OrderByDesc == null || string.IsNullOrEmpty(Filter.OrderByPropertyName)) return accounts;
+            System.Reflection.PropertyInfo prop = typeof(AccountModel).GetProperty(Filter.OrderByPropertyName);
+            if (prop == null) return accounts.Take(Filter.PageSize);
+            accounts = Filter.OrderByDesc.Value ? accounts.OrderByDescending(x => prop.GetValue(x, null)) : accounts.OrderBy(x => prop.GetValue(x, null));
+            if (Filter.PageNumber != null)
+            {
+                accounts = accounts.Skip(Math.Max(0, Filter.PageNumber.Value - 1) * Filter.PageSize);
+            }
+            return accounts.Take(Filter.PageSize);
         }
     }
 }

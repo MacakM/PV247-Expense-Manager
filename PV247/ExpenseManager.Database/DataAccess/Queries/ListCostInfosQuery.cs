@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using ExpenseManager.Database.Entities;
 using ExpenseManager.Database.Filters;
 using ExpenseManager.Database.Infrastructure.Query;
@@ -16,11 +17,19 @@ namespace ExpenseManager.Database.DataAccess.Queries
 
         protected override IQueryable<CostInfoModel> GetQueryable()
         {
-            IQueryable<CostInfoModel> costInfos = Context.CostInfos;
+            IQueryable<CostInfoModel> costInfos = Context.CostInfos.Include(nameof(CostInfoModel.Account)).Include(nameof(CostInfoModel.Type));
 
             if (Filter == null)
             {
                 return costInfos;
+            }
+            if (!string.IsNullOrEmpty(Filter.AccountName))
+            {
+                costInfos = Filter.DoExactMatch ? costInfos.Where(costInfo => costInfo.Account.Name.Equals(Filter.AccountName)) : costInfos.Where(costInfo => costInfo.Account.Name.Contains(Filter.AccountName));
+            }
+            if (!string.IsNullOrEmpty(Filter.TypeName))
+            {
+                costInfos = Filter.DoExactMatch ? costInfos.Where(costInfo => costInfo.Type.Name.Equals(Filter.TypeName)) : costInfos.Where(costInfo => costInfo.Type.Name.Contains(Filter.TypeName));
             }
             if (Filter.AccountId != null)
             {
@@ -54,7 +63,15 @@ namespace ExpenseManager.Database.DataAccess.Queries
             {
                 costInfos = costInfos.Where(costInfo => costInfo.Money <= Filter.MoneyTo.Value);
             }
-            return costInfos;
+            if (Filter.OrderByDesc == null || string.IsNullOrEmpty(Filter.OrderByPropertyName)) return costInfos;
+            System.Reflection.PropertyInfo prop = typeof(AccountBadgeModel).GetProperty(Filter.OrderByPropertyName);
+            if (prop == null) return costInfos.Take(Filter.PageSize);
+            costInfos = Filter.OrderByDesc.Value ? costInfos.OrderByDescending(x => prop.GetValue(x, null)) : costInfos.OrderBy(x => prop.GetValue(x, null));
+            if (Filter.PageNumber != null)
+            {
+                costInfos = costInfos.Skip(Math.Max(0, Filter.PageNumber.Value - 1) * Filter.PageSize);
+            }
+            return costInfos.Take(Filter.PageSize);
         }
     }
 }

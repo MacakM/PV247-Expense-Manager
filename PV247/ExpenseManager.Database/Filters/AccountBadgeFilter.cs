@@ -12,7 +12,10 @@ namespace ExpenseManager.Database.Filters
     public class AccountBadgeFilter : FilterBase
     {
         public int? AccountId { get; set; }
+        public string AccountName { get; set; }
+        public bool DoExactMatch { get; set; }
         public int? BadgeId { get; set; }
+        public string BadgeDescription { get; set; }
         public DateTime? AchievedFrom { get; set; }
         public DateTime? AchievedTo { get; set; }
     }

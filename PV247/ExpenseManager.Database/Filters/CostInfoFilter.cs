@@ -15,9 +15,12 @@ namespace ExpenseManager.Database.Filters
         public int? MoneyFrom { get; set; }
         public int? MoneyTo { get; set; }
         public int? AccountId { get; set; }
+        public string AccountName { get; set; }
+        public bool DoExactMatch { get; set; }
         public DateTime? CreatedFrom { get; set; }
         public DateTime? CreatedTo { get; set; }
         public int? TypeId { get; set; }
+        public string TypeName { get; set; }
         public bool? IsPeriodic { get; set; }
     }
 }

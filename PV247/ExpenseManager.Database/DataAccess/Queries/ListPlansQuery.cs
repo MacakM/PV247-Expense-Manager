@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using ExpenseManager.Database.Entities;
 using ExpenseManager.Database.Filters;
 using ExpenseManager.Database.Infrastructure.Query;
@@ -28,10 +29,26 @@ namespace ExpenseManager.Database.DataAccess.Queries
         /// <returns>IQueryable</returns>
         protected override IQueryable<PlanModel> GetQueryable()
         {
-            IQueryable<PlanModel> plans = Context.Plans;
+            IQueryable<PlanModel> plans = Context.Plans.Include(nameof(PlanModel.Account)).Include(nameof(PlanModel.PlannedType));
             if (Filter == null)
             {
                 return plans;
+            }
+            if (!string.IsNullOrEmpty(Filter.AccountName))
+            {
+                plans = Filter.DoExactMatch ? plans.Where(plan => plan.Account.Name.Equals(Filter.AccountName)) : plans.Where(plan => plan.Account.Name.Contains(Filter.AccountName));
+            }
+            if (!string.IsNullOrEmpty(Filter.CostTypeName))
+            {
+                plans = Filter.DoExactMatch ? plans.Where(plan => plan.PlannedType.Name.Equals(Filter.CostTypeName)) : plans.Where(plan => plan.PlannedType.Name.Equals(Filter.CostTypeName));
+            }
+            if (!string.IsNullOrEmpty(Filter.Description))
+            {
+                plans = Filter.DoExactMatch ? plans.Where(plan => plan.Description.Equals(Filter.Description)) : plans.Where(plan => plan.Description.Contains(Filter.Description));
+            }
+            if (Filter.CostTypeId != null)
+            {
+                plans = plans.Where(plan => plan.PlannedType.Id == Filter.CostTypeId);
             }
             if (Filter.AccountId != null)
             {
@@ -40,10 +57,6 @@ namespace ExpenseManager.Database.DataAccess.Queries
             if (Filter.PlanType != null)
             {
                 plans = plans.Where(plan => plan.PlanType == Filter.PlanType.Value);
-            }
-            if (Filter.Description != null)
-            {
-                plans = plans.Where(plan => plan.Description.Contains(Filter.Description));
             }
             if (Filter.IsCompleted != null)
             {
@@ -65,8 +78,15 @@ namespace ExpenseManager.Database.DataAccess.Queries
             {
                 plans = plans.Where(plan => plan.PlannedMoney <= Filter.PlannedMoneyTo.Value);
             }
-
-            return plans;
+            if (Filter.OrderByDesc == null || string.IsNullOrEmpty(Filter.OrderByPropertyName)) return plans;
+            System.Reflection.PropertyInfo prop = typeof(AccountBadgeModel).GetProperty(Filter.OrderByPropertyName);
+            if (prop == null) return plans.Take(Filter.PageSize);
+            plans = Filter.OrderByDesc.Value ? plans.OrderByDescending(x => prop.GetValue(x, null)) : plans.OrderBy(x => prop.GetValue(x, null));
+            if (Filter.PageNumber != null)
+            {
+                plans = plans.Skip(Math.Max(0, Filter.PageNumber.Value - 1) * Filter.PageSize);
+            }
+            return plans.Take(Filter.PageSize);
         }
     }
 }
