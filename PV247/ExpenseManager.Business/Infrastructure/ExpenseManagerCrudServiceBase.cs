@@ -12,7 +12,7 @@ namespace ExpenseManager.Business.Infrastructure
     /// <typeparam name="T">The type of the  used in the detail form.</typeparam>
     public abstract class ExpenseManagerCrudServiceBase<TEntity, TKey, T> 
         where TEntity : class, IEntity<TKey>, new() 
-        where T : ExpenseManager<TKey>, new()
+        where T : BusinessObject<TKey>, new()
     {
         public IUnitOfWorkProvider UnitOfWorkProvider { get; }
 

@@ -4,6 +4,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.Facades;
+using ExpenseManager.Database.Entities;
 using ExpenseManager.Database.Enums;
 using ExpenseManager.Identity.Entities;
 using Microsoft.AspNetCore.Authorization;
@@ -122,7 +123,6 @@ namespace ExpenseManager.Presentation.Controllers
             _userFacade.RegisterNewUser(new User
             {
                 AccessType = AccountAccessType.Full,
-                Account = new Account(),
                 Email = email,
                 Name = email.Substring(0, email.IndexOf("@", StringComparison.Ordinal))
             });

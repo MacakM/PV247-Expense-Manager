@@ -1,6 +1,7 @@
 ﻿using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.Services;
 using ExpenseManager.Business.Services.Interfaces;
+using ExpenseManager.Database.Entities;
 
 namespace ExpenseManager.Business.Facades
 {
