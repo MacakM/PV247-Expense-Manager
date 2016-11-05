@@ -16,5 +16,7 @@ namespace ExpenseManager.Database.Filters
         }
 
         public int? PageNumber { get; set; }
+        public bool? OrderByDesc { get; set; }
+        public string OrderByPropertyName { get; set; }
     }
 }

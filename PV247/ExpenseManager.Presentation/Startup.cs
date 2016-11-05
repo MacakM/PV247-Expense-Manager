@@ -128,7 +128,7 @@ namespace ExpenseManager.Presentation
             services.AddTransient<ExpenseManagerRepository<AccountBadgeModel, int>, AccountBadgeRepository>();
             
             // Register all query objects
-            services.AddTransient<ExpenseManagerQuery<PlanModel>, ListUserPlansQuery>();
+            services.AddTransient<ExpenseManagerQuery<PlanModel>, ListPlansQuery>();
             //TODO add more query objects
 
             // Register all services
