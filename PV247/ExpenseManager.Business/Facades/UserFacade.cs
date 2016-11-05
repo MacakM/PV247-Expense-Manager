@@ -1,7 +1,5 @@
 ﻿using ExpenseManager.Business.DataTransferObjects;
-using ExpenseManager.Business.Services;
 using ExpenseManager.Business.Services.Interfaces;
-using ExpenseManager.Database.Entities;
 
 namespace ExpenseManager.Business.Facades
 {
@@ -32,7 +30,7 @@ namespace ExpenseManager.Business.Facades
         /// <param name="modifiedUser">Updated user information</param>
         public void UpdatesUser(User modifiedUser)
         {
-            _userService.UpdatesUser(modifiedUser);
+            _userService.UpdateUser(modifiedUser);
         }
 
         /// <summary>

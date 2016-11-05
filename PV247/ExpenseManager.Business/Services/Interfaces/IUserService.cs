@@ -16,7 +16,7 @@ namespace ExpenseManager.Business.Services.Interfaces
         /// Updates existing user according to provided information
         /// </summary>
         /// <param name="modifiedUser">Updated user information</param>
-        void UpdatesUser(User modifiedUser);
+        void UpdateUser(User modifiedUser);
 
         /// <summary>
         /// Gets currently signed user according to its email

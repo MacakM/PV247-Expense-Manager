@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using ExpenseManager.Business.DataTransferObjects;
-using ExpenseManager.Database.Filters;
+using ExpenseManager.Business.DataTransferObjects.Filters;
 
 namespace ExpenseManager.Business.Services.Interfaces
 {
@@ -14,6 +10,6 @@ namespace ExpenseManager.Business.Services.Interfaces
         void EditPlan(Plan plan);
         void DeletePlan(int planId);
         Plan GetPlan(int planId);
-        IEnumerable<Plan> ListPlans(PlanModelFilter filter, int requiredPage = 1);
+        IEnumerable<Plan> ListPlans(PlanFilter filter);
     }
 }

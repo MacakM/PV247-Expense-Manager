@@ -37,7 +37,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// Updates existing user according to provided information
         /// </summary>
         /// <param name="modifiedUser">Updated user information</param>
-        public void UpdatesUser(User modifiedUser)
+        public void UpdateUser(User modifiedUser)
         {
             using (var uow = UnitOfWorkProvider.Create())
             {

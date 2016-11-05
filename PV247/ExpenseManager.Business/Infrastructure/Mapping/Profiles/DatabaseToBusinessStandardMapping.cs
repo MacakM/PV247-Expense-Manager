@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
 using ExpenseManager.Business.DataTransferObjects;
-using ExpenseManager.Business.DataTransferObjects.Enums;
 using ExpenseManager.Business.DataTransferObjects.Filters;
 using ExpenseManager.Database.Entities;
-using ExpenseManager.Database.Enums;
 
 namespace ExpenseManager.Business.Infrastructure.Mapping.Profiles
 {

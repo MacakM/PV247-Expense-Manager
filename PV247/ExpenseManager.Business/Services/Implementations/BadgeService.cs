@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using AutoMapper;
 using ExpenseManager.Business.DataTransferObjects;
+using ExpenseManager.Business.DataTransferObjects.Filters;
 using ExpenseManager.Business.Infrastructure;
 using ExpenseManager.Database.DataAccess.Repositories;
 using ExpenseManager.Database.Entities;
-using ExpenseManager.Database.Filters;
 using ExpenseManager.Database.Infrastructure.Repository;
 using Riganti.Utils.Infrastructure.Core;
 using ExpenseManager.Business.Services.Interfaces;
@@ -57,7 +57,7 @@ namespace ExpenseManager.Business.Services.Implementations
             }
         }
 
-        public IEnumerable<Badge> ListBadges(BadgeModelFilter filter, int requiredPage = 1)
+        public IEnumerable<Badge> ListBadges(BadgeFilter filter)
         {
             throw new NotImplementedException();
         }
@@ -69,7 +69,7 @@ namespace ExpenseManager.Business.Services.Implementations
 
         protected override string[] EntityIncludes { get; } =
         {
-            nameof(BadgeModel.Users)
+            nameof(BadgeModel.Accounts)
         };
     }
 }

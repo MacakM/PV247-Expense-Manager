@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using AutoMapper;
 using ExpenseManager.Business.DataTransferObjects;
+using ExpenseManager.Business.DataTransferObjects.Filters;
 using ExpenseManager.Business.Infrastructure;
 using ExpenseManager.Business.Services.Interfaces;
 using ExpenseManager.Database.DataAccess.Repositories;
 using ExpenseManager.Database.Entities;
-using ExpenseManager.Database.Filters;
 using ExpenseManager.Database.Infrastructure.Repository;
 using Riganti.Utils.Infrastructure.Core;
 
@@ -57,7 +57,7 @@ namespace ExpenseManager.Business.Services.Implementations
             }
         }
 
-        public IEnumerable<Plan> ListPlans(PlanModelFilter filter, int requiredPage = 1)
+        public IEnumerable<Plan> ListPlans(PlanFilter filter)
         {
             throw new NotImplementedException();
         }

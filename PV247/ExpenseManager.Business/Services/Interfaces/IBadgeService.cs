@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using ExpenseManager.Business.DataTransferObjects;
+using ExpenseManager.Business.DataTransferObjects.Filters;
 using ExpenseManager.Database.Entities;
-using ExpenseManager.Database.Filters;
 
 namespace ExpenseManager.Business.Services.Interfaces
 {
@@ -15,8 +11,7 @@ namespace ExpenseManager.Business.Services.Interfaces
         void EditBadge(Badge badge);
         void DeleteBadge(int badgeId);
         Badge GetBadge(int badgeId);
-        IEnumerable<Badge> ListBadges(BadgeModelFilter filter, int requiredPage = 1);
-
+        IEnumerable<Badge> ListBadges(BadgeFilter filter);
         void AchieveBadge(Badge badge, AccountModel account);
     }
 }
