@@ -1,16 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ExpenseManager.Database.Entities;
-
-namespace ExpenseManager.Database.Filters
+﻿namespace ExpenseManager.Database.Filters
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class AccountFilter : FilterBase
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public string Name { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
         public bool DoExactMatch { get; set; }
     }
 }

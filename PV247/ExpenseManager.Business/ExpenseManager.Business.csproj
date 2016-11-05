@@ -63,9 +63,9 @@
     <Compile Include="DataTransferObjects\Badge.cs" />
     <Compile Include="DataTransferObjects\CostInfo.cs" />
     <Compile Include="DataTransferObjects\CostType.cs" />
-    <Compile Include="DataTransferObjects\ExpenseManager.cs" />
+    <Compile Include="DataTransferObjects\BusinessObject.cs" />
     <Compile Include="DataTransferObjects\Plan.cs" />
-    <Compile Include="DataTransferObjects\UserBadge.cs" />
+    <Compile Include="DataTransferObjects\AccountBadge.cs" />
     <Compile Include="DataTransferObjects\User.cs" />
     <Compile Include="Facades\PlanFacade.cs" />
     <Compile Include="Facades\UserFacade.cs" />

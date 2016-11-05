@@ -1,39 +1,43 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
-namespace ExpenseManager.Database.Filters
+namespace ExpenseManager.Business.DataTransferObjects
 {
     /// <summary>
     /// 
     /// </summary>
-    public class AccountBadgeFilter : FilterBase
+    public class AccountBadge : BusinessObject<int>
     {
         /// <summary>
-        /// 
+        /// Account Id.
         /// </summary>
+        [Required]
         public int? AccountId { get; set; }
         /// <summary>
         /// 
         /// </summary>
         public string AccountName { get; set; }
         /// <summary>
-        /// 
+        /// Badge id.
         /// </summary>
-        public bool DoExactMatch { get; set; }
-        /// <summary>
         /// 
-        /// </summary>
+        [Required]
         public int? BadgeId { get; set; }
         /// <summary>
         /// 
         /// </summary>
+        [MaxLength(256)]
         public string BadgeDescription { get; set; }
         /// <summary>
-        /// 
+        /// Badge image uri.
         /// </summary>
-        public DateTime? AchievedFrom { get; set; }
+        [MaxLength(1024)]
+        public string BadgeImgUri { get; set; }
         /// <summary>
-        /// 
+        /// Date when the badge was achieved.
         /// </summary>
-        public DateTime? AchievedTo { get; set; }
+        [Required]
+        public DateTime? Achieved { get; set; }
     }
 }
+

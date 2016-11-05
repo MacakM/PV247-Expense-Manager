@@ -1,62 +1,55 @@
-﻿namespace ExpenseManager.Business.DataTransferObjects
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using ExpenseManager.Database.Enums;
+
+namespace ExpenseManager.Business.DataTransferObjects
 {
-    public class Plan : ExpenseManager<int>
+    /// <summary>
+    /// 
+    /// </summary>
+    public class Plan : BusinessObject<int>
     {
         /// <summary>
-        /// User that created this plan.
+        /// Account Id.
         /// </summary>
-        public int UserId { get; set; }
-
+        [Required]
+        public int? AccountId { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string AccountName { get; set; }
         /// <summary>
         /// Description of the plan.
         /// </summary>
+        [MaxLength(256)]
         public string Description { get; set; }
-
         /// <summary>
-        /// How much money is needed to achieve this plan.
+        /// Type of this plan.
         /// </summary>
-        public int PlannedMoney { get; set; }
-
+        [Required]
+        public PlanType? PlanType { get; set; }
         /// <summary>
-        /// Which type of cost is assigned to this plan.
+        /// How much money is desired to achieve this plan.
         /// </summary>
-        public CostType PlannedType { get; set; }
-
+        [Required]
+        public int? PlannedMoney { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Required]
+        public int? PlannedTypeId { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string PlannedTypeName { get; set; }
+        /// <summary>
+        /// Date when is the deadline of the plan.
+        /// </summary>
+        [Required]
+        public DateTime? Deadline { get; set; }
         /// <summary>
         /// States whether this plan is achieved.
         /// </summary>
         public bool IsCompleted { get; set; }
-
-        protected bool Equals(Plan other)
-        {
-            return Id == other.Id && UserId == other.UserId && string.Equals(Description, other.Description) && PlannedMoney == other.PlannedMoney && Equals(PlannedType, other.PlannedType) && IsCompleted == other.IsCompleted;
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
-            return Equals((Plan)obj);
-        }
-
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                var hashCode = Id;
-                hashCode = (hashCode * 397) ^ UserId;
-                hashCode = (hashCode * 397) ^ (Description != null ? Description.GetHashCode() : 0);
-                hashCode = (hashCode * 397) ^ PlannedMoney;
-                hashCode = (hashCode * 397) ^ (PlannedType != null ? PlannedType.GetHashCode() : 0);
-                hashCode = (hashCode * 397) ^ IsCompleted.GetHashCode();
-                return hashCode;
-            }
-        }
-
-        public override string ToString()
-        {
-            return $"UserId: {UserId}, Description: {Description}, PlannedMoney: {PlannedMoney}, IsCompleted: {IsCompleted}";
-        }
     }
 }

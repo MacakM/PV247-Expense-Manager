@@ -12,7 +12,7 @@ namespace ExpenseManager.Business.Infrastructure
     /// <typeparam name="TList">The type of the  used in the list of records, e.g. in the GridView control.</typeparam>
     public abstract class ExpenseManagerQueryAndCrudServiceBase<TEntity, TKey, TList, T> : ExpenseManagerCrudServiceBase<TEntity, TKey, T> 
         where TEntity : class, IEntity<TKey>, new() 
-        where T : ExpenseManager<TKey>, new()
+        where T : BusinessObject<TKey>, new()
     {
         /// <summary>
         /// Gets the query object used to populate the list or records.

@@ -1,9 +1,14 @@
 namespace ExpenseManager.Database.Migrations
 {
     using System.Data.Entity.Migrations;
-    
+    /// <summary>
+    /// 
+    /// </summary>
     public partial class Initial : DbMigration
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public override void Up()
         {
             CreateTable(
@@ -101,7 +106,9 @@ namespace ExpenseManager.Database.Migrations
                 .PrimaryKey(t => t.Id);
             
         }
-        
+        /// <summary>
+        /// 
+        /// </summary>
         public override void Down()
         {
             DropForeignKey("dbo.AccountBadges", "BadgeId", "dbo.Badges");
