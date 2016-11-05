@@ -15,7 +15,7 @@ namespace ExpenseManager.Database.DataAccess.Queries
         /// <summary>
         /// Plan filter.
         /// </summary>
-        public PlanFilter Filter { get; set; }
+        public PlanModelFilter Filter { get; set; }
 
         /// <summary>
         /// Create query.

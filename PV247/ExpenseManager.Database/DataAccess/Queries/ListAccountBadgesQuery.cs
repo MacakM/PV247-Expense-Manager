@@ -13,7 +13,7 @@ namespace ExpenseManager.Database.DataAccess.Queries
         {
         }
 
-        public AccountBadgeFilter Filter { get; set; }
+        public AccountBadgeModelFilter Filter { get; set; }
 
         protected override IQueryable<AccountBadgeModel> GetQueryable()
         {

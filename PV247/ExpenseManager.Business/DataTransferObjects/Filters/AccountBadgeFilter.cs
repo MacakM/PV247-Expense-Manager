@@ -1,11 +1,9 @@
 ﻿using System;
 
-namespace ExpenseManager.Database.Filters
+namespace ExpenseManager.Business.DataTransferObjects.Filters
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    public class AccountBadgeFilter : FilterBase
+
+    public class AccountBadgeFilter
     {
         /// <summary>
         /// 

@@ -14,7 +14,7 @@ namespace ExpenseManager.Database.DataAccess.Queries
 
         }
 
-        public UserFilter Filter { get; set; }
+        public UserModelFilter Filter { get; set; }
 
         protected override IQueryable<UserModel> GetQueryable()
         {

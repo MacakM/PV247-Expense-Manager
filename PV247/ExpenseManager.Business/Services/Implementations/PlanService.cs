@@ -57,7 +57,7 @@ namespace ExpenseManager.Business.Services.Implementations
             }
         }
 
-        public IEnumerable<Plan> ListPlans(PlanFilter filter, int requiredPage = 1)
+        public IEnumerable<Plan> ListPlans(PlanModelFilter filter, int requiredPage = 1)
         {
             throw new NotImplementedException();
         }

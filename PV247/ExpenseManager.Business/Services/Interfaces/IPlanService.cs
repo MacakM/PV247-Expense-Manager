@@ -14,6 +14,6 @@ namespace ExpenseManager.Business.Services.Interfaces
         void EditPlan(Plan plan);
         void DeletePlan(int planId);
         Plan GetPlan(int planId);
-        IEnumerable<Plan> ListPlans(PlanFilter filter, int requiredPage = 1);
+        IEnumerable<Plan> ListPlans(PlanModelFilter filter, int requiredPage = 1);
     }
 }

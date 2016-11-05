@@ -1,9 +1,6 @@
-﻿namespace ExpenseManager.Database.Filters
+﻿namespace ExpenseManager.Business.DataTransferObjects.Filters
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    public abstract class FilterBase
+    public class FilterBase
     {
         private int _pageSize = 10;
         /// <summary>

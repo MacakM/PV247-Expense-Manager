@@ -15,7 +15,7 @@ namespace ExpenseManager.Business.Services.Interfaces
         void EditBadge(Badge badge);
         void DeleteBadge(int badgeId);
         Badge GetBadge(int badgeId);
-        IEnumerable<Badge> ListBadges(BadgeFilter filter, int requiredPage = 1);
+        IEnumerable<Badge> ListBadges(BadgeModelFilter filter, int requiredPage = 1);
 
         void AchieveBadge(Badge badge, AccountModel account);
     }

@@ -13,7 +13,7 @@ namespace ExpenseManager.Database.DataAccess.Queries
         {
         }
 
-        public CostTypeFilter Filter { get; set; }
+        public CostTypeModelFilter Filter { get; set; }
 
         protected override IQueryable<CostTypeModel> GetQueryable()
         {

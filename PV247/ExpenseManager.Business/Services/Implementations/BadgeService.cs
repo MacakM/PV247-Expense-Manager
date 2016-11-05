@@ -57,7 +57,7 @@ namespace ExpenseManager.Business.Services.Implementations
             }
         }
 
-        public IEnumerable<Badge> ListBadges(BadgeFilter filter, int requiredPage = 1)
+        public IEnumerable<Badge> ListBadges(BadgeModelFilter filter, int requiredPage = 1)
         {
             throw new NotImplementedException();
         }
