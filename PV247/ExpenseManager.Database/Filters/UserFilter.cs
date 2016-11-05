@@ -30,6 +30,6 @@ namespace ExpenseManager.Database.Filters
         /// <summary>
         /// 
         /// </summary>
-        public AccountAccessType? AccessType { get; set; }
+        public AccountAccessTypeModel? AccessType { get; set; }
     }
 }

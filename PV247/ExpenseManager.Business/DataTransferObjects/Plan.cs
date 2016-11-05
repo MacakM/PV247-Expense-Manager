@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using ExpenseManager.Database.Enums;
+using ExpenseManager.Business.DataTransferObjects.Enums;
+
 
 namespace ExpenseManager.Business.DataTransferObjects
 {
@@ -51,5 +52,54 @@ namespace ExpenseManager.Business.DataTransferObjects
         /// States whether this plan is achieved.
         /// </summary>
         public bool IsCompleted { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return $"AccountId: {AccountId}, AccountName: {AccountName}, Description: {Description}, PlanType: {PlanType}, PlannedMoney: {PlannedMoney}, PlannedTypeId: {PlannedTypeId}, PlannedTypeName: {PlannedTypeName}, Deadline: {Deadline}, IsCompleted: {IsCompleted}";
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        protected bool Equals(Plan other)
+        {
+            return AccountId == other.AccountId && string.Equals(AccountName, other.AccountName) && string.Equals(Description, other.Description) && PlanType == other.PlanType && PlannedMoney == other.PlannedMoney && PlannedTypeId == other.PlannedTypeId && string.Equals(PlannedTypeName, other.PlannedTypeName) && Deadline.Equals(other.Deadline) && IsCompleted == other.IsCompleted;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((Plan) obj);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var hashCode = AccountId.GetHashCode();
+                hashCode = (hashCode*397) ^ (AccountName != null ? AccountName.GetHashCode() : 0);
+                hashCode = (hashCode*397) ^ (Description != null ? Description.GetHashCode() : 0);
+                hashCode = (hashCode*397) ^ PlanType.GetHashCode();
+                hashCode = (hashCode*397) ^ PlannedMoney.GetHashCode();
+                hashCode = (hashCode*397) ^ PlannedTypeId.GetHashCode();
+                hashCode = (hashCode*397) ^ (PlannedTypeName != null ? PlannedTypeName.GetHashCode() : 0);
+                hashCode = (hashCode*397) ^ Deadline.GetHashCode();
+                hashCode = (hashCode*397) ^ IsCompleted.GetHashCode();
+                return hashCode;
+            }
+        }
     }
 }

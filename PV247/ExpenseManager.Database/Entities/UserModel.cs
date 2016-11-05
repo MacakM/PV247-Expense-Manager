@@ -32,6 +32,6 @@ namespace ExpenseManager.Database.Entities
         /// Access type of the user.
         /// </summary>
         [Required]
-        public AccountAccessType AccessType { get; set; }
+        public AccountAccessTypeModel AccessType { get; set; }
     }
 }

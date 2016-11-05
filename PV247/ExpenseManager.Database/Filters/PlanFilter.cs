@@ -35,7 +35,7 @@ namespace ExpenseManager.Database.Filters
         /// <summary>
         /// /
         /// </summary>
-        public PlanType? PlanType { get; set; }
+        public PlanTypeModel? PlanType { get; set; }
         /// <summary>
         /// 
         /// </summary>
