@@ -13,7 +13,7 @@ namespace ExpenseManager.Database.Filters
     {
         public string Name { get; set; }
         public string Email { get; set; }
-        public bool ExactMatch { get; set; }
+        public bool DoExactMatch { get; set; }
         public AccountAccessType? AccessType { get; set; }
     }
 }

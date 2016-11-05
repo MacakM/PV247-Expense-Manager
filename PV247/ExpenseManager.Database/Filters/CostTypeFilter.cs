@@ -11,6 +11,6 @@ namespace ExpenseManager.Database.Filters
     public class CostTypeFilter : FilterBase
     {
         public string Name { get; set; }
-        public bool ExactMatch { get; set; }
+        public bool DoExactMatch { get; set; }
     }
 }

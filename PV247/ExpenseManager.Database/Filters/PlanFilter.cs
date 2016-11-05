@@ -9,7 +9,8 @@ namespace ExpenseManager.Database.Filters
         public int? AccountId { get; set; }
         public string Description { get; set; }
         public PlanType? PlanType { get; set; }
-        public int? PlannedMoney { get; set; }
+        public int? PlannedMoneyFrom { get; set; }
+        public int? PlannedMoneyTo { get; set; }
         public DateTime? DeadlineFrom { get; set; }
         public DateTime? DeadlineTo { get; set; }
         public bool? IsCompleted { get; set; }
