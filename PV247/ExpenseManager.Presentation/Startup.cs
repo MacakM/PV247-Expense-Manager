@@ -114,7 +114,7 @@ namespace ExpenseManager.Presentation
                 provider => {
                     var config = new MapperConfiguration(cfg => 
                     {
-                        cfg.AddProfile<StandardMappingProfile>();
+                        cfg.AddProfile<DatabaseToBusinessMapping>();
                     });
                     return config.CreateMapper();
             });

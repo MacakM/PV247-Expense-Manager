@@ -38,6 +38,50 @@ namespace ExpenseManager.Business.DataTransferObjects
         /// </summary>
         [Required]
         public DateTime? Achieved { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return $"AccountName: {AccountName}, BadgeDescription: {BadgeDescription}, Achieved: {Achieved}";
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        protected bool Equals(AccountBadge other)
+        {
+            return AccountId == other.AccountId && string.Equals(AccountName, other.AccountName) && BadgeId == other.BadgeId && string.Equals(BadgeDescription, other.BadgeDescription);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((AccountBadge) obj);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var hashCode = AccountId.GetHashCode();
+                hashCode = (hashCode*397) ^ (AccountName != null ? AccountName.GetHashCode() : 0);
+                hashCode = (hashCode*397) ^ BadgeId.GetHashCode();
+                hashCode = (hashCode*397) ^ (BadgeDescription != null ? BadgeDescription.GetHashCode() : 0);
+                return hashCode;
+            }
+        }
     }
 }
 

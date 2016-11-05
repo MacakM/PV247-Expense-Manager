@@ -7,12 +7,12 @@ namespace ExpenseManager.Business.Infrastructure.Mapping.Profiles
     /// <summary>
     /// Standard mapping profile.
     /// </summary>
-    public class StandardMappingProfile : Profile
+    public class DatabaseToBusinessMapping : Profile
     {
         /// <summary>
         /// Creates mapping.
         /// </summary>
-        public StandardMappingProfile()
+        public DatabaseToBusinessMapping()
         {
             CreateMap<UserModel, User>().ReverseMap();
             CreateMap<PlanModel, Plan>().ReverseMap();
