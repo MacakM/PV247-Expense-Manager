@@ -33,7 +33,7 @@ namespace ExpenseManager.Database.Entities
         /// <summary>
         /// Type of this plan.
         /// </summary>
-        public PlanType PlanType { get; set; }
+        public PlanTypeModel PlanType { get; set; }
         /// <summary>
         /// How much money is desired to achieve this plan.
         /// </summary>

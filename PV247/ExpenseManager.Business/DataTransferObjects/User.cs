@@ -1,6 +1,5 @@
-﻿
-using System.ComponentModel.DataAnnotations;
-using ExpenseManager.Database.Enums;
+﻿using System.ComponentModel.DataAnnotations;
+using ExpenseManager.Business.DataTransferObjects.Enums;
 
 namespace ExpenseManager.Business.DataTransferObjects
 {

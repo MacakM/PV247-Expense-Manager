@@ -1,4 +1,4 @@
-﻿namespace ExpenseManager.Database.Enums
+﻿namespace ExpenseManager.Business.DataTransferObjects.Enums
 {
     /// <summary>
     /// 

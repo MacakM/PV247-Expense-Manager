@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using ExpenseManager.Database.Enums;
+using ExpenseManager.Business.DataTransferObjects.Enums;
+
 
 namespace ExpenseManager.Business.DataTransferObjects
 {
