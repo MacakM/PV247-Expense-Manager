@@ -26,8 +26,8 @@ namespace ExpenseManager.Database.Entities
         [Required]
         public string BadgeImgUri { get; set; }
         /// <summary>
-        /// Users that achieved this Badge.
+        /// 
         /// </summary>
-        public virtual List<AccountBadgeModel> Users { get; set; }
+        public virtual List<AccountBadgeModel> Accounts { get; set; }
     }
 }

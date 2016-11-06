@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-
 namespace ExpenseManager.Business.DataTransferObjects
 {
     /// <summary>
@@ -21,9 +20,9 @@ namespace ExpenseManager.Business.DataTransferObjects
         [Required]
         public string BadgeImgUri { get; set; }
         /// <summary>
-        /// Users that achieved this Badge.
+        ///
         /// </summary>
-        public List<User> Users { get; set; }
+        public List<AccountBadge> Accounts { get; set; }
         /// <summary>
         /// 
         /// </summary>
@@ -39,7 +38,7 @@ namespace ExpenseManager.Business.DataTransferObjects
         /// <returns></returns>
         protected bool Equals(Badge other)
         {
-            return string.Equals(Description, other.Description) && string.Equals(BadgeImgUri, other.BadgeImgUri) && Equals(Users, other.Users);
+            return string.Equals(Description, other.Description) && string.Equals(BadgeImgUri, other.BadgeImgUri) && Equals(Accounts, other.Accounts);
         }
         /// <summary>
         /// 
@@ -63,7 +62,7 @@ namespace ExpenseManager.Business.DataTransferObjects
             {
                 var hashCode = (Description != null ? Description.GetHashCode() : 0);
                 hashCode = (hashCode*397) ^ (BadgeImgUri != null ? BadgeImgUri.GetHashCode() : 0);
-                hashCode = (hashCode*397) ^ (Users != null ? Users.GetHashCode() : 0);
+                hashCode = (hashCode*397) ^ (Accounts != null ? Accounts.GetHashCode() : 0);
                 return hashCode;
             }
         }

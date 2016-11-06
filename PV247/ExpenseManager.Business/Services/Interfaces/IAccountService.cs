@@ -7,38 +7,34 @@ namespace ExpenseManager.Business.Services.Interfaces
     /// <summary>
     /// 
     /// </summary>
-    public interface ICostInfoService
+    public interface IAccountService
     {
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="costInfo"></param>
-        void CreateCostInfo(CostInfo costInfo);
+        /// <param name="account"></param>
+        void CreateAccount(Account account);
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="updatedCostInfo"></param>
-        void UpdateCostInfo(CostInfo updatedCostInfo);
+        /// <param name="updatedAccount"></param>
+        void UpdateAccount(Account updatedAccount);
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="costInfoId"></param>
-        void DeleteCostInfo(int costInfoId);
+        /// <param name="accountId"></param>
+        void DeleteAccount(int accountId);
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="costInfoId"></param>
+        /// <param name="accountId"></param>
         /// <returns></returns>
-        CostInfo GetCostInfo(int costInfoId);
+        Account GetAccount(int accountId);
         /// <summary>
         /// 
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        List<CostInfo> ListCostInfos(CostInfoFilter filter);
-        /// <summary>
-        /// 
-        /// </summary>
-        void RecomputePeriodicCosts();
+        List<Account> ListAccounts(AccountFilter filter);
     }
 }

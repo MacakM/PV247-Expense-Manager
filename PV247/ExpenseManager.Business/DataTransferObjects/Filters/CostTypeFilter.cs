@@ -1,9 +1,6 @@
-﻿namespace ExpenseManager.Database.Filters
+﻿namespace ExpenseManager.Business.DataTransferObjects.Filters
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    public class AccountFilter : FilterBase
+    public class CostTypeFilter
     {
         /// <summary>
         /// 

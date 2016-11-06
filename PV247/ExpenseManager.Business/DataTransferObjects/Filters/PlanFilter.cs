@@ -1,12 +1,9 @@
 ﻿using System;
-using ExpenseManager.Database.Enums;
+using ExpenseManager.Business.DataTransferObjects.Enums;
 
-namespace ExpenseManager.Database.Filters
+namespace ExpenseManager.Business.DataTransferObjects.Filters
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    public class PlanFilter : FilterBase
+    public class PlanFilter
     {
         /// <summary>
         /// 
@@ -35,7 +32,7 @@ namespace ExpenseManager.Database.Filters
         /// <summary>
         /// /
         /// </summary>
-        public PlanTypeModel? PlanType { get; set; }
+        public PlanType? PlanType { get; set; }
         /// <summary>
         /// 
         /// </summary>

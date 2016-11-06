@@ -52,11 +52,9 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Facades\AccountFacadeTests.cs" />
+    <Compile Include="Facades\BalanceFacadeTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\BadgeServiceTests.cs" />
-    <Compile Include="Services\CostInfoServiceTests.cs" />
-    <Compile Include="Services\PlanServiceTests.cs" />
-    <Compile Include="Services\UserServiceTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ExpenseManager.Business\ExpenseManager.Business.csproj">

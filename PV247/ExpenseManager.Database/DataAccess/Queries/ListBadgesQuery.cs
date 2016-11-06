@@ -7,13 +7,12 @@ using Riganti.Utils.Infrastructure.Core;
 
 namespace ExpenseManager.Database.DataAccess.Queries
 {
-    public class ListBadgesQuery : ExpenseManagerQuery<BadgeModel>
+    public class ListBadgesQuery : ExpenseManagerQuery<BadgeModel, BadgeModelFilter>
     {
         public ListBadgesQuery(IUnitOfWorkProvider provider) : base(provider)
         {
         }
-
-        public BadgeFilter Filter { get; set; }
+        public override BadgeModelFilter Filter { get; set; }
 
         protected override IQueryable<BadgeModel> GetQueryable()
         {

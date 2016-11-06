@@ -5,9 +5,9 @@ namespace ExpenseManager.Presentation.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly UserFacade _userFacade;
+        private readonly AccountFacade _userFacade;
 
-        public HomeController(UserFacade userFacade)
+        public HomeController(AccountFacade userFacade)
         {
             _userFacade = userFacade;
         }

@@ -51,6 +51,7 @@
       <HintPath>..\packages\System.Runtime.Extensions.4.1.0\lib\net462\System.Runtime.Extensions.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Workflow.Runtime" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -66,19 +67,33 @@
     <Compile Include="DataTransferObjects\BusinessObject.cs" />
     <Compile Include="DataTransferObjects\Enums\AccountAccessTye.cs" />
     <Compile Include="DataTransferObjects\Enums\PlanType.cs" />
+    <Compile Include="DataTransferObjects\Filters\AccountBadgeFilter.cs" />
+    <Compile Include="DataTransferObjects\Filters\AccountFilter.cs" />
+    <Compile Include="DataTransferObjects\Filters\BadgeFilter.cs" />
+    <Compile Include="DataTransferObjects\Filters\CostInfoFilter.cs" />
+    <Compile Include="DataTransferObjects\Filters\CostTypeFilter.cs" />
+    <Compile Include="DataTransferObjects\Filters\FilterBase.cs" />
+    <Compile Include="DataTransferObjects\Filters\PlanFilter.cs" />
+    <Compile Include="DataTransferObjects\Filters\UserFilter.cs" />
     <Compile Include="DataTransferObjects\Plan.cs" />
     <Compile Include="DataTransferObjects\AccountBadge.cs" />
     <Compile Include="DataTransferObjects\User.cs" />
-    <Compile Include="Facades\PlanFacade.cs" />
-    <Compile Include="Facades\UserFacade.cs" />
+    <Compile Include="Facades\BalanceFacade.cs" />
+    <Compile Include="Facades\AccountFacade.cs" />
     <Compile Include="Infrastructure\ExpenseManagerCrudServiceBase.cs" />
     <Compile Include="Infrastructure\ExpenseManagerQueryAndCrudServiceBase.cs" />
     <Compile Include="Infrastructure\Mapping\Profiles\DatabaseToBusinessStandardMapping.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Implementations\AccountBadgeService.cs" />
+    <Compile Include="Services\Implementations\AccountService.cs" />
     <Compile Include="Services\Implementations\BadgeService.cs" />
     <Compile Include="Services\Implementations\CostInfoService.cs" />
+    <Compile Include="Services\Implementations\CostTypeService.cs" />
+    <Compile Include="Services\Interfaces\IAccountBadgeService.cs" />
+    <Compile Include="Services\Interfaces\IAccountService.cs" />
     <Compile Include="Services\Interfaces\IBadgeService.cs" />
     <Compile Include="Services\Interfaces\ICostInfoService.cs" />
+    <Compile Include="Services\Interfaces\ICostTypeService.cs" />
     <Compile Include="Services\Interfaces\IPlanService.cs" />
     <Compile Include="Services\Interfaces\IUserService.cs" />
     <Compile Include="Services\Implementations\PlanService.cs" />

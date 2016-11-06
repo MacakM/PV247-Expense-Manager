@@ -5,7 +5,7 @@ namespace ExpenseManager.Database.Filters
     /// <summary>
     /// 
     /// </summary>
-    public class UserFilter : FilterBase
+    public class UserModelFilter : FilterModelBase
     {
         /// <summary>
         /// 

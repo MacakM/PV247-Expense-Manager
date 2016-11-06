@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using ExpenseManager.Business.DataTransferObjects;
@@ -7,7 +6,6 @@ using ExpenseManager.Business.DataTransferObjects.Filters;
 using ExpenseManager.Business.Infrastructure;
 using ExpenseManager.Business.Services.Interfaces;
 using ExpenseManager.Database.DataAccess.Queries;
-using ExpenseManager.Database.DataAccess.Repositories;
 using ExpenseManager.Database.Entities;
 using ExpenseManager.Database.Filters;
 using ExpenseManager.Database.Infrastructure.Repository;
@@ -18,16 +16,13 @@ namespace ExpenseManager.Business.Services.Implementations
     /// <summary>
     /// 
     /// </summary>
-    public class PlanService : ExpenseManagerQueryAndCrudServiceBase<PlanModel, int, ListPlansQuery, Plan, PlanModelFilter>, IPlanService
+    public class CostTypeService : ExpenseManagerQueryAndCrudServiceBase<CostTypeModel, int, ListCostTypesQuery, CostType, CostTypeModelFilter>, ICostTypeService
     {
+   
         /// <summary>
         /// 
         /// </summary>
-        protected override string[] EntityIncludes { get; } =
-        {
-            nameof(PlanModel.Account),
-            nameof(PlanModel.PlannedType)
-        };
+        protected override string[] EntityIncludes { get; }
         /// <summary>
         /// 
         /// </summary>
@@ -35,58 +30,54 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="repository"></param>
         /// <param name="expenseManagerMapper"></param>
         /// <param name="unitOfWorkProvider"></param>
-        public PlanService(ListPlansQuery query, ExpenseManagerRepository<PlanModel, int> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
+        public CostTypeService(ListCostTypesQuery query, ExpenseManagerRepository<CostTypeModel, int> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
         {
         }
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="plan"></param>
-        public void CreatePlan(Plan plan)
+        /// <param name="costType"></param>
+        public void CreateCostType(CostType costType)
         {
-            Save(plan);
+            Save(costType);
         }
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="planUpdated"></param>
-        public void UpdatePlan(Plan planUpdated)
+        /// <param name="costType"></param>
+        public void UpdateCostType(CostType costType)
         {
-           Save(planUpdated);
+           Save(costType);
         }
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="planId"></param>
-        public void DeletePlan(int planId)
+        /// <param name="costTypeId"></param>
+        public void DeleteCostType(int costTypeId)
         {
-            Delete(planId);
+           Delete(costTypeId);
         }
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="planId"></param>
+        /// <param name="costTypeId"></param>
         /// <returns></returns>
-        public Plan GetPlan(int planId)
+        public CostType GetCostType(int costTypeId)
         {
-            return GetDetail(planId);
+            return GetDetail(costTypeId);
         }
         /// <summary>
         /// 
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public List<Plan> ListPlans(PlanFilter filter)
+        public List<CostType> ListCostTypes(CostTypeFilter filter)
         {
-            Query.Filter = Mapper.Map<PlanModelFilter>(filter);
+            Query.Filter = ExpenseManagerMapper.Map<CostTypeModelFilter>(filter);
             return GetList().ToList();
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        public void CheckAllPlansFulfillment()
-        {
-            throw new NotImplementedException();
-        }
+
+
+    
     }
 }

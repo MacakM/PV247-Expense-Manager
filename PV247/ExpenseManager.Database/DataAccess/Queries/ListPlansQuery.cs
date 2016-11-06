@@ -10,12 +10,12 @@ namespace ExpenseManager.Database.DataAccess.Queries
     /// <summary>
     /// Implementation of Query for user's plans.
     /// </summary>
-    public class ListPlansQuery : ExpenseManagerQuery<PlanModel>
+    public class ListPlansQuery : ExpenseManagerQuery<PlanModel, PlanModelFilter>
     {
         /// <summary>
         /// Plan filter.
         /// </summary>
-        public PlanFilter Filter { get; set; }
+        public override PlanModelFilter Filter { get; set; }
 
         /// <summary>
         /// Create query.

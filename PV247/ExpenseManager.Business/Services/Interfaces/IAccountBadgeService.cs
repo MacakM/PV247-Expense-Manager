@@ -7,38 +7,34 @@ namespace ExpenseManager.Business.Services.Interfaces
     /// <summary>
     /// 
     /// </summary>
-    public interface ICostInfoService
+    public interface IAccountBadgeService
     {
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="costInfo"></param>
-        void CreateCostInfo(CostInfo costInfo);
+        /// <param name="accountBadge"></param>
+        void CreateAccountBadge(AccountBadge accountBadge);
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="updatedCostInfo"></param>
-        void UpdateCostInfo(CostInfo updatedCostInfo);
+        /// <param name="updatedAccountBadge"></param>
+        void UpdateAccountBadge(AccountBadge updatedAccountBadge);
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="costInfoId"></param>
-        void DeleteCostInfo(int costInfoId);
+        /// <param name="accountBadgeId"></param>
+        void DeleteAccountBadge(int accountBadgeId);
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="costInfoId"></param>
+        /// <param name="accountBadgeId"></param>
         /// <returns></returns>
-        CostInfo GetCostInfo(int costInfoId);
+        AccountBadge GetAccountBadge(int accountBadgeId);
         /// <summary>
         /// 
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        List<CostInfo> ListCostInfos(CostInfoFilter filter);
-        /// <summary>
-        /// 
-        /// </summary>
-        void RecomputePeriodicCosts();
+        List<AccountBadge> ListAccountBadges(AccountBadgeFilter filter);
     }
 }

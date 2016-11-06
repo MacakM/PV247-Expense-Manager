@@ -3,12 +3,12 @@
     /// <summary>
     /// 
     /// </summary>
-    public class BadgeFilter : FilterBase
+    public class CostTypeModelFilter : FilterModelBase
     {
         /// <summary>
         /// 
         /// </summary>
-        public string Description { get; set; }
+        public string Name { get; set; }
         /// <summary>
         /// 
         /// </summary>

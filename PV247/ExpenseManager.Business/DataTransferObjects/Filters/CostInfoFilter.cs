@@ -1,11 +1,8 @@
 ﻿using System;
 
-namespace ExpenseManager.Database.Filters
+namespace ExpenseManager.Business.DataTransferObjects.Filters
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    public class CostInfoFilter : FilterBase
+    public class CostInfoFilter
     {
         /// <summary>
         /// 

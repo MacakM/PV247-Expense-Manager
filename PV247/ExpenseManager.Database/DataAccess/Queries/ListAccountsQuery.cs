@@ -7,13 +7,13 @@ using Riganti.Utils.Infrastructure.Core;
 
 namespace ExpenseManager.Database.DataAccess.Queries
 {
-    public class ListAccountsQuery : ExpenseManagerQuery<AccountModel>
+    public class ListAccountsQuery : ExpenseManagerQuery<AccountModel, AccountModelFilter>
     {
         public ListAccountsQuery(IUnitOfWorkProvider provider) : base(provider)
         {
         }
 
-        public AccountFilter Filter { get; set; }
+        public override AccountModelFilter Filter { get; set; }
 
         protected override IQueryable<AccountModel> GetQueryable()
         {

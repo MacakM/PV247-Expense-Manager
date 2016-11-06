@@ -1,22 +1,50 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using ExpenseManager.Business.DataTransferObjects;
-using ExpenseManager.Database.Entities;
-using ExpenseManager.Database.Filters;
+using ExpenseManager.Business.DataTransferObjects.Filters;
 
 namespace ExpenseManager.Business.Services.Interfaces
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public interface IBadgeService
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="badge"></param>
         void CreateBadge(Badge badge);
-        void EditBadge(Badge badge);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="badge"></param>
+        void UpdateBadge(Badge badge);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="badgeId"></param>
         void DeleteBadge(int badgeId);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="badgeId"></param>
+        /// <returns></returns>
         Badge GetBadge(int badgeId);
-        IEnumerable<Badge> ListBadges(BadgeFilter filter, int requiredPage = 1);
-
-        void AchieveBadge(Badge badge, AccountModel account);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        List<Badge> ListBadges(BadgeFilter filter);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="badge"></param>
+        /// <param name="account"></param>
+        void AchieveBadge(Badge badge, Account account);
+        /// <summary>
+        /// 
+        /// </summary>
+        void CheckBadgesRequirements();
     }
 }

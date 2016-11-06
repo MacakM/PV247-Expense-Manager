@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
 using ExpenseManager.Business.DataTransferObjects;
-using ExpenseManager.Business.DataTransferObjects.Enums;
+using ExpenseManager.Business.DataTransferObjects.Filters;
 using ExpenseManager.Database.Entities;
-using ExpenseManager.Database.Enums;
 
 namespace ExpenseManager.Business.Infrastructure.Mapping.Profiles
 {
@@ -52,11 +51,35 @@ namespace ExpenseManager.Business.Infrastructure.Mapping.Profiles
             CreateMap<AccountModel, Account>()
                .ReverseMap();
 
-      /*      CreateMap<AccountAccessType, AccountAccessTypeModel>()
-              .ReverseMap();
+            /*      CreateMap<AccountAccessType, AccountAccessTypeModel>()
+                    .ReverseMap();
 
-            CreateMap<PlanType, PlanTypeModel>()
-             .ReverseMap();*/
+                  CreateMap<PlanType, PlanTypeModel>()
+                   .ReverseMap();*/
+
+            CreateMap<AccountBadgeFilter, AccountBadgeFilter>()
+             .ReverseMap();
+
+            CreateMap<AccountFilter, AccountFilter>()
+             .ReverseMap();
+
+            CreateMap<BadgeFilter, BadgeFilter>()
+             .ReverseMap();
+
+            CreateMap<CostInfoFilter, CostInfoFilter>()
+             .ReverseMap();
+
+            CreateMap<CostTypeFilter, CostTypeFilter>()
+             .ReverseMap();
+
+            CreateMap<FilterBase, FilterBase>()
+             .ReverseMap();
+
+            CreateMap<PlanFilter, PlanFilter>()
+             .ReverseMap();
+
+            CreateMap<UserFilter, UserFilter>()
+             .ReverseMap();
 
         }
     }
