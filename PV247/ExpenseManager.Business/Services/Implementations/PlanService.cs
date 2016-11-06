@@ -81,6 +81,12 @@ namespace ExpenseManager.Business.Services.Implementations
             Query.Filter = Mapper.Map<PlanModelFilter>(filter);
             return GetList().ToList();
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        public void CheckAllPlansFulfillment()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

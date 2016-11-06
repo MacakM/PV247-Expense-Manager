@@ -36,6 +36,9 @@ namespace ExpenseManager.Business.Services.Interfaces
         /// <param name="filter"></param>
         /// <returns></returns>
         List<CostInfo> ListCostInfos(CostInfoFilter filter);
-
+        /// <summary>
+        /// 
+        /// </summary>
+        void RecomputePeriodicCosts();
     }
 }

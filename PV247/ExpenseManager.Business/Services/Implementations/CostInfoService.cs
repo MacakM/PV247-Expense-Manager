@@ -81,8 +81,12 @@ namespace ExpenseManager.Business.Services.Implementations
             Query.Filter = Mapper.Map<CostInfoModelFilter>(filter);
             return GetList().ToList();
         }
-
-
-      
+        /// <summary>
+        /// 
+        /// </summary>
+        public void RecomputePeriodicCosts()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

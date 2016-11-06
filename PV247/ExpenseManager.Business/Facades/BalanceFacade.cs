@@ -39,14 +39,21 @@ namespace ExpenseManager.Business.Facades
         /// </summary>
         public void CheckAllPlansFulfillment()
         {
-            
+            _planService.CheckAllPlansFulfillment();
         }
         /// <summary>
         /// 
         /// </summary>
         public void CheckBadgesRequirements()
         {
-            
+            _badgeService.CheckBadgesRequirements();
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public void RecomputePeriodicCosts()
+        {
+            _costInfoService.RecomputePeriodicCosts();
         }
         #endregion
         #region CostInfo CRUD

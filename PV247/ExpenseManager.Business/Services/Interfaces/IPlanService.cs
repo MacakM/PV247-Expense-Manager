@@ -36,5 +36,9 @@ namespace ExpenseManager.Business.Services.Interfaces
         /// <param name="filter"></param>
         /// <returns></returns>
         List<Plan> ListPlans(PlanFilter filter);
+        /// <summary>
+        /// 
+        /// </summary>
+        void CheckAllPlansFulfillment();
     }
 }

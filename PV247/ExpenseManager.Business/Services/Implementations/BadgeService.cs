@@ -88,7 +88,12 @@ namespace ExpenseManager.Business.Services.Implementations
         {
             throw new NotImplementedException();
         }
-
-
+        /// <summary>
+        /// 
+        /// </summary>
+        public void CheckBadgesRequirements()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -42,5 +42,9 @@ namespace ExpenseManager.Business.Services.Interfaces
         /// <param name="badge"></param>
         /// <param name="account"></param>
         void AchieveBadge(Badge badge, Account account);
+        /// <summary>
+        /// 
+        /// </summary>
+        void CheckBadgesRequirements();
     }
 }
