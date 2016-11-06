@@ -141,7 +141,7 @@ namespace ExpenseManager.Business.Facades
         /// <returns></returns>
         public List<Plan> ListPlans(PlanFilter filter)
         {
-            return ListPlans(filter);
+            return _planService.ListPlans(filter);
         }
         #endregion
         #region CostType CRUD
