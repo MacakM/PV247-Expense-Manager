@@ -55,7 +55,7 @@ namespace ExpenseManager.Business.Facades
         /// </summary>
         public void CreateItem(CostInfo costInfo)
         {
-            
+            _costInfoService.CreateCostInfo(costInfo);
         }
         /// <summary>
         /// 
@@ -63,7 +63,7 @@ namespace ExpenseManager.Business.Facades
         /// <param name="costInfoId"></param>
         public void DeleteItem(int costInfoId)
         {
-
+            _costInfoService.DeleteCostInfo(costInfoId);
         }
         /// <summary>
         /// 
@@ -71,7 +71,7 @@ namespace ExpenseManager.Business.Facades
         /// <param name="updatedCostInfo"></param>
         public void UpdateItem(CostInfo updatedCostInfo)
         {
-
+            _costInfoService.UpdateCostInfo(updatedCostInfo);
         }
         /// <summary>
         /// 
@@ -80,7 +80,7 @@ namespace ExpenseManager.Business.Facades
         /// <returns></returns>
         public CostInfo GetItem(int costInfoId)
         {
-            return null;
+            return _costInfoService.GetCostInfo(costInfoId);
         }
         /// <summary>
         /// 
@@ -89,7 +89,7 @@ namespace ExpenseManager.Business.Facades
         /// <returns></returns>
         public List<CostInfo> ListItem(CostInfoFilter filter)
         {
-            return null;
+            return _costInfoService.ListCostInfos(filter);
         }
         #endregion
         #region Plan CRUD
@@ -99,7 +99,7 @@ namespace ExpenseManager.Business.Facades
         /// <param name="plan"></param>
         public void CreatePlan(Plan plan)
         {
-            
+            _planService.CreatePlan(plan);
         }
         /// <summary>
         /// 
@@ -107,7 +107,7 @@ namespace ExpenseManager.Business.Facades
         /// <param name="planId"></param>
         public void DeletePlan(int planId)
         {
-            
+            _planService.DeletePlan(planId);
         }
         /// <summary>
         /// 
@@ -115,7 +115,7 @@ namespace ExpenseManager.Business.Facades
         /// <param name="updatedPlan"></param>
         public void UpdatePlan(Plan updatedPlan)
         {
-            
+            _planService.UpdatePlan(updatedPlan);
         }
         /// <summary>
         /// 
@@ -124,7 +124,7 @@ namespace ExpenseManager.Business.Facades
         /// <returns></returns>
         public Plan GetPlan(int planId)
         {
-            return null;
+            return _planService.GetPlan(planId);
         }
         /// <summary>
         /// 
@@ -133,7 +133,7 @@ namespace ExpenseManager.Business.Facades
         /// <returns></returns>
         public List<Plan> ListPlans(PlanFilter filter)
         {
-            return null;
+            return ListPlans(filter);
         }
         #endregion
         #region CostType CRUD
@@ -143,7 +143,7 @@ namespace ExpenseManager.Business.Facades
         /// <param name="costType"></param>
         public void CreateItemType(CostType costType)
         {
-            
+            _costTypeService.CreateCostType(costType);
         }
         /// <summary>
         /// 
@@ -151,7 +151,7 @@ namespace ExpenseManager.Business.Facades
         /// <param name="costTypeId"></param>
         public void DeleteItemType(int costTypeId)
         {
-            
+            _costTypeService.DeleteCostType(costTypeId);
         }
         /// <summary>
         /// 
@@ -159,7 +159,7 @@ namespace ExpenseManager.Business.Facades
         /// <param name="updatedCostType"></param>
         public void UpdateItemType(CostType updatedCostType)
         {
-            
+            _costTypeService.UpdateCostType(updatedCostType);
         }
         /// <summary>
         /// 
@@ -168,7 +168,7 @@ namespace ExpenseManager.Business.Facades
         /// <returns></returns>
         public CostType GetItemType(int itemTypeId)
         {
-            return null;
+            return _costTypeService.GetCostType(itemTypeId);
         }
         /// <summary>
         /// 
@@ -177,7 +177,7 @@ namespace ExpenseManager.Business.Facades
         /// <returns></returns>
         public List<CostType> ListItemTypes(CostTypeFilter filter)
         {
-            return null;
+            return _costTypeService.ListCostTypes(filter);
         }
         #endregion
         #region Badge CRUD
@@ -187,7 +187,7 @@ namespace ExpenseManager.Business.Facades
         /// <param name="badge"></param>
         public void CreateBadge(Badge badge)
         {
-            
+            _badgeService.CreateBadge(badge);
         }
         /// <summary>
         /// 
@@ -195,7 +195,7 @@ namespace ExpenseManager.Business.Facades
         /// <param name="badgeId"></param>
         public void DeleteBadge(int badgeId)
         {
-            
+            _badgeService.DeleteBadge(badgeId);
         }
         /// <summary>
         /// 
@@ -203,7 +203,7 @@ namespace ExpenseManager.Business.Facades
         /// <param name="updatedBadge"></param>
         public void UpdateBadge(Badge updatedBadge)
         {
-            
+            _badgeService.UpdateBadge(updatedBadge);
         }
         /// <summary>
         /// 
@@ -212,7 +212,7 @@ namespace ExpenseManager.Business.Facades
         /// <returns></returns>
         public Badge GetBadge(int badgeId)
         {
-            return null;
+            return _badgeService.GetBadge(badgeId);
         }
         /// <summary>
         /// 
@@ -221,7 +221,7 @@ namespace ExpenseManager.Business.Facades
         /// <returns></returns>
         public List<Badge> ListBages(BadgeFilter filter)
         {
-            return null;
+            return _badgeService.ListBadges(filter);
         }
         #endregion
         #region AccountBadge CRUD
@@ -231,7 +231,7 @@ namespace ExpenseManager.Business.Facades
         /// <param name="accountBadge"></param>
         public void CreateAccountBadge(AccountBadge accountBadge)
         {
-            
+            _accountBadgeService.CreateAccountBadge(accountBadge);
         }
         /// <summary>
         /// 
@@ -239,7 +239,7 @@ namespace ExpenseManager.Business.Facades
         /// <param name="accountBadgeId"></param>
         public void DeleteAccountBadge(int accountBadgeId)
         {
-            
+            _accountBadgeService.DeleteAccountBadge(accountBadgeId);
         }
         /// <summary>
         /// 
@@ -247,7 +247,7 @@ namespace ExpenseManager.Business.Facades
         /// <param name="updatedAccountBadge"></param>
         public void UpdateAccountBadge(AccountBadge updatedAccountBadge)
         {
-            
+            _accountBadgeService.UpdateAccountBadge(updatedAccountBadge);
         }
         /// <summary>
         /// 
@@ -256,7 +256,7 @@ namespace ExpenseManager.Business.Facades
         /// <returns></returns>
         public AccountBadge GetAccountBadge(int accountBadgeId)
         {
-            return null;
+            return _accountBadgeService.GetAccountBadge(accountBadgeId);
         }
         /// <summary>
         /// 
@@ -265,7 +265,7 @@ namespace ExpenseManager.Business.Facades
         /// <returns></returns>
         public List<AccountBadge> ListAccountBadges(AccountBadgeFilter filter)
         {
-            return null;
+            return _accountBadgeService.ListAccountBadges(filter);
         } 
         #endregion
     }

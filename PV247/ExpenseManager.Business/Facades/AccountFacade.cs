@@ -59,7 +59,7 @@ namespace ExpenseManager.Business.Facades
         /// <param name="userId"></param>
         public void DeleteUser(int userId)
         {
-            
+            _userService.DeleteUser(userId);
         }
         /// <summary>
         /// 
@@ -68,7 +68,7 @@ namespace ExpenseManager.Business.Facades
         /// <returns></returns>
         public User GetUser(int userId)
         {
-            return null;
+            return _userService.GetUser(userId);
         }
         /// <summary>
         /// 
@@ -77,7 +77,7 @@ namespace ExpenseManager.Business.Facades
         /// <returns></returns>
         public List<User> ListUsers(UserFilter filter)
         {
-            return null;
+            return _userService.ListUsers(filter);
         } 
         #endregion
         #region Account CRUD
@@ -87,7 +87,7 @@ namespace ExpenseManager.Business.Facades
         /// <param name="account"></param>
         public void CreateAccount(Account account)
         {
-            
+            _accountService.CreateAccount(account);
         }
         /// <summary>
         /// 
@@ -95,7 +95,7 @@ namespace ExpenseManager.Business.Facades
         /// <param name="accountId"></param>
         public void DeleteAccount(int accountId)
         {
-            
+            _accountService.DeleteAccount(accountId);
         }
         /// <summary>
         /// 
@@ -103,7 +103,7 @@ namespace ExpenseManager.Business.Facades
         /// <param name="updatedAccount"></param>
         public void UpdateAccount(Account updatedAccount)
         {
-            
+            _accountService.UpdateAccount(updatedAccount);
         }
         /// <summary>
         /// 
@@ -112,7 +112,7 @@ namespace ExpenseManager.Business.Facades
         /// <returns></returns>
         public Account GetAccount(int accountId)
         {
-            return null;
+            return _accountService.GetAccount(accountId);
         }
         /// <summary>
         /// 
@@ -121,7 +121,7 @@ namespace ExpenseManager.Business.Facades
         /// <returns></returns>
         public List<Account> ListAccounts(AccountFilter filter)
         {
-            return null;
+            return _accountService.ListAccounts(filter);
         } 
         #endregion
     }
