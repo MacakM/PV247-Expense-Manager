@@ -6,9 +6,9 @@ using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Filters;
 using ExpenseManager.Business.Infrastructure;
 using ExpenseManager.Business.Services.Interfaces;
-using ExpenseManager.Database.DataAccess.Queries;
 using ExpenseManager.Database.Entities;
 using ExpenseManager.Database.Filters;
+using ExpenseManager.Database.Infrastructure.Query;
 using ExpenseManager.Database.Infrastructure.Repository;
 using Riganti.Utils.Infrastructure.Core;
 
@@ -35,7 +35,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="repository"></param>
         /// <param name="expenseManagerMapper"></param>
         /// <param name="unitOfWorkProvider"></param>
-        public PlanService(ListPlansQuery query, ExpenseManagerRepository<PlanModel, int> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
+        public PlanService(ExpenseManagerQuery<PlanModel, PlanModelFilter> query, ExpenseManagerRepository<PlanModel, int> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
         {
         }
         /// <summary>

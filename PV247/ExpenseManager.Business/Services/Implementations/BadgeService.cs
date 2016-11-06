@@ -9,8 +9,8 @@ using ExpenseManager.Database.Entities;
 using ExpenseManager.Database.Infrastructure.Repository;
 using Riganti.Utils.Infrastructure.Core;
 using ExpenseManager.Business.Services.Interfaces;
-using ExpenseManager.Database.DataAccess.Queries;
 using ExpenseManager.Database.Filters;
+using ExpenseManager.Database.Infrastructure.Query;
 
 namespace ExpenseManager.Business.Services.Implementations
 {
@@ -34,7 +34,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="repository"></param>
         /// <param name="expenseManagerMapper"></param>
         /// <param name="unitOfWorkProvider"></param>
-        public BadgeService(ListBadgesQuery query, ExpenseManagerRepository<BadgeModel, int> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
+        public BadgeService(ExpenseManagerQuery<BadgeModel, BadgeModelFilter> query, ExpenseManagerRepository<BadgeModel, int> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
         {
         }
         /// <summary>
