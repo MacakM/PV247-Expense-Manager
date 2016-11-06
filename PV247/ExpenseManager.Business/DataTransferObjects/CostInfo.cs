@@ -18,6 +18,10 @@ namespace ExpenseManager.Business.DataTransferObjects
         [Required]
         public int? Money { get; set; }
         /// <summary>
+        /// More concrete description of the cost
+        /// </summary>
+        public string Description { get; set; }
+        /// <summary>
         /// Account id.
         /// </summary>
         [Required]

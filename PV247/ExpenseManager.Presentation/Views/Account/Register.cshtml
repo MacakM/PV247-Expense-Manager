@@ -1,9 +1,9 @@
 ﻿@model ExpenseManager.Presentation.Models.AccountViewModels.RegisterViewModel
-@{
-    ViewData["Title"] = "Register";
-}
 
-<h2>@ViewData["Title"].</h2>
+@section title
+{
+    Register
+}
 
 <form asp-controller="Account" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
     <h4>Create a new account.</h4>

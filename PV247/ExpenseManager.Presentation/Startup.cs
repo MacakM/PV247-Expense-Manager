@@ -56,6 +56,7 @@ namespace ExpenseManager.Presentation
             RegisterBusinessLayerDependencies(services);
 
             // Configure PL
+
             services.AddMvc(options =>
             {
                 options.Filters.Add(new RequireHttpsAttribute());
@@ -116,6 +117,7 @@ namespace ExpenseManager.Presentation
                     var config = new MapperConfiguration(cfg => 
                     {
                         cfg.AddProfile<DatabaseToBusinessStandardMapping>();
+                        //cfg.AddProfile<BussinessToViewModelMapping>();
                     });
                     return config.CreateMapper();
             });
@@ -140,27 +142,27 @@ namespace ExpenseManager.Presentation
             //TODO add more query objects
 
             // Register all services
-            services.AddTransient(typeof(ExpenseManagerQueryAndCrudServiceBase<AccountBadgeModel, int, ListAccountBadgesQuery, User, AccountBadgeModelFilter>), typeof(AccountBadgeService));
+            services.AddTransient(typeof(ExpenseManagerQueryAndCrudServiceBase<AccountBadgeModel, int, AccountBadge, AccountBadgeModelFilter>), typeof(AccountBadgeService));
+            services.AddTransient<IAccountBadgeService, AccountBadgeService>();
+
+            services.AddTransient(typeof(ExpenseManagerQueryAndCrudServiceBase<AccountModel, int, Account, AccountModelFilter>), typeof(AccountService));
+            services.AddTransient<IAccountService, AccountService>();
+
+            services.AddTransient(typeof(ExpenseManagerQueryAndCrudServiceBase<BadgeModel, int, Badge, BadgeModelFilter>), typeof(BadgeService));
+            services.AddTransient<IBadgeService, BadgeService>();
+
+            services.AddTransient(typeof(ExpenseManagerQueryAndCrudServiceBase<CostInfoModel, int, CostInfo, CostInfoModelFilter>), typeof(CostInfoService));
+            services.AddTransient<ICostInfoService, CostInfoService>();
+
+            services.AddTransient(typeof(ExpenseManagerQueryAndCrudServiceBase<CostTypeModel, int, CostType, CostTypeModelFilter>), typeof(CostTypeService));
+            services.AddTransient<ICostTypeService, CostTypeService>();
+
+            services.AddTransient(typeof(ExpenseManagerQueryAndCrudServiceBase<PlanModel, int, Plan, PlanModelFilter>), typeof(PlanService));
+            services.AddTransient<IPlanService, PlanService>();
+
+            services.AddTransient(typeof(ExpenseManagerQueryAndCrudServiceBase<UserModel, int, User, UserModelFilter>), typeof(UserService));
             services.AddTransient<IUserService, UserService>();
 
-            services.AddTransient(typeof(ExpenseManagerQueryAndCrudServiceBase<AccountModel, int, ListAccountsQuery, User, AccountModelFilter>), typeof(AccountService));
-            services.AddTransient<IUserService, UserService>();
-
-            services.AddTransient(typeof(ExpenseManagerQueryAndCrudServiceBase<BadgeModel, int, ListBadgesQuery, User, BadgeModelFilter>), typeof(BadgeService));
-            services.AddTransient<IUserService, UserService>();
-
-            services.AddTransient(typeof(ExpenseManagerQueryAndCrudServiceBase<CostInfoModel, int, ListCostInfosQuery, User, CostInfoModelFilter>), typeof(CostInfoService));
-            services.AddTransient<IUserService, UserService>();
-
-            services.AddTransient(typeof(ExpenseManagerQueryAndCrudServiceBase<CostTypeModel, int, ListCostTypesQuery, User, CostTypeModelFilter>), typeof(CostTypeService));
-            services.AddTransient<IUserService, UserService>();
-
-            services.AddTransient(typeof(ExpenseManagerQueryAndCrudServiceBase<PlanModel, int, ListPlansQuery, User, PlanModelFilter>), typeof(PlanService));
-            services.AddTransient<IUserService, UserService>();
-
-            services.AddTransient(typeof(ExpenseManagerQueryAndCrudServiceBase<UserModel, int, ListUsersQuery, User, UserModelFilter>), typeof(UserService));
-            services.AddTransient<IUserService, UserService>();
-            
             //TODO add more services
 
             // Register all facades

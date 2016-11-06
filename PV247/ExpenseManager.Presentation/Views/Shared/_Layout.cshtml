@@ -27,73 +27,76 @@
     <![endif]-->
 </head>
 <body>
-    <header>
-        <div id="left-menu-opener" href=""><i class="fa fa-bars" aria-hidden="true"></i></div>
-        <a href="@Url.Action("Index", "Expense")" class="project-name">Expense Manager</a>
-        <span class="right-part">
+<header>
+    <div id="left-menu-opener" href=""><i class="fa fa-bars" aria-hidden="true"></i>
+    </div>
+    <a href="@Url.Action("Index", "Expense")" class="project-name">Expense Manager</a>
+    <span class="right-part">
             <span class="username">Username</span>
             <a href="#" class="logout"><i class="fa fa-power-off" aria-hidden="true"></i></a>
         </span>
-    </header>
-    <div id="left-menu">
-        <ul>
-            <li><a href="@Url.Action("Index", "AccountSettings")">Account settings</a></li>
-            <!--<li><a href="#">Permanent expenses</a></li>-->
-            <li><a href="@Url.Action("Index", "Category")">Categories</a></li>
-            <li><a href="@Url.Action("Index", "Plan")">Plans</a></li>
-            <li><a href="@Url.Action("Index", "Achievement")">Achievements</a></li>
-        </ul>
-    </div>
-    <div class="container-fluid">
-        @RenderBody()
-        <div class="col-sm-3 sidebar right">
-            <div class="money-info">
-                <h3>Money remaining:</h3>
-                <span class="remaining-money">5000 kč</span>
-                <span>Total money for this month: 30000kč</span>
+</header>
+<div id="left-menu">
+    <ul>
+        <li><a href="@Url.Action("Index", "AccountSettings")">Account settings</a></li>
+        <!--<li><a href="#">Permanent expenses</a></li>-->
+        <li><a href="@Url.Action("Index", "Category")">Categories</a></li>
+        <li><a href="@Url.Action("Index", "Plan")">Plans</a></li>
+        <li><a href="@Url.Action("Index", "Achievement")">Achievements</a></li>
+    </ul>
+</div>
+<div class="container-fluid">
+    @RenderBody()
+    <div class="col-sm-3 sidebar right">
+        <div class="money-info">
+            <h3>Money remaining:</h3>
+            <span class="remaining-money">5000 kč</span>
+            <span>Total money for this month: 30000kč</span>
+        </div>
+        <hr/>
+        <div class="achievements">
+            <h3>Latest achievements</h3>
+            <div class="achievement">
+                <img src="~/images/badge.png"/>
+                <span>Ušetrenie 5000kč</span>
             </div>
-            <hr />
-            <div class="achievements">
-                <h3>Latest achievements</h3>
-                <div class="achievement">
-                    <img src="~/images/badge.png"/>
-                    <span>Ušetrenie 5000kč</span>
-                </div>
-                <div class="achievement">
-                    <img src="~/images/badge.png" />
-                    <span>Minutie menej než 15000kč</span>
-                </div>
-                <div class="achievement">
-                    <img src="~/images/badge.png" />
-                    <span>Ušetrenie 5000kč</span>
-                </div>
-                <div class="achievement">
-                    <img src="~/images/badge.png" />
-                    <span>Minutie menej než 15000kč</span>
-                </div>
-                <div class="achievement">
-                    <div class="img-holder"></div>
-                    <span><a class="more" href="@Url.Action("Index", "Achievement")">More...</a></span>
-                </div>
+            <div class="achievement">
+                <img src="~/images/badge.png"/>
+                <span>Minutie menej než 15000kč</span>
             </div>
-            <hr/>
-            <div class="plans">
-                <h3>Plans for this month</h3>
-                <div>Ušetriť 5000kč</div>
-                <div>Ušetriť 5000kč</div>
-                <div>Ušetriť 5000kč</div>
-                <div>Ušetriť 5000kč</div>
-                <div>Ušetriť 5000kč</div>
-                <div>Ušetriť 5000kč</div>
-                <div>Ušetriť 5000kč</div>
-                <div>Ušetriť 5000kč</div>
-                <div>Ušetriť 5000kč</div>
-                <div>Ušetriť 5000kč</div>
-                <div>Ušetriť 5000kč</div>
-                <div><a href="@Url.Action("Index", "Plan")" class="more">More</a>
-                </div>
+            <div class="achievement">
+                <img src="~/images/badge.png"/>
+                <span>Ušetrenie 5000kč</span>
+            </div>
+            <div class="achievement">
+                <img src="~/images/badge.png"/>
+                <span>Minutie menej než 15000kč</span>
+            </div>
+            <div class="achievement">
+                <div class="img-holder"></div>
+                <span><a class="more" href="@Url.Action("Index", "Achievement")">More...</a></span>
+            </div>
+        </div>
+        <hr/>
+        <div class="plans">
+            <h3>Plans for this month</h3>
+            <div>Ušetriť 5000kč</div>
+            <div>Ušetriť 5000kč</div>
+            <div>Ušetriť 5000kč</div>
+            <div>Ušetriť 5000kč</div>
+            <div>Ušetriť 5000kč</div>
+            <div>Ušetriť 5000kč</div>
+            <div>Ušetriť 5000kč</div>
+            <div>Ušetriť 5000kč</div>
+            <div>Ušetriť 5000kč</div>
+            <div>Ušetriť 5000kč</div>
+            <div>Ušetriť 5000kč</div>
+            <div><a href="@Url.Action("Index", "Plan")" class="more">More</a>
             </div>
         </div>
     </div>
+</div>
 </body>
+
+@RenderSection("scripts", required: false)
 </html>

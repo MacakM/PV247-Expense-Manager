@@ -1,11 +1,10 @@
 ﻿@using System.Threading.Tasks
 @using ExpenseManager.Presentation.Models.AccountViewModels
 @model ExpenseManager.Presentation.Models.AccountViewModels.ExternalLoginConfirmationViewModel
-@{
-    ViewData["Title"] = "Register";
+@section title
+{
+    Confirmation
 }
-
-<h2>@ViewData["Title"].</h2>
 <h3>Associate your @ViewData["LoginProvider"] account.</h3>
 
 <form asp-controller="Account" asp-action="ExternalLoginConfirmation" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
