@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using AutoMapper;
 using ExpenseManager.Business.DataTransferObjects;
+using ExpenseManager.Business.DataTransferObjects.Filters;
 using ExpenseManager.Business.Infrastructure;
 using ExpenseManager.Business.Services.Interfaces;
 using ExpenseManager.Database.DataAccess.Repositories;
@@ -22,28 +23,38 @@ namespace ExpenseManager.Business.Services.Implementations
             _costInfoRepository = costInfoRepository;
         }
        
-        public void CreateCost(CostInfo cost)
+        public void CreateCostInfo(CostInfo costInfo)
         {
             // insert new CostType too?
-            Save(cost);
+            Save(costInfo);
         }
 
-        public void DeleteCost(int costId)
+        public void UpdateCostInfo(CostInfo updatedCostInfo)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void DeleteCostInfo(int costInfoId)
         {
             using (var uow = UnitOfWorkProvider.Create())
             {
-                _costInfoRepository.Delete(costId);
+                _costInfoRepository.Delete(costInfoId);
                 uow.Commit();
             }
         }
 
-        public CostInfo GetCost(int costId)
+        public CostInfo GetCostInfo(int costInfoId)
         {
             using (UnitOfWorkProvider.Create())
             {
-                var plan = _costInfoRepository.GetById(costId);
+                var plan = _costInfoRepository.GetById(costInfoId);
                 return plan != null ? Mapper.Map<CostInfo>(plan) : null;
             }
+        }
+
+        public List<CostInfo> ListCostInfos(CostInfoFilter filter)
+        {
+            throw new System.NotImplementedException();
         }
 
         protected override string[] EntityIncludes { get; } =

@@ -28,11 +28,11 @@ namespace ExpenseManager.Business.Services.Implementations
             Save(plan);
         }
 
-        public void EditPlan(Plan planEdited)
+        public void UpdatePlan(Plan planUpdateed)
         {
             using (var uow = UnitOfWorkProvider.Create())
             {
-                var plan = _planRepository.GetById(planEdited.Id, EntityIncludes);
+                var plan = _planRepository.GetById(planUpdateed.Id, EntityIncludes);
                 Mapper.Map(plan, plan);
                 _planRepository.Update(plan);
                 uow.Commit();

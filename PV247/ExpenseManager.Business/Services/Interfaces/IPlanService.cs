@@ -7,7 +7,7 @@ namespace ExpenseManager.Business.Services.Interfaces
     public interface IPlanService
     {
         void CreatePlan(Plan plan);
-        void EditPlan(Plan plan);
+        void UpdatePlan(Plan plan);
         void DeletePlan(int planId);
         Plan GetPlan(int planId);
         IEnumerable<Plan> ListPlans(PlanFilter filter);

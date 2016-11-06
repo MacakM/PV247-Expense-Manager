@@ -37,7 +37,7 @@ namespace ExpenseManager.Business.Facades
         /// <summary>
         /// 
         /// </summary>
-        public void CheckAllPlansFulfilment()
+        public void CheckAllPlansFulfillment()
         {
             
         }
@@ -201,7 +201,7 @@ namespace ExpenseManager.Business.Facades
         /// 
         /// </summary>
         /// <param name="updatedBadge"></param>
-        public void EditBadge(Badge updatedBadge)
+        public void UpdateBadge(Badge updatedBadge)
         {
             
         }

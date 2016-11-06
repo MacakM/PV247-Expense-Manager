@@ -28,7 +28,7 @@ namespace ExpenseManager.Business.Services.Implementations
             Save(badge);
         }
 
-        public void EditBadge(Badge badgeEdited)
+        public void UpdateBadge(Badge badgeEdited)
         {
             using (var uow = UnitOfWorkProvider.Create())
             {
@@ -57,12 +57,12 @@ namespace ExpenseManager.Business.Services.Implementations
             }
         }
 
-        public IEnumerable<Badge> ListBadges(BadgeFilter filter)
+        public List<Badge> ListBadges(BadgeFilter filter)
         {
             throw new NotImplementedException();
         }
 
-        public void AchieveBadge(Badge badge, AccountModel account)
+        public void AchieveBadge(Badge badge, Account account)
         {
             throw new NotImplementedException();
         }
