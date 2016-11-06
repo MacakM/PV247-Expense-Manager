@@ -137,7 +137,7 @@ namespace ExpenseManager.Presentation
             //TODO add more services
 
             // Register all facades
-            services.AddTransient<UserFacade>();
+            services.AddTransient<AccountFacade>();
             services.AddTransient<BalanceFacade>();
             //TODO add more facades
             

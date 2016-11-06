@@ -18,13 +18,13 @@ namespace ExpenseManager.Presentation.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        private readonly UserFacade _userFacade;
+        private readonly AccountFacade _userFacade;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger _logger;
 
         public AccountController(
-            UserFacade userFacade,
+            AccountFacade userFacade,
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILoggerFactory loggerFactory)

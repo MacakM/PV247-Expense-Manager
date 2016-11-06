@@ -51,6 +51,7 @@
       <HintPath>..\packages\System.Runtime.Extensions.4.1.0\lib\net462\System.Runtime.Extensions.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Workflow.Runtime" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -78,7 +79,7 @@
     <Compile Include="DataTransferObjects\AccountBadge.cs" />
     <Compile Include="DataTransferObjects\User.cs" />
     <Compile Include="Facades\BalanceFacade.cs" />
-    <Compile Include="Facades\UserFacade.cs" />
+    <Compile Include="Facades\AccountFacade.cs" />
     <Compile Include="Infrastructure\ExpenseManagerCrudServiceBase.cs" />
     <Compile Include="Infrastructure\ExpenseManagerQueryAndCrudServiceBase.cs" />
     <Compile Include="Infrastructure\Mapping\Profiles\DatabaseToBusinessStandardMapping.cs" />
