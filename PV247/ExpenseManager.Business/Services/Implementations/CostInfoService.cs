@@ -13,9 +13,8 @@ using Riganti.Utils.Infrastructure.Core;
 
 namespace ExpenseManager.Business.Services.Implementations
 {
-    // TODO doc
     /// <summary>
-    /// 
+    /// Service handles AccountBadge entity operations
     /// </summary>
     public class CostInfoService : ExpenseManagerQueryAndCrudServiceBase<CostInfoModel, int, ListCostInfosQuery, CostInfo, CostInfoModelFilter>, ICostInfoService
     {
@@ -39,7 +38,7 @@ namespace ExpenseManager.Business.Services.Implementations
         {
         }
         /// <summary>
-        /// 
+        /// Creates new cost info object in databse
         /// </summary>
         /// <param name="costInfo"></param>
         public void CreateCostInfo(CostInfo costInfo)
@@ -48,15 +47,15 @@ namespace ExpenseManager.Business.Services.Implementations
             Save(costInfo);
         }
         /// <summary>
-        /// 
+        /// Updates existing cost info
         /// </summary>
-        /// <param name="updatedCostInfo"></param>
+        /// <param name="updatedCostInfo">updated cost info</param>
         public void UpdateCostInfo(CostInfo updatedCostInfo)
         {
             Save(updatedCostInfo);
         }
         /// <summary>
-        /// 
+        /// Deletes cost info specified by cost info
         /// </summary>
         /// <param name="costInfoId"></param>
         public void DeleteCostInfo(int costInfoId)
@@ -64,26 +63,26 @@ namespace ExpenseManager.Business.Services.Implementations
             Delete(costInfoId);
         }
         /// <summary>
-        /// 
+        /// Get cost info specified by unique id
         /// </summary>
-        /// <param name="costInfoId"></param>
-        /// <returns></returns>
+        /// <param name="costInfoId">Unique id</param>
+        /// <returns>Cost info</returns>
         public CostInfo GetCostInfo(int costInfoId)
         {
             return GetDetail(costInfoId);
         }
         /// <summary>
-        /// 
+        /// List cost types based on filter
         /// </summary>
-        /// <param name="filter"></param>
-        /// <returns></returns>
+        /// <param name="filter">Filters cost infos</param>
+        /// <returns>List of cost infos</returns>
         public List<CostInfo> ListCostInfos(CostInfoFilter filter)
         {
             Query.Filter = Mapper.Map<CostInfoModelFilter>(filter);
             return GetList().ToList();
         }
         /// <summary>
-        /// 
+        /// Recompute periodic costs and make them as new cost infos
         /// </summary>
         public void RecomputePeriodicCosts()
         {

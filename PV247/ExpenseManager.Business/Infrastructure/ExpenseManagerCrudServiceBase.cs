@@ -5,7 +5,7 @@ using Riganti.Utils.Infrastructure.Core;
 
 namespace ExpenseManager.Business.Infrastructure
 {
-    // TODO doc
+    
     /// <summary>
     /// A base class for CRUD-enabled service, taken from unreleased project of RigantiInfrastructure solution, all credit goes to Tomas Herceg.
     /// </summary>

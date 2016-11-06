@@ -5,9 +5,8 @@ using ExpenseManager.Business.Services.Interfaces;
 
 namespace ExpenseManager.Business.Facades
 {
-    // TODO doc
     /// <summary>
-    /// 
+    /// Handles operations over account balance and related entities
     /// </summary>
     public class BalanceFacade
     {
@@ -36,21 +35,21 @@ namespace ExpenseManager.Business.Facades
         
         #region Business operations
         /// <summary>
-        /// 
+        /// Lists all plans that can be closed by user
         /// </summary>
-        public void CheckAllPlansFulfillment()
+        public List<Plan> ListAllCloseablePlans()
         {
-            _planService.CheckAllPlansFulfillment();
+            return _planService.ListAllCloseablePlans();
         }
         /// <summary>
-        /// 
+        /// Checks all account if they can get badge
         /// </summary>
         public void CheckBadgesRequirements()
         {
             _badgeService.CheckBadgesRequirements();
         }
         /// <summary>
-        /// 
+        /// Recomputes periodic costs
         /// </summary>
         public void RecomputePeriodicCosts()
         {
@@ -59,14 +58,15 @@ namespace ExpenseManager.Business.Facades
         #endregion
         #region CostInfo CRUD
         /// <summary>
-        /// 
+        /// Creates new cost info object in databse
         /// </summary>
+        /// <param name="costInfo"></param>
         public void CreateItem(CostInfo costInfo)
         {
             _costInfoService.CreateCostInfo(costInfo);
         }
         /// <summary>
-        /// 
+        /// Deletes cost info specified by cost info
         /// </summary>
         /// <param name="costInfoId"></param>
         public void DeleteItem(int costInfoId)
@@ -74,27 +74,27 @@ namespace ExpenseManager.Business.Facades
             _costInfoService.DeleteCostInfo(costInfoId);
         }
         /// <summary>
-        /// 
+        /// Updates existing cost info
         /// </summary>
-        /// <param name="updatedCostInfo"></param>
+        /// <param name="updatedCostInfo">updated cost info</param>
         public void UpdateItem(CostInfo updatedCostInfo)
         {
             _costInfoService.UpdateCostInfo(updatedCostInfo);
         }
         /// <summary>
-        /// 
+        /// Get cost info specified by unique id
         /// </summary>
-        /// <param name="costInfoId"></param>
-        /// <returns></returns>
+        /// <param name="costInfoId">Unique id</param>
+        /// <returns>Cost info</returns>
         public CostInfo GetItem(int costInfoId)
         {
             return _costInfoService.GetCostInfo(costInfoId);
         }
         /// <summary>
-        /// 
+        /// List cost types based on filter
         /// </summary>
-        /// <param name="filter"></param>
-        /// <returns></returns>
+        /// <param name="filter">Filters cost infos</param>
+        /// <returns>List of cost infos</returns>
         public List<CostInfo> ListItem(CostInfoFilter filter)
         {
             return _costInfoService.ListCostInfos(filter);
@@ -102,42 +102,42 @@ namespace ExpenseManager.Business.Facades
         #endregion
         #region Plan CRUD
         /// <summary>
-        /// 
+        /// Creates new plan in databse
         /// </summary>
-        /// <param name="plan"></param>
+        /// <param name="plan">Object to be saved to database</param>
         public void CreatePlan(Plan plan)
         {
             _planService.CreatePlan(plan);
         }
         /// <summary>
-        /// 
+        /// Deletes plen with specified id
         /// </summary>
-        /// <param name="planId"></param>
+        /// <param name="planId">Unique id of deleted plan</param>
         public void DeletePlan(int planId)
         {
             _planService.DeletePlan(planId);
         }
         /// <summary>
-        /// 
+        /// Updates plan, must have id of updated plan!
         /// </summary>
-        /// <param name="updatedPlan"></param>
+        /// <param name="updatedPlan">Plan object with id of existing plan</param>
         public void UpdatePlan(Plan updatedPlan)
         {
             _planService.UpdatePlan(updatedPlan);
         }
         /// <summary>
-        /// 
+        /// Get specific plan specified by unique id
         /// </summary>
-        /// <param name="planId"></param>
+        /// <param name="planId">Unique id of plan</param>
         /// <returns></returns>
         public Plan GetPlan(int planId)
         {
             return _planService.GetPlan(planId);
         }
         /// <summary>
-        /// 
+        /// Lists all plans that match filters criterias
         /// </summary>
-        /// <param name="filter"></param>
+        /// <param name="filter">Filters plans</param>
         /// <returns></returns>
         public List<Plan> ListPlans(PlanFilter filter)
         {
@@ -146,43 +146,43 @@ namespace ExpenseManager.Business.Facades
         #endregion
         #region CostType CRUD
         /// <summary>
-        /// 
+        /// Creaates new cost type
         /// </summary>
-        /// <param name="costType"></param>
+        /// <param name="costType">Object to be added to database</param>
         public void CreateItemType(CostType costType)
         {
             _costTypeService.CreateCostType(costType);
         }
         /// <summary>
-        /// 
+        /// Deletes cost type specified by id
         /// </summary>
-        /// <param name="costTypeId"></param>
+        /// <param name="costTypeId">Unique cost type id</param>
         public void DeleteItemType(int costTypeId)
         {
             _costTypeService.DeleteCostType(costTypeId);
         }
         /// <summary>
-        /// 
+        /// Updates existing cost type
         /// </summary>
-        /// <param name="updatedCostType"></param>
+        /// <param name="updatedCostType">Modified existing cost type</param>
         public void UpdateItemType(CostType updatedCostType)
         {
             _costTypeService.UpdateCostType(updatedCostType);
         }
         /// <summary>
-        /// 
+        /// Get cost type specified by unique id
         /// </summary>
-        /// <param name="itemTypeId"></param>
+        /// <param name="itemTypeId">Unique cost type id</param>
         /// <returns></returns>
         public CostType GetItemType(int itemTypeId)
         {
             return _costTypeService.GetCostType(itemTypeId);
         }
         /// <summary>
-        /// 
+        /// List cost types specified by filter
         /// </summary>
-        /// <param name="filter"></param>
-        /// <returns></returns>
+        /// <param name="filter">Filters cost types</param>
+        /// <returns>List of cost typer</returns>
         public List<CostType> ListItemTypes(CostTypeFilter filter)
         {
             return _costTypeService.ListCostTypes(filter);
@@ -190,15 +190,15 @@ namespace ExpenseManager.Business.Facades
         #endregion
         #region Badge CRUD
         /// <summary>
-        /// 
+        /// Creates new Badge object in database
         /// </summary>
-        /// <param name="badge"></param>
+        /// <param name="badge">new Badge</param>
         public void CreateBadge(Badge badge)
         {
             _badgeService.CreateBadge(badge);
         }
         /// <summary>
-        /// 
+        /// Deletes badge cpecified by id
         /// </summary>
         /// <param name="badgeId"></param>
         public void DeleteBadge(int badgeId)
@@ -206,7 +206,7 @@ namespace ExpenseManager.Business.Facades
             _badgeService.DeleteBadge(badgeId);
         }
         /// <summary>
-        /// 
+        /// Updates existing badge in database
         /// </summary>
         /// <param name="updatedBadge"></param>
         public void UpdateBadge(Badge updatedBadge)
@@ -214,7 +214,7 @@ namespace ExpenseManager.Business.Facades
             _badgeService.UpdateBadge(updatedBadge);
         }
         /// <summary>
-        /// 
+        /// Get specific badge by unique id
         /// </summary>
         /// <param name="badgeId"></param>
         /// <returns></returns>
@@ -223,9 +223,9 @@ namespace ExpenseManager.Business.Facades
             return _badgeService.GetBadge(badgeId);
         }
         /// <summary>
-        /// 
+        /// Lists filtered badges
         /// </summary>
-        /// <param name="filter"></param>
+        /// <param name="filter">Filters badges</param>
         /// <returns></returns>
         public List<Badge> ListBages(BadgeFilter filter)
         {
@@ -234,7 +234,7 @@ namespace ExpenseManager.Business.Facades
         #endregion
         #region AccountBadge CRUD
         /// <summary>
-        /// 
+        /// Add new badge to account by creating new AccountBadge object in database
         /// </summary>
         /// <param name="accountBadge"></param>
         public void CreateAccountBadge(AccountBadge accountBadge)
@@ -242,7 +242,7 @@ namespace ExpenseManager.Business.Facades
             _accountBadgeService.CreateAccountBadge(accountBadge);
         }
         /// <summary>
-        /// 
+        /// Deletes specified account badge
         /// </summary>
         /// <param name="accountBadgeId"></param>
         public void DeleteAccountBadge(int accountBadgeId)
@@ -250,7 +250,7 @@ namespace ExpenseManager.Business.Facades
             _accountBadgeService.DeleteAccountBadge(accountBadgeId);
         }
         /// <summary>
-        /// 
+        /// Updates existing account badge
         /// </summary>
         /// <param name="updatedAccountBadge"></param>
         public void UpdateAccountBadge(AccountBadge updatedAccountBadge)
@@ -258,7 +258,7 @@ namespace ExpenseManager.Business.Facades
             _accountBadgeService.UpdateAccountBadge(updatedAccountBadge);
         }
         /// <summary>
-        /// 
+        /// Get account badge specified by id
         /// </summary>
         /// <param name="accountBadgeId"></param>
         /// <returns></returns>
@@ -267,9 +267,9 @@ namespace ExpenseManager.Business.Facades
             return _accountBadgeService.GetAccountBadge(accountBadgeId);
         }
         /// <summary>
-        /// 
+        /// List filtered account badges
         /// </summary>
-        /// <param name="filter"></param>
+        /// <param name="filter">Filters account badgess</param>
         /// <returns></returns>
         public List<AccountBadge> ListAccountBadges(AccountBadgeFilter filter)
         {

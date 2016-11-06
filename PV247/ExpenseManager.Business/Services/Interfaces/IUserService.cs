@@ -6,9 +6,9 @@ using ExpenseManager.Business.DataTransferObjects.Filters;
 
 namespace ExpenseManager.Business.Services.Interfaces
 {
-    // TODO doc
+   
     /// <summary>
-    /// 
+    /// Service handles user entity operations
     /// </summary>
     public interface IUserService
     {
@@ -17,13 +17,11 @@ namespace ExpenseManager.Business.Services.Interfaces
         /// </summary>
         /// <param name="userRegistration">User registration information</param>
         void RegisterNewUser(User userRegistration);
-
         /// <summary>
         /// Updates existing user according to provided information
         /// </summary>
         /// <param name="modifiedUser">Updated user information</param>
         void UpdateUser(User modifiedUser);
-
         /// <summary>
         /// Gets currently signed user according to its email
         /// </summary>
@@ -31,7 +29,6 @@ namespace ExpenseManager.Business.Services.Interfaces
         /// <param name="includes">Property to include with obtained user</param>
         /// <returns>User with user details</returns>
         User GetCurrentlySignedUser(string email, params Expression<Func<User, object>>[] includes);
-
         /// <summary>
         /// Gets currently signed user according to its email
         /// </summary>
@@ -40,21 +37,21 @@ namespace ExpenseManager.Business.Services.Interfaces
         /// <returns>User with user details</returns>
         User GetCurrentlySignedUser(string email, bool includeAllProperties = false);
         /// <summary>
-        /// 
+        /// List users that match parameters given in filter 
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
         List<User> ListUsers(UserFilter filter);
         /// <summary>
-        /// 
+        /// Get specific user that had id == userId
         /// </summary>
-        /// <param name="userId"></param>
-        /// <returns></returns>
+        /// <param name="userId">Unique user identifier</param>
+        /// <returns>One user with id == userId</returns>
         User GetUser(int userId);
         /// <summary>
-        /// 
+        /// Delete user specified by userId
         /// </summary>
-        /// <param name="userId"></param>
+        /// <param name="userId">Unique user identifier</param>
         void DeleteUser(int userId);
     }
 }

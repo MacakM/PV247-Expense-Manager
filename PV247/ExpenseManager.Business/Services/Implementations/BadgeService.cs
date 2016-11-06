@@ -14,9 +14,8 @@ using ExpenseManager.Database.Filters;
 
 namespace ExpenseManager.Business.Services.Implementations
 {
-    // TODO doc
     /// <summary>
-    /// 
+    /// Service handles Badge entity operations
     /// </summary>
     public class BadgeService : ExpenseManagerQueryAndCrudServiceBase<BadgeModel, int, ListBadgesQuery, Badge, BadgeModelFilter>, IBadgeService
     {
@@ -38,15 +37,14 @@ namespace ExpenseManager.Business.Services.Implementations
         {
         }
         /// <summary>
-        /// 
+        /// Creates new Badge object in database
         /// </summary>
-        /// <param name="badge"></param>
         public void CreateBadge(Badge badge)
         {
             Save(badge);
         }
         /// <summary>
-        /// 
+        /// Updates existing badge in database
         /// </summary>
         /// <param name="badgeEdited"></param>
         public void UpdateBadge(Badge badgeEdited)
@@ -54,7 +52,7 @@ namespace ExpenseManager.Business.Services.Implementations
             Save(badgeEdited);
         }
         /// <summary>
-        /// 
+        /// Deletes badge cpecified by id
         /// </summary>
         /// <param name="badgeId"></param>
         public void DeleteBadge(int badgeId)
@@ -62,7 +60,7 @@ namespace ExpenseManager.Business.Services.Implementations
             Delete(badgeId);
         }
         /// <summary>
-        /// 
+        /// Get specific badge by unique id
         /// </summary>
         /// <param name="badgeId"></param>
         /// <returns></returns>
@@ -71,9 +69,9 @@ namespace ExpenseManager.Business.Services.Implementations
             return GetDetail(badgeId);
         }
         /// <summary>
-        /// 
+        /// Lists filtered badges
         /// </summary>
-        /// <param name="filter"></param>
+        /// <param name="filter">Filters badges</param>
         /// <returns></returns>
         public List<Badge> ListBadges(BadgeFilter filter)
         {
@@ -81,16 +79,7 @@ namespace ExpenseManager.Business.Services.Implementations
             return GetList().ToList();
         }
         /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="badge"></param>
-        /// <param name="account"></param>
-        public void AchieveBadge(Badge badge, Account account)
-        {
-            throw new NotImplementedException();
-        }
-        /// <summary>
-        /// 
+        /// Check all accounts if they dont deserve some badges
         /// </summary>
         public void CheckBadgesRequirements()
         {

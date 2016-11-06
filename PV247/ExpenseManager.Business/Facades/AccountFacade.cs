@@ -5,7 +5,6 @@ using ExpenseManager.Business.Services.Interfaces;
 
 namespace ExpenseManager.Business.Facades
 {
-    // TODO doc
     /// <summary>
     /// Provides access to user related functionality
     /// </summary>
@@ -55,35 +54,35 @@ namespace ExpenseManager.Business.Facades
             return _userService.GetCurrentlySignedUser(email, includeAllProperties);
         }
         /// <summary>
-        /// 
+        /// Delete user specified by userId
         /// </summary>
-        /// <param name="userId"></param>
+        /// <param name="userId">Unique user identifier</param>
         public void DeleteUser(int userId)
         {
             _userService.DeleteUser(userId);
         }
         /// <summary>
-        /// 
+        /// Get specific user that had id == userId
         /// </summary>
-        /// <param name="userId"></param>
-        /// <returns></returns>
+        /// <param name="userId">Unique user identifier</param>
+        /// <returns>One user with id == userId</returns>
         public User GetUser(int userId)
         {
             return _userService.GetUser(userId);
         }
         /// <summary>
-        /// 
+        /// List users that match parameters given in filter 
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
         public List<User> ListUsers(UserFilter filter)
         {
             return _userService.ListUsers(filter);
-        } 
+        }
         #endregion
         #region Account CRUD
         /// <summary>
-        /// 
+        /// Creates new account
         /// </summary>
         /// <param name="account"></param>
         public void CreateAccount(Account account)
@@ -91,7 +90,7 @@ namespace ExpenseManager.Business.Facades
             _accountService.CreateAccount(account);
         }
         /// <summary>
-        /// 
+        /// Deletes account by specified unique id
         /// </summary>
         /// <param name="accountId"></param>
         public void DeleteAccount(int accountId)
@@ -99,7 +98,7 @@ namespace ExpenseManager.Business.Facades
             _accountService.DeleteAccount(accountId);
         }
         /// <summary>
-        /// 
+        /// Updates existing account
         /// </summary>
         /// <param name="updatedAccount"></param>
         public void UpdateAccount(Account updatedAccount)
@@ -107,7 +106,7 @@ namespace ExpenseManager.Business.Facades
             _accountService.UpdateAccount(updatedAccount);
         }
         /// <summary>
-        /// 
+        /// Get account specified by id
         /// </summary>
         /// <param name="accountId"></param>
         /// <returns></returns>
@@ -116,9 +115,9 @@ namespace ExpenseManager.Business.Facades
             return _accountService.GetAccount(accountId);
         }
         /// <summary>
-        /// 
+        /// List filtered accounts
         /// </summary>
-        /// <param name="filter"></param>
+        /// <param name="filter">Filters accounts</param>
         /// <returns></returns>
         public List<Account> ListAccounts(AccountFilter filter)
         {

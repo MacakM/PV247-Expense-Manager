@@ -18,7 +18,6 @@ using ExpenseManager.Database.Filters;
 
 namespace ExpenseManager.Business.Services.Implementations
 {
-    // TODO doc
     /// <summary>
     /// Provides user related functionality
     /// </summary>
@@ -108,7 +107,7 @@ namespace ExpenseManager.Business.Services.Implementations
             }
         }
         /// <summary>
-        /// 
+        /// List users that match parameters given in filter 
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
@@ -118,18 +117,18 @@ namespace ExpenseManager.Business.Services.Implementations
             return GetList().ToList();
         }
         /// <summary>
-        /// 
+        /// Get specific user that had id == userId
         /// </summary>
-        /// <param name="userId"></param>
-        /// <returns></returns>
+        /// <param name="userId">Unique user identifier</param>
+        /// <returns>One user with id == userId</returns>
         public User GetUser(int userId)
         {
             return GetDetail(userId);
         }
         /// <summary>
-        /// 
+        /// Delete user specified by userId
         /// </summary>
-        /// <param name="userId"></param>
+        /// <param name="userId">Unique user identifier</param>
         public void DeleteUser(int userId)
         {
             Delete(userId);

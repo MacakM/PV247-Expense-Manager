@@ -13,9 +13,8 @@ using Riganti.Utils.Infrastructure.Core;
 
 namespace ExpenseManager.Business.Services.Implementations
 {
-    // TODO doc
     /// <summary>
-    /// 
+    /// Service handles Account entity operations
     /// </summary>
     public class AccountService : ExpenseManagerQueryAndCrudServiceBase<AccountModel, int, ListAccountsQuery, Account, AccountModelFilter>, IAccountService
     {
@@ -34,7 +33,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// </summary>
         protected override string[] EntityIncludes { get; }
         /// <summary>
-        /// 
+        /// Creates new account
         /// </summary>
         /// <param name="account"></param>
         public void CreateAccount(Account account)
@@ -42,7 +41,7 @@ namespace ExpenseManager.Business.Services.Implementations
             Save(account);
         }
         /// <summary>
-        /// 
+        /// Updates existing account
         /// </summary>
         /// <param name="updatedAccount"></param>
         public void UpdateAccount(Account updatedAccount)
@@ -50,7 +49,7 @@ namespace ExpenseManager.Business.Services.Implementations
             Save(updatedAccount);
         }
         /// <summary>
-        /// 
+        /// Deletes account by specified unique id
         /// </summary>
         /// <param name="accountId"></param>
         public void DeleteAccount(int accountId)
@@ -58,7 +57,7 @@ namespace ExpenseManager.Business.Services.Implementations
             Delete(accountId);
         }
         /// <summary>
-        /// 
+        /// Get account specified by id
         /// </summary>
         /// <param name="accountId"></param>
         /// <returns></returns>
@@ -67,9 +66,9 @@ namespace ExpenseManager.Business.Services.Implementations
            return GetAccount(accountId);
         }
         /// <summary>
-        /// 
+        /// List filtered accounts
         /// </summary>
-        /// <param name="filter"></param>
+        /// <param name="filter">Filters accounts</param>
         /// <returns></returns>
         public List<Account> ListAccounts(AccountFilter filter)
         {

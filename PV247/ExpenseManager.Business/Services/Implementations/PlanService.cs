@@ -14,9 +14,8 @@ using Riganti.Utils.Infrastructure.Core;
 
 namespace ExpenseManager.Business.Services.Implementations
 {
-    // TODO doc
     /// <summary>
-    /// 
+    /// Service handles plan entity operations
     /// </summary>
     public class PlanService : ExpenseManagerQueryAndCrudServiceBase<PlanModel, int, ListPlansQuery, Plan, PlanModelFilter>, IPlanService
     {
@@ -39,42 +38,42 @@ namespace ExpenseManager.Business.Services.Implementations
         {
         }
         /// <summary>
-        /// 
+        /// Creates new plan in databse
         /// </summary>
-        /// <param name="plan"></param>
+        /// <param name="plan">Object to be saved to database</param>
         public void CreatePlan(Plan plan)
         {
             Save(plan);
         }
         /// <summary>
-        /// 
+        /// Updates plan, must have id of updated plan!
         /// </summary>
-        /// <param name="planUpdated"></param>
+        /// <param name="planUpdated">Plan object with id of existing plan</param>
         public void UpdatePlan(Plan planUpdated)
         {
            Save(planUpdated);
         }
         /// <summary>
-        /// 
+        /// Deletes plen with specified id
         /// </summary>
-        /// <param name="planId"></param>
+        /// <param name="planId">Unique id of deleted plan</param>
         public void DeletePlan(int planId)
         {
             Delete(planId);
         }
         /// <summary>
-        /// 
+        /// Get specific plan specified by unique id
         /// </summary>
-        /// <param name="planId"></param>
+        /// <param name="planId">Unique id of plan</param>
         /// <returns></returns>
         public Plan GetPlan(int planId)
         {
             return GetDetail(planId);
         }
         /// <summary>
-        /// 
+        /// Lists all plans that match filters criterias
         /// </summary>
-        /// <param name="filter"></param>
+        /// <param name="filter">Filters plans</param>
         /// <returns></returns>
         public List<Plan> ListPlans(PlanFilter filter)
         {
@@ -82,11 +81,14 @@ namespace ExpenseManager.Business.Services.Implementations
             return GetList().ToList();
         }
         /// <summary>
-        /// 
+        /// Lists all plans, that can be closed by user
         /// </summary>
-        public void CheckAllPlansFulfillment()
+        /// <returns>List of plans</returns>
+        public List<Plan> ListAllCloseablePlans()
         {
             throw new NotImplementedException();
         }
+
+     
     }
 }
