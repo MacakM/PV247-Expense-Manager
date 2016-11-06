@@ -14,6 +14,7 @@ using ExpenseManager.Database.Infrastructure.Query;
 using ExpenseManager.Database.Infrastructure.Repository;
 using ExpenseManager.Database.Infrastructure.UnitOfWork;
 using ExpenseManager.Identity;
+using ExpenseManager.Presentation.Infrastructure.Mapping;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -56,6 +57,7 @@ namespace ExpenseManager.Presentation
             RegisterBusinessLayerDependencies(services);
 
             // Configure PL
+
             services.AddMvc(options =>
             {
                 options.Filters.Add(new RequireHttpsAttribute());
@@ -116,6 +118,7 @@ namespace ExpenseManager.Presentation
                     var config = new MapperConfiguration(cfg => 
                     {
                         cfg.AddProfile<DatabaseToBusinessStandardMapping>();
+                        cfg.AddProfile<BussinessToViewModelMapping>();
                     });
                     return config.CreateMapper();
             });
