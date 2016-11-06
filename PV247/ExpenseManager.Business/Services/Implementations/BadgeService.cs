@@ -18,7 +18,7 @@ namespace ExpenseManager.Business.Services.Implementations
     /// <summary>
     /// 
     /// </summary>
-    public class BadgeService : ExpenseManagerQueryAndCrudServiceBase<BadgeModel, int, ListBadgesQuery, Badge, BadgeModelFilter>, IBadgeService
+    public class BadgeService : ExpenseManagerQueryAndCrudServiceBase<BadgeModel, int, Badge, BadgeModelFilter>, IBadgeService
     {
         /// <summary>
         /// 

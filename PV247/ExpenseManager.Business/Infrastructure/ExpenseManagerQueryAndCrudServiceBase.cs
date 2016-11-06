@@ -17,16 +17,15 @@ namespace ExpenseManager.Business.Infrastructure
     /// <typeparam name="TQuery"></typeparam>
     /// <typeparam name="TFilter"></typeparam>
     /// <typeparam name="T"></typeparam>
-    public abstract class ExpenseManagerQueryAndCrudServiceBase<TEntity, TKey, TQuery, T, TFilter> : ExpenseManagerCrudServiceBase<TEntity, TKey, T> 
+    public abstract class ExpenseManagerQueryAndCrudServiceBase<TEntity, TKey, T, TFilter> : ExpenseManagerCrudServiceBase<TEntity, TKey, T> 
         where TEntity : class, IEntity<TKey>, new() 
-        where T : BusinessObject<TKey>, new()
-        where TQuery : ExpenseManagerQuery<TEntity, TFilter>
+        where T : BusinessObject<TKey>, new() 
         where TFilter : FilterModelBase, new ()
     {
         /// <summary>
         /// Gets the query object used to populate the list or records.
         /// </summary>
-        public TQuery Query { get; }
+        public ExpenseManagerQuery<TEntity, TFilter> Query { get; }
         /// <summary>
         /// 
         /// </summary>
@@ -34,7 +33,7 @@ namespace ExpenseManager.Business.Infrastructure
         /// <param name="repository"></param>
         /// <param name="expenseManagerMapper"></param>
         /// <param name="unitOfWorkProvider"></param>
-        protected ExpenseManagerQueryAndCrudServiceBase(TQuery query, ExpenseManagerRepository<TEntity, TKey> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) : base(repository, expenseManagerMapper, unitOfWorkProvider)
+        protected ExpenseManagerQueryAndCrudServiceBase(ExpenseManagerQuery<TEntity, TFilter> query, ExpenseManagerRepository<TEntity, TKey> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) : base(repository, expenseManagerMapper, unitOfWorkProvider)
         {
             this.Query = query;
         }

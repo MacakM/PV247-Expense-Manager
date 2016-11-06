@@ -18,7 +18,7 @@ namespace ExpenseManager.Business.Services.Implementations
     /// <summary>
     /// 
     /// </summary>
-    public class PlanService : ExpenseManagerQueryAndCrudServiceBase<PlanModel, int, ListPlansQuery, Plan, PlanModelFilter>, IPlanService
+    public class PlanService : ExpenseManagerQueryAndCrudServiceBase<PlanModel, int, Plan, PlanModelFilter>, IPlanService
     {
         /// <summary>
         /// 

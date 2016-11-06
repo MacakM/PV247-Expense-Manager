@@ -8,6 +8,7 @@ using ExpenseManager.Business.Services.Interfaces;
 using ExpenseManager.Database.DataAccess.Queries;
 using ExpenseManager.Database.Entities;
 using ExpenseManager.Database.Filters;
+using ExpenseManager.Database.Infrastructure.Query;
 using ExpenseManager.Database.Infrastructure.Repository;
 using Riganti.Utils.Infrastructure.Core;
 
@@ -17,7 +18,7 @@ namespace ExpenseManager.Business.Services.Implementations
     /// <summary>
     /// 
     /// </summary>
-    public class AccountBadgeService : ExpenseManagerQueryAndCrudServiceBase<AccountBadgeModel, int, ListAccountBadgesQuery, AccountBadge, AccountBadgeModelFilter>, IAccountBadgeService
+    public class AccountBadgeService : ExpenseManagerQueryAndCrudServiceBase<AccountBadgeModel, int, AccountBadge, AccountBadgeModelFilter>, IAccountBadgeService
     {
 
         /// <summary>
@@ -27,7 +28,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="repository"></param>
         /// <param name="expenseManagerMapper"></param>
         /// <param name="unitOfWorkProvider"></param>
-        public AccountBadgeService(ListAccountBadgesQuery query, ExpenseManagerRepository<AccountBadgeModel, int> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
+        public AccountBadgeService(ExpenseManagerQuery<AccountBadgeModel, AccountBadgeModelFilter> query, ExpenseManagerRepository<AccountBadgeModel, int> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
         {
         }
         /// <summary>

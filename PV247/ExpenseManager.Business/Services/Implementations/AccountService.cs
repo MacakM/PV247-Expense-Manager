@@ -8,6 +8,7 @@ using ExpenseManager.Business.Services.Interfaces;
 using ExpenseManager.Database.DataAccess.Queries;
 using ExpenseManager.Database.Entities;
 using ExpenseManager.Database.Filters;
+using ExpenseManager.Database.Infrastructure.Query;
 using ExpenseManager.Database.Infrastructure.Repository;
 using Riganti.Utils.Infrastructure.Core;
 
@@ -17,7 +18,7 @@ namespace ExpenseManager.Business.Services.Implementations
     /// <summary>
     /// 
     /// </summary>
-    public class AccountService : ExpenseManagerQueryAndCrudServiceBase<AccountModel, int, ListAccountsQuery, Account, AccountModelFilter>, IAccountService
+    public class AccountService : ExpenseManagerQueryAndCrudServiceBase<AccountModel, int, Account, AccountModelFilter>, IAccountService
     {
         /// <summary>
         /// 
@@ -26,7 +27,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="repository"></param>
         /// <param name="expenseManagerMapper"></param>
         /// <param name="unitOfWorkProvider"></param>
-        public AccountService(ListAccountsQuery query, ExpenseManagerRepository<AccountModel, int> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
+        public AccountService(ExpenseManagerQuery<AccountModel, AccountModelFilter> query, ExpenseManagerRepository<AccountModel, int> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
         {
         }
         /// <summary>

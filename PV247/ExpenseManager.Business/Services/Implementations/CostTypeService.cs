@@ -17,7 +17,7 @@ namespace ExpenseManager.Business.Services.Implementations
     /// <summary>
     /// 
     /// </summary>
-    public class CostTypeService : ExpenseManagerQueryAndCrudServiceBase<CostTypeModel, int, ListCostTypesQuery, CostType, CostTypeModelFilter>, ICostTypeService
+    public class CostTypeService : ExpenseManagerQueryAndCrudServiceBase<CostTypeModel, int, CostType, CostTypeModelFilter>, ICostTypeService
     {
    
         /// <summary>
