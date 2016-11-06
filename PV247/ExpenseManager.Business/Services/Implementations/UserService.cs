@@ -13,8 +13,8 @@ using ExpenseManager.Database.Infrastructure.Repository;
 using ExpenseManager.Database.Infrastructure.Utils;
 using Riganti.Utils.Infrastructure.Core;
 using ExpenseManager.Business.Services.Interfaces;
-using ExpenseManager.Database.DataAccess.Queries;
 using ExpenseManager.Database.Filters;
+using ExpenseManager.Database.Infrastructure.Query;
 
 namespace ExpenseManager.Business.Services.Implementations
 {
@@ -22,7 +22,7 @@ namespace ExpenseManager.Business.Services.Implementations
     /// <summary>
     /// Provides user related functionality
     /// </summary>
-    public class UserService : ExpenseManagerQueryAndCrudServiceBase<UserModel, int, ListUsersQuery, User, UserModelFilter>, IUserService
+    public class UserService : ExpenseManagerQueryAndCrudServiceBase<UserModel, int, User, UserModelFilter>, IUserService
     {
         private readonly UserRepository _userRepository;
       
@@ -34,9 +34,9 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="expenseManagerMapper"></param>
         /// <param name="unitOfWorkProvider"></param>
         /// <param name="userRepository"></param>
-        public UserService(ListUsersQuery query, ExpenseManagerRepository<UserModel, int> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider, UserRepository userRepository) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
+        public UserService(ExpenseManagerQuery<UserModel, UserModelFilter> query, ExpenseManagerRepository<UserModel, int> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
         {
-            _userRepository = userRepository;
+            _userRepository = repository as UserRepository;
         }
 
         /// <summary>
