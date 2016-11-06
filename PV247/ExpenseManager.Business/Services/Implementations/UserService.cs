@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Linq.Expressions;
 using AutoMapper;
 using ExpenseManager.Business.DataTransferObjects;
+using ExpenseManager.Business.DataTransferObjects.Filters;
 using ExpenseManager.Business.Infrastructure;
 using ExpenseManager.Database.DataAccess.Repositories;
 using ExpenseManager.Database.Entities;
@@ -10,18 +13,38 @@ using ExpenseManager.Database.Infrastructure.Repository;
 using ExpenseManager.Database.Infrastructure.Utils;
 using Riganti.Utils.Infrastructure.Core;
 using ExpenseManager.Business.Services.Interfaces;
+using ExpenseManager.Database.DataAccess.Queries;
+using ExpenseManager.Database.Filters;
 
 namespace ExpenseManager.Business.Services.Implementations
 {
     /// <summary>
     /// Provides user related functionality
     /// </summary>
-    public class UserService : ExpenseManagerCrudServiceBase<UserModel, int, User>, IUserService
+    public class UserService : ExpenseManagerQueryAndCrudServiceBase<UserModel, int, ListUsersQuery, User, UserModelFilter>, IUserService
     {
-        public UserService(ExpenseManagerRepository<UserModel, int> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) 
-            : base(repository, expenseManagerMapper, unitOfWorkProvider) { }
+        private readonly UserRepository _userRepository;
+      
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="repository"></param>
+        /// <param name="expenseManagerMapper"></param>
+        /// <param name="unitOfWorkProvider"></param>
+        /// <param name="userRepository"></param>
+        public UserService(ListUsersQuery query, ExpenseManagerRepository<UserModel, int> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider, UserRepository userRepository) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
+        {
+            _userRepository = userRepository;
+        }
 
-        private UserRepository UserRepository => (UserRepository)Repository;
+        /// <summary>
+        /// 
+        /// </summary>
+        protected override string[] EntityIncludes { get; } =
+        {
+            nameof(UserModel.Account)
+        };
 
         /// <summary>
         /// Registers user according to provided information
@@ -42,12 +65,12 @@ namespace ExpenseManager.Business.Services.Implementations
             using (var uow = UnitOfWorkProvider.Create())
             {
                 uow.RegisterAfterCommitAction(() => Debug.WriteLine($"Successfully modified user with email: {modifiedUser.Email}"));
-                var user = UserRepository.GetUserByEmail(modifiedUser.Email, EntityIncludes);
+                var user = _userRepository.GetUserByEmail(modifiedUser.Email, EntityIncludes);
                 if (user == null)
                 {
                     throw new InvalidOperationException($"Cannot update user with email: { modifiedUser.Email }, the user is not persisted yet!");
                 }
-                UserRepository.Update(user);
+                _userRepository.Update(user);
                 uow.Commit();
             }
         }
@@ -62,7 +85,7 @@ namespace ExpenseManager.Business.Services.Implementations
         {
             using (UnitOfWorkProvider.Create())
             {
-                var entity = UserRepository.GetUserByEmail(email, IncludesHelper.ProcessIncludesList<User, UserModel>(includes));
+                var entity = _userRepository.GetUserByEmail(email, IncludesHelper.ProcessIncludesList<User, UserModel>(includes));
                 return ExpenseManagerMapper.Map<UserModel, User>(entity);
             }          
         }
@@ -77,16 +100,38 @@ namespace ExpenseManager.Business.Services.Implementations
         {
             using (UnitOfWorkProvider.Create())
             {              
-                var entity = includeAllProperties ? 
-                    UserRepository.GetUserByEmail(email, nameof(UserModel.Account)) : 
-                    UserRepository.GetUserByEmail(email);
+                var entity = includeAllProperties ?
+                    _userRepository.GetUserByEmail(email, nameof(UserModel.Account)) :
+                    _userRepository.GetUserByEmail(email);
                 return ExpenseManagerMapper.Map<UserModel, User>(entity);
             }
         }
-
-        protected override string[] EntityIncludes { get; } =
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        public List<User> ListUsers(UserFilter filter)
         {
-            nameof(UserModel.Account)
-        };
+            Query.Filter = Mapper.Map<UserModelFilter>(filter);
+            return GetList().ToList();
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public User GetUser(int userId)
+        {
+            return GetDetail(userId);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userId"></param>
+        public void DeleteUser(int userId)
+        {
+            Delete(userId);
+        }
     }
 }

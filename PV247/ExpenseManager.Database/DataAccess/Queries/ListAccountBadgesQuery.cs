@@ -7,14 +7,26 @@ using Riganti.Utils.Infrastructure.Core;
 
 namespace ExpenseManager.Database.DataAccess.Queries
 {
-    public class ListAccountBadgesQuery : ExpenseManagerQuery<AccountBadgeModel>
+    /// <summary>
+    /// 
+    /// </summary>
+    public class ListAccountBadgesQuery : ExpenseManagerQuery<AccountBadgeModel, AccountBadgeModelFilter>
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="provider"></param>
         public ListAccountBadgesQuery(IUnitOfWorkProvider provider) : base(provider)
         {
         }
-
-        public AccountBadgeModelFilter Filter { get; set; }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        public override AccountBadgeModelFilter Filter { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         protected override IQueryable<AccountBadgeModel> GetQueryable()
         {
             IQueryable<AccountBadgeModel> accountBadges = Context.AccountBadges.Include(nameof(AccountBadgeModel.Account)).Include(nameof(AccountBadgeModel.Badge));
@@ -63,5 +75,6 @@ namespace ExpenseManager.Database.DataAccess.Queries
             }
             return accountBadges.Take(Filter.PageSize);
         }
+
     }
 }

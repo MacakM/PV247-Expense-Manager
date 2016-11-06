@@ -8,6 +8,7 @@ using ExpenseManager.Business.Services.Interfaces;
 using ExpenseManager.Database.DataAccess.Queries;
 using ExpenseManager.Database.DataAccess.Repositories;
 using ExpenseManager.Database.Entities;
+using ExpenseManager.Database.Filters;
 using ExpenseManager.Database.Infrastructure.ConnectionConfiguration;
 using ExpenseManager.Database.Infrastructure.Query;
 using ExpenseManager.Database.Infrastructure.Repository;
@@ -128,7 +129,7 @@ namespace ExpenseManager.Presentation
             services.AddTransient<ExpenseManagerRepository<AccountBadgeModel, int>, AccountBadgeRepository>();
             
             // Register all query objects
-            services.AddTransient<ExpenseManagerQuery<PlanModel>, ListPlansQuery>();
+            services.AddTransient<ExpenseManagerQuery<PlanModel, PlanModelFilter>, ListPlansQuery>();
             //TODO add more query objects
 
             // Register all services

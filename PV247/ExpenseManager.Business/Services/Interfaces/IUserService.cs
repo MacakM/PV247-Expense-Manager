@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using ExpenseManager.Business.DataTransferObjects;
+using ExpenseManager.Business.DataTransferObjects.Filters;
 
 namespace ExpenseManager.Business.Services.Interfaces
 {
@@ -33,5 +35,22 @@ namespace ExpenseManager.Business.Services.Interfaces
         /// <param name="includeAllProperties">Decides whether all properties should be included</param>
         /// <returns>User with user details</returns>
         User GetCurrentlySignedUser(string email, bool includeAllProperties = false);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        List<User> ListUsers(UserFilter filter);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        User GetUser(int userId);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userId"></param>
+        void DeleteUser(int userId);
     }
 }

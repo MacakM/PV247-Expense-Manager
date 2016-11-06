@@ -1,71 +1,86 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Filters;
 using ExpenseManager.Business.Infrastructure;
 using ExpenseManager.Business.Services.Interfaces;
+using ExpenseManager.Database.DataAccess.Queries;
 using ExpenseManager.Database.DataAccess.Repositories;
 using ExpenseManager.Database.Entities;
+using ExpenseManager.Database.Filters;
 using ExpenseManager.Database.Infrastructure.Repository;
 using Riganti.Utils.Infrastructure.Core;
 
 namespace ExpenseManager.Business.Services.Implementations
 {
-    public class PlanService : ExpenseManagerQueryAndCrudServiceBase<PlanModel, int, IList<Plan>, Plan>, IPlanService
+    /// <summary>
+    /// 
+    /// </summary>
+    public class PlanService : ExpenseManagerQueryAndCrudServiceBase<PlanModel, int, ListPlansQuery, Plan, PlanModelFilter>, IPlanService
     {
-        private readonly PlanRepository _planRepository;
-
-        public PlanService(IQuery<IList<Plan>> query, ExpenseManagerRepository<PlanModel, int> repository,
-            Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider, PlanRepository planRepository)
-            : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
-        {
-            _planRepository = planRepository;
-        }
-
-        public void CreatePlan(Plan plan)
-        {
-            Save(plan);
-        }
-
-        public void UpdatePlan(Plan planUpdateed)
-        {
-            using (var uow = UnitOfWorkProvider.Create())
-            {
-                var plan = _planRepository.GetById(planUpdateed.Id, EntityIncludes);
-                Mapper.Map(plan, plan);
-                _planRepository.Update(plan);
-                uow.Commit();
-            }
-        }
-
-        public void DeletePlan(int planId)
-        {
-            using (var uow = UnitOfWorkProvider.Create())
-            {
-                _planRepository.Delete(planId);
-                uow.Commit();
-            }
-        }
-
-        public Plan GetPlan(int planId)
-        {
-            using (UnitOfWorkProvider.Create())
-            {
-                var plan = _planRepository.GetById(planId);
-                return plan != null ? Mapper.Map<Plan>(plan) : null;
-            }
-        }
-
-        public IEnumerable<Plan> ListPlans(PlanFilter filter)
-        {
-            throw new NotImplementedException();
-        }
-
+        /// <summary>
+        /// 
+        /// </summary>
         protected override string[] EntityIncludes { get; } =
         {
             nameof(PlanModel.Account),
             nameof(PlanModel.PlannedType)
         };
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="repository"></param>
+        /// <param name="expenseManagerMapper"></param>
+        /// <param name="unitOfWorkProvider"></param>
+        public PlanService(ListPlansQuery query, ExpenseManagerRepository<PlanModel, int> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
+        {
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="plan"></param>
+        public void CreatePlan(Plan plan)
+        {
+            Save(plan);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="planUpdated"></param>
+        public void UpdatePlan(Plan planUpdated)
+        {
+           Save(planUpdated);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="planId"></param>
+        public void DeletePlan(int planId)
+        {
+            Delete(planId);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="planId"></param>
+        /// <returns></returns>
+        public Plan GetPlan(int planId)
+        {
+            return GetDetail(planId);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        public IEnumerable<Plan> ListPlans(PlanFilter filter)
+        {
+            Query.Filter = Mapper.Map<PlanModelFilter>(filter);
+            return GetList().ToList();
+        }
+
     }
 }
