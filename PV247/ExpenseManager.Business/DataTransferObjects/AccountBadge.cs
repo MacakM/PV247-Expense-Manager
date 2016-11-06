@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace ExpenseManager.Business.DataTransferObjects
 {
     /// <summary>
-    /// 
+    /// Business layer representation of AccountBadgeModel object
     /// </summary>
     public class AccountBadge : BusinessObject<int>
     {
@@ -14,17 +14,16 @@ namespace ExpenseManager.Business.DataTransferObjects
         [Required]
         public int? AccountId { get; set; }
         /// <summary>
-        /// 
+        /// Name of account
         /// </summary>
         public string AccountName { get; set; }
         /// <summary>
         /// Badge id.
         /// </summary>
-        /// 
         [Required]
         public int? BadgeId { get; set; }
         /// <summary>
-        /// 
+        /// Description of badge
         /// </summary>
         [MaxLength(256)]
         public string BadgeDescription { get; set; }
@@ -39,27 +38,27 @@ namespace ExpenseManager.Business.DataTransferObjects
         [Required]
         public DateTime? Achieved { get; set; }
         /// <summary>
-        /// 
+        /// Makes string representation of object based on its properties
         /// </summary>
-        /// <returns></returns>
+        /// <returns>String representation of object</returns>
         public override string ToString()
         {
             return $"AccountName: {AccountName}, BadgeDescription: {BadgeDescription}, Achieved: {Achieved}";
         }
         /// <summary>
-        /// 
+        /// Determites if two objects are the same one
         /// </summary>
-        /// <param name="other"></param>
-        /// <returns></returns>
+        /// <param name="other">Object to be compared with</param>
+        /// <returns>true if objects are same</returns>
         protected bool Equals(AccountBadge other)
         {
             return AccountId == other.AccountId && string.Equals(AccountName, other.AccountName) && BadgeId == other.BadgeId && string.Equals(BadgeDescription, other.BadgeDescription);
         }
         /// <summary>
-        /// 
+        /// Determites if two objects are the same one
         /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
+        /// <param name="obj">Object to be compared with</param>
+        /// <returns>true if objects are same</returns>
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
@@ -68,9 +67,9 @@ namespace ExpenseManager.Business.DataTransferObjects
             return Equals((AccountBadge) obj);
         }
         /// <summary>
-        /// 
+        /// Compute hash of this object based on his properties
         /// </summary>
-        /// <returns></returns>
+        /// <returns>This object hashcode</returns>
         public override int GetHashCode()
         {
             unchecked

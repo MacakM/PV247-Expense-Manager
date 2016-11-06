@@ -2,12 +2,12 @@ namespace ExpenseManager.Database.Migrations
 {
     using System.Data.Entity.Migrations;
     /// <summary>
-    /// 
+    /// Initial migreation
     /// </summary>
     public partial class Initial : DbMigration
     {
         /// <summary>
-        /// 
+        /// Making new tables
         /// </summary>
         public override void Up()
         {
@@ -107,7 +107,7 @@ namespace ExpenseManager.Database.Migrations
             
         }
         /// <summary>
-        /// 
+        /// Droping old tables
         /// </summary>
         public override void Down()
         {

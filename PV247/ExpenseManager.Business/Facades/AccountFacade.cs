@@ -5,6 +5,7 @@ using ExpenseManager.Business.Services.Interfaces;
 
 namespace ExpenseManager.Business.Facades
 {
+    // TODO doc
     /// <summary>
     /// Provides access to user related functionality
     /// </summary>

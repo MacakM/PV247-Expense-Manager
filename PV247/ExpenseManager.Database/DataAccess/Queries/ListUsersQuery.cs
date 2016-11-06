@@ -7,15 +7,27 @@ using Riganti.Utils.Infrastructure.Core;
 
 namespace ExpenseManager.Database.DataAccess.Queries
 {
+    /// <summary>
+    /// Implementation of Query for users.
+    /// </summary>
     public class ListUsersQuery : ExpenseManagerQuery<UserModel, UserModelFilter>
     {
+        /// <summary>
+        /// Create query.
+        /// </summary>
+        /// <param name="provider">UoW provider</param>
         public ListUsersQuery(IUnitOfWorkProvider provider) : base(provider)
         {
 
         }
-
+        /// <summary>
+        /// User filter.
+        /// </summary>
         public override UserModelFilter Filter { get; set; }
-
+        /// <summary>
+        /// Return IQueryable.
+        /// </summary>
+        /// <returns>IQueryable</returns>
         protected override IQueryable<UserModel> GetQueryable()
         {
             IQueryable<UserModel> users = Context.Users.Include(nameof(AccountModel));

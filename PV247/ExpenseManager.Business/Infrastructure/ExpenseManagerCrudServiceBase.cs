@@ -5,15 +5,20 @@ using Riganti.Utils.Infrastructure.Core;
 
 namespace ExpenseManager.Business.Infrastructure
 {
+    // TODO doc
     /// <summary>
     /// A base class for CRUD-enabled service, taken from unreleased project of RigantiInfrastructure solution, all credit goes to Tomas Herceg.
     /// </summary>
     /// <typeparam name="TKey">The type of the entity primary key.</typeparam>
     /// <typeparam name="T">The type of the  used in the detail form.</typeparam>
+    /// <typeparam name="TEntity"></typeparam>
     public abstract class ExpenseManagerCrudServiceBase<TEntity, TKey, T> 
         where TEntity : class, IEntity<TKey>, new() 
         where T : BusinessObject<TKey>, new()
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public IUnitOfWorkProvider UnitOfWorkProvider { get; }
 
         /// <summary>
@@ -34,9 +39,9 @@ namespace ExpenseManager.Business.Infrastructure
         /// <param name="unitOfWorkProvider">uow provider</param>
         protected ExpenseManagerCrudServiceBase(ExpenseManagerRepository<TEntity, TKey> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider)
         {
-            this.UnitOfWorkProvider = unitOfWorkProvider;
-            this.Repository = repository;
-            this.ExpenseManagerMapper = expenseManagerMapper.DefaultContext.Mapper;
+            UnitOfWorkProvider = unitOfWorkProvider;
+            Repository = repository;
+            ExpenseManagerMapper = expenseManagerMapper.DefaultContext.Mapper;
         }
 
         /// <summary>

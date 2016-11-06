@@ -26,7 +26,7 @@ namespace ExpenseManager.Database.Entities
         [Required]
         public string BadgeImgUri { get; set; }
         /// <summary>
-        /// 
+        /// Accounts where the badge is assinged
         /// </summary>
         public virtual List<AccountBadgeModel> Accounts { get; set; }
     }

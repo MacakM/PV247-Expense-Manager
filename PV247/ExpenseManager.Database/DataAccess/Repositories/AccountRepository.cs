@@ -4,8 +4,15 @@ using Riganti.Utils.Infrastructure.Core;
 
 namespace ExpenseManager.Database.DataAccess.Repositories
 {
+    /// <summary>
+    /// Implementation of Repository for Account entity.
+    /// </summary>
     public class AccountRepository : ExpenseManagerRepository<AccountModel, int>
     {
+        /// <summary>
+        /// Create repository.
+        /// </summary>
+        /// <param name="provider">UoW provider</param>
         public AccountRepository(IUnitOfWorkProvider provider) : base(provider) { }
     }
 }

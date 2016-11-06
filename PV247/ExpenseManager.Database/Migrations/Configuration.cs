@@ -4,7 +4,7 @@ namespace ExpenseManager.Database.Migrations
 {
     using System.Data.Entity.Migrations;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<ExpenseManager.Database.ExpenseDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<ExpenseDbContext>
     {
         public Configuration()
         {

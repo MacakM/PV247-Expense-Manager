@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using AutoMapper;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Database.Filters;
@@ -9,10 +8,15 @@ using Riganti.Utils.Infrastructure.Core;
 
 namespace ExpenseManager.Business.Infrastructure
 {
+    // TODO doc
     /// <summary>
     /// A base class for Query-enabled service, taken from unreleased project of RigantiInfrastructure solution, all credit goes to Tomas Herceg.
     /// </summary>
-    /// <typeparam name="TList">The type of the  used in the list of records, e.g. in the GridView control.</typeparam>
+    /// <typeparam name="TEntity"></typeparam>
+    /// <typeparam name="TKey"></typeparam>
+    /// <typeparam name="TQuery"></typeparam>
+    /// <typeparam name="TFilter"></typeparam>
+    /// <typeparam name="T"></typeparam>
     public abstract class ExpenseManagerQueryAndCrudServiceBase<TEntity, TKey, TQuery, T, TFilter> : ExpenseManagerCrudServiceBase<TEntity, TKey, T> 
         where TEntity : class, IEntity<TKey>, new() 
         where T : BusinessObject<TKey>, new()

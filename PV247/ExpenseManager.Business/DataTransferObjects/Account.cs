@@ -3,7 +3,7 @@
 namespace ExpenseManager.Business.DataTransferObjects
 {
     /// <summary>
-    /// 
+    /// Business layer representation of AccountModel object
     /// </summary>
     public class Account : BusinessObject<int>
     {
@@ -28,27 +28,27 @@ namespace ExpenseManager.Business.DataTransferObjects
         /// </summary>
         public List<AccountBadge> Badges { get; set; }
         /// <summary>
-        /// 
+        /// Makes string representation of object based on its properties
         /// </summary>
-        /// <returns></returns>
+        /// <returns>String representation of object</returns>
         public override string ToString()
         {
             return $"Name: {Name}";
         }
         /// <summary>
-        /// 
+        /// Determites if two objects are the same one
         /// </summary>
-        /// <param name="other"></param>
-        /// <returns></returns>
+        /// <param name="other">Object to be compared with</param>
+        /// <returns>true if objects are same</returns>
         protected bool Equals(Account other)
         {
             return string.Equals(Name, other.Name);
         }
         /// <summary>
-        /// 
+        /// Determites if two objects are the same one
         /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
+        /// <param name="obj">Object to be compared with</param>
+        /// <returns>true if objects are same</returns>
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
@@ -57,9 +57,9 @@ namespace ExpenseManager.Business.DataTransferObjects
             return Equals((Account) obj);
         }
         /// <summary>
-        /// 
+        /// Compute hash of this object based on his properties
         /// </summary>
-        /// <returns></returns>
+        /// <returns>This object hashcode</returns>
         public override int GetHashCode()
         {
             return (Name != null ? Name.GetHashCode() : 0);

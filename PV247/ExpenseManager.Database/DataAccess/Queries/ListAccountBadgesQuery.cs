@@ -8,25 +8,25 @@ using Riganti.Utils.Infrastructure.Core;
 namespace ExpenseManager.Database.DataAccess.Queries
 {
     /// <summary>
-    /// 
+    /// Implementation of Query for account badges.
     /// </summary>
     public class ListAccountBadgesQuery : ExpenseManagerQuery<AccountBadgeModel, AccountBadgeModelFilter>
     {
         /// <summary>
-        /// 
+        /// Create query.
         /// </summary>
-        /// <param name="provider"></param>
+        /// <param name="provider">UoW provider</param>
         public ListAccountBadgesQuery(IUnitOfWorkProvider provider) : base(provider)
         {
         }
         /// <summary>
-        /// 
+        /// Account badges filter
         /// </summary>
         public override AccountBadgeModelFilter Filter { get; set; }
         /// <summary>
-        /// 
+        /// Return IQueryable.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>IQueryable</returns>
         protected override IQueryable<AccountBadgeModel> GetQueryable()
         {
             IQueryable<AccountBadgeModel> accountBadges = Context.AccountBadges.Include(nameof(AccountBadgeModel.Account)).Include(nameof(AccountBadgeModel.Badge));
