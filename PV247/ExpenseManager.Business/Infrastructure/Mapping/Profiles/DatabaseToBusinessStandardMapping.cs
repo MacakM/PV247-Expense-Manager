@@ -2,6 +2,7 @@
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Filters;
 using ExpenseManager.Database.Entities;
+using ExpenseManager.Database.Filters;
 
 namespace ExpenseManager.Business.Infrastructure.Mapping.Profiles
 {
@@ -57,28 +58,28 @@ namespace ExpenseManager.Business.Infrastructure.Mapping.Profiles
                   CreateMap<PlanType, PlanTypeModel>()
                    .ReverseMap();*/
 
-            CreateMap<AccountBadgeFilter, AccountBadgeFilter>()
+            CreateMap<AccountBadgeFilter, AccountBadgeModelFilter>()
              .ReverseMap();
 
-            CreateMap<AccountFilter, AccountFilter>()
+            CreateMap<AccountFilter, AccountModelFilter>()
              .ReverseMap();
 
-            CreateMap<BadgeFilter, BadgeFilter>()
+            CreateMap<BadgeFilter, BadgeModelFilter>()
              .ReverseMap();
 
-            CreateMap<CostInfoFilter, CostInfoFilter>()
+            CreateMap<CostInfoFilter, CostInfoModelFilter>()
              .ReverseMap();
 
-            CreateMap<CostTypeFilter, CostTypeFilter>()
+            CreateMap<CostTypeFilter, CostTypeModelFilter>()
              .ReverseMap();
 
-            CreateMap<FilterBase, FilterBase>()
+            CreateMap<FilterBase, FilterModelBase>()
              .ReverseMap();
 
-            CreateMap<PlanFilter, PlanFilter>()
+            CreateMap<PlanFilter, PlanModelFilter>()
              .ReverseMap();
 
-            CreateMap<UserFilter, UserFilter>()
+            CreateMap<UserFilter, UserModelFilter>()
              .ReverseMap();
 
         }
