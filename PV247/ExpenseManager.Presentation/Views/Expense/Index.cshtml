@@ -7,6 +7,8 @@
     Expenses
 }
 
+@model List<ExpenseManager.Presentation.Models.Expense.IndexViewModel>
+
 <div class="col-sm-3 sidebar left">
         <form class="form">
             <label for="search-from">From: </label><input class="form-control datepicker" id="search-from" type="text" />
@@ -36,108 +38,22 @@
                 <th>Date</th>
                 <th>Cost</th>
             </tr>
-            <tr>
-                <td>Strava</td>
-                <td>10 rohlíkov</td>
-                <td>27.10.2016</td>
-                <td>12kč</td>
-            </tr>
-            <tr>
-                <td>Strava</td>
-                <td>10 rohlíkov</td>
-                <td>27.10.2016</td>
-                <td>12kč</td>
-            </tr>
-            <tr>
-                <td>Strava</td>
-                <td>10 rohlíkov</td>
-                <td>27.10.2016</td>
-                <td>12kč</td>
-            </tr>
-            <tr>
-                <td>Strava</td>
-                <td>10 rohlíkov</td>
-                <td>27.10.2016</td>
-                <td>12kč</td>
-            </tr>
-            <tr>
-                <td>Strava</td>
-                <td>10 rohlíkov</td>
-                <td>27.10.2016</td>
-                <td>12kč</td>
-            </tr>
-            <tr>
-                <td>Strava</td>
-                <td>10 rohlíkov</td>
-                <td>27.10.2016</td>
-                <td>12kč</td>
-            </tr>
-            <tr>
-                <td>Strava</td>
-                <td>10 rohlíkov</td>
-                <td>27.10.2016</td>
-                <td>12kč</td>
-            </tr>
-            <tr>
-                <td>Strava</td>
-                <td>10 rohlíkov</td>
-                <td>27.10.2016</td>
-                <td>12kč</td>
-            </tr>
-            <tr>
-                <td>Strava</td>
-                <td>10 rohlíkov</td>
-                <td>27.10.2016</td>
-                <td>12kč</td>
-            </tr>
-            <tr>
-                <td>Strava</td>
-                <td>10 rohlíkov</td>
-                <td>27.10.2016</td>
-                <td>12kč</td>
-            </tr>
-            <tr>
-                <td>Strava</td>
-                <td>10 rohlíkov</td>
-                <td>27.10.2016</td>
-                <td>12kč</td>
-            </tr>
-            <tr>
-                <td>Strava</td>
-                <td>10 rohlíkov</td>
-                <td>27.10.2016</td>
-                <td>12kč</td>
-            </tr>
-            <tr>
-                <td>Strava</td>
-                <td>10 rohlíkov</td>
-                <td>27.10.2016</td>
-                <td>12kč</td>
-            </tr>
-            <tr>
-                <td>Strava</td>
-                <td>10 rohlíkov</td>
-                <td>27.10.2016</td>
-                <td>12kč</td>
-            </tr>
-            <tr>
-                <td>Strava</td>
-                <td>10 rohlíkov</td>
-                <td>27.10.2016</td>
-                <td>12kč</td>
-            </tr>
-            <tr>
-                <td>Strava</td>
-                <td>10 rohlíkov</td>
-                <td>27.10.2016</td>
-                <td>12kč</td>
-            </tr>
-            <tr>
-                <td>Strava</td>
-                <td>10 rohlíkov</td>
-                <td>27.10.2016</td>
-                <td>12kč</td>
-            </tr>
+            @foreach (var indexViewModel in Model)
+            {
+                <tr>
+                    <td>@indexViewModel.TypeName</td>
+                    <td>@indexViewModel.Description</td>
+                    <td>@indexViewModel.Created</td>
+                    @if (@indexViewModel.IsIncome)
+                    {
+                        <td class="positive">+@indexViewModel.Money $</td>
+                    }
+                    else
+                    {
+                        <td class="negative">-@indexViewModel.Money $</td>
+                    }
+                </tr>
+            }
         </table>
         <div class="expense-pagination">
             <ul class="pagination">
