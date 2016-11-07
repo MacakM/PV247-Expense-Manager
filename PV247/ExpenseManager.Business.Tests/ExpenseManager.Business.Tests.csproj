@@ -61,6 +61,10 @@
       <Project>{aa56a845-d942-49f1-830a-fddd40c8df66}</Project>
       <Name>ExpenseManager.Bussines</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ExpenseManager.Presentation\ExpenseManager.Presentation.xproj">
+      <Project>{bed60df6-c1d4-4367-b057-100b9801ee11}</Project>
+      <Name>ExpenseManager.Presentation</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
