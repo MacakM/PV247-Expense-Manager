@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using ExpenseManager.Business.DataTransferObjects;
-using ExpenseManager.Presentation.Models.Expense;
+using ExpenseManager.Presentation.Models.ManageViewModels;
 
 namespace ExpenseManager.Presentation.Infrastructure.Mapping
 {
