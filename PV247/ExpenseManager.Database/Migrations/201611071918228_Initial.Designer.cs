@@ -13,7 +13,7 @@ namespace ExpenseManager.Database.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201611011950166_Initial"; }
+            get { return "201611071918228_Initial"; }
         }
         
         string IMigrationMetadata.Source

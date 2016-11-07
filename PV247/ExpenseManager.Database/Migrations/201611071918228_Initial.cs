@@ -1,18 +1,14 @@
 namespace ExpenseManager.Database.Migrations
 {
+    using System;
     using System.Data.Entity.Migrations;
-    /// <summary>
-    /// Initial migreation
-    /// </summary>
+    
     public partial class Initial : DbMigration
     {
-        /// <summary>
-        /// Making new tables
-        /// </summary>
         public override void Up()
         {
             CreateTable(
-                "dbo.AccountBadges",
+                "dbo.AccountBadgeModels",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -21,13 +17,13 @@ namespace ExpenseManager.Database.Migrations
                         Achieved = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Accounts", t => t.AccountId, cascadeDelete: true)
-                .ForeignKey("dbo.Badges", t => t.BadgeId, cascadeDelete: true)
+                .ForeignKey("dbo.AccountModels", t => t.AccountId, cascadeDelete: true)
+                .ForeignKey("dbo.BadgeModels", t => t.BadgeId, cascadeDelete: true)
                 .Index(t => t.AccountId)
                 .Index(t => t.BadgeId);
             
             CreateTable(
-                "dbo.Accounts",
+                "dbo.AccountModels",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -36,25 +32,26 @@ namespace ExpenseManager.Database.Migrations
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
-                "dbo.CostInfoes",
+                "dbo.CostInfoModels",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
                         IsIncome = c.Boolean(nullable: false),
                         Money = c.Int(nullable: false),
+                        Description = c.String(),
                         AccountId = c.Int(nullable: false),
                         Created = c.DateTime(nullable: false),
                         TypeId = c.Int(nullable: false),
                         IsPeriodic = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Accounts", t => t.AccountId, cascadeDelete: true)
-                .ForeignKey("dbo.CostTypes", t => t.TypeId, cascadeDelete: true)
+                .ForeignKey("dbo.AccountModels", t => t.AccountId, cascadeDelete: true)
+                .ForeignKey("dbo.CostTypeModels", t => t.TypeId, cascadeDelete: true)
                 .Index(t => t.AccountId)
                 .Index(t => t.TypeId);
             
             CreateTable(
-                "dbo.CostTypes",
+                "dbo.CostTypeModels",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -63,7 +60,7 @@ namespace ExpenseManager.Database.Migrations
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
-                "dbo.Plans",
+                "dbo.PlanModels",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -76,13 +73,13 @@ namespace ExpenseManager.Database.Migrations
                         PlannedType_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Accounts", t => t.AccountId, cascadeDelete: true)
-                .ForeignKey("dbo.CostTypes", t => t.PlannedType_Id)
+                .ForeignKey("dbo.AccountModels", t => t.AccountId, cascadeDelete: true)
+                .ForeignKey("dbo.CostTypeModels", t => t.PlannedType_Id)
                 .Index(t => t.AccountId)
                 .Index(t => t.PlannedType_Id);
             
             CreateTable(
-                "dbo.Users",
+                "dbo.UserModels",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -92,11 +89,11 @@ namespace ExpenseManager.Database.Migrations
                         Account_Id = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Accounts", t => t.Account_Id, cascadeDelete: true)
+                .ForeignKey("dbo.AccountModels", t => t.Account_Id, cascadeDelete: true)
                 .Index(t => t.Account_Id);
             
             CreateTable(
-                "dbo.Badges",
+                "dbo.BadgeModels",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -106,32 +103,30 @@ namespace ExpenseManager.Database.Migrations
                 .PrimaryKey(t => t.Id);
             
         }
-        /// <summary>
-        /// Droping old tables
-        /// </summary>
+        
         public override void Down()
         {
-            DropForeignKey("dbo.AccountBadges", "BadgeId", "dbo.Badges");
-            DropForeignKey("dbo.AccountBadges", "AccountId", "dbo.Accounts");
-            DropForeignKey("dbo.Users", "Account_Id", "dbo.Accounts");
-            DropForeignKey("dbo.Plans", "PlannedType_Id", "dbo.CostTypes");
-            DropForeignKey("dbo.Plans", "AccountId", "dbo.Accounts");
-            DropForeignKey("dbo.CostInfoes", "TypeId", "dbo.CostTypes");
-            DropForeignKey("dbo.CostInfoes", "AccountId", "dbo.Accounts");
-            DropIndex("dbo.Users", new[] { "Account_Id" });
-            DropIndex("dbo.Plans", new[] { "PlannedType_Id" });
-            DropIndex("dbo.Plans", new[] { "AccountId" });
-            DropIndex("dbo.CostInfoes", new[] { "TypeId" });
-            DropIndex("dbo.CostInfoes", new[] { "AccountId" });
-            DropIndex("dbo.AccountBadges", new[] { "BadgeId" });
-            DropIndex("dbo.AccountBadges", new[] { "AccountId" });
-            DropTable("dbo.Badges");
-            DropTable("dbo.Users");
-            DropTable("dbo.Plans");
-            DropTable("dbo.CostTypes");
-            DropTable("dbo.CostInfoes");
-            DropTable("dbo.Accounts");
-            DropTable("dbo.AccountBadges");
+            DropForeignKey("dbo.AccountBadgeModels", "BadgeId", "dbo.BadgeModels");
+            DropForeignKey("dbo.AccountBadgeModels", "AccountId", "dbo.AccountModels");
+            DropForeignKey("dbo.UserModels", "Account_Id", "dbo.AccountModels");
+            DropForeignKey("dbo.PlanModels", "PlannedType_Id", "dbo.CostTypeModels");
+            DropForeignKey("dbo.PlanModels", "AccountId", "dbo.AccountModels");
+            DropForeignKey("dbo.CostInfoModels", "TypeId", "dbo.CostTypeModels");
+            DropForeignKey("dbo.CostInfoModels", "AccountId", "dbo.AccountModels");
+            DropIndex("dbo.UserModels", new[] { "Account_Id" });
+            DropIndex("dbo.PlanModels", new[] { "PlannedType_Id" });
+            DropIndex("dbo.PlanModels", new[] { "AccountId" });
+            DropIndex("dbo.CostInfoModels", new[] { "TypeId" });
+            DropIndex("dbo.CostInfoModels", new[] { "AccountId" });
+            DropIndex("dbo.AccountBadgeModels", new[] { "BadgeId" });
+            DropIndex("dbo.AccountBadgeModels", new[] { "AccountId" });
+            DropTable("dbo.BadgeModels");
+            DropTable("dbo.UserModels");
+            DropTable("dbo.PlanModels");
+            DropTable("dbo.CostTypeModels");
+            DropTable("dbo.CostInfoModels");
+            DropTable("dbo.AccountModels");
+            DropTable("dbo.AccountBadgeModels");
         }
     }
 }
