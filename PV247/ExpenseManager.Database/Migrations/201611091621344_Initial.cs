@@ -37,12 +37,13 @@ namespace ExpenseManager.Database.Migrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         IsIncome = c.Boolean(nullable: false),
-                        Money = c.Int(nullable: false),
+                        Money = c.Decimal(nullable: false, precision: 18, scale: 2),
                         Description = c.String(),
                         AccountId = c.Int(nullable: false),
                         Created = c.DateTime(nullable: false),
                         TypeId = c.Int(nullable: false),
-                        IsPeriodic = c.Boolean(nullable: false),
+                        Periodicity = c.Int(),
+                        PeriodicMultiplicity = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.AccountModels", t => t.AccountId, cascadeDelete: true)

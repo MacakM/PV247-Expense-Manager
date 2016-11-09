@@ -15,11 +15,11 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters
         /// <summary>
         /// Left edge of money range
         /// </summary>
-        public int? MoneyFrom { get; set; }
+        public decimal? MoneyFrom { get; set; }
         /// <summary>
         /// Right edge of money range
         /// </summary>
-        public int? MoneyTo { get; set; }
+        public decimal? MoneyTo { get; set; }
         /// <summary>
         /// Account id to be filtered with
         /// </summary>

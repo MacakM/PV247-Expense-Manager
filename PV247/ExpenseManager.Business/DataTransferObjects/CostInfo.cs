@@ -17,7 +17,7 @@ namespace ExpenseManager.Business.DataTransferObjects
         /// How much money has changed.
         /// </summary>
         [Required]
-        public int? Money { get; set; }
+        public decimal? Money { get; set; }
         /// <summary>
         /// More concrete description of the cost
         /// </summary>
@@ -48,7 +48,7 @@ namespace ExpenseManager.Business.DataTransferObjects
         /// <summary>
         /// Periodicity of cost
         /// </summary>
-        public PeriodicityModel Periodicity { get; set; }
+        public PeriodicityModel? Periodicity { get; set; }
         /// <summary>
         /// Mulptiplies periodicity
         /// </summary>

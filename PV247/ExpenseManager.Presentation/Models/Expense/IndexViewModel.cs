@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using ExpenseManager.Database.Enums;
 
 namespace ExpenseManager.Presentation.Models.Expense
 {
@@ -19,7 +20,7 @@ namespace ExpenseManager.Presentation.Models.Expense
         /// How much money has changed.
         /// </summary>
         [Required]
-        public int? Money { get; set; }
+        public decimal? Money { get; set; }
         /// <summary>
         /// More concrete description of the cost
         /// </summary>
@@ -34,8 +35,12 @@ namespace ExpenseManager.Presentation.Models.Expense
         /// </summary>
         public string TypeName { get; set; }
         /// <summary>
-        /// State whether this cost is periodic each month.
+        /// Periodicity of cost
         /// </summary>
-        public bool IsPeriodic { get; set; }
+        public PeriodicityModel? Periodicity { get; set; }
+        /// <summary>
+        /// Mulptiplies periodicity
+        /// </summary>
+        public int? PeriodicMultiplicity { get; set; }
     }
 }

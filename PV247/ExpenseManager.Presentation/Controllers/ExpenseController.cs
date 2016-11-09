@@ -42,6 +42,7 @@ namespace ExpenseManager.Presentation.Controllers
                 AccountName = "testerAccount"
             };
 
+
             var expenses = _balanceFacade.ListItem(filter);
             var indexViewModels = _mapper.Map<List<IndexViewModel>>(expenses);
             return View(indexViewModels);
