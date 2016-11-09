@@ -1,4 +1,5 @@
 ﻿using System;
+using ExpenseManager.Database.Enums;
 
 namespace ExpenseManager.Database.Filters
 {
@@ -48,8 +49,16 @@ namespace ExpenseManager.Database.Filters
         /// </summary>
         public string TypeName { get; set; }
         /// <summary>
-        /// Filters out periodic costs, does not filter if null
+        /// Periodicity of cost
         /// </summary>
-        public bool? IsPeriodic { get; set; }
+        public PeriodicityModel? Periodicity { get; set; }
+        /// <summary>
+        /// Mulptiplies periodicity
+        /// </summary>
+        public int? PeriodicMultiplicityFrom { get; set; }
+        /// <summary>
+        /// Mulptiplies periodicity
+        /// </summary>
+        public int? PeriodicMultiplicityTo { get; set; }
     }
 }

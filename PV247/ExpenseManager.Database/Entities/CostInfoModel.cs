@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using ExpenseManager.Database.Enums;
 using Riganti.Utils.Infrastructure.Core;
 
 namespace ExpenseManager.Database.Entities
@@ -53,8 +54,12 @@ namespace ExpenseManager.Database.Entities
         [ForeignKey("TypeId")]
         public CostTypeModel Type { get; set; }
         /// <summary>
-        /// State whether this cost is periodic each month.
+        /// Periodicity of cost
         /// </summary>
-        public bool IsPeriodic { get; set; }
+        public PeriodicityModel? Periodicity { get; set; }
+        /// <summary>
+        /// Mulptiplies periodicity
+        /// </summary>
+        public int? PeriodicMultiplicity { get; set; }
     }
 }

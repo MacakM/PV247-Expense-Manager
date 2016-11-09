@@ -66,6 +66,7 @@
     <Compile Include="DataTransferObjects\CostType.cs" />
     <Compile Include="DataTransferObjects\BusinessObject.cs" />
     <Compile Include="DataTransferObjects\Enums\AccountAccessTye.cs" />
+    <Compile Include="DataTransferObjects\Enums\Periodicity.cs" />
     <Compile Include="DataTransferObjects\Enums\PlanType.cs" />
     <Compile Include="DataTransferObjects\Filters\AccountBadgeFilter.cs" />
     <Compile Include="DataTransferObjects\Filters\AccountFilter.cs" />

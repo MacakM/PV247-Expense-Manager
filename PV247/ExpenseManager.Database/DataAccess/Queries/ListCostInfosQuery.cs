@@ -51,9 +51,21 @@ namespace ExpenseManager.Database.DataAccess.Queries
             {
                 costInfos = costInfos.Where(costInfo => costInfo.IsIncome == Filter.IsIncome.Value);
             }
-            if (Filter.IsPeriodic != null)
+            if (Filter.Periodicity != null)
             {
-                costInfos = costInfos.Where(costInfo => costInfo.IsPeriodic == Filter.IsPeriodic.Value);
+                costInfos = costInfos.Where(costInfo => costInfo.Periodicity == Filter.Periodicity.Value);
+            }
+            if (Filter.PeriodicMultiplicityFrom != null)
+            {
+                costInfos =
+                    costInfos.Where(
+                        costInfo => costInfo.PeriodicMultiplicity.Value >= Filter.PeriodicMultiplicityFrom.Value);
+            }
+            if (Filter.PeriodicMultiplicityTo != null)
+            {
+                costInfos =
+                    costInfos.Where(
+                        costInfo => costInfo.PeriodicMultiplicity.Value <= Filter.PeriodicMultiplicityTo.Value);
             }
             if (Filter.TypeId != null)
             {

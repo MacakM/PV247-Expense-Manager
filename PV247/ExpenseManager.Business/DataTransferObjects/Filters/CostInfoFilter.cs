@@ -1,4 +1,5 @@
 ﻿using System;
+using ExpenseManager.Business.DataTransferObjects.Enums;
 
 namespace ExpenseManager.Business.DataTransferObjects.Filters
 {
@@ -48,8 +49,13 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters
         /// </summary>
         public string TypeName { get; set; }
         /// <summary>
-        /// Filters out periodic costs, does not filter if null
+        /// Mulptiplies periodicity
         /// </summary>
-        public bool? IsPeriodic { get; set; }
+        public int? PeriodicMultiplicityFrom { get; set; }
+        /// <summary>
+        /// Mulptiplies periodicity
+        /// </summary>
+        public int? PeriodicMultiplicityTo { get; set; }
+
     }
 }

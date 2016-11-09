@@ -103,6 +103,7 @@
     <Compile Include="Entities\CostTypeModel.cs" />
     <Compile Include="Entities\AccountBadgeModel.cs" />
     <Compile Include="Enums\AccountAccessTypeModel.cs" />
+    <Compile Include="Enums\PeriodicityModel.cs" />
     <Compile Include="Enums\PlanTypeModel.cs" />
     <Compile Include="ExpenseDbContext.cs" />
     <Compile Include="Filters\AccountBadgeModelFilter.cs" />
