@@ -120,9 +120,9 @@
     <Compile Include="Infrastructure\UnitOfWork\ExpenseManagerUnitOfWork.cs" />
     <Compile Include="Infrastructure\UnitOfWork\EntityFrameworkUnitOfWorkProvider.cs" />
     <Compile Include="Infrastructure\Utils\IncludesHelper.cs" />
-    <Compile Include="Migrations\201611011950166_Initial.cs" />
-    <Compile Include="Migrations\201611011950166_Initial.Designer.cs">
-      <DependentUpon>201611011950166_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201611071918228_Initial.cs" />
+    <Compile Include="Migrations\201611071918228_Initial.Designer.cs">
+      <DependentUpon>201611071918228_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -134,14 +134,15 @@
     <Compile Include="DataAccess\Repositories\PlanRepository.cs" />
     <Compile Include="DataAccess\Repositories\AccountBadgeRepository.cs" />
     <Compile Include="DataAccess\Repositories\UserRepository.cs" />
+    <Compile Include="TestSeedingInitializer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201611011950166_Initial.resx">
-      <DependentUpon>201611011950166_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201611071918228_Initial.resx">
+      <DependentUpon>201611071918228_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

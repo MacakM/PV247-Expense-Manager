@@ -78,7 +78,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <returns>List of cost infos</returns>
         public List<CostInfo> ListCostInfos(CostInfoFilter filter)
         {
-            Query.Filter = Mapper.Map<CostInfoModelFilter>(filter);
+            Query.Filter = ExpenseManagerMapper.Map<CostInfoModelFilter>(filter);
             return GetList().ToList();
         }
         /// <summary>
