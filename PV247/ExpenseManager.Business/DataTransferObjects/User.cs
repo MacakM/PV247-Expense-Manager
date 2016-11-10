@@ -21,7 +21,6 @@ namespace ExpenseManager.Business.DataTransferObjects
         /// <summary>
         /// Account Id.
         /// </summary>
-        [Required]
         public int? AccountId { get; set; }
         /// <summary>
         /// Name of users account
