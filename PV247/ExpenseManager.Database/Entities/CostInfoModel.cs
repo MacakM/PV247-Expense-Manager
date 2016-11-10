@@ -22,7 +22,7 @@ namespace ExpenseManager.Database.Entities
         /// <summary>
         /// How much money has changed.
         /// </summary>
-        public int Money { get; set; }
+        public decimal Money { get; set; }
         /// <summary>
         /// More concrete description of the cost
         /// </summary>
