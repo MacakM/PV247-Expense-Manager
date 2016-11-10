@@ -49,6 +49,10 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters
         /// </summary>
         public string TypeName { get; set; }
         /// <summary>
+        /// Periodicity of cost
+        /// </summary>
+        public Periodicity? Periodicity { get; set; }
+        /// <summary>
         /// Mulptiplies periodicity
         /// </summary>
         public int? PeriodicMultiplicityFrom { get; set; }
