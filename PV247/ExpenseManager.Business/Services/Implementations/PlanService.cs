@@ -77,7 +77,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <returns></returns>
         public List<Plan> ListPlans(PlanFilter filter)
         {
-            Query.Filter = Mapper.Map<PlanModelFilter>(filter);
+            Query.Filter = ExpenseManagerMapper.Map<PlanModelFilter>(filter);
             return GetList().ToList();
         }
         /// <summary>

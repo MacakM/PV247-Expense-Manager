@@ -113,7 +113,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <returns></returns>
         public List<User> ListUsers(UserFilter filter)
         {
-            Query.Filter = Mapper.Map<UserModelFilter>(filter);
+            Query.Filter = ExpenseManagerMapper.Map<UserModelFilter>(filter);
             return GetList().ToList();
         }
         /// <summary>
