@@ -20,6 +20,11 @@ namespace ExpenseManager.Business.DataTransferObjects
         [Required]
         public string BadgeImgUri { get; set; }
         /// <summary>
+        /// Name of Badge
+        /// </summary>
+        [Required]
+        public string Name { get; set; }
+        /// <summary>
         /// List of Accounts where badge is assigned
         /// </summary>
         public List<AccountBadge> Accounts { get; set; }

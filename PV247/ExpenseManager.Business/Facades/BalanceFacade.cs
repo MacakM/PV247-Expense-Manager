@@ -15,6 +15,7 @@ namespace ExpenseManager.Business.Facades
         private readonly ICostInfoService _costInfoService;
         private readonly ICostTypeService _costTypeService;
         private readonly IPlanService _planService;
+        private readonly IBadgeManagerService _badgeManagerService;
 
         /// <summary>
         /// 
@@ -24,13 +25,14 @@ namespace ExpenseManager.Business.Facades
         /// <param name="costInfoService"></param>
         /// <param name="costTypeService"></param>
         /// <param name="planService"></param>
-        public BalanceFacade(IAccountBadgeService accountBadgeService, IBadgeService badgeService, ICostInfoService costInfoService, ICostTypeService costTypeService, IPlanService planService)
+        public BalanceFacade(IAccountBadgeService accountBadgeService, IBadgeService badgeService, ICostInfoService costInfoService, ICostTypeService costTypeService, IPlanService planService, IBadgeManagerService badgeManagerService)
         {
             _accountBadgeService = accountBadgeService;
             _badgeService = badgeService;
             _costInfoService = costInfoService;
             _costTypeService = costTypeService;
             _planService = planService;
+            _badgeManagerService = badgeManagerService;
         }
         
         #region Business operations
@@ -46,10 +48,10 @@ namespace ExpenseManager.Business.Facades
         /// </summary>
         public void CheckBadgesRequirements()
         {
-            _badgeService.CheckBadgesRequirements();
+            _badgeManagerService.CheckBadgesRequirements();
         }
         /// <summary>
-        /// Recomputes periodic costs
+        /// Recomputes periodic costs, should be called every day in order to refresh all costs. Smallest period was set as one day
         /// </summary>
         public void RecomputePeriodicCosts()
         {

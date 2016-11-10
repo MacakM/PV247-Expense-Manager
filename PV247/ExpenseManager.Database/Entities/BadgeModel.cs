@@ -14,6 +14,11 @@ namespace ExpenseManager.Database.Entities
         /// </summary>
         public int Id { get; set; }
         /// <summary>
+        /// Name of Badge
+        /// </summary>
+        [Required]
+        public string Name { get; set; }
+        /// <summary>
         /// Description how achieve this badge.
         /// </summary>
         [MaxLength(256)]
