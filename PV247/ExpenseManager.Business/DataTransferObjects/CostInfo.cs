@@ -1,6 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using ExpenseManager.Database.Enums;
+using ExpenseManager.Business.DataTransferObjects.Enums;
 
 namespace ExpenseManager.Business.DataTransferObjects
 {
@@ -48,7 +48,7 @@ namespace ExpenseManager.Business.DataTransferObjects
         /// <summary>
         /// Periodicity of cost
         /// </summary>
-        public PeriodicityModel? Periodicity { get; set; }
+        public Periodicity? Periodicity { get; set; }
         /// <summary>
         /// Mulptiplies periodicity
         /// </summary>

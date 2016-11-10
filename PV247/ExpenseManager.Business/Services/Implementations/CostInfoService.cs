@@ -1,11 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using ExpenseManager.Business.DataTransferObjects;
+using ExpenseManager.Business.DataTransferObjects.Enums;
 using ExpenseManager.Business.DataTransferObjects.Filters;
 using ExpenseManager.Business.Infrastructure;
 using ExpenseManager.Business.Services.Interfaces;
 using ExpenseManager.Database.Entities;
+using ExpenseManager.Database.Enums;
 using ExpenseManager.Database.Filters;
 using ExpenseManager.Database.Infrastructure.Query;
 using ExpenseManager.Database.Infrastructure.Repository;
@@ -83,10 +86,103 @@ namespace ExpenseManager.Business.Services.Implementations
         }
         /// <summary>
         /// Recompute periodic costs and make them as new cost infos
+        /// List periodic updates. Check if its right time to set it as cost, and clone it as non periodic ones.
+        /// Also set periodic cost info created time to DateTime.Now in order to start new period.
         /// </summary>
         public void RecomputePeriodicCosts()
         {
-            throw new System.NotImplementedException();
+
+           
+            CheckDayPeriodicites();
+            CheckWeekPeriodicities();
+            CheckMonthPeriodicities();
+        }
+
+        private void CheckMonthPeriodicities()
+        {
+            CostInfoFilter filter = new CostInfoFilter { Periodicity = Periodicity.Month };
+
+            Query.Filter = ExpenseManagerMapper.Map<CostInfoModelFilter>(filter);
+            var monthPeriodicityCosts = GetList().ToList();
+
+            foreach (var monthPeriodicity in monthPeriodicityCosts)
+            {
+                if (monthPeriodicity.Created != null)
+                {
+                    var created = monthPeriodicity.Created.Value;
+                    if (created.AddMonths(monthPeriodicity.PeriodicMultiplicity) >= DateTime.Today)
+                    {
+                        monthPeriodicity.Created = DateTime.Now;
+                        Save(monthPeriodicity);
+                        Save(CloneAsNonPeriodic(monthPeriodicity));
+                    }
+                }
+            }
+        }
+
+        private void CheckWeekPeriodicities()
+        {
+            CostInfoFilter filter = new CostInfoFilter { Periodicity = Periodicity.Week };
+
+            Query.Filter = ExpenseManagerMapper.Map<CostInfoModelFilter>(filter);
+            var dayPeriodicityCosts = GetList().ToList();
+
+            foreach (var weekPeriodicityCost in dayPeriodicityCosts)
+            {
+                if (weekPeriodicityCost.Created != null)
+                {
+                    var created = weekPeriodicityCost.Created.Value;
+                    if (created.AddDays(7*weekPeriodicityCost.PeriodicMultiplicity) >= DateTime.Today) // Week usually has 7 days
+                    {
+                        weekPeriodicityCost.Created = DateTime.Now;
+                        Save(weekPeriodicityCost);
+                        Save(CloneAsNonPeriodic(weekPeriodicityCost));
+                    }
+                }
+            }
+        }
+
+        private void CheckDayPeriodicites()
+        {
+            CostInfoFilter filter = new CostInfoFilter {Periodicity = Periodicity.Day};
+
+            Query.Filter = ExpenseManagerMapper.Map<CostInfoModelFilter>(filter);
+            var dayPeriodicityCosts = GetList().ToList();
+
+            foreach (var dayPeriodicityCost in dayPeriodicityCosts)
+            {
+                if (dayPeriodicityCost.Created != null)
+                {
+                    var created = dayPeriodicityCost.Created.Value;
+                    if (created.AddDays(dayPeriodicityCost.PeriodicMultiplicity) >= DateTime.Today)
+                    {
+                        dayPeriodicityCost.Created = DateTime.Now;
+                        Save(dayPeriodicityCost);
+                        Save(CloneAsNonPeriodic(dayPeriodicityCost));
+                    }
+                }
+            }
+        }
+
+        private CostInfo CloneAsNonPeriodic(CostInfo periodic)
+        {
+            CostInfo nonPeriodic = new CostInfo
+            {
+                Created = DateTime.Now,
+                PeriodicMultiplicity = 0,
+                AccountId = periodic.AccountId,
+                AccountName = periodic.AccountName,
+                Description = periodic.Description,
+                IsIncome = periodic.IsIncome,
+                Money = periodic.Money,
+                Periodicity = Periodicity.None,
+                TypeId = periodic.TypeId,
+                TypeName = periodic.TypeName
+            };
+
+
+            return nonPeriodic;
+
         }
     }
 }
