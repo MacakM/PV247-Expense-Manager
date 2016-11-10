@@ -33,7 +33,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <summary>
         /// 
         /// </summary>
-        protected override string[] EntityIncludes { get; }
+        protected override string[] EntityIncludes { get; } = new string[0];
         /// <summary>
         /// Add new badge to account by creating new AccountBadge object in database
         /// </summary>
