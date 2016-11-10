@@ -14,6 +14,7 @@ using ExpenseManager.Database.Infrastructure.Query;
 using ExpenseManager.Database.Infrastructure.Repository;
 using ExpenseManager.Database.Infrastructure.UnitOfWork;
 using ExpenseManager.Identity;
+using ExpenseManager.Presentation.Authentication;
 using ExpenseManager.Presentation.Infrastructure.Mapping;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -125,21 +126,35 @@ namespace ExpenseManager.Presentation
 
             // Register all repositories
             services.AddTransient<ExpenseManagerRepository<BadgeModel, int>, BadgeRepository>();
+            services.AddTransient<BadgeRepository>();
             services.AddTransient<ExpenseManagerRepository<CostInfoModel, int>, CostInfoRepository>();
+            services.AddTransient<CostInfoRepository>();
             services.AddTransient<ExpenseManagerRepository<CostTypeModel, int>, CostTypeRepository>();
+            services.AddTransient<CostTypeRepository>();
             services.AddTransient<ExpenseManagerRepository<PlanModel, int>, PlanRepository>();
+            services.AddTransient<PlanRepository>();
             services.AddTransient<ExpenseManagerRepository<UserModel, int>, UserRepository>();
+            services.AddTransient<UserRepository>();
             services.AddTransient<ExpenseManagerRepository<AccountBadgeModel, int>, AccountBadgeRepository>();
+            services.AddTransient<AccountBadgeRepository>();
             services.AddTransient<ExpenseManagerRepository<AccountModel, int>, AccountRepository>();
+            services.AddTransient<AccountRepository>();
 
             // Register all query objects
             services.AddTransient<ExpenseManagerQuery<AccountBadgeModel, AccountBadgeModelFilter>, ListAccountBadgesQuery>();
+            services.AddTransient<ListAccountBadgesQuery>();
             services.AddTransient<ExpenseManagerQuery<AccountModel, AccountModelFilter>, ListAccountsQuery>();
+            services.AddTransient<ListAccountsQuery>();
             services.AddTransient<ExpenseManagerQuery<BadgeModel, BadgeModelFilter>, ListBadgesQuery>();
+            services.AddTransient<ListBadgesQuery>();
             services.AddTransient<ExpenseManagerQuery<CostInfoModel, CostInfoModelFilter>, ListCostInfosQuery>();
+            services.AddTransient<ListCostInfosQuery>();
             services.AddTransient<ExpenseManagerQuery<CostTypeModel, CostTypeModelFilter>, ListCostTypesQuery>();
+            services.AddTransient<ListCostTypesQuery>();
             services.AddTransient<ExpenseManagerQuery<PlanModel, PlanModelFilter>, ListPlansQuery>();
+            services.AddTransient<ListPlansQuery>();
             services.AddTransient<ExpenseManagerQuery<UserModel, UserModelFilter>, ListUsersQuery>();
+            services.AddTransient<ListUsersQuery>();
             //TODO add more query objects
 
             // Register all services
@@ -171,7 +186,10 @@ namespace ExpenseManager.Presentation
             services.AddTransient<AccountFacade>();
             services.AddTransient<BalanceFacade>();
             //TODO add more facades
-            
+
+            // Presentation layer
+            services.AddTransient<ICurrentAccountProvider, CurrentAccountProvider>();
+
         }
     }
 }

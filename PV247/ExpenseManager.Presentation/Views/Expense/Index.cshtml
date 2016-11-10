@@ -1,8 +1,4 @@
-﻿@{
-    Layout = "_layout";
-}
-
-@section title
+﻿@section title
 {
     Expenses
 }
@@ -30,7 +26,7 @@
     </div>
     <div class="col-sm-6 main-content">
         <h1>Expenses</h1>
-        @Html.ActionLink("+", "Index", "Expense", null, new { @class = "add-new" })
+        @Html.ActionLink("+", "Create", "Expense", null, new { @class = "add-new" })
         <table class="table">
             <tr>
                 <th>Type</th>

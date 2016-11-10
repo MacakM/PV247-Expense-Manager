@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using ExpenseManager.Business.DataTransferObjects;
-using ExpenseManager.Presentation.Models.Expense;
 
 namespace ExpenseManager.Presentation.Infrastructure.Mapping
 {
@@ -8,7 +7,13 @@ namespace ExpenseManager.Presentation.Infrastructure.Mapping
     {
         public BussinessToViewModelMapping()
         {
-            CreateMap<CostInfo, IndexViewModel>()
+            CreateMap<CostInfo, Models.Expense.IndexViewModel>()
+                .ReverseMap();
+
+            CreateMap<CostInfo, Models.Expense.CreateViewModel>()
+                .ReverseMap();
+
+            CreateMap<CostType, Models.CostType.IndexViewModel>()
                 .ReverseMap();
         }
     }
