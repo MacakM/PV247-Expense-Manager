@@ -13,7 +13,6 @@ namespace ExpenseManager.Business.Infrastructure
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     /// <typeparam name="TKey"></typeparam>
-    /// <typeparam name="TQuery"></typeparam>
     /// <typeparam name="TFilter"></typeparam>
     /// <typeparam name="T"></typeparam>
     public abstract class ExpenseManagerQueryAndCrudServiceBase<TEntity, TKey, T, TFilter> : ExpenseManagerCrudServiceBase<TEntity, TKey, T> 

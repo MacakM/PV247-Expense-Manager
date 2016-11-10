@@ -163,7 +163,8 @@ namespace ExpenseManager.Presentation
 
             services.AddTransient(typeof(ExpenseManagerQueryAndCrudServiceBase<UserModel, int, User, UserModelFilter>), typeof(UserService));
             services.AddTransient<IUserService, UserService>();
-
+            
+            services.AddTransient<IBadgeManagerService, BadgeManagerService>();
             //TODO add more services
 
             // Register all facades

@@ -35,6 +35,10 @@ namespace ExpenseManager.Database.DataAccess.Queries
             {
                 return badges;
             }
+            if (!string.IsNullOrEmpty(Filter.Name))
+            {
+                badges = Filter.DoExactMatch ? badges.Where(badge => badge.Name.Equals(Filter.Name)) : badges.Where(badge => badge.Name.Contains(Filter.Name));
+            }
             if (!string.IsNullOrEmpty(Filter.Description))
             {
                 badges = Filter.DoExactMatch ? badges.Where(badge => badge.Description.Equals(Filter.Description)) : badges.Where(badge => badge.Description.Contains(Filter.Description));
