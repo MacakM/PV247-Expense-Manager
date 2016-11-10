@@ -4,6 +4,7 @@ using ExpenseManager.Database.Entities;
 using ExpenseManager.Database.Filters;
 using ExpenseManager.Database.Infrastructure.Query;
 using Riganti.Utils.Infrastructure.Core;
+using System.Data.Entity;
 
 namespace ExpenseManager.Database.DataAccess.Queries
 {
@@ -30,7 +31,7 @@ namespace ExpenseManager.Database.DataAccess.Queries
         /// <returns>IQueryable</returns>
         protected override IQueryable<UserModel> GetQueryable()
         {
-            IQueryable<UserModel> users = Context.Users.Include(nameof(AccountModel));
+            IQueryable<UserModel> users = Context.Users.Include(x => x.Account);
 
             if (Filter == null)
             {
