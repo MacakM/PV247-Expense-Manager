@@ -6,6 +6,10 @@
     public enum Periodicity
     {
         /// <summary>
+        /// Cost is NOT periodic
+        /// </summary>
+        None,
+        /// <summary>
         /// Day period
         /// </summary>
         Day,
