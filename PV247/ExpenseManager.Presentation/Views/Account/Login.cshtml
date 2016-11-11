@@ -4,7 +4,7 @@
 @inject SignInManager<ExpenseManager.Identity.Entities.ApplicationUser> SignInManager
 
 @{
-    ViewData["Title"] = "Log in";
+    Layout = "_EmptyLayout";
 }
 
 @section title
@@ -13,10 +13,10 @@
 }
 
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-7">
         <section>
             <form asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
-                <h4>Use a local account to log in.</h4>
+                <h3>Use a local account to log in.</h3>
                 <hr />
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <div class="form-group">
@@ -45,7 +45,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <button type="submit" class="btn btn-default">Log in</button>
+                        <input type="submit" value="Log in" class="btn"/>
                     </div>
                 </div>
                 <p>
@@ -54,9 +54,9 @@
             </form>
         </section>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-5">
         <section>
-            <h4>Use another service to log in.</h4>
+            <h3>Use another service to log in.</h3>
             <hr />
             @{
                 var loginProviders = SignInManager.GetExternalAuthenticationSchemes().ToList();
@@ -65,7 +65,7 @@
                         <p>
                             @foreach (var provider in loginProviders)
                             {
-                                <button type="submit" class="btn btn-default" name="provider" value="@provider.AuthenticationScheme" title="Log in using your @provider.DisplayName account">@provider.AuthenticationScheme</button>
+                                <button type="submit" class="btn" name="provider" value="@provider.AuthenticationScheme" title="Log in using your @provider.DisplayName account">@provider.AuthenticationScheme</button>
                             }
                         </p>
                     </div>
