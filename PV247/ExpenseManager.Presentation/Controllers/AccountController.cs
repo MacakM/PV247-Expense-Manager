@@ -4,7 +4,6 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Enums;
-using ExpenseManager.Business.DataTransferObjects.Filters;
 using ExpenseManager.Business.Facades;
 using ExpenseManager.Identity.Entities;
 using Microsoft.AspNetCore.Authorization;
@@ -16,6 +15,9 @@ using ExpenseManager.Presentation.Models.AccountViewModels;
 
 namespace ExpenseManager.Presentation.Controllers
 {
+    /// <summary>
+    /// Controller for handling authentication
+    /// </summary>
     [Authorize]
     public class AccountController : Controller
     {
@@ -24,6 +26,13 @@ namespace ExpenseManager.Presentation.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger _logger;
 
+        /// <summary>
+        /// constructor for AccountController
+        /// </summary>
+        /// <param name="userFacade"></param>
+        /// <param name="userManager"></param>
+        /// <param name="signInManager"></param>
+        /// <param name="loggerFactory"></param>
         public AccountController(
             AccountFacade userFacade,
             UserManager<ApplicationUser> userManager,
@@ -36,8 +45,12 @@ namespace ExpenseManager.Presentation.Controllers
             _logger = loggerFactory.CreateLogger<AccountController>();
         }
 
-        //
-        // GET: /Account/Login
+        /// <summary>
+        /// GET: /Account/Login
+        /// Displays login form
+        /// </summary>
+        /// <param name="returnUrl"></param>
+        /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Login(string returnUrl = null)
@@ -46,8 +59,13 @@ namespace ExpenseManager.Presentation.Controllers
             return View();
         }
 
-        //
-        // POST: /Account/Login
+        /// <summary>
+        /// POST: /Account/Login
+        /// Logs user in
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="returnUrl"></param>
+        /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -81,8 +99,12 @@ namespace ExpenseManager.Presentation.Controllers
             return View(model);
         }
 
-        //
-        // GET: /Account/Register
+        /// <summary>
+        /// GET: /Account/Register
+        /// Displays Registration form
+        /// </summary>
+        /// <param name="returnUrl"></param>
+        /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Register(string returnUrl = null)
@@ -91,8 +113,13 @@ namespace ExpenseManager.Presentation.Controllers
             return View();
         }
 
-        //
-        // POST: /Account/Register
+        /// <summary>
+        /// POST: /Account/Register
+        /// Registers new user
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="returnUrl"></param>
+        /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -126,22 +153,28 @@ namespace ExpenseManager.Presentation.Controllers
                 Email = email,
                 Name = email.Substring(0, email.IndexOf("@", StringComparison.Ordinal))
             });
-            var users = _userFacade.ListUsers(null);
         }
 
-        //
-        // POST: /Account/LogOff
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        /// <summary>
+        /// GET: /Account/LogOff
+        /// Logs user off
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
         public async Task<IActionResult> LogOff()
         {
             await _signInManager.SignOutAsync();
             _logger.LogInformation(4, "User logged out.");
-            return RedirectToAction(nameof(HomeController.Index), "Home");
+            return RedirectToAction("Login", "Account");
         }
 
-        //
-        // POST: /Account/ExternalLogin
+        /// <summary>
+        /// POST: /Account/ExternalLogin
+        /// Handles external login
+        /// </summary>
+        /// <param name="provider"></param>
+        /// <param name="returnUrl"></param>
+        /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -153,8 +186,12 @@ namespace ExpenseManager.Presentation.Controllers
             return Challenge(properties, provider);
         }
 
-        //
-        // GET: /Account/ExternalLoginCallback
+        /// <summary>
+        /// GET: /Account/ExternalLoginCallback
+        /// </summary>
+        /// <param name="returnUrl"></param>
+        /// <param name="remoteError"></param>
+        /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> ExternalLoginCallback(string returnUrl = null, string remoteError = null)
@@ -192,8 +229,13 @@ namespace ExpenseManager.Presentation.Controllers
             return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = email });
         }
 
-        //
-        // POST: /Account/ExternalLoginConfirmation
+        /// <summary>
+        /// POST: /Account/ExternalLoginConfirmation
+        /// Handles external login confirmation
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="returnUrl"></param>
+        /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -228,8 +270,12 @@ namespace ExpenseManager.Presentation.Controllers
             return View(model);
         }
 
-        //
-        // GET: /Account/SendCode
+        /// <summary>
+        /// GET: /Account/SendCode
+        /// </summary>
+        /// <param name="returnUrl"></param>
+        /// <param name="rememberMe"></param>
+        /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
         public async Task<ActionResult> SendCode(string returnUrl = null, bool rememberMe = false)
@@ -244,8 +290,11 @@ namespace ExpenseManager.Presentation.Controllers
             return View(new SendCodeViewModel { Providers = factorOptions, ReturnUrl = returnUrl, RememberMe = rememberMe });
         }
 
-        //
-        // POST: /Account/SendCode
+        /// <summary>
+        /// POST: /Account/SendCode
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -275,8 +324,13 @@ namespace ExpenseManager.Presentation.Controllers
             return RedirectToAction(nameof(VerifyCode), new { Provider = model.SelectedProvider, ReturnUrl = model.ReturnUrl, RememberMe = model.RememberMe });
         }
 
-        //
-        // GET: /Account/VerifyCode
+        /// <summary>
+        /// GET: /Account/VerifyCode 
+        /// </summary>
+        /// <param name="provider"></param>
+        /// <param name="rememberMe"></param>
+        /// <param name="returnUrl"></param>
+        /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> VerifyCode(string provider, bool rememberMe, string returnUrl = null)
@@ -290,8 +344,11 @@ namespace ExpenseManager.Presentation.Controllers
             return View(new VerifyCodeViewModel { Provider = provider, ReturnUrl = returnUrl, RememberMe = rememberMe });
         }
 
-        //
-        // POST: /Account/VerifyCode
+        /// <summary>
+        /// POST: /Account/VerifyCode
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -345,7 +402,7 @@ namespace ExpenseManager.Presentation.Controllers
             }
             else
             {
-                return RedirectToAction(nameof(HomeController.Index), "Home");
+                return RedirectToAction("Index", "Expense");
             }
         }
 
