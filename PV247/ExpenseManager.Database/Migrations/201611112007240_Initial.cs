@@ -87,10 +87,10 @@ namespace ExpenseManager.Database.Migrations
                         Name = c.String(nullable: false),
                         Email = c.String(nullable: false),
                         AccessType = c.Int(nullable: false),
-                        Account_Id = c.Int(nullable: false),
+                        Account_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.AccountModels", t => t.Account_Id, cascadeDelete: true)
+                .ForeignKey("dbo.AccountModels", t => t.Account_Id)
                 .Index(t => t.Account_Id);
             
             CreateTable(
@@ -98,6 +98,7 @@ namespace ExpenseManager.Database.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
+                        Name = c.String(nullable: false),
                         Description = c.String(nullable: false, maxLength: 256),
                         BadgeImgUri = c.String(nullable: false, maxLength: 1024),
                     })

@@ -233,10 +233,6 @@
     <Compile Include="IdentityDALInstaller.cs" />
     <Compile Include="IdentityDbContext.cs" />
     <Compile Include="Entities\ApplicationUser.cs" />
-    <Compile Include="Migrations\20161023012509_Initial.cs" />
-    <Compile Include="Migrations\20161023012509_Initial.designer.cs">
-      <DependentUpon>20161023012509_Initial.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\IdentityDbContextModelSnapshot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
