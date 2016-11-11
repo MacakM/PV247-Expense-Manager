@@ -63,7 +63,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <returns></returns>
         public Account GetAccount(int accountId)
         {
-           return GetAccount(accountId);
+           return GetDetail(accountId);
         }
         /// <summary>
         /// List filtered accounts
