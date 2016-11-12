@@ -50,7 +50,7 @@ namespace ExpenseManager.Database.DataAccess.Queries
             System.Reflection.PropertyInfo prop = typeof(BadgeModel).GetProperty(Filter.OrderByPropertyName);
             if (prop == null)
             {
-                return badges.Take(Filter.PageSize);
+                return badges;
             }
             badges = Filter.OrderByDesc.Value ? badges.OrderByDescending(x => prop.GetValue(x, null)) : badges.OrderBy(x => prop.GetValue(x, null));
             if (Filter.PageNumber != null)

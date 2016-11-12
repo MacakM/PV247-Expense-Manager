@@ -94,9 +94,10 @@ namespace ExpenseManager.Database.DataAccess.Queries
             System.Reflection.PropertyInfo prop = typeof(CostInfoModel).GetProperty(Filter.OrderByPropertyName);
             if (prop == null)
             {
-                return costInfos.Take(Filter.PageSize);
+                return costInfos;
             }
-            costInfos = Filter.OrderByDesc.Value ? costInfos.OrderByDescending(x => prop.GetValue(x, null)) : costInfos.OrderBy(x => prop.GetValue(x, null));
+            // todo ordering by Created is hardcoded here
+            costInfos = Filter.OrderByDesc.Value ? costInfos.OrderByDescending(x => x.Created) : costInfos.OrderBy(x => x.Created);
             if (Filter.PageNumber != null)
             {
                 costInfos = costInfos.Skip(Math.Max(0, Filter.PageNumber.Value - 1) * Filter.PageSize);

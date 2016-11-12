@@ -46,7 +46,7 @@ namespace ExpenseManager.Database.DataAccess.Queries
             System.Reflection.PropertyInfo prop = typeof(CostTypeModel).GetProperty(Filter.OrderByPropertyName);
             if (prop == null)
             {
-                return costTypes.Take(Filter.PageSize);
+                return costTypes;
             }
             costTypes = Filter.OrderByDesc.Value ? costTypes.OrderByDescending(x => prop.GetValue(x, null)) : costTypes.OrderBy(x => prop.GetValue(x, null));
             if (Filter.PageNumber != null)

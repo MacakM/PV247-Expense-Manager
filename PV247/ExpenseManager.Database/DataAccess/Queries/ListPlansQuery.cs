@@ -85,7 +85,7 @@ namespace ExpenseManager.Database.DataAccess.Queries
             System.Reflection.PropertyInfo prop = typeof(PlanModel).GetProperty(Filter.OrderByPropertyName);
             if (prop == null)
             {
-                return plans.Take(Filter.PageSize);
+                return plans;
             }
             plans = Filter.OrderByDesc.Value ? plans.OrderByDescending(x => prop.GetValue(x, null)) : plans.OrderBy(x => prop.GetValue(x, null));
             if (Filter.PageNumber != null)
