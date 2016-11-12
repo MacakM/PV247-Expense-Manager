@@ -41,5 +41,10 @@ namespace ExpenseManager.Business.Services.Interfaces
         /// </summary>
         /// <returns>List of plans</returns>
         List<Plan> ListAllCloseablePlans();
+        /// <summary>
+        /// Transfers plan into cost
+        /// </summary>
+        /// <param name="plan"></param>
+        void ClosePlan(Plan plan);
     }
 }

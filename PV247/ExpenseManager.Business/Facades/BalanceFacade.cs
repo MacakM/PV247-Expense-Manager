@@ -44,6 +44,14 @@ namespace ExpenseManager.Business.Facades
             return _planService.ListAllCloseablePlans();
         }
         /// <summary>
+        /// Plan is marked as closed and is transfered into database as CostInfo - user spent m
+        /// </summary>
+        /// <param name="plan"></param>
+        public void ClosePlan(Plan plan)
+        {
+            _planService.ClosePlan(plan);
+        }
+        /// <summary>
         /// Checks all account if they can get badge
         /// </summary>
         public void CheckBadgesRequirements()

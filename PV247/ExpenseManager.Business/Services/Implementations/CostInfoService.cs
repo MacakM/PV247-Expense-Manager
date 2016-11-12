@@ -139,11 +139,11 @@ namespace ExpenseManager.Business.Services.Implementations
                 if (monthPeriodicity.Created != null)
                 {
                     var created = monthPeriodicity.Created.Value;
-                    if (created.AddMonths(monthPeriodicity.PeriodicMultiplicity) >= DateTime.Today)
+                    if (created <= DateTime.Today) // I look if today is later then next creating time
                     {
-                        monthPeriodicity.Created = DateTime.Now;
-                        Save(monthPeriodicity);
                         Save(CloneAsNonPeriodic(monthPeriodicity));
+                        monthPeriodicity.Created = DateTime.Now.AddMonths(monthPeriodicity.PeriodicMultiplicity);
+                        Save(monthPeriodicity);
                     }
                 }
             }
@@ -161,11 +161,11 @@ namespace ExpenseManager.Business.Services.Implementations
                 if (weekPeriodicityCost.Created != null)
                 {
                     var created = weekPeriodicityCost.Created.Value;
-                    if (created.AddDays(7*weekPeriodicityCost.PeriodicMultiplicity) >= DateTime.Today) // Week usually has 7 days
+                    if (created <= DateTime.Today) // Week usually has 7 days  // I look if today is later then next creating time
                     {
-                        weekPeriodicityCost.Created = DateTime.Now;
-                        Save(weekPeriodicityCost);
                         Save(CloneAsNonPeriodic(weekPeriodicityCost));
+                        weekPeriodicityCost.Created = DateTime.Now.AddDays(7*weekPeriodicityCost.PeriodicMultiplicity);
+                        Save(weekPeriodicityCost);
                     }
                 }
             }
@@ -183,11 +183,11 @@ namespace ExpenseManager.Business.Services.Implementations
                 if (dayPeriodicityCost.Created != null)
                 {
                     var created = dayPeriodicityCost.Created.Value;
-                    if (created.AddDays(dayPeriodicityCost.PeriodicMultiplicity) >= DateTime.Today)
+                    if (created <= DateTime.Today)  // I look if today is later then next creating time
                     {
-                        dayPeriodicityCost.Created = DateTime.Now;
-                        Save(dayPeriodicityCost);
                         Save(CloneAsNonPeriodic(dayPeriodicityCost));
+                        dayPeriodicityCost.Created = DateTime.Now.AddDays(dayPeriodicityCost.PeriodicMultiplicity);
+                        Save(dayPeriodicityCost);
                     }
                 }
             }

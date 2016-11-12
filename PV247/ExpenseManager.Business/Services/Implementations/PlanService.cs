@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using ExpenseManager.Business.DataTransferObjects;
+using ExpenseManager.Business.DataTransferObjects.Enums;
 using ExpenseManager.Business.DataTransferObjects.Filters;
 using ExpenseManager.Business.Infrastructure;
 using ExpenseManager.Business.Services.Interfaces;
@@ -88,7 +89,16 @@ namespace ExpenseManager.Business.Services.Implementations
         {
             throw new NotImplementedException();
         }
-
-     
+        /// <summary>
+        /// Transfers plan into cost
+        /// </summary>
+        /// <param name="plan"></param>
+        public void ClosePlan(Plan plan)
+        {
+            if (plan.PlanType != PlanType.Save)
+            {
+                
+            }
+        }
     }
 }
