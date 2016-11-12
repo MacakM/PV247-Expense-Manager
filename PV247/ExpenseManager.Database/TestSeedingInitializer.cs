@@ -21,6 +21,8 @@ namespace ExpenseManager.Database
         {
             TruncateDB(context);
 
+            Random random = new Random();
+
             var account = new AccountModel()
             {
                 Name = "testerAccount"
@@ -77,7 +79,7 @@ namespace ExpenseManager.Database
             {
                 Account = account,
                 Created = DateTime.Now,
-                Description = "Chľast",
+                Description = "Futsal",
                 IsIncome = false,
                 Periodicity = PeriodicityModel.None,
                 Money = 100,
@@ -112,6 +114,20 @@ namespace ExpenseManager.Database
             context.CostInfos.Add(cost4);
             context.CostInfos.Add(cost5);
 
+            for (int i = 0; i < 30; i++)
+            {
+                var cost = new CostInfoModel()
+                {
+                    Account = account,
+                    Created = DateTime.Now,
+                    Description = "Seeded expense",
+                    IsIncome = false,
+                    Periodicity = PeriodicityModel.None,
+                    Money = (decimal) (random.NextDouble() * 150),
+                    Type = costType1
+                };
+                context.CostInfos.Add(cost);
+            }
             
             
             context.SaveChanges();

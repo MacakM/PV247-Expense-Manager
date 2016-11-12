@@ -101,6 +101,18 @@ namespace ExpenseManager.Business.Facades
         {
             return _costInfoService.ListCostInfos(filter);
         }
+
+        /// <summary>
+        /// Gets the count of rows in database filtered by filter
+        /// Used for pagination
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        public int GetCostInfosCount(CostInfoFilter filter)
+        {
+            return _costInfoService.GetCostInfosCount(filter);
+        }
+
         #endregion
         #region Plan CRUD
         /// <summary>

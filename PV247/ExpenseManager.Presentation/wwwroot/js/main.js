@@ -1,9 +1,11 @@
 ﻿$(document).ready(function () {
     var menuOpened = false;
-
+    /*
     $("#date-from").datepicker();
     $("#date-to").datepicker();
+    */
 
+    // all pages
     $("#left-menu-opener").click(function () {
         var padding;
         var margin;
@@ -28,9 +30,18 @@
             }, 500);
     });
 
+
+    // AccountSettings/Index
     $(".change-income")
         .click(function() {
             $(".income-holder").hide();
             $(".income-form").show();
+        });
+
+    // Expense/Index
+    $(".expense-pagination a")
+        .click(function () {
+            $("input[name='PageNumber']").val($(this).text());
+            $("input[name='PageNumber']").closest("form").submit();
         });
 });

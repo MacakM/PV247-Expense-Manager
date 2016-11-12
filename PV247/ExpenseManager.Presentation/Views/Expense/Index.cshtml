@@ -5,36 +5,37 @@
     Expenses
 }
 
-@*model List<ExpenseManager.Presentation.Models.Expense.IndexViewModel>*@
-
 @{
     IEnumerable<ExpenseManager.Presentation.Models.Expense.IndexViewModel> indexViewModels = (IEnumerable<ExpenseManager.Presentation.Models.Expense.IndexViewModel>)ViewData["indexViewModels"];
     IEnumerable<ExpenseManager.Presentation.Models.CostType.IndexViewModel> costTypes = (IEnumerable<ExpenseManager.Presentation.Models.CostType.IndexViewModel>)ViewData["costTypes"];
+    int pageCount = (int) ViewData["pageCount"];
 }
 
 <div class="col-sm-3 sidebar left">
     <form asp-action="Index">
+        @Html.AntiForgeryToken()
         <!--<label asp-for="DateFrom"></label>
-        <input asp-for="DateFrom" class="form-control" />
+        <input asp-for="DateFrom" class="form-control"/>
         <span asp-validation-for="DateFrom" class="text-danger" />-->
-        <label for="date-from">From: </label>
-        <input name="DateFrom" class="form-control datepicker" id="date-from" type="text" />
-        <br class="datepicker-separator" />
-        <label for="date-to">To: </label><input name="DateTo" class="form-control datepicker" id="date-to" type="text" />
-        <br />
-        <label for="money-from">Minimal ammount: </label><input name="MoneyFrom" class="form-control" id="money-from" type="text" />
-        <label for="money-to">Maximal ammount: </label><input name="MoneyTo" class="form-control" id="money-to" type="text" />
+        <label for="date-from">Created from: </label>
+        <input name="DateFrom" class="form-control" id="date-from" type="text" @(Model.DateFrom != null ? "value=" + Model.DateFrom : "") />
+        <!--<br class="datepicker-separator"/>-->
+        <label for="date-to">Created to: </label><input name="DateTo" class="form-control" id="date-to" type="text" @(Model.DateTo != null ? "value=" + Model.DateTo : "") />
+        <br/>
+        <label for="money-from">Minimal ammount: </label><input name="MoneyFrom" class="form-control" id="money-from" type="text" @(Model.MoneyFrom != null ? "value=" + Model.MoneyFrom : "") />
+        <label for="money-to">Maximal ammount: </label><input name="MoneyTo" class="form-control" id="money-to" type="text" @(Model.MoneyTo != null ? "value=" + Model.MoneyTo : "") />
         <div class="form-group">
-            <label>Category:</label> <br />
+            <label>Category:</label> <br/>
             <select name="CostTypeId" class="form-control">
                 <option value="">All</option>
                 @foreach (var costType in costTypes)
                 {
-                    <option value="@costType.Id">@costType.Name</option>
+                    @Html.Raw("<option value=" + costType.Id + " " + (Model.CostTypeId == costType.Id ? "selected" : "") + ">" + costType.Name + "</option>")
                 }
             </select>
         </div>
-        <input type="submit" class="search form-control" value="Search" />
+        <input type="hidden" name="PageNumber" value="1"/>
+        <input type="submit" class="search form-control" value="Search"/>
     </form>
     </div>
     <div class="col-sm-6 main-content">
@@ -46,6 +47,7 @@
                 <th>Description</th>
                 <th>Date</th>
                 <th>Cost</th>
+                <th class="text-center">Delete</th>
             </tr>
             @foreach (var indexViewModel in indexViewModels)
             {
@@ -61,16 +63,22 @@
                     {
                         <td class="negative">-@indexViewModel.Money $</td>
                     }
+                    <td class="text-center">
+                        <form asp-action="Delete">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="id" value="@indexViewModel.Id"/>
+                            <button class="link-button negative"><i class="fa fa-times" aria-hidden="true"></i></button>
+                        </form>
+                    </td>
                 </tr>
             }
         </table>
         <div class="expense-pagination">
             <ul class="pagination">
-                <li><a href="#">1</a></li>
-                <li class="active"><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
+                @for (int i = 1; i <= pageCount; i++)
+                {
+                    <li @((i == 1 && Model.PageNumber == null) || Model.PageNumber == i ? "class=active" : "")><a href="#">@i</a></li>
+                }
             </ul>
         </div>
     </div>

@@ -111,8 +111,26 @@ namespace ExpenseManager.Business.Services.Implementations
         public List<CostInfo> ListCostInfos(CostInfoFilter filter)
         {
             Query.Filter = ExpenseManagerMapper.Map<CostInfoModelFilter>(filter);
+            Query.Filter.OrderByDesc = true;
+            Query.Filter.OrderByPropertyName = nameof(CostInfo.Created);
             return GetList().ToList();
         }
+
+        /// <summary>
+        /// Gets the count of rows in database filtered by filter
+        /// Used for pagination
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        public int GetCostInfosCount(CostInfoFilter filter)
+        {
+            Query.Filter = ExpenseManagerMapper.Map<CostInfoModelFilter>(filter);
+            using (UnitOfWorkProvider.Create())
+            {
+                return Query.GetTotalRowCount();
+            }
+        }
+
         /// <summary>
         /// Recompute periodic costs and make them as new cost infos
         /// List periodic updates. Check if its right time to set it as cost, and clone it as non periodic ones.

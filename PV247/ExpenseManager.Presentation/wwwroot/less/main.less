@@ -161,7 +161,6 @@ header {
 
         position: absolute;
         right: 30px;
-        margin-top: 10px;
         display: block;
         border-radius: 50%;
         background-color: @mainColor;
@@ -269,7 +268,7 @@ a, a:hover, a:active, a:focus {
             color: @mainColor;
         }
 
-        &.active a, &.active a:hover {
+        &.active a, &.active a:hover, &.active a:focus {
             background-color: @mainColor;
             border-color: @mainColor;
         }
@@ -333,6 +332,9 @@ input[type=submit], button, button.btn {
 
 .negative {
     color: @redColor;
+    &:hover, &:active, &:focus {
+        color: @redColor;
+    }
 }
 
 .neutral {
@@ -345,6 +347,15 @@ input[type=submit], button, button.btn {
     left: 100px;
     width: 80%;
     z-index: 1000;
+    border: 2px solid @mainColor;
+}
+
+.link-button {
+    background:none!important;
+    border:none; 
+    padding:0!important;
+    font: inherit;
+    cursor: pointer;
 }
 
 .empty-page-content {

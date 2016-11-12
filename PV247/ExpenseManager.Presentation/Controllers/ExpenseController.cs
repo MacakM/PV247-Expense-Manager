@@ -25,6 +25,8 @@ namespace ExpenseManager.Presentation.Controllers
         private readonly ICurrentAccountProvider _currentAccountProvider;
         private readonly IRuntimeMapper _mapper;
 
+        private const int NumberOfExpensesPerPage = 10;
+
         /// <summary>
         /// Constructor for ExpenseController
         /// </summary>
@@ -46,7 +48,6 @@ namespace ExpenseManager.Presentation.Controllers
         {
             var account = _currentAccountProvider.GetCurrentAccount(HttpContext.User);
             // todo users without account should not be allowed here
-            // todo pagination
             var filter = new CostInfoFilter()
             {
                 AccountId = account.Id,
@@ -55,10 +56,13 @@ namespace ExpenseManager.Presentation.Controllers
                 CreatedTo = filterModel.DateTo,
                 MoneyFrom = filterModel.MoneyFrom,
                 MoneyTo = filterModel.MoneyTo,
-                TypeId = filterModel.CostTypeId
+                TypeId = filterModel.CostTypeId,
+                PageNumber = filterModel.PageNumber ?? 1,
+                PageSize = NumberOfExpensesPerPage
             };
             
             ViewData["indexViewModels"] = GetFilteredExpenses(filter);
+            ViewData["pageCount"] = (int) Math.Ceiling(_balanceFacade.GetCostInfosCount(filter)/ (double) NumberOfExpensesPerPage);
             ViewData["costTypes"] = GetAllCostTypes();
             return View(filterModel);
         }
@@ -78,6 +82,7 @@ namespace ExpenseManager.Presentation.Controllers
         /// Stores new expense
         /// </summary>
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Store(CreateViewModel costInfoViewModel)
         {
             var costType = _balanceFacade.GetItemType(costInfoViewModel.TypeId);
@@ -103,6 +108,27 @@ namespace ExpenseManager.Presentation.Controllers
             return RedirectToAction("Index");
         }
 
+        /// <summary>
+        /// Deletes expense with given id
+        /// </summary>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete([FromForm] int id)
+        {
+            var costInfo = _balanceFacade.GetItem(id);
+            var account = _currentAccountProvider.GetCurrentAccount(HttpContext.User);
+
+            if (costInfo == null || costInfo.AccountId != account.Id)
+            {
+                return RedirectWithError("Expense could not be deleted, it probably doesn't exist");
+            }
+
+            _balanceFacade.DeleteItem(id);
+
+            TempData["SuccessMessage"] = "Expense sucessfully deleted";
+            return RedirectToAction("Index");
+        }
+
         #region Helpers
 
         private List<IndexViewModel> GetFilteredExpenses(CostInfoFilter filter)
@@ -116,6 +142,13 @@ namespace ExpenseManager.Presentation.Controllers
             var costTypes = _balanceFacade.ListItemTypes(null);
             var costTypeViewModels = _mapper.Map<List<Models.CostType.IndexViewModel>>(costTypes);
             return costTypeViewModels;
+        }
+
+        private IActionResult RedirectWithError(string message)
+        {
+            TempData["ErrorMessage"] = message;
+            return RedirectToAction("Index", "Error");
+
         }
 
         #endregion

@@ -40,5 +40,10 @@ namespace ExpenseManager.Business.Services.Interfaces
         /// Recompute periodic costs and make them as new cost infos
         /// </summary>
         void RecomputePeriodicCosts();
+        /// <summary>
+        /// Gets the count of rows in database filtered by filter
+        /// Used for pagination
+        /// </summary>
+        int GetCostInfosCount(CostInfoFilter filter);
     }
 }
