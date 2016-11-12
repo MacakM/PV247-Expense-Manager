@@ -96,8 +96,7 @@ namespace ExpenseManager.Database.DataAccess.Queries
             {
                 return costInfos;
             }
-            // todo ordering by Created is hardcoded here
-            costInfos = Filter.OrderByDesc.Value ? costInfos.OrderByDescending(x => x.Created) : costInfos.OrderBy(x => x.Created);
+            costInfos = Filter.OrderByDesc.Value ? QueryOrderByHelper.OrderByDesc(costInfos, Filter.OrderByPropertyName) : QueryOrderByHelper.OrderBy(costInfos, Filter.OrderByPropertyName);
             if (Filter.PageNumber != null)
             {
                 costInfos = costInfos.Skip(Math.Max(0, Filter.PageNumber.Value - 1) * Filter.PageSize);

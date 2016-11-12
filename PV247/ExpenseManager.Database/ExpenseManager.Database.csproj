@@ -95,6 +95,7 @@
     <Compile Include="DataAccess\Queries\ListCostInfosQuery.cs" />
     <Compile Include="DataAccess\Queries\ListCostTypesQuery.cs" />
     <Compile Include="DataAccess\Queries\ListUsersQuery.cs" />
+    <Compile Include="DataAccess\Queries\QueryOrderByHelper.cs" />
     <Compile Include="DataAccess\Repositories\AccountRepository.cs" />
     <Compile Include="Entities\AccountModel.cs" />
     <Compile Include="Entities\BadgeModel.cs" />

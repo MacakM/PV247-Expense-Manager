@@ -48,7 +48,7 @@ namespace ExpenseManager.Database.DataAccess.Queries
             {
                 return accounts;
             }
-            accounts = Filter.OrderByDesc.Value ? accounts.OrderByDescending(x => prop.GetValue(x, null)) : accounts.OrderBy(x => prop.GetValue(x, null));
+            accounts = Filter.OrderByDesc.Value ? QueryOrderByHelper.OrderByDesc(accounts, Filter.OrderByPropertyName) : QueryOrderByHelper.OrderBy(accounts, Filter.OrderByPropertyName);
             if (Filter.PageNumber != null)
             {
                 accounts = accounts.Skip(Math.Max(0, Filter.PageNumber.Value - 1) * Filter.PageSize);

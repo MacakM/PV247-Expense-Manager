@@ -48,7 +48,7 @@ namespace ExpenseManager.Database.DataAccess.Queries
             {
                 return costTypes;
             }
-            costTypes = Filter.OrderByDesc.Value ? costTypes.OrderByDescending(x => prop.GetValue(x, null)) : costTypes.OrderBy(x => prop.GetValue(x, null));
+            costTypes = Filter.OrderByDesc.Value ? QueryOrderByHelper.OrderByDesc(costTypes, Filter.OrderByPropertyName) : QueryOrderByHelper.OrderBy(costTypes, Filter.OrderByPropertyName);
             if (Filter.PageNumber != null)
             {
                 costTypes = costTypes.Skip(Math.Max(0, Filter.PageNumber.Value - 1) * Filter.PageSize);

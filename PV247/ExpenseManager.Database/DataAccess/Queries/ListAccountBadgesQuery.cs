@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Linq.Expressions;
 using ExpenseManager.Database.Entities;
 using ExpenseManager.Database.Filters;
 using ExpenseManager.Database.Infrastructure.Query;
@@ -63,12 +64,13 @@ namespace ExpenseManager.Database.DataAccess.Queries
             {
                 return accountBadges;
             }
+       
             System.Reflection.PropertyInfo prop = typeof(AccountBadgeModel).GetProperty(Filter.OrderByPropertyName);
             if (prop == null)
             {
                 return accountBadges;
             }
-            accountBadges = Filter.OrderByDesc.Value ? accountBadges.OrderByDescending(x => prop.GetValue(x, null)) : accountBadges.OrderBy(x => prop.GetValue(x, null));
+            accountBadges = Filter.OrderByDesc.Value ? QueryOrderByHelper.OrderByDesc(accountBadges, Filter.OrderByPropertyName) : QueryOrderByHelper.OrderBy(accountBadges, Filter.OrderByPropertyName);
             if (Filter.PageNumber != null)
             {
                 accountBadges = accountBadges.Skip(Math.Max(0, Filter.PageNumber.Value - 1) * Filter.PageSize);
