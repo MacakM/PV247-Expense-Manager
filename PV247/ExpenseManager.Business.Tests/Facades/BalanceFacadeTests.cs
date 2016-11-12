@@ -1,10 +1,17 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Linq;
+using ExpenseManager.Business.DataTransferObjects;
+using ExpenseManager.Business.Facades;
+using ExpenseManager.Business.Services.Implementations;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ExpenseManager.Database;
 
 namespace ExpenseManager.Business.Tests.Facades
 {
     [TestClass]
     public class BalanceFacadeTests
     {
+        private readonly BalanceFacade _balanceFacade;
+
         [TestMethod]
         public void ListAllCloseablePlans()
         {
@@ -95,28 +102,70 @@ namespace ExpenseManager.Business.Tests.Facades
         {
             throw new AssertFailedException();
         }
+        /// <summary>
+        /// Test Badge creation.
+        /// </summary>
         [TestMethod]
         public void CreateBadgeTest()
         {
-            throw new AssertFailedException();
+            _balanceFacade.CreateBadge(new Badge
+            {
+                Name = "Organizer",
+                Description = "Add your first expense",
+                BadgeImgUri = "lol"
+            });
+            using (var db = new ExpenseDbContext())
+            {
+                var myBadge = db.Badges.FirstOrDefault(model => model.Name.Equals("Organizer"));
+                Assert.IsTrue(myBadge != null && myBadge.Description.Equals("Add your first expense") && myBadge.BadgeImgUri.Equals("lol"), "Badge was not created successfuly");
+            }
         }
+        /// <summary>
+        /// Test Badge deletion.
+        /// </summary>
         [TestMethod]
         public void DeleteBadgeTest()
         {
-            throw new AssertFailedException();
+            _balanceFacade.DeleteBadge(85);
+            using (var db = new ExpenseDbContext())
+            {
+                var myBadge = db.Badges.FirstOrDefault(model => model.Name.Equals("Survivor"));
+                Assert.IsTrue(myBadge == null, "Badge was not deleted successfuly");
+            }
         }
+        /// <summary>
+        /// Test Badge update.
+        /// </summary>
         [TestMethod]
         public void UpdateBadgeTest()
         {
-            throw new AssertFailedException();
+            _balanceFacade.UpdateBadge(new Badge
+            {
+                Id = 45,
+                Name = "Officer",
+                Description = "Buy 5 donuts",
+                BadgeImgUri = "mmm"
+            });
+
+            using (var db = new ExpenseDbContext())
+            {
+                var myBadge = db.Badges.Find(45);
+                Assert.IsTrue(myBadge.Description == "Buy 5 donuts", "Badge was not updated successfuly");
+            }
         }
+        /// <summary>
+        /// Test Badge get.
+        /// </summary>
         [TestMethod]
         public void GetBadgeTest()
         {
-            throw new AssertFailedException();
+            var badge = _balanceFacade.GetBadge(45);
+            Assert.IsTrue(
+                badge.Name.Equals("Officer") && badge.Description.Equals("Buy donuts") &&
+                badge.BadgeImgUri.Equals("mmm"), "Badge was not get successfuly");
         }
         [TestMethod]
-        public void ListBagesTest()
+        public void ListBadgesTest()
         {
             throw new AssertFailedException();
         }

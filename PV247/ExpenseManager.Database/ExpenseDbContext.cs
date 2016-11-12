@@ -1,11 +1,15 @@
 ﻿using System.Data.Entity;
+using System.Runtime.CompilerServices;
 using ExpenseManager.Database.Entities;
 
+[assembly: InternalsVisibleTo("ExpenseManager.Business.Tests")]
 namespace ExpenseManager.Database
 {
     internal class ExpenseDbContext : DbContext
     {
-        public ExpenseDbContext() : base("ExpenseManagerDB") { }
+        public ExpenseDbContext() : base("ExpenseManagerDB")
+        {
+        }
 
         public ExpenseDbContext(string nameOrConnectionString) : base(nameOrConnectionString) { }
 

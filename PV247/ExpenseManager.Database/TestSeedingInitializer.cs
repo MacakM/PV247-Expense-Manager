@@ -21,6 +21,26 @@ namespace ExpenseManager.Database
         {
             TruncateDB(context);
 
+            var badge = new BadgeModel()
+            {
+                Id = 85,
+                Name = "Survivor",
+                BadgeImgUri = "hmm",
+                Description = "I will survive"
+            };
+
+            context.Badges.Add(badge);
+
+            var badge2 = new BadgeModel()
+            {
+                Id = 45,
+                Name = "Officer",
+                BadgeImgUri = "mmm",
+                Description = "Buy donuts"
+            };
+
+            context.Badges.Add(badge2);
+
             var account = new AccountModel()
             {
                 Name = "testerAccount"
