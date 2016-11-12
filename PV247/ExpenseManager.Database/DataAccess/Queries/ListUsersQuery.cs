@@ -61,7 +61,7 @@ namespace ExpenseManager.Database.DataAccess.Queries
             {
                 return users;
             }
-            System.Reflection.PropertyInfo prop = typeof(AccountBadgeModel).GetProperty(Filter.OrderByPropertyName);
+            System.Reflection.PropertyInfo prop = typeof(UserModel).GetProperty(Filter.OrderByPropertyName);
             if (prop == null)
             {
                 return users.Take(Filter.PageSize);

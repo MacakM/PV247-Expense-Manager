@@ -43,7 +43,7 @@ namespace ExpenseManager.Database.DataAccess.Queries
             {
                 return costTypes;
             }
-            System.Reflection.PropertyInfo prop = typeof(AccountBadgeModel).GetProperty(Filter.OrderByPropertyName);
+            System.Reflection.PropertyInfo prop = typeof(CostTypeModel).GetProperty(Filter.OrderByPropertyName);
             if (prop == null)
             {
                 return costTypes.Take(Filter.PageSize);

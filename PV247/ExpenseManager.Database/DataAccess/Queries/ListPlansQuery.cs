@@ -82,7 +82,7 @@ namespace ExpenseManager.Database.DataAccess.Queries
             {
                 return plans;
             }
-            System.Reflection.PropertyInfo prop = typeof(AccountBadgeModel).GetProperty(Filter.OrderByPropertyName);
+            System.Reflection.PropertyInfo prop = typeof(PlanModel).GetProperty(Filter.OrderByPropertyName);
             if (prop == null)
             {
                 return plans.Take(Filter.PageSize);
