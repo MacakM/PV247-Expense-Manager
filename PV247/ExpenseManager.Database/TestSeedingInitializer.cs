@@ -57,7 +57,7 @@ namespace ExpenseManager.Database
                 Created = DateTime.Now,
                 Description = "Fajný rohlík",
                 IsIncome = false,
-                Periodicity = null,
+                Periodicity = PeriodicityModel.None,
                 Money = 20,
                 Type = costType1
             };
@@ -68,7 +68,7 @@ namespace ExpenseManager.Database
                 Created = DateTime.Now,
                 Description = "Chlebík",
                 IsIncome = false,
-                Periodicity = null,
+                Periodicity = PeriodicityModel.None,
                 Money = 50,
                 Type = costType1
             };
@@ -79,7 +79,7 @@ namespace ExpenseManager.Database
                 Created = DateTime.Now,
                 Description = "Chľast",
                 IsIncome = false,
-                Periodicity = null,
+                Periodicity = PeriodicityModel.None,
                 Money = 100,
                 Type = costType2
             };

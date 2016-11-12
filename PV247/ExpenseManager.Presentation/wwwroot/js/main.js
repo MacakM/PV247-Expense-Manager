@@ -1,7 +1,8 @@
 ﻿$(document).ready(function () {
     var menuOpened = false;
 
-    $(".datepicker").datepicker();
+    $("#date-from").datepicker();
+    $("#date-to").datepicker();
 
     $("#left-menu-opener").click(function () {
         var padding;

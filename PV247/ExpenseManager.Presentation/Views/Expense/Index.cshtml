@@ -1,28 +1,41 @@
-﻿@section title
+﻿@model ExpenseManager.Presentation.Models.Expense.IndexFilterViewModel
+
+@section title
 {
     Expenses
 }
 
-@model List<ExpenseManager.Presentation.Models.Expense.IndexViewModel>
+@*model List<ExpenseManager.Presentation.Models.Expense.IndexViewModel>*@
+
+@{
+    IEnumerable<ExpenseManager.Presentation.Models.Expense.IndexViewModel> indexViewModels = (IEnumerable<ExpenseManager.Presentation.Models.Expense.IndexViewModel>)ViewData["indexViewModels"];
+    IEnumerable<ExpenseManager.Presentation.Models.CostType.IndexViewModel> costTypes = (IEnumerable<ExpenseManager.Presentation.Models.CostType.IndexViewModel>)ViewData["costTypes"];
+}
 
 <div class="col-sm-3 sidebar left">
-        <form class="form">
-            <label for="search-from">From: </label><input class="form-control datepicker" id="search-from" type="text" />
-            <br class="datepicker-separator" />
-            <label for="search-to">To: </label><input class="form-control datepicker" id="search-to" type="text" />
-
-            <br /> TODO vložiť range slider na sumu <br />
-            <div class="form-group">
-                <label>Category:</label> <br />
-                <select class="form-control">
-                    <option>Strava</option>
-                    <option>Zábava</option>
-                    <option>other</option>
-                    <option>other</option>
-                </select>
-            </div>
-            <input type="submit" class="search form-control" value="Search" />
-        </form>
+    <form asp-action="Index">
+        <!--<label asp-for="DateFrom"></label>
+        <input asp-for="DateFrom" class="form-control" />
+        <span asp-validation-for="DateFrom" class="text-danger" />-->
+        <label for="date-from">From: </label>
+        <input name="DateFrom" class="form-control datepicker" id="date-from" type="text" />
+        <br class="datepicker-separator" />
+        <label for="date-to">To: </label><input name="DateTo" class="form-control datepicker" id="date-to" type="text" />
+        <br />
+        <label for="money-from">Minimal ammount: </label><input name="MoneyFrom" class="form-control" id="money-from" type="text" />
+        <label for="money-to">Maximal ammount: </label><input name="MoneyTo" class="form-control" id="money-to" type="text" />
+        <div class="form-group">
+            <label>Category:</label> <br />
+            <select name="CostTypeId" class="form-control">
+                <option value="">All</option>
+                @foreach (var costType in costTypes)
+                {
+                    <option value="@costType.Id">@costType.Name</option>
+                }
+            </select>
+        </div>
+        <input type="submit" class="search form-control" value="Search" />
+    </form>
     </div>
     <div class="col-sm-6 main-content">
         <h1>Expenses</h1>
@@ -34,7 +47,7 @@
                 <th>Date</th>
                 <th>Cost</th>
             </tr>
-            @foreach (var indexViewModel in Model)
+            @foreach (var indexViewModel in indexViewModels)
             {
                 <tr>
                     <td>@indexViewModel.TypeName</td>

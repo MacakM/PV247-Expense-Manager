@@ -26,7 +26,7 @@ namespace ExpenseManager.Business.DataTransferObjects
         /// Account id.
         /// </summary>
         [Required]
-        public int? AccountId { get; set; }
+        public int AccountId { get; set; }
         /// <summary>
         /// Account whom this cost belongs.
         /// </summary>
@@ -40,7 +40,7 @@ namespace ExpenseManager.Business.DataTransferObjects
         /// Type id.
         /// </summary>
         [Required]
-        public int? TypeId { get; set; }
+        public int TypeId { get; set; }
         /// <summary>
         /// Type of the cost.
         /// </summary>

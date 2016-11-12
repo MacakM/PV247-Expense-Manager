@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using ExpenseManager.Business.DataTransferObjects;
+using ExpenseManager.Business.DataTransferObjects.Enums;
 using ExpenseManager.Business.DataTransferObjects.Filters;
 using ExpenseManager.Business.Facades;
 using ExpenseManager.Presentation.Authentication;
@@ -41,31 +42,37 @@ namespace ExpenseManager.Presentation.Controllers
         /// Displays expenses for loged-in user
         /// </summary>
         /// <returns></returns>
-        public async Task<IActionResult> Index()
+        public IActionResult Index(IndexFilterViewModel filterModel)
         {
-            //var account = _currentAccountProvider.GetCurrentAccount(HttpContext.User);
+            var account = _currentAccountProvider.GetCurrentAccount(HttpContext.User);
+            // todo users without account should not be allowed here
+            // todo pagination
             var filter = new CostInfoFilter()
             {
-                AccountName = "testerAccount", // todo use real account
+                AccountId = account.Id,
+                Periodicity = Periodicity.None,
+                CreatedFrom = filterModel.DateFrom,
+                CreatedTo = filterModel.DateTo,
+                MoneyFrom = filterModel.MoneyFrom,
+                MoneyTo = filterModel.MoneyTo,
+                TypeId = filterModel.CostTypeId
             };
-
-
-            var expenses = _balanceFacade.ListItem(filter);
-            var indexViewModels = _mapper.Map<List<IndexViewModel>>(expenses);
-            return View(indexViewModels);
+            
+            ViewData["indexViewModels"] = GetFilteredExpenses(filter);
+            ViewData["costTypes"] = GetAllCostTypes();
+            return View(filterModel);
         }
+
 
         /// <summary>
         /// Displays form for creating new expense
         /// </summary>
         public IActionResult Create()
         {
-            var costTypeFilter = new CostTypeFilter(); // todo apply filter by account
-            var costTypes = _balanceFacade.ListItemTypes(costTypeFilter);
-            var costTypeViewModels = _mapper.Map <List<Models.CostType.IndexViewModel>>(costTypes);
-            ViewData["costTypes"] = costTypeViewModels;
+            ViewData["costTypes"] = GetAllCostTypes();
             return View();
         }
+
 
         /// <summary>
         /// Stores new expense
@@ -73,25 +80,44 @@ namespace ExpenseManager.Presentation.Controllers
         [HttpPost]
         public IActionResult Store(CreateViewModel costInfoViewModel)
         {
-            if (!ModelState.IsValid)
-            {
-                throw new InvalidOperationException("Invalid input data"); // todo handle errors more gracefully
-            }
-
             var costType = _balanceFacade.GetItemType(costInfoViewModel.TypeId);
 
-            if (costType == null)
+            if (!ModelState.IsValid || costType == null)
             {
-                throw new InvalidOperationException("Invalid input data"); // todo handle errors more gracefully
+                TempData["CreateExpenseMessage"] = "Invalid input data";
+                return RedirectToAction("Create");
             }
 
             var costInfo = _mapper.Map<CostInfo>(costInfoViewModel);
 
-            // todo add actual account here
+            var account = _currentAccountProvider.GetCurrentAccount(HttpContext.User);
+
+            costInfo.AccountId = account.Id;
+            costInfo.Created = DateTime.Now;
+            costInfo.Periodicity = Periodicity.None;
 
             _balanceFacade.CreateItem(costInfo);
 
+            TempData["SuccessMessage"] = "Expense successfully created";
+
             return RedirectToAction("Index");
         }
+
+        #region Helpers
+
+        private List<IndexViewModel> GetFilteredExpenses(CostInfoFilter filter)
+        {
+            var expenses = _balanceFacade.ListItem(filter);
+            return _mapper.Map<List<IndexViewModel>>(expenses);
+        }
+
+        private List<Models.CostType.IndexViewModel> GetAllCostTypes()
+        {
+            var costTypes = _balanceFacade.ListItemTypes(null);
+            var costTypeViewModels = _mapper.Map<List<Models.CostType.IndexViewModel>>(costTypes);
+            return costTypeViewModels;
+        }
+
+        #endregion
     }
 }

@@ -11,7 +11,13 @@
 }
 <div class="col-sm-9 content-holder">
     <h2>New expense</h2>
-
+    @if (TempData["CreateExpenseMessage"] != null)
+    {
+        <div class="alert alert-danger">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            @TempData["CreateExpenseMessage"]
+        </div>
+    }
     <form asp-action="Store">
         <div class="form-horizontal">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -63,6 +69,4 @@
     </div>
 </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+

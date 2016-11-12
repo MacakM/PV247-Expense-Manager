@@ -7,6 +7,7 @@ using ExpenseManager.Business.DataTransferObjects.Enums;
 using ExpenseManager.Business.DataTransferObjects.Filters;
 using ExpenseManager.Business.Infrastructure;
 using ExpenseManager.Business.Services.Interfaces;
+using ExpenseManager.Database.DataAccess.Repositories;
 using ExpenseManager.Database.Entities;
 using ExpenseManager.Database.Enums;
 using ExpenseManager.Database.Filters;
@@ -21,6 +22,8 @@ namespace ExpenseManager.Business.Services.Implementations
     /// </summary>
     public class CostInfoService : ExpenseManagerQueryAndCrudServiceBase<CostInfoModel, int, CostInfo, CostInfoModelFilter>, ICostInfoService
     {
+        private readonly CostTypeRepository _costTypeRepository;
+        private readonly AccountRepository _accountRepository;
 
         /// <summary>
         /// 
@@ -30,6 +33,7 @@ namespace ExpenseManager.Business.Services.Implementations
             nameof(CostInfoModel.Account),
             nameof(CostInfoModel.Type)
         };
+
         /// <summary>
         /// 
         /// </summary>
@@ -37,8 +41,18 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="repository"></param>
         /// <param name="expenseManagerMapper"></param>
         /// <param name="unitOfWorkProvider"></param>
-        public CostInfoService(ExpenseManagerQuery<CostInfoModel, CostInfoModelFilter> query, ExpenseManagerRepository<CostInfoModel, int> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
+        /// <param name="costTypeRepository"></param>
+        /// <param name="accountRepository"></param>
+        public CostInfoService(
+            ExpenseManagerQuery<CostInfoModel, CostInfoModelFilter> query, 
+            ExpenseManagerRepository<CostInfoModel, int> repository, 
+            Mapper expenseManagerMapper, 
+            IUnitOfWorkProvider unitOfWorkProvider,
+            CostTypeRepository costTypeRepository,
+            AccountRepository accountRepository) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
         {
+            _costTypeRepository = costTypeRepository;
+            _accountRepository = accountRepository;
         }
         /// <summary>
         /// Creates new cost info object in databse
@@ -46,8 +60,23 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="costInfo"></param>
         public void CreateCostInfo(CostInfo costInfo)
         {
-            // insert new CostType too?
-            Save(costInfo);
+            var costInfoModel = ExpenseManagerMapper.Map<CostInfoModel>(costInfo);
+            using (var uow = UnitOfWorkProvider.Create())
+            {
+                var account = _accountRepository.GetById(costInfo.AccountId);
+                var type = _costTypeRepository.GetById(costInfo.TypeId);
+
+                if (account == null || type == null)
+                {
+                    throw new InvalidOperationException("Account of type doesn't exists");
+                }
+
+                costInfoModel.Account = account;
+                costInfoModel.Type = type;
+
+                Repository.Insert(costInfoModel);
+                uow.Commit();
+            }
         }
         /// <summary>
         /// Updates existing cost info
