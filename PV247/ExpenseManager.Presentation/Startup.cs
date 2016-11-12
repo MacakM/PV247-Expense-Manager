@@ -59,6 +59,7 @@ namespace ExpenseManager.Presentation
 
             // Configure PL
 
+            services.AddSession();
             services.AddMvc(options =>
             {
                 options.Filters.Add(new RequireHttpsAttribute());
@@ -81,6 +82,8 @@ namespace ExpenseManager.Presentation
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+
+            app.UseSession();
 
             app.UseStaticFiles();
 
