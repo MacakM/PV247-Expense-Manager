@@ -121,9 +121,9 @@
     <Compile Include="Infrastructure\UnitOfWork\ExpenseManagerUnitOfWork.cs" />
     <Compile Include="Infrastructure\UnitOfWork\EntityFrameworkUnitOfWorkProvider.cs" />
     <Compile Include="Infrastructure\Utils\IncludesHelper.cs" />
-    <Compile Include="Migrations\201611112007240_Initial.cs" />
-    <Compile Include="Migrations\201611112007240_Initial.Designer.cs">
-      <DependentUpon>201611112007240_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201611131108350_Initial.cs" />
+    <Compile Include="Migrations\201611131108350_Initial.Designer.cs">
+      <DependentUpon>201611131108350_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -142,8 +142,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201611112007240_Initial.resx">
-      <DependentUpon>201611112007240_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201611131108350_Initial.resx">
+      <DependentUpon>201611131108350_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

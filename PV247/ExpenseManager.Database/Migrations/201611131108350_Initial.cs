@@ -68,8 +68,9 @@ namespace ExpenseManager.Database.Migrations
                         AccountId = c.Int(nullable: false),
                         Description = c.String(maxLength: 256),
                         PlanType = c.Int(nullable: false),
-                        PlannedMoney = c.Int(nullable: false),
+                        PlannedMoney = c.Decimal(nullable: false, precision: 18, scale: 2),
                         Deadline = c.DateTime(),
+                        Start = c.DateTime(),
                         IsCompleted = c.Boolean(nullable: false),
                         PlannedType_Id = c.Int(),
                     })
