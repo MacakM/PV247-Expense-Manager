@@ -1,4 +1,6 @@
 ﻿using System.Linq;
+using Castle.MicroKernel.Lifestyle;
+using Castle.Windsor;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.Facades;
 using ExpenseManager.Business.Services.Implementations;
@@ -10,7 +12,14 @@ namespace ExpenseManager.Business.Tests.Facades
     [TestClass]
     public class BalanceFacadeTests
     {
+        private IWindsorContainer container = new WindsorContainer();
         private readonly BalanceFacade _balanceFacade;
+
+        public BalanceFacadeTests()
+        {
+            container.Install(new TestInstaller());
+            _balanceFacade = container.Resolve<BalanceFacade>();
+        }
 
         [TestMethod]
         public void ListAllCloseablePlans()
