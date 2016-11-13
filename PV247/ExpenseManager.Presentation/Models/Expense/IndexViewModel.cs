@@ -8,7 +8,7 @@ using ExpenseManager.Database.Enums;
 namespace ExpenseManager.Presentation.Models.Expense
 {
     /// <summary>
-    /// Presentation layer representation of CostInfoModel object
+    /// Presentation layer representation of non-permanent CostInfoModel object
     /// </summary>
     public class IndexViewModel : ViewModelId
     {
@@ -34,13 +34,5 @@ namespace ExpenseManager.Presentation.Models.Expense
         /// Type of the cost.
         /// </summary>
         public string TypeName { get; set; }
-        /// <summary>
-        /// Periodicity of cost
-        /// </summary>
-        public PeriodicityModel? Periodicity { get; set; }
-        /// <summary>
-        /// Mulptiplies periodicity
-        /// </summary>
-        public int? PeriodicMultiplicity { get; set; }
     }
 }

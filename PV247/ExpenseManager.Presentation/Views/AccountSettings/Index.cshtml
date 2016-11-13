@@ -1,6 +1,13 @@
-﻿@section title
+﻿@using System.Threading.Tasks
+@using ExpenseManager.Business.DataTransferObjects.Enums
+@using ExpenseManager.Presentation.Models.Expense
+@section title
 {
     Account Settings
+}
+
+@{
+    List<IndexPermanentExpenseViewModel> expenses = (List<IndexPermanentExpenseViewModel>) ViewData["expenses"];
 }
 
 <div class="col-sm-9 content-holder account-settings">
@@ -29,43 +36,50 @@
         </tr>
     </table>
     
-    
-    <h2>Monthly income</h2>
-    <div class="income-holder">
-        <span class="income">30 000kč</span> <span class="change-income">change</span>    
-    </div>
-    <div class="income-form">
-        <form class="floating-inputs">
-            <input class="form-control" type="text" value="30000" name="income"/>
-            <input class="form-control" type="submit" value="Change"/>
-        </form>
-    </div>
-    
     <h2>Permanent expenses</h2>
     <table class="table">
         <tr>
-            <th>Type</th>
+            <th>Category</th>
             <th>Description</th>
-            <th>Cost</th>
+            <th>Next time to apply</th>
+            <th class="text-center">Ammount</th>
+            <th class="text-center">Periodicity</th>
+            <th class="text-center">Periodicity multiplicity</th>
         </tr>
-        <tr>
-            <td>Ubytovanie</td>
-            <td>Nájom za byt</td>
-            <td>12000kč</td>
-        </tr>
-        <tr>
-            <td>Ubytovanie</td>
-            <td>Voda</td>
-            <td>1200kč</td>
-        </tr>
-        <tr>
-            <td>Auto</td>
-            <td>Poistka</td>
-            <td>1200kč</td>
-        </tr>
+        @foreach (var expense in expenses)
+        {
+            <tr>
+                <td>@expense.TypeName</td>
+                <td>@expense.Description</td>
+                <td>@expense.Created</td>
+                @if (@expense.IsIncome)
+                {
+                    <td class="positive text-center">+@expense.Money $</td>
+                }
+                else
+                {
+                    <td class="negative text-center">-@expense.Money $</td>
+                }
+                <td class="text-center">
+                    @if (expense.Periodicity == Periodicity.Day)
+                    {
+                        <span>Daily</span>
+                    }
+                    @if (expense.Periodicity == Periodicity.Week)
+                    {
+                        <span>Weekly</span>
+                    }
+                    @if (expense.Periodicity == Periodicity.Month)
+                    {
+                        <span>Monthly</span>
+                    }
+                </td>
+                <td class="text-center">@expense.PeriodicMultiplicity</td>
+            </tr>
+        }
         <tr class="add-new-permanent-expense">
             <td colspan="3">
-                <a href="#">Add new</a>
+                <a href="@Url.Action("CreatePermanentExpense", "Expense")">Add new</a>
             </td>
         </tr>
     </table>

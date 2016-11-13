@@ -109,6 +109,42 @@ namespace ExpenseManager.Presentation.Controllers
         }
 
         /// <summary>
+        /// Displays form for creating permanent expenses
+        /// </summary>
+        public IActionResult CreatePermanentExpense()
+        {
+            ViewData["costTypes"] = GetAllCostTypes();
+            return View();
+        }
+
+        /// <summary>
+        /// Stores permanent expense
+        /// </summary>
+        public IActionResult StorePermanentExpense(CreatePermanentExpenseViewModel costInfoViewModel)
+        {
+            var costType = _balanceFacade.GetItemType(costInfoViewModel.TypeId);
+
+            if (!ModelState.IsValid || costType == null)
+            {
+                TempData["CreateExpenseMessage"] = "Invalid input data";
+                return RedirectToAction("CreatePermanentExpense");
+            }
+
+            var costInfo = _mapper.Map<CostInfo>(costInfoViewModel);
+
+            var account = _currentAccountProvider.GetCurrentAccount(HttpContext.User);
+
+            costInfo.AccountId = account.Id;
+            costInfo.Created = DateTime.Now;
+
+            _balanceFacade.CreateItem(costInfo);
+
+            TempData["SuccessMessage"] = "Expense successfully created";
+
+            return RedirectToAction("Index", "AccountSettings");
+        }
+
+        /// <summary>
         /// Deletes expense with given id
         /// </summary>
         [HttpPost]

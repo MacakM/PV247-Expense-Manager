@@ -103,7 +103,7 @@ namespace ExpenseManager.Database
                 Created = DateTime.Now,
                 Description = "Výplata",
                 IsIncome = true,
-                Periodicity = PeriodicityModel.Month,
+                Periodicity = PeriodicityModel.Day,
                 Money = 1000,
                 Type = costType1
             };
