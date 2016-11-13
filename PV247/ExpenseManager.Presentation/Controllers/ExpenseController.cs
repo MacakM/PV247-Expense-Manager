@@ -48,7 +48,6 @@ namespace ExpenseManager.Presentation.Controllers
         public IActionResult Index(IndexFilterViewModel filterModel)
         {
             var account = _currentAccountProvider.GetCurrentAccount(HttpContext.User);
-            // todo users without account should not be allowed here
             var filter = new CostInfoFilter()
             {
                 AccountId = account.Id,

@@ -51,7 +51,7 @@ namespace ExpenseManager.Database.DataAccess.Queries
             }
             if (!string.IsNullOrEmpty(Filter.Email))
             {
-                users = Filter.DoExactMatch ? users.Where(user => user.Name.Equals(Filter.Email)) : users.Where(user => user.Name.Contains(Filter.Email));
+                users = Filter.DoExactMatch ? users.Where(user => user.Email.Equals(Filter.Email)) : users.Where(user => user.Email.Contains(Filter.Email));
             }
             if (Filter.AccessType != null)
             {

@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using ExpenseManager.Business.DataTransferObjects;
+using ExpenseManager.Business.DataTransferObjects.Enums;
 using ExpenseManager.Business.DataTransferObjects.Filters;
 using ExpenseManager.Business.Infrastructure;
 using ExpenseManager.Business.Services.Interfaces;
 using ExpenseManager.Database.DataAccess.Repositories;
 using ExpenseManager.Database.Entities;
+using ExpenseManager.Database.Enums;
 using ExpenseManager.Database.Filters;
 using ExpenseManager.Database.Infrastructure.Query;
 using ExpenseManager.Database.Infrastructure.Repository;
@@ -111,6 +113,24 @@ namespace ExpenseManager.Business.Services.Implementations
         {
             Query.Filter = ExpenseManagerMapper.Map<AccountModelFilter>(filter);
             return GetList().ToList();
+        }
+
+        /// <summary>
+        /// Attaches account with given ID to user with given access type
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="accountId"></param>
+        /// <param name="accessType"></param>
+        public void AttachAccountToUser(int userId, int accountId, AccountAccessType accessType)
+        {
+            using (var uow = UnitOfWorkProvider.Create())
+            {
+                var user = _userRepository.GetById(userId);
+                var account = Repository.GetById(accountId);
+                user.Account = account;
+                user.AccessType = (AccountAccessTypeModel)accessType;
+                uow.Commit();
+            }
         }
     }
 }

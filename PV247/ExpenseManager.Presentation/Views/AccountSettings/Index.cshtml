@@ -1,6 +1,10 @@
 ﻿@using System.Threading.Tasks
 @using ExpenseManager.Business.DataTransferObjects.Enums
 @using ExpenseManager.Presentation.Models.Expense
+@using IndexViewModel = ExpenseManager.Presentation.Models.User.IndexViewModel
+
+@model ExpenseManager.Presentation.Models.AccountSettingsViewModel.AddAccessViewModel
+
 @section title
 {
     Account Settings
@@ -8,33 +12,50 @@
 
 @{
     List<IndexPermanentExpenseViewModel> expenses = (List<IndexPermanentExpenseViewModel>) ViewData["expenses"];
+    List<IndexViewModel> usersWithAccess = (List<IndexViewModel>) ViewData["usersWithAccess"];
 }
 
 <div class="col-sm-9 content-holder account-settings">
     <h1>Account settings</h1>
     <h2>Access to account</h2>
     <table class="table">
-        <tr>
-            <td>User with access</td>
-        </tr>
-        <tr>
-            <td>User with access</td>
-        </tr>
-        <tr>
-            <td>User with access</td>
-        </tr>
-        <tr>
-            <td>User with access</td>
-        </tr>
-        <tr>
-            <td>
-                <form class="floating-inputs">
-                    <input class="form-control" placeholder="Username" type="text" />
-                    <input class="form-control" type="submit" value="Add new" />
-                </form>
-            </td>
-        </tr>
+        @foreach (var user in usersWithAccess)
+        {
+            <tr>
+                <td>@user.Email</td>
+            </tr>
+        }
     </table>
+    
+    <h4>Add new user to account</h4>
+    <form asp-action="AddAccessToAccount">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label asp-for="Email" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="AccessType" class="col-md-2 control-label">Access type</label>
+                <div class="col-md-10">
+                    <select class="form-control" name="AccessType">
+                        <option value="1">Full</option>
+                        <option value="2">Only read</option>
+                    </select>
+                    <span asp-validation-for="AccessType" class="text-danger" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Add" class="btn" />
+                </div>
+            </div>
+        </div>
+        
+    </form>
     
     <h2>Permanent expenses</h2>
     <table class="table">
@@ -93,3 +114,7 @@
         </tr>
     </table>
 </div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

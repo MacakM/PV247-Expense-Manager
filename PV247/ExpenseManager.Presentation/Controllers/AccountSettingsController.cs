@@ -8,9 +8,11 @@ using ExpenseManager.Business.DataTransferObjects.Enums;
 using ExpenseManager.Business.DataTransferObjects.Filters;
 using ExpenseManager.Business.Facades;
 using ExpenseManager.Presentation.Authentication;
+using ExpenseManager.Presentation.Models.AccountSettingsViewModel;
 using ExpenseManager.Presentation.Models.Expense;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using IndexViewModel = ExpenseManager.Presentation.Models.User.IndexViewModel;
 
 namespace ExpenseManager.Presentation.Controllers
 {
@@ -52,7 +54,20 @@ namespace ExpenseManager.Presentation.Controllers
         {
             var account = _currentAccountProvider.GetCurrentAccount(HttpContext.User);
             ViewData["expenses"] = GetAllPermanentExpenses(account);
+            ViewData["usersWithAccess"] = GetAllUsersWithAccess(account);
             return View();
+        }
+
+        private List<IndexViewModel> GetAllUsersWithAccess(Account account)
+        {
+            var userFilter = new UserFilter()
+            {
+                AccountId = account.Id
+            };
+
+            var users = _accountFacade.ListUsers(userFilter);
+
+            return _mapper.Map<List<IndexViewModel>>(users);
         }
 
         private List<IndexPermanentExpenseViewModel> GetAllPermanentExpenses(Account account)
@@ -75,6 +90,46 @@ namespace ExpenseManager.Presentation.Controllers
         }
 
         /// <summary>
+        /// Adds access to new user for this account
+        /// </summary>
+        public IActionResult AddAccessToAccount(AddAccessViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return RedirectWithError("Invalid input data");
+            }
+
+            var user = GetUserFromEmail(model.Email);
+            if (user == null)
+            {
+                return RedirectWithError("User with given email doesn't exits");
+            }
+            if (user.AccountId != null)
+            {
+                return RedirectWithError("User with given email already has and account");
+            }
+
+            var account = _currentAccountProvider.GetCurrentAccount(HttpContext.User);
+
+            _accountFacade.AttachAccountToUser(user.Id, account.Id, model.AccessType);
+
+            TempData["SuccessMessage"] = "Access to user was successfully granted";
+            return RedirectToAction("Index");
+
+        }
+
+        private User GetUserFromEmail(string email)
+        {
+            var userFilter = new UserFilter()
+            {
+                Email = email
+            };
+
+            var users = _accountFacade.ListUsers(userFilter);
+            return users.FirstOrDefault();
+        }
+
+        /// <summary>
         /// Displays view for user which doesn't have account yet
         /// </summary>
         public IActionResult NoAccount()
@@ -94,8 +149,7 @@ namespace ExpenseManager.Presentation.Controllers
 
             if (account != null)
             {
-                TempData["ErrorMessage"] = "You already have an account, you can't create new one";
-                return RedirectToAction("Index", "Error");
+                return RedirectWithError("You already have an account, you can't create new one");
             }
 
             var user = _currentAccountProvider.GetCurrentUser(HttpContext.User);
@@ -103,6 +157,12 @@ namespace ExpenseManager.Presentation.Controllers
 
             TempData["SuccessMessage"] = "Account successfuly created";
             return RedirectToAction("Index", "Expense");
+        }
+
+        private IActionResult RedirectWithError(string message)
+        {
+            TempData["ErrorMessage"] = message;
+            return RedirectToAction("Index", "Error");
         }
     }
 }
