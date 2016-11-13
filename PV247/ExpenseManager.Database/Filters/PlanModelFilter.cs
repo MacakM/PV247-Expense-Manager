@@ -39,11 +39,11 @@ namespace ExpenseManager.Database.Filters
         /// <summary>
         /// Left edge of planned money range
         /// </summary>
-        public int? PlannedMoneyFrom { get; set; }
+        public decimal? PlannedMoneyFrom { get; set; }
         /// <summary>
         /// Right edge of planned money range
         /// </summary>
-        public int? PlannedMoneyTo { get; set; }
+        public decimal? PlannedMoneyTo { get; set; }
         /// <summary>
         /// Left edge of deadline range
         /// </summary>

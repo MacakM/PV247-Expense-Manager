@@ -37,7 +37,7 @@ namespace ExpenseManager.Database.Entities
         /// <summary>
         /// How much money is desired to achieve this plan.
         /// </summary>
-        public int PlannedMoney { get; set; }
+        public decimal PlannedMoney { get; set; }
         /// <summary>
         /// Which type of cost is assigned to this plan.
         /// </summary>

@@ -33,7 +33,7 @@ namespace ExpenseManager.Business.DataTransferObjects
         /// How much money is desired to achieve this plan.
         /// </summary>
         [Required]
-        public int? PlannedMoney { get; set; }
+        public decimal? PlannedMoney { get; set; }
         /// <summary>
         /// Planned type id
         /// </summary>

@@ -25,6 +25,7 @@ namespace ExpenseManager.Business.Facades
         /// <param name="costInfoService"></param>
         /// <param name="costTypeService"></param>
         /// <param name="planService"></param>
+        /// <param name="badgeManagerService"></param>
         public BalanceFacade(IAccountBadgeService accountBadgeService, IBadgeService badgeService, ICostInfoService costInfoService, ICostTypeService costTypeService, IPlanService planService, IBadgeManagerService badgeManagerService)
         {
             _accountBadgeService = accountBadgeService;
@@ -41,7 +42,15 @@ namespace ExpenseManager.Business.Facades
         /// </summary>
         public List<Plan> ListAllCloseablePlans(int accountId)
         {
-            return _planService.ListAllCloseablePlans();
+            return _planService.ListAllCloseablePlans(accountId, GetBalance(accountId));
+        }
+        /// <summary>
+        /// Check all MaxSpend plans and in they at deadline and accomplished set em as completed
+        /// </summary>
+        /// <returns></returns>
+        public void CheckAllMaxSpendDeadlines()
+        {
+             _planService.CheckAllMaxSpendDeadlines();
         }
         /// <summary>
         /// Returns current balance of account
