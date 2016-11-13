@@ -45,6 +45,7 @@
             <th class="text-center">Ammount</th>
             <th class="text-center">Periodicity</th>
             <th class="text-center">Periodicity multiplicity</th>
+            <th class="text-center">Delete</th>
         </tr>
         @foreach (var expense in expenses)
         {
@@ -75,6 +76,14 @@
                     }
                 </td>
                 <td class="text-center">@expense.PeriodicMultiplicity</td>
+                <td class="text-center">
+                    <form method="post" action="@Url.Action("Delete", "Expense")">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="returnRedirect" value="@Url.Action("Index", "AccountSettings")"/>
+                        <input type="hidden" name="id" value="@expense.Id" />
+                        <button class="link-button negative"><i class="fa fa-times" aria-hidden="true"></i></button>
+                    </form>
+                </td>
             </tr>
         }
         <tr class="add-new-permanent-expense">

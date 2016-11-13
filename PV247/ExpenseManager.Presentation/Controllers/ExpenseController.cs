@@ -149,7 +149,9 @@ namespace ExpenseManager.Presentation.Controllers
         /// </summary>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete([FromForm] int id)
+        public IActionResult Delete(
+            [FromForm] int id,
+            [FromForm] string returnRedirect)
         {
             var costInfo = _balanceFacade.GetItem(id);
             var account = _currentAccountProvider.GetCurrentAccount(HttpContext.User);
@@ -162,7 +164,7 @@ namespace ExpenseManager.Presentation.Controllers
             _balanceFacade.DeleteItem(id);
 
             TempData["SuccessMessage"] = "Expense sucessfully deleted";
-            return RedirectToAction("Index");
+            return Redirect(returnRedirect);
         }
 
         #region Helpers
