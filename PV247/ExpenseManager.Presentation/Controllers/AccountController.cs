@@ -171,6 +171,18 @@ namespace ExpenseManager.Presentation.Controllers
         }
 
         /// <summary>
+        /// /Account/AccessDenied
+        /// When user can't access given url
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public IActionResult AccessDenied(string returnUrl = null)
+        {
+            TempData["ErrorMessage"] = "Access denied";
+            return RedirectToAction("Index", "Error");
+        }
+
+        /// <summary>
         /// POST: /Account/ExternalLogin
         /// Handles external login
         /// </summary>

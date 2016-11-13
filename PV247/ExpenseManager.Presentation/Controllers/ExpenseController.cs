@@ -19,6 +19,7 @@ namespace ExpenseManager.Presentation.Controllers
     /// Controller for managing expenses
     /// </summary>
     [Authorize]
+    [Authorize(Policy = "HasAccount")]
     public class ExpenseController : Controller
     {
         private readonly BalanceFacade _balanceFacade;

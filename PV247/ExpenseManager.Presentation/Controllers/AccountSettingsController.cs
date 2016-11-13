@@ -9,6 +9,7 @@ using ExpenseManager.Business.DataTransferObjects.Filters;
 using ExpenseManager.Business.Facades;
 using ExpenseManager.Presentation.Authentication;
 using ExpenseManager.Presentation.Models.Expense;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExpenseManager.Presentation.Controllers
@@ -16,6 +17,8 @@ namespace ExpenseManager.Presentation.Controllers
     /// <summary>
     /// Controller for displaying account settings
     /// </summary>
+    [Authorize]
+    [Authorize(Policy = "HasAccount")]
     public class AccountSettingsController : Controller
     {
         private readonly BalanceFacade _balanceFacade;
