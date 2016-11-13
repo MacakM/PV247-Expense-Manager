@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using ExpenseManager.Business.DataTransferObjects;
+using ExpenseManager.Business.DataTransferObjects.Enums;
 using ExpenseManager.Business.DataTransferObjects.Filters;
 
 namespace ExpenseManager.Business.Services.Interfaces
@@ -36,5 +37,17 @@ namespace ExpenseManager.Business.Services.Interfaces
         /// <param name="filter">Filters accounts</param>
         /// <returns></returns>
         List<Account> ListAccounts(AccountFilter filter);
+        /// <summary>
+        /// Creates account for user with given id
+        /// </summary>
+        void CreateAccount(int userId);
+
+        /// <summary>
+        /// Attaches account with given ID to user with given access type
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="accountId"></param>
+        /// <param name="accessType"></param>
+        void AttachAccountToUser(int userId, int accountId, AccountAccessType accessType);
     }
 }

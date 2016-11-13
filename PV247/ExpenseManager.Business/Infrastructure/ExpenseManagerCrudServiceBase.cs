@@ -74,9 +74,9 @@ namespace ExpenseManager.Business.Infrastructure
         public virtual void Save(T item)
         {
             var entity = ExpenseManagerMapper.Map<T, TEntity>(item);
+            var isNew = item.Id.Equals(default(TKey));
             using (var uow = UnitOfWorkProvider.Create())
             {
-                var isNew = item.Id.Equals(default(TKey));
                 if (isNew)
                 {
                     Repository.Insert(entity);
@@ -86,6 +86,11 @@ namespace ExpenseManager.Business.Infrastructure
                     Repository.Update(entity);
                 }
                 uow.Commit();
+            }
+
+            if (isNew)
+            {
+                item.Id = entity.Id;
             }
         }
 

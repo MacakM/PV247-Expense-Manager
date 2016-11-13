@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using ExpenseManager.Business.DataTransferObjects;
+using ExpenseManager.Business.DataTransferObjects.Enums;
 using ExpenseManager.Business.DataTransferObjects.Filters;
 using ExpenseManager.Business.Services.Interfaces;
 
@@ -25,13 +26,20 @@ namespace ExpenseManager.Business.Facades
         }
 
         #region User CRUD
+
         /// <summary>
         /// Registers user according to provided information
         /// </summary>
         /// <param name="userRegistration">User registration information</param>
-        public void RegisterNewUser(User userRegistration)
+        /// <param name="createAccount"></param>
+        public void RegisterNewUser(User userRegistration, bool createAccount = true)
         {
             _userService.RegisterNewUser(userRegistration);
+
+            if (createAccount)
+            {
+                CreateAccount(userRegistration.Id);
+            }
         }
 
         /// <summary>
@@ -79,7 +87,9 @@ namespace ExpenseManager.Business.Facades
         {
             return _userService.ListUsers(filter);
         }
+
         #endregion
+
         #region Account CRUD
         /// <summary>
         /// Creates new account
@@ -89,6 +99,14 @@ namespace ExpenseManager.Business.Facades
         {
             _accountService.CreateAccount(account);
         }
+        /// <summary>
+        /// Creates account for user with given id
+        /// </summary>
+        public void CreateAccount(int userId)
+        {
+            _accountService.CreateAccount(userId);
+        }
+
         /// <summary>
         /// Deletes account by specified unique id
         /// </summary>
@@ -122,7 +140,19 @@ namespace ExpenseManager.Business.Facades
         public List<Account> ListAccounts(AccountFilter filter)
         {
             return _accountService.ListAccounts(filter);
-        } 
+        }
+
+        /// <summary>
+        /// Attaches account with given ID to user with given access type
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="accountId"></param>
+        /// <param name="accessType"></param>
+        public void AttachAccountToUser(int userId, int accountId, AccountAccessType accessType)
+        {
+            _accountService.AttachAccountToUser(userId, accountId, accessType);
+        }
+
         #endregion
     }
 }

@@ -40,6 +40,14 @@ namespace ExpenseManager.Database
 
             context.Users.Add(user);
 
+            var user2 = new UserModel()
+            {
+                Name = "tester2",
+                Email = "tester2@email.com",
+            };
+
+            context.Users.Add(user2);
+
             var costType1 = new CostTypeModel()
             {
                 Name = "Strava"

@@ -8,10 +8,10 @@
         /// <summary>
         /// User can read.
         /// </summary>
-        Read,
+        Read = 1,
         /// <summary>
         /// User can read and write.
         /// </summary>
-        Full
+        Full = 2
     }
 }

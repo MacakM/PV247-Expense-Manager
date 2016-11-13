@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ExpenseManager.Business.DataTransferObjects;
+using ExpenseManager.Business.DataTransferObjects.Enums;
 using ExpenseManager.Business.Facades;
 using ExpenseManager.Business.Infrastructure;
 using ExpenseManager.Business.Infrastructure.Mapping.Profiles;
@@ -16,6 +17,7 @@ using ExpenseManager.Database.Infrastructure.UnitOfWork;
 using ExpenseManager.Identity;
 using ExpenseManager.Presentation.Authentication;
 using ExpenseManager.Presentation.Infrastructure.Mapping;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -26,8 +28,15 @@ using Riganti.Utils.Infrastructure.Core;
 
 namespace ExpenseManager.Presentation
 {
+    /// <summary>
+    /// Configuration at startup
+    /// </summary>
     public class Startup
     {
+        /// <summary>
+        /// constructor
+        /// </summary>
+        /// <param name="env"></param>
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
@@ -46,7 +55,10 @@ namespace ExpenseManager.Presentation
 
         public IConfigurationRoot Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        /// <summary>
+        /// This method gets called by the runtime. Use this method to add services to the container.
+        /// </summary>
+        /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {  
             services.Configure<ConnectionOptions>(options => options.ConnectionString = Configuration.GetConnectionString("DefaultConnection"));
@@ -58,15 +70,30 @@ namespace ExpenseManager.Presentation
             RegisterBusinessLayerDependencies(services);
 
             // Configure PL
-
             services.AddSession();
+
+            services.AddSingleton<IAuthorizationHandler, HasAccountHandler>();
+            services.AddSingleton<IAuthorizationHandler, HasAccessRightsHandler>();
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("HasAccount",
+                                  policy => policy.Requirements.Add(new HasAccountRequirement()));
+                options.AddPolicy("HasFullRights",
+                                  policy => policy.Requirements.Add(new HasAccessRightsRequirement(AccountAccessType.Full)));
+            });
             services.AddMvc(options =>
             {
                 options.Filters.Add(new RequireHttpsAttribute());
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// <summary>
+        /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="env"></param>
+        /// <param name="loggerFactory"></param>
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));

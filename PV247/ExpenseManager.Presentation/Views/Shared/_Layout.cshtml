@@ -1,4 +1,9 @@
-﻿<!doctype html>
+﻿@using ExpenseManager.Presentation.Models.User
+@{
+    IndexViewModel user = (IndexViewModel) ViewData["currentUser"];
+}
+
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -32,17 +37,18 @@
     </div>
     <a href="@Url.Action("Index", "Expense")" class="project-name">Expense Manager</a>
     <span class="right-part">
-            <span class="username">Username</span>
+            <span class="username">@user.Email</span>
             <a href="@Url.Action("LogOff", "Account")" class="logout"><i class="fa fa-power-off" aria-hidden="true"></i></a>
         </span>
 </header>
 <div id="left-menu">
     <ul>
-        <li><a href="@Url.Action("Index", "AccountSettings")">Account settings</a></li>
-        <!--<li><a href="#">Permanent expenses</a></li>-->
-        <li><a href="@Url.Action("Index", "Category")">Categories</a></li>
+        <li><a href="@Url.Action("Index", "Expense")">Expenses</a></li>
+        <!--<li><a href="#">Permanent expenses</a></li>
+        <!--<li><a href="#">Categories</a></li>-->
         <li><a href="@Url.Action("Index", "Plan")">Plans</a></li>
         <li><a href="@Url.Action("Index", "Achievement")">Achievements</a></li>
+        <li><a href="@Url.Action("Index", "AccountSettings")">Account settings</a></li>
     </ul>
 </div>
 <div class="container-fluid">

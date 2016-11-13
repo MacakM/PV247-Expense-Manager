@@ -19,11 +19,10 @@ namespace ExpenseManager.Presentation.Controllers
     /// Controller for managing expenses
     /// </summary>
     [Authorize]
-    public class ExpenseController : Controller
+    [Authorize(Policy = "HasAccount")]
+    public class ExpenseController : BaseController
     {
         private readonly BalanceFacade _balanceFacade;
-        private readonly ICurrentAccountProvider _currentAccountProvider;
-        private readonly IRuntimeMapper _mapper;
 
         private const int NumberOfExpensesPerPage = 10;
 
@@ -33,11 +32,9 @@ namespace ExpenseManager.Presentation.Controllers
         /// <param name="balanceFacade"></param>
         /// <param name="mapper"></param>
         /// <param name="currentAccountProvider"></param>
-        public ExpenseController(BalanceFacade balanceFacade, Mapper mapper, ICurrentAccountProvider currentAccountProvider)
+        public ExpenseController(BalanceFacade balanceFacade, Mapper mapper, ICurrentAccountProvider currentAccountProvider) : base(currentAccountProvider, mapper)
         {
             _balanceFacade = balanceFacade;
-            _currentAccountProvider = currentAccountProvider;
-            _mapper = mapper.DefaultContext.Mapper;
         }
 
         /// <summary>
@@ -47,7 +44,6 @@ namespace ExpenseManager.Presentation.Controllers
         public IActionResult Index(IndexFilterViewModel filterModel)
         {
             var account = _currentAccountProvider.GetCurrentAccount(HttpContext.User);
-            // todo users without account should not be allowed here
             var filter = new CostInfoFilter()
             {
                 AccountId = account.Id,
@@ -71,6 +67,7 @@ namespace ExpenseManager.Presentation.Controllers
         /// <summary>
         /// Displays form for creating new expense
         /// </summary>
+        [Authorize(Policy = "HasFullRights")]
         public IActionResult Create()
         {
             ViewData["costTypes"] = GetAllCostTypes();
@@ -83,6 +80,7 @@ namespace ExpenseManager.Presentation.Controllers
         /// </summary>
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "HasFullRights")]
         public IActionResult Store(CreateViewModel costInfoViewModel)
         {
             var costType = _balanceFacade.GetItemType(costInfoViewModel.TypeId);
@@ -111,6 +109,7 @@ namespace ExpenseManager.Presentation.Controllers
         /// <summary>
         /// Displays form for creating permanent expenses
         /// </summary>
+        [Authorize(Policy = "HasFullRights")]
         public IActionResult CreatePermanentExpense()
         {
             ViewData["costTypes"] = GetAllCostTypes();
@@ -122,6 +121,7 @@ namespace ExpenseManager.Presentation.Controllers
         /// </summary>
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "HasFullRights")]
         public IActionResult StorePermanentExpense(CreatePermanentExpenseViewModel costInfoViewModel)
         {
             var costType = _balanceFacade.GetItemType(costInfoViewModel.TypeId);
@@ -151,6 +151,7 @@ namespace ExpenseManager.Presentation.Controllers
         /// </summary>
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "HasFullRights")]
         public IActionResult Delete(
             [FromForm] int id,
             [FromForm] string returnRedirect)
@@ -182,13 +183,6 @@ namespace ExpenseManager.Presentation.Controllers
             var costTypes = _balanceFacade.ListItemTypes(null);
             var costTypeViewModels = _mapper.Map<List<Models.CostType.IndexViewModel>>(costTypes);
             return costTypeViewModels;
-        }
-
-        private IActionResult RedirectWithError(string message)
-        {
-            TempData["ErrorMessage"] = message;
-            return RedirectToAction("Index", "Error");
-
         }
 
         #endregion

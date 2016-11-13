@@ -6,6 +6,7 @@ using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Enums;
 using ExpenseManager.Business.Facades;
 using ExpenseManager.Identity.Entities;
+using ExpenseManager.Presentation.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -24,6 +25,7 @@ namespace ExpenseManager.Presentation.Controllers
         private readonly AccountFacade _userFacade;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly ICurrentAccountProvider _currentAccountProvider;
         private readonly ILogger _logger;
 
         /// <summary>
@@ -33,15 +35,18 @@ namespace ExpenseManager.Presentation.Controllers
         /// <param name="userManager"></param>
         /// <param name="signInManager"></param>
         /// <param name="loggerFactory"></param>
+        /// <param name="currentAccountProvider"></param>
         public AccountController(
             AccountFacade userFacade,
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            ILoggerFactory loggerFactory)
+            ILoggerFactory loggerFactory,
+            ICurrentAccountProvider currentAccountProvider)
         {
             _userFacade = userFacade;
             _userManager = userManager;
             _signInManager = signInManager;
+            _currentAccountProvider = currentAccountProvider;
             _logger = loggerFactory.CreateLogger<AccountController>();
         }
 
@@ -132,7 +137,7 @@ namespace ExpenseManager.Presentation.Controllers
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    CreateExpenseManagerUser(model.Email);
+                    CreateExpenseManagerUser(model.Email, model.CreateAccount);
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation(3, "User created a new account with password.");
@@ -145,14 +150,16 @@ namespace ExpenseManager.Presentation.Controllers
             return View(model);
         }
 
-        private void CreateExpenseManagerUser(string email)
+        private void CreateExpenseManagerUser(string email, bool createAccount = false)
         {
-            _userFacade.RegisterNewUser(new User
+            var user = new User
             {
                 AccessType = AccountAccessType.Full,
                 Email = email,
                 Name = email.Substring(0, email.IndexOf("@", StringComparison.Ordinal))
-            });
+            };
+
+            _userFacade.RegisterNewUser(user, createAccount);
         }
 
         /// <summary>
@@ -166,6 +173,29 @@ namespace ExpenseManager.Presentation.Controllers
             await _signInManager.SignOutAsync();
             _logger.LogInformation(4, "User logged out.");
             return RedirectToAction("Login", "Account");
+        }
+
+        /// <summary>
+        /// /Account/AccessDenied
+        /// When user can't access given url
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public IActionResult AccessDenied(string returnUrl = null)
+        {
+            if (DoesntHaveAccount())
+            {
+                return RedirectToAction("NoAccount", "AccountSettings");
+            }
+
+            TempData["ErrorMessage"] = "Access denied";
+            return RedirectToAction("Index", "Error");
+        }
+
+        private bool DoesntHaveAccount()
+        {
+            var account = _currentAccountProvider.GetCurrentAccount(HttpContext.User);
+            return account == null;
         }
 
         /// <summary>

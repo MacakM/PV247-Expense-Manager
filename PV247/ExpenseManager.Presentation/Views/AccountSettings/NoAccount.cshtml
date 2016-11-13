@@ -1,0 +1,24 @@
+﻿@{
+    Layout = "_EmptyLayout";
+}
+
+@section title{ 
+    No account
+}
+
+<div>
+    <div class="alert alert-danger">
+        You dont have any account yet!
+    </div>
+    <div>
+        You can either create your own account or wait while somebody else 
+        will grant you access rights to his.
+    </div>
+    <br />
+    <div>
+        <form asp-action="CreateAccount">
+            @Html.AntiForgeryToken()
+            <input type="submit" class="form-control" value="Create own account"/>
+        </form>
+    </div>
+</div>

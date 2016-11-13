@@ -1,4 +1,5 @@
-﻿@model ExpenseManager.Presentation.Models.Expense.IndexFilterViewModel
+﻿@using ExpenseManager.Presentation.Models.User
+@model ExpenseManager.Presentation.Models.Expense.IndexFilterViewModel
 
 @section title
 {
@@ -9,6 +10,7 @@
     IEnumerable<ExpenseManager.Presentation.Models.Expense.IndexViewModel> indexViewModels = (IEnumerable<ExpenseManager.Presentation.Models.Expense.IndexViewModel>)ViewData["indexViewModels"];
     IEnumerable<ExpenseManager.Presentation.Models.CostType.IndexViewModel> costTypes = (IEnumerable<ExpenseManager.Presentation.Models.CostType.IndexViewModel>)ViewData["costTypes"];
     int pageCount = (int) ViewData["pageCount"];
+    IndexViewModel user = (IndexViewModel)ViewData["currentUser"];
 }
 
 <div class="col-sm-3 sidebar left">
@@ -40,14 +42,20 @@
     </div>
     <div class="col-sm-6 main-content">
         <h1>Expenses</h1>
-        @Html.ActionLink("+", "Create", "Expense", null, new { @class = "add-new" })
+        @if (user.HasFullRights)
+        {
+            @Html.ActionLink("+", "Create", "Expense", null, new { @class = "add-new" })
+        }
         <table class="table">
             <tr>
                 <th>Type</th>
                 <th>Description</th>
                 <th class="text-center">Date</th>
                 <th class="text-center">Cost</th>
-                <th class="text-center">Delete</th>
+                @if (user.HasFullRights)
+                {
+                    <th class="text-center">Delete</th>
+                }
             </tr>
             @foreach (var indexViewModel in indexViewModels)
             {
@@ -63,14 +71,18 @@
                     {
                         <td class="negative text-center">-@indexViewModel.Money $</td>
                     }
-                    <td class="text-center">
-                        <form asp-action="Delete">
-                            @Html.AntiForgeryToken()
-                            <input type="hidden" name="returnRedirect" value="@Url.Action("Index", "Expense")" />
-                            <input type="hidden" name="id" value="@indexViewModel.Id"/>
-                            <button class="link-button negative"><i class="fa fa-times" aria-hidden="true"></i></button>
-                        </form>
-                    </td>
+
+                    @if (user.HasFullRights)
+                    {
+                        <td class="text-center">
+                            <form asp-action="Delete">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="returnRedirect" value="@Url.Action("Index", "Expense")" />
+                                <input type="hidden" name="id" value="@indexViewModel.Id" />
+                                <button class="link-button negative"><i class="fa fa-times" aria-hidden="true"></i></button>
+                            </form>
+                        </td>
+                    }
                 </tr>
             }
         </table>

@@ -34,13 +34,20 @@ namespace ExpenseManager.Presentation.Authentication
         /// </summary>
         public Account GetCurrentAccount(ClaimsPrincipal principal)
         {
-            var applicationUser = GetCurrentApplicationUser(principal);
-            var userModel = _accountFacade.GetCurrentlySignedUser(applicationUser.Email, true);
-            if (userModel == null)
+            var user = GetCurrentUser(principal);
+            if (user == null)
             {
                 throw new InvalidOperationException("Logged-in user doesn't exists in expensemanagerDB");
             }
-            return !userModel.AccountId.HasValue ? null : _accountFacade.GetAccount(userModel.AccountId.Value);
+
+            return !user.AccountId.HasValue ? null : _accountFacade.GetAccount(user.AccountId.Value);
+        }
+
+        /// <inheritdoc />
+        public User GetCurrentUser(ClaimsPrincipal principal)
+        {
+            var applicationUser = GetCurrentApplicationUser(principal);
+            return _accountFacade.GetCurrentlySignedUser(applicationUser.Email, true);
         }
 
         private ApplicationUser GetCurrentApplicationUser(ClaimsPrincipal principal)
