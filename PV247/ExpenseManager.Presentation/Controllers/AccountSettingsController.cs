@@ -106,7 +106,7 @@ namespace ExpenseManager.Presentation.Controllers
             }
             if (user.AccountId != null)
             {
-                return RedirectWithError("User with given email already has and account");
+                return RedirectWithError("User with given email already has an account");
             }
 
             var account = _currentAccountProvider.GetCurrentAccount(HttpContext.User);

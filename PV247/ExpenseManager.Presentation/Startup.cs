@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ExpenseManager.Business.DataTransferObjects;
+using ExpenseManager.Business.DataTransferObjects.Enums;
 using ExpenseManager.Business.Facades;
 using ExpenseManager.Business.Infrastructure;
 using ExpenseManager.Business.Infrastructure.Mapping.Profiles;
@@ -69,13 +70,17 @@ namespace ExpenseManager.Presentation
             RegisterBusinessLayerDependencies(services);
 
             // Configure PL
-
             services.AddSession();
+
             services.AddSingleton<IAuthorizationHandler, HasAccountHandler>();
+            services.AddSingleton<IAuthorizationHandler, HasAccessRightsHandler>();
+
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("HasAccount",
                                   policy => policy.Requirements.Add(new HasAccountRequirement()));
+                options.AddPolicy("HasFullRights",
+                                  policy => policy.Requirements.Add(new HasAccessRightsRequirement(AccountAccessType.Full)));
             });
             services.AddMvc(options =>
             {

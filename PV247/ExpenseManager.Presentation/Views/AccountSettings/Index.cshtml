@@ -19,15 +19,27 @@
     <h1>Account settings</h1>
     <h2>Access to account</h2>
     <table class="table">
+        <tr>
+            <th>Email</th>
+            <th>Access type</th>
+        </tr>
         @foreach (var user in usersWithAccess)
         {
             <tr>
                 <td>@user.Email</td>
+                @if (user.AccessType == AccountAccessType.Full)
+                {
+                    <td>Full</td>
+                }
+                else
+                {
+                    <td>Only read</td>
+                }
             </tr>
         }
     </table>
     
-    <h4>Add new user to account</h4>
+    <h3>Add new user to account</h3>
     <form asp-action="AddAccessToAccount">
         <div asp-validation-summary="All" class="text-danger"></div>
         <div class="form-horizontal">
@@ -42,8 +54,8 @@
                 <label asp-for="AccessType" class="col-md-2 control-label">Access type</label>
                 <div class="col-md-10">
                     <select class="form-control" name="AccessType">
-                        <option value="1">Full</option>
-                        <option value="2">Only read</option>
+                        <option value="2">Full</option>
+                        <option value="1">Only read</option>
                     </select>
                     <span asp-validation-for="AccessType" class="text-danger" />
                 </div>
