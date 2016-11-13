@@ -37,11 +37,18 @@ namespace ExpenseManager.Business.Facades
         
         #region Business operations
         /// <summary>
-        /// Lists all plans that can be closed by user
+        /// Lists all plans that can be closed by user - MUST BE PLANTYPE.SAVE
         /// </summary>
-        public List<Plan> ListAllCloseablePlans()
+        public List<Plan> ListAllCloseablePlans(int accountId)
         {
             return _planService.ListAllCloseablePlans();
+        }
+        /// <summary>
+        /// Returns current balance of account
+        /// </summary>
+        public decimal GetBalance(int accountId)
+        {
+            return _costInfoService.GetBalance(accountId);
         }
         /// <summary>
         /// Plan is marked as closed and is transfered into database as CostInfo - user spent m

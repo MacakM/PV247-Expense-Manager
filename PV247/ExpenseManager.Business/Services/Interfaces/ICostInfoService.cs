@@ -40,5 +40,11 @@ namespace ExpenseManager.Business.Services.Interfaces
         /// Recompute periodic costs and make them as new cost infos
         /// </summary>
         void RecomputePeriodicCosts();
+        /// <summary>
+        /// Returns balance of aacount
+        /// </summary>
+        /// <param name="accountId"></param>
+        /// <returns></returns>
+        decimal GetBalance(int accountId);
     }
 }
