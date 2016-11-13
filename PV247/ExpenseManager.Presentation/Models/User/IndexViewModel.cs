@@ -23,5 +23,10 @@ namespace ExpenseManager.Presentation.Models.User
         /// Access type of the user.
         /// </summary>
         public AccountAccessType? AccessType { get; set; }
+
+        /// <summary>
+        /// Wethere user has full access rights
+        /// </summary>
+        public bool HasFullRights => AccessType == AccountAccessType.Full;
     }
 }

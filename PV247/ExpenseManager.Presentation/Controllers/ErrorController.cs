@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using ExpenseManager.Presentation.Authentication;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExpenseManager.Presentation.Controllers
@@ -9,7 +11,7 @@ namespace ExpenseManager.Presentation.Controllers
     /// <summary>
     /// Controller for handling and displaying errors
     /// </summary>
-    public class ErrorController : Controller
+    public class ErrorController :  BaseController
     {
         /// <summary>
         /// Displays error message
@@ -19,6 +21,15 @@ namespace ExpenseManager.Presentation.Controllers
             var message = TempData["ErrorMessage"] ?? "Unknown error occured";
 
             return View(message);
+        }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="currentAccountProvider"></param>
+        /// <param name="mapper"></param>
+        public ErrorController(ICurrentAccountProvider currentAccountProvider, Mapper mapper) : base(currentAccountProvider, mapper)
+        {
         }
     }
 }

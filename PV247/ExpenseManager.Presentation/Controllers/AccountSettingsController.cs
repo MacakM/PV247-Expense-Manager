@@ -20,12 +20,10 @@ namespace ExpenseManager.Presentation.Controllers
     /// Controller for displaying account settings
     /// </summary>
     [Authorize]
-    public class AccountSettingsController : Controller
+    public class AccountSettingsController : BaseController
     {
         private readonly BalanceFacade _balanceFacade;
-        private readonly ICurrentAccountProvider _currentAccountProvider;
         private readonly AccountFacade _accountFacade;
-        private readonly IRuntimeMapper _mapper;
 
         /// <summary>
         /// Constructor for AccountSettingsController
@@ -38,12 +36,10 @@ namespace ExpenseManager.Presentation.Controllers
             BalanceFacade balanceFacade, 
             ICurrentAccountProvider currentAccountProvider, 
             Mapper mapper, 
-            AccountFacade accountFacade)
+            AccountFacade accountFacade) : base(currentAccountProvider, mapper)
         {
             _balanceFacade = balanceFacade;
-            _currentAccountProvider = currentAccountProvider;
             _accountFacade = accountFacade;
-            _mapper = mapper.DefaultContext.Mapper;
         }
 
         /// <summary>
@@ -92,6 +88,8 @@ namespace ExpenseManager.Presentation.Controllers
         /// <summary>
         /// Adds access to new user for this account
         /// </summary>
+        [Authorize(Policy = "HasAccount")]
+        [Authorize(Policy = "HasFullRights")]
         public IActionResult AddAccessToAccount(AddAccessViewModel model)
         {
             if (!ModelState.IsValid)
@@ -157,12 +155,6 @@ namespace ExpenseManager.Presentation.Controllers
 
             TempData["SuccessMessage"] = "Account successfuly created";
             return RedirectToAction("Index", "Expense");
-        }
-
-        private IActionResult RedirectWithError(string message)
-        {
-            TempData["ErrorMessage"] = message;
-            return RedirectToAction("Index", "Error");
         }
     }
 }
