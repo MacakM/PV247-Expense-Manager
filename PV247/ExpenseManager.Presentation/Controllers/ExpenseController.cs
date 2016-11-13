@@ -120,6 +120,8 @@ namespace ExpenseManager.Presentation.Controllers
         /// <summary>
         /// Stores permanent expense
         /// </summary>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult StorePermanentExpense(CreatePermanentExpenseViewModel costInfoViewModel)
         {
             var costType = _balanceFacade.GetItemType(costInfoViewModel.TypeId);
