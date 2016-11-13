@@ -20,7 +20,7 @@ namespace ExpenseManager.Presentation.Models.Expense
         /// How much money has changed.
         /// </summary>
         [Required]
-        public decimal? Money { get; set; }
+        public decimal Money { get; set; }
         /// <summary>
         /// More concrete description of the cost
         /// </summary>
@@ -29,7 +29,7 @@ namespace ExpenseManager.Presentation.Models.Expense
         /// Date when the cost info was created.
         /// </summary>
         [Required]
-        public DateTime? Created { get; set; }
+        public DateTime Created { get; set; }
         /// <summary>
         /// Type of the cost.
         /// </summary>

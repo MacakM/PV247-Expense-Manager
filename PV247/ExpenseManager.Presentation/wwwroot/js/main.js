@@ -30,6 +30,8 @@
             }, 500);
     });
 
+    $(".success-message").delay(3000).fadeOut();
+
 
     // AccountSettings/Index
     $(".change-income")

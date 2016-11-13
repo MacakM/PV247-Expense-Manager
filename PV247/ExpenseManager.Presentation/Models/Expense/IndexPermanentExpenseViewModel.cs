@@ -15,7 +15,7 @@ namespace ExpenseManager.Presentation.Models.Expense
         /// <summary>
         /// How much money has changed.
         /// </summary>
-        public decimal? Money { get; set; }
+        public decimal Money { get; set; }
         /// <summary>
         /// More concrete description of the cost
         /// </summary>

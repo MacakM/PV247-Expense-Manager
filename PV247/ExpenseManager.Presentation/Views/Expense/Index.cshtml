@@ -45,8 +45,8 @@
             <tr>
                 <th>Type</th>
                 <th>Description</th>
-                <th>Date</th>
-                <th>Cost</th>
+                <th class="text-center">Date</th>
+                <th class="text-center">Cost</th>
                 <th class="text-center">Delete</th>
             </tr>
             @foreach (var indexViewModel in indexViewModels)
@@ -54,14 +54,14 @@
                 <tr>
                     <td>@indexViewModel.TypeName</td>
                     <td>@indexViewModel.Description</td>
-                    <td>@indexViewModel.Created</td>
+                    <td class="text-center">@indexViewModel.Created.ToShortDateString()</td>
                     @if (@indexViewModel.IsIncome)
                     {
-                        <td class="positive">+@indexViewModel.Money $</td>
+                        <td class="positive text-center">+@indexViewModel.Money $</td>
                     }
                     else
                     {
-                        <td class="negative">-@indexViewModel.Money $</td>
+                        <td class="negative text-center">-@indexViewModel.Money $</td>
                     }
                     <td class="text-center">
                         <form asp-action="Delete">

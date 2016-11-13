@@ -52,7 +52,7 @@
             <tr>
                 <td>@expense.TypeName</td>
                 <td>@expense.Description</td>
-                <td>@expense.Created</td>
+                <td>@expense.Created.ToShortDateString()</td>
                 @if (@expense.IsIncome)
                 {
                     <td class="positive text-center">+@expense.Money $</td>
