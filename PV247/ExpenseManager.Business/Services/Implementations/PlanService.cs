@@ -103,19 +103,20 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="plan"></param>
         public void ClosePlan(Plan plan)
         {
-            if (plan.PlanType != PlanType.Save)
+            if (plan.PlanType == PlanType.Save)
             {
                 plan.IsCompleted = true;
                 CloneToCost(plan);
                 Save(plan);
-            }
+            } 
+            throw new ArgumentException("PlanType.Save is the right one.");
         }
 
         private void CloneToCost(Plan plan)
         {
-
-
+           
             CostInfoModel costInfo = new CostInfoModel();
+
             if (plan.PlannedMoney != null) costInfo.Money = plan.PlannedMoney.Value;
             if (plan.AccountId != null) costInfo.AccountId = plan.AccountId.Value;
             if (plan.PlannedTypeId != null) costInfo.TypeId = plan.PlannedTypeId.Value;
@@ -136,7 +137,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <returns></returns>
         public List<Plan> ListAllCloseablePlans(int accountId, decimal accountBalance)
         {
-             Query.Filter = new PlanModelFilter {AccountId = accountId, PlannedMoneyFrom = accountBalance, PlanType = PlanTypeModel.Save};
+             Query.Filter = new PlanModelFilter {AccountId = accountId, PlannedMoneyFrom = accountBalance, PlanType = PlanTypeModel.Save, IsCompleted = false};
             return GetList().ToList();
         }
         /// <summary>
