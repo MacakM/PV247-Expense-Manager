@@ -36,5 +36,9 @@ namespace ExpenseManager.Business.Services.Interfaces
         /// <param name="filter">Filters accounts</param>
         /// <returns></returns>
         List<Account> ListAccounts(AccountFilter filter);
+        /// <summary>
+        /// Creates account for user with given id
+        /// </summary>
+        void CreateAccount(int userId);
     }
 }

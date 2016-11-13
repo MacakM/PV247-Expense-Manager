@@ -132,7 +132,7 @@ namespace ExpenseManager.Presentation.Controllers
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    CreateExpenseManagerUser(model.Email);
+                    CreateExpenseManagerUser(model.Email, model.CreateAccount);
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation(3, "User created a new account with password.");
@@ -145,14 +145,16 @@ namespace ExpenseManager.Presentation.Controllers
             return View(model);
         }
 
-        private void CreateExpenseManagerUser(string email)
+        private void CreateExpenseManagerUser(string email, bool createAccount = false)
         {
-            _userFacade.RegisterNewUser(new User
+            var user = new User
             {
                 AccessType = AccountAccessType.Full,
                 Email = email,
                 Name = email.Substring(0, email.IndexOf("@", StringComparison.Ordinal))
-            });
+            };
+
+            _userFacade.RegisterNewUser(user, createAccount);
         }
 
         /// <summary>

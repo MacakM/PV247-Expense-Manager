@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Filters;
 using ExpenseManager.Business.Infrastructure;
 using ExpenseManager.Business.Services.Interfaces;
+using ExpenseManager.Database.DataAccess.Repositories;
 using ExpenseManager.Database.Entities;
 using ExpenseManager.Database.Filters;
 using ExpenseManager.Database.Infrastructure.Query;
@@ -18,6 +20,8 @@ namespace ExpenseManager.Business.Services.Implementations
     /// </summary>
     public class AccountService : ExpenseManagerQueryAndCrudServiceBase<AccountModel, int, Account, AccountModelFilter>, IAccountService
     {
+        private readonly UserRepository _userRepository;
+
         /// <summary>
         /// 
         /// </summary>
@@ -25,8 +29,15 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="repository"></param>
         /// <param name="expenseManagerMapper"></param>
         /// <param name="unitOfWorkProvider"></param>
-        public AccountService(ExpenseManagerQuery<AccountModel, AccountModelFilter> query, ExpenseManagerRepository<AccountModel, int> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
+        /// <param name="userRepository"></param>
+        public AccountService(
+            ExpenseManagerQuery<AccountModel, 
+                AccountModelFilter> query, 
+            ExpenseManagerRepository<AccountModel, int> repository, 
+            Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider,
+            UserRepository userRepository) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
         {
+            _userRepository = userRepository;
         }
         /// <summary>
         /// 
@@ -40,6 +51,32 @@ namespace ExpenseManager.Business.Services.Implementations
         {
             Save(account);
         }
+
+        /// <summary>
+        /// Creates account for user with given id
+        /// </summary>
+        public void CreateAccount(int userId)
+        {
+            using (var uow = UnitOfWorkProvider.Create())
+            {
+                var user = _userRepository.GetById(userId);
+
+                if (user == null)
+                {
+                    throw new InvalidOperationException("User with given ID doesn't exist");
+                }
+
+                var account = new AccountModel()
+                {
+                    Users = new List<UserModel>() { user },
+                    Name = user.Name + "'s account"
+                };
+
+                Repository.Insert(account);
+                uow.Commit();
+            }
+        }
+
         /// <summary>
         /// Updates existing account
         /// </summary>
@@ -75,8 +112,5 @@ namespace ExpenseManager.Business.Services.Implementations
             Query.Filter = ExpenseManagerMapper.Map<AccountModelFilter>(filter);
             return GetList().ToList();
         }
-
-
-      
     }
 }

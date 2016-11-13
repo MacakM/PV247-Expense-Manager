@@ -25,13 +25,20 @@ namespace ExpenseManager.Business.Facades
         }
 
         #region User CRUD
+
         /// <summary>
         /// Registers user according to provided information
         /// </summary>
         /// <param name="userRegistration">User registration information</param>
-        public void RegisterNewUser(User userRegistration)
+        /// <param name="createAccount"></param>
+        public void RegisterNewUser(User userRegistration, bool createAccount = true)
         {
             _userService.RegisterNewUser(userRegistration);
+
+            if (createAccount)
+            {
+                CreateAccount(userRegistration.Id);
+            }
         }
 
         /// <summary>
@@ -89,6 +96,14 @@ namespace ExpenseManager.Business.Facades
         {
             _accountService.CreateAccount(account);
         }
+        /// <summary>
+        /// Creates account for user with given id
+        /// </summary>
+        public void CreateAccount(int userId)
+        {
+            _accountService.CreateAccount(userId);
+        }
+
         /// <summary>
         /// Deletes account by specified unique id
         /// </summary>
