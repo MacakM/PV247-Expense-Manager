@@ -17,5 +17,10 @@ namespace ExpenseManager.Presentation.Authentication
         /// Gets current account
         /// </summary>
         Account GetCurrentAccount(ClaimsPrincipal principal);
+
+        /// <summary>
+        /// Gets current user
+        /// </summary>
+        User GetCurrentUser(ClaimsPrincipal principal);
     }
 }

@@ -6,6 +6,7 @@ using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Enums;
 using ExpenseManager.Business.Facades;
 using ExpenseManager.Identity.Entities;
+using ExpenseManager.Presentation.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -24,6 +25,7 @@ namespace ExpenseManager.Presentation.Controllers
         private readonly AccountFacade _userFacade;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly ICurrentAccountProvider _currentAccountProvider;
         private readonly ILogger _logger;
 
         /// <summary>
@@ -33,15 +35,18 @@ namespace ExpenseManager.Presentation.Controllers
         /// <param name="userManager"></param>
         /// <param name="signInManager"></param>
         /// <param name="loggerFactory"></param>
+        /// <param name="currentAccountProvider"></param>
         public AccountController(
             AccountFacade userFacade,
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            ILoggerFactory loggerFactory)
+            ILoggerFactory loggerFactory,
+            ICurrentAccountProvider currentAccountProvider)
         {
             _userFacade = userFacade;
             _userManager = userManager;
             _signInManager = signInManager;
+            _currentAccountProvider = currentAccountProvider;
             _logger = loggerFactory.CreateLogger<AccountController>();
         }
 
@@ -178,8 +183,19 @@ namespace ExpenseManager.Presentation.Controllers
         [HttpGet]
         public IActionResult AccessDenied(string returnUrl = null)
         {
+            if (DoesntHaveAccount())
+            {
+                return RedirectToAction("NoAccount", "AccountSettings");
+            }
+
             TempData["ErrorMessage"] = "Access denied";
             return RedirectToAction("Index", "Error");
+        }
+
+        private bool DoesntHaveAccount()
+        {
+            var account = _currentAccountProvider.GetCurrentAccount(HttpContext.User);
+            return account == null;
         }
 
         /// <summary>

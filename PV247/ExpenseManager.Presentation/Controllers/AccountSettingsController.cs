@@ -18,11 +18,11 @@ namespace ExpenseManager.Presentation.Controllers
     /// Controller for displaying account settings
     /// </summary>
     [Authorize]
-    [Authorize(Policy = "HasAccount")]
     public class AccountSettingsController : Controller
     {
         private readonly BalanceFacade _balanceFacade;
         private readonly ICurrentAccountProvider _currentAccountProvider;
+        private readonly AccountFacade _accountFacade;
         private readonly IRuntimeMapper _mapper;
 
         /// <summary>
@@ -31,16 +31,23 @@ namespace ExpenseManager.Presentation.Controllers
         /// <param name="balanceFacade"></param>
         /// <param name="currentAccountProvider"></param>
         /// <param name="mapper"></param>
-        public AccountSettingsController(BalanceFacade balanceFacade, ICurrentAccountProvider currentAccountProvider, Mapper mapper)
+        /// <param name="accountFacade"></param>
+        public AccountSettingsController(
+            BalanceFacade balanceFacade, 
+            ICurrentAccountProvider currentAccountProvider, 
+            Mapper mapper, 
+            AccountFacade accountFacade)
         {
             _balanceFacade = balanceFacade;
             _currentAccountProvider = currentAccountProvider;
+            _accountFacade = accountFacade;
             _mapper = mapper.DefaultContext.Mapper;
         }
 
         /// <summary>
         /// Displays account settings
         /// </summary>
+        [Authorize(Policy = "HasAccount")]
         public IActionResult Index()
         {
             var account = _currentAccountProvider.GetCurrentAccount(HttpContext.User);
@@ -65,6 +72,37 @@ namespace ExpenseManager.Presentation.Controllers
             expenses.AddRange(_balanceFacade.ListItem(filter));
 
             return _mapper.Map<List<IndexPermanentExpenseViewModel>>(expenses);
+        }
+
+        /// <summary>
+        /// Displays view for user which doesn't have account yet
+        /// </summary>
+        public IActionResult NoAccount()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// Creates currently logged-in user new account
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateAccount()
+        {
+            var account = _currentAccountProvider.GetCurrentAccount(HttpContext.User);
+
+            if (account != null)
+            {
+                TempData["ErrorMessage"] = "You already have an account, you can't create new one";
+                return RedirectToAction("Index", "Error");
+            }
+
+            var user = _currentAccountProvider.GetCurrentUser(HttpContext.User);
+            _accountFacade.CreateAccount(user.Id);
+
+            TempData["SuccessMessage"] = "Account successfuly created";
+            return RedirectToAction("Index", "Expense");
         }
     }
 }
