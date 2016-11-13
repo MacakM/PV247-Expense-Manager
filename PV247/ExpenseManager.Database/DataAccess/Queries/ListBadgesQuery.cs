@@ -52,7 +52,7 @@ namespace ExpenseManager.Database.DataAccess.Queries
             {
                 return badges;
             }
-            badges = Filter.OrderByDesc.Value ? badges.OrderByDescending(x => prop.GetValue(x, null)) : badges.OrderBy(x => prop.GetValue(x, null));
+            badges = Filter.OrderByDesc.Value ? QueryOrderByHelper.OrderByDesc(badges, Filter.OrderByPropertyName) : QueryOrderByHelper.OrderBy(badges, Filter.OrderByPropertyName);
             if (Filter.PageNumber != null)
             {
                 badges = badges.Skip(Math.Max(0, Filter.PageNumber.Value - 1) * Filter.PageSize);

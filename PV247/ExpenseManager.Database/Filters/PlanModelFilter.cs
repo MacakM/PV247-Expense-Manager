@@ -39,11 +39,11 @@ namespace ExpenseManager.Database.Filters
         /// <summary>
         /// Left edge of planned money range
         /// </summary>
-        public int? PlannedMoneyFrom { get; set; }
+        public decimal? PlannedMoneyFrom { get; set; }
         /// <summary>
         /// Right edge of planned money range
         /// </summary>
-        public int? PlannedMoneyTo { get; set; }
+        public decimal? PlannedMoneyTo { get; set; }
         /// <summary>
         /// Left edge of deadline range
         /// </summary>
@@ -53,7 +53,15 @@ namespace ExpenseManager.Database.Filters
         /// </summary>
         public DateTime? DeadlineTo { get; set; }
         /// <summary>
-        /// Filters based on completition of plan
+        /// Date when is the plan starts
+        /// </summary>
+        public DateTime? StartFrom { get; set; }
+        /// <summary>
+        /// Date when is the plan starts
+        /// </summary>
+        public DateTime? StartTo { get; set; }
+        /// <summary>
+        /// If plan is completed
         /// </summary>
         public bool? IsCompleted { get; set; }
     }

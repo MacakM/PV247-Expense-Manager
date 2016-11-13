@@ -36,10 +36,22 @@ namespace ExpenseManager.Business.Services.Interfaces
         /// <param name="filter">Filters plans</param>
         /// <returns></returns>
         List<Plan> ListPlans(PlanFilter filter);
+       /// <summary>
+       /// List closeable plans of account
+       /// </summary>
+       /// <param name="accountId"></param>
+       /// <param name="accountBalance"></param>
+       /// <returns></returns>
+        List<Plan> ListAllCloseablePlans(int accountId, decimal accountBalance);
         /// <summary>
-        /// Lists all plans, that can be closed by user
+        /// Transfers plan into cost
         /// </summary>
-        /// <returns>List of plans</returns>
-        List<Plan> ListAllCloseablePlans();
+        /// <param name="plan"></param>
+        void ClosePlan(Plan plan);
+        /// <summary>
+        /// Check all MaxSpent plans and in they at deadline and accomplished set em as completed
+        /// </summary>
+        /// <returns></returns>
+        void CheckAllMaxSpendDeadlines();
     }
 }

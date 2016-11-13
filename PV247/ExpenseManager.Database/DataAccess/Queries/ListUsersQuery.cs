@@ -66,7 +66,7 @@ namespace ExpenseManager.Database.DataAccess.Queries
             {
                 return users;
             }
-            users = Filter.OrderByDesc.Value ? users.OrderByDescending(x => prop.GetValue(x, null)) : users.OrderBy(x => prop.GetValue(x, null));
+            users = Filter.OrderByDesc.Value ? QueryOrderByHelper.OrderByDesc(users, Filter.OrderByPropertyName) : QueryOrderByHelper.OrderBy(users, Filter.OrderByPropertyName);
             if (Filter.PageNumber != null)
             {
                 users = users.Skip(Math.Max(0, Filter.PageNumber.Value - 1) * Filter.PageSize);

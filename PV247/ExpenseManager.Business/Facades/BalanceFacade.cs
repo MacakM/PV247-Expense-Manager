@@ -25,6 +25,7 @@ namespace ExpenseManager.Business.Facades
         /// <param name="costInfoService"></param>
         /// <param name="costTypeService"></param>
         /// <param name="planService"></param>
+        /// <param name="badgeManagerService"></param>
         public BalanceFacade(IAccountBadgeService accountBadgeService, IBadgeService badgeService, ICostInfoService costInfoService, ICostTypeService costTypeService, IPlanService planService, IBadgeManagerService badgeManagerService)
         {
             _accountBadgeService = accountBadgeService;
@@ -37,11 +38,34 @@ namespace ExpenseManager.Business.Facades
         
         #region Business operations
         /// <summary>
-        /// Lists all plans that can be closed by user
+        /// Lists all plans that can be closed by user - MUST BE PLANTYPE.SAVE
         /// </summary>
-        public List<Plan> ListAllCloseablePlans()
+        public List<Plan> ListAllCloseablePlans(int accountId)
         {
-            return _planService.ListAllCloseablePlans();
+            return _planService.ListAllCloseablePlans(accountId, GetBalance(accountId));
+        }
+        /// <summary>
+        /// Check all MaxSpend plans and in they at deadline and accomplished set em as completed
+        /// </summary>
+        /// <returns></returns>
+        public void CheckAllMaxSpendDeadlines()
+        {
+             _planService.CheckAllMaxSpendDeadlines();
+        }
+        /// <summary>
+        /// Returns current balance of account
+        /// </summary>
+        public decimal GetBalance(int accountId)
+        {
+            return _costInfoService.GetBalance(accountId);
+        }
+        /// <summary>
+        /// Plan is marked as closed and is transfered into database as CostInfo - user spent m
+        /// </summary>
+        /// <param name="plan"></param>
+        public void ClosePlan(Plan plan)
+        {
+            _planService.ClosePlan(plan);
         }
         /// <summary>
         /// Checks all account if they can get badge

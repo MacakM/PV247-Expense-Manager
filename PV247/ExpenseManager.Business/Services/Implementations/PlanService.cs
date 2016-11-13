@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using ExpenseManager.Business.DataTransferObjects;
+using ExpenseManager.Business.DataTransferObjects.Enums;
 using ExpenseManager.Business.DataTransferObjects.Filters;
 using ExpenseManager.Business.Infrastructure;
 using ExpenseManager.Business.Services.Interfaces;
+using ExpenseManager.Database.DataAccess.Queries;
+using ExpenseManager.Database.DataAccess.Repositories;
 using ExpenseManager.Database.Entities;
+using ExpenseManager.Database.Enums;
 using ExpenseManager.Database.Filters;
 using ExpenseManager.Database.Infrastructure.Query;
 using ExpenseManager.Database.Infrastructure.Repository;
@@ -19,6 +23,10 @@ namespace ExpenseManager.Business.Services.Implementations
     /// </summary>
     public class PlanService : ExpenseManagerQueryAndCrudServiceBase<PlanModel, int, Plan, PlanModelFilter>, IPlanService
     {
+
+        private readonly CostInfoRepository _costInfoRepository;
+        private readonly ListAccountsQuery _accountsQuery;
+        private readonly ListCostInfosQuery _costInfosQuery;
         /// <summary>
         /// 
         /// </summary>
@@ -27,6 +35,7 @@ namespace ExpenseManager.Business.Services.Implementations
             nameof(PlanModel.Account),
             nameof(PlanModel.PlannedType)
         };
+
         /// <summary>
         /// 
         /// </summary>
@@ -34,9 +43,16 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="repository"></param>
         /// <param name="expenseManagerMapper"></param>
         /// <param name="unitOfWorkProvider"></param>
-        public PlanService(ExpenseManagerQuery<PlanModel, PlanModelFilter> query, ExpenseManagerRepository<PlanModel, int> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
+        /// <param name="costInfoRepository"></param>
+        /// <param name="accountsQuery"></param>
+        /// <param name="costInfosQuery"></param>
+        public PlanService(ExpenseManagerQuery<PlanModel, PlanModelFilter> query, ExpenseManagerRepository<PlanModel, int> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider, CostInfoRepository costInfoRepository, ListAccountsQuery accountsQuery, ListCostInfosQuery costInfosQuery) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
         {
+            _costInfoRepository = costInfoRepository;
+            _accountsQuery = accountsQuery;
+            _costInfosQuery = costInfosQuery;
         }
+
         /// <summary>
         /// Creates new plan in databse
         /// </summary>
@@ -80,15 +96,78 @@ namespace ExpenseManager.Business.Services.Implementations
             Query.Filter = ExpenseManagerMapper.Map<PlanModelFilter>(filter);
             return GetList().ToList();
         }
+   
+        /// <summary>
+        /// Transfers plan into cost
+        /// </summary>
+        /// <param name="plan"></param>
+        public void ClosePlan(Plan plan)
+        {
+            if (plan.PlanType == PlanType.Save)
+            {
+                plan.IsCompleted = true;
+                CloneToCost(plan);
+                Save(plan);
+            } 
+            throw new ArgumentException("PlanType.Save is the right one.");
+        }
+
+        private void CloneToCost(Plan plan)
+        {
+           
+            CostInfoModel costInfo = new CostInfoModel();
+
+            if (plan.PlannedMoney != null) costInfo.Money = plan.PlannedMoney.Value;
+            if (plan.AccountId != null) costInfo.AccountId = plan.AccountId.Value;
+            if (plan.PlannedTypeId != null) costInfo.TypeId = plan.PlannedTypeId.Value;
+            costInfo.Created = DateTime.Now;
+            costInfo.IsIncome = false;
+            costInfo.Description = plan.Description;
+            costInfo.PeriodicMultiplicity = 0;
+            costInfo.Periodicity = PeriodicityModel.None;
+            
+            _costInfoRepository.Insert(costInfo);
+        }
+
         /// <summary>
         /// Lists all plans, that can be closed by user
         /// </summary>
-        /// <returns>List of plans</returns>
-        public List<Plan> ListAllCloseablePlans()
+        /// <param name="accountId"></param>
+        /// <param name="accountBalance"></param>
+        /// <returns></returns>
+        public List<Plan> ListAllCloseablePlans(int accountId, decimal accountBalance)
         {
-            throw new NotImplementedException();
+             Query.Filter = new PlanModelFilter {AccountId = accountId, PlannedMoneyFrom = accountBalance, PlanType = PlanTypeModel.Save, IsCompleted = false};
+            return GetList().ToList();
         }
+        /// <summary>
+        /// Check all MaxSpent plans and in they at deadline and accomplished set em as completed
+        /// </summary>
+        public void CheckAllMaxSpendDeadlines()
+        {
+            
+            var accounts = _accountsQuery.Execute();
+            foreach (var account in accounts) // FOR EACH ACCOUNT 
+            {
+                Query.Filter = new PlanModelFilter {AccountId = account.Id, PlanType = PlanTypeModel.MaxSpend, IsCompleted = false, DeadlineFrom = DateTime.Now};
+                var maxSpendPlans = GetList();
+                foreach (var plan in maxSpendPlans) // CHECK EVERY MAX SPEND PLAN THAT IS NO COMPLETED YET, REACHED ITS DEADLINE
+                {
+                    _costInfosQuery.Filter = new CostInfoModelFilter() // USES EVERY COST OF PLANNED TYPE FROM START TO DEADLINE
+                    {
+                        TypeId = plan.PlannedTypeId,
+                        CreatedFrom = plan.Start,
+                        CreatedTo = plan.Deadline
+                    };
+                    var costInfos = _costInfosQuery.Execute();
+                    if (costInfos.Sum(x => x.Money) <= plan.PlannedMoney)
+                    {
+                        plan.IsCompleted = true;
+                        Save(plan);
+                    }
+                }
 
-     
+            }
+        }
     }
 }

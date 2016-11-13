@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using ExpenseManager.Business.DataTransferObjects.Enums;
 
 namespace ExpenseManager.Business.DataTransferObjects.Filters
@@ -39,11 +40,11 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters
         /// <summary>
         /// Left edge of planned money range
         /// </summary>
-        public int? PlannedMoneyFrom { get; set; }
+        public decimal? PlannedMoneyFrom { get; set; }
         /// <summary>
         /// Right edge of planned money range
         /// </summary>
-        public int? PlannedMoneyTo { get; set; }
+        public decimal PlannedMoneyTo { get; set; }
         /// <summary>
         /// Left edge of deadline range
         /// </summary>
@@ -52,6 +53,15 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters
         /// Right edge of deadline range
         /// </summary>
         public DateTime? DeadlineTo { get; set; }
+        /// <summary>
+        /// Date when is the plan starts
+        /// </summary>
+        public DateTime? StartFrom { get; set; }
+        /// <summary>
+        /// Date when is the plan starts
+        /// </summary>
+        [DataType(DataType.Date)]
+        public DateTime? StartTo { get; set; }
         /// <summary>
         /// Filters based on completition of plan
         /// </summary>

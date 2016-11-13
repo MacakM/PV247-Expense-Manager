@@ -70,6 +70,14 @@ namespace ExpenseManager.Database.DataAccess.Queries
             {
                 plans = plans.Where(plan => plan.Deadline <= Filter.DeadlineTo.Value);
             }
+            if (Filter.StartFrom != null)
+            {
+                plans = plans.Where(plan => plan.Start.Value >= Filter.StartFrom.Value);
+            }
+            if (Filter.StartTo != null)
+            {
+                plans = plans.Where(plan => plan.Start.Value <= Filter.StartTo.Value);
+            }
             if (Filter.PlannedMoneyFrom != null)
             {
                 plans = plans.Where(plan => plan.PlannedMoney >= Filter.PlannedMoneyFrom.Value);
@@ -87,7 +95,7 @@ namespace ExpenseManager.Database.DataAccess.Queries
             {
                 return plans;
             }
-            plans = Filter.OrderByDesc.Value ? plans.OrderByDescending(x => prop.GetValue(x, null)) : plans.OrderBy(x => prop.GetValue(x, null));
+            plans = Filter.OrderByDesc.Value ? QueryOrderByHelper.OrderByDesc(plans, Filter.OrderByPropertyName) : QueryOrderByHelper.OrderBy(plans, Filter.OrderByPropertyName);
             if (Filter.PageNumber != null)
             {
                 plans = plans.Skip(Math.Max(0, Filter.PageNumber.Value - 1) * Filter.PageSize);

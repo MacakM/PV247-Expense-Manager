@@ -45,5 +45,11 @@ namespace ExpenseManager.Business.Services.Interfaces
         /// Used for pagination
         /// </summary>
         int GetCostInfosCount(CostInfoFilter filter);
+        ///<summary>
+        /// Returns balance of aacount
+        /// </summary>
+        /// <param name="accountId"></param>
+        /// <returns></returns>
+        decimal GetBalance(int accountId);
     }
 }

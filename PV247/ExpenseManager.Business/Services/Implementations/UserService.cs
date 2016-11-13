@@ -24,7 +24,7 @@ namespace ExpenseManager.Business.Services.Implementations
     public class UserService : ExpenseManagerQueryAndCrudServiceBase<UserModel, int, User, UserModelFilter>, IUserService
     {
         private readonly UserRepository _userRepository;
-      
+
         /// <summary>
         /// 
         /// </summary>
@@ -32,7 +32,6 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="repository"></param>
         /// <param name="expenseManagerMapper"></param>
         /// <param name="unitOfWorkProvider"></param>
-        /// <param name="userRepository"></param>
         public UserService(ExpenseManagerQuery<UserModel, UserModelFilter> query, ExpenseManagerRepository<UserModel, int> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
         {
             _userRepository = repository as UserRepository;

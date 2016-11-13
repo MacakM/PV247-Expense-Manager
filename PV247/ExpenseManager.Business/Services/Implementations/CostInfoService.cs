@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 using AutoMapper;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Enums;
@@ -44,9 +45,9 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="costTypeRepository"></param>
         /// <param name="accountRepository"></param>
         public CostInfoService(
-            ExpenseManagerQuery<CostInfoModel, CostInfoModelFilter> query, 
-            ExpenseManagerRepository<CostInfoModel, int> repository, 
-            Mapper expenseManagerMapper, 
+            ExpenseManagerQuery<CostInfoModel, CostInfoModelFilter> query,
+            ExpenseManagerRepository<CostInfoModel, int> repository,
+            Mapper expenseManagerMapper,
             IUnitOfWorkProvider unitOfWorkProvider,
             CostTypeRepository costTypeRepository,
             AccountRepository accountRepository) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
@@ -138,11 +139,34 @@ namespace ExpenseManager.Business.Services.Implementations
         /// </summary>
         public void RecomputePeriodicCosts()
         {
-
-           
             CheckDayPeriodicites();
             CheckWeekPeriodicities();
             CheckMonthPeriodicities();
+        }
+        /// <summary>
+        /// Returns current balance of account
+        /// </summary>
+        /// <param name="accountId"></param>
+        /// <returns></returns>
+        public decimal GetBalance(int accountId)
+        {
+            Query.Filter = new CostInfoModelFilter { IsIncome = true, Periodicity = PeriodicityModel.None, CreatedTo = DateTime.Now, AccountId = accountId};
+            var incomes = GetList();
+            Query.Filter = new CostInfoModelFilter { IsIncome = false, Periodicity = PeriodicityModel.None, CreatedTo = DateTime.Now, AccountId = accountId };
+            var outcomes = GetList();
+
+            return incomes.Sum(x =>
+            {
+                if (x.Money != null)
+                {
+                    return x.Money.Value;
+                }
+                return 0;
+            }) - outcomes.Sum(x =>
+            {
+                if (x.Money != null) { return x.Money.Value; }
+                return 0;
+            });
         }
 
         private void CheckMonthPeriodicities()
@@ -157,11 +181,11 @@ namespace ExpenseManager.Business.Services.Implementations
                 if (monthPeriodicity.Created != null)
                 {
                     var created = monthPeriodicity.Created.Value;
-                    if (created.AddMonths(monthPeriodicity.PeriodicMultiplicity) >= DateTime.Today)
+                    if (created <= DateTime.Today) // I look if today is later then next creating time
                     {
-                        monthPeriodicity.Created = DateTime.Now;
-                        Save(monthPeriodicity);
                         Save(CloneAsNonPeriodic(monthPeriodicity));
+                        monthPeriodicity.Created = DateTime.Now.AddMonths(monthPeriodicity.PeriodicMultiplicity);
+                        Save(monthPeriodicity);
                     }
                 }
             }
@@ -179,11 +203,11 @@ namespace ExpenseManager.Business.Services.Implementations
                 if (weekPeriodicityCost.Created != null)
                 {
                     var created = weekPeriodicityCost.Created.Value;
-                    if (created.AddDays(7*weekPeriodicityCost.PeriodicMultiplicity) >= DateTime.Today) // Week usually has 7 days
+                    if (created <= DateTime.Today) // Week usually has 7 days  // I look if today is later then next creating time
                     {
-                        weekPeriodicityCost.Created = DateTime.Now;
-                        Save(weekPeriodicityCost);
                         Save(CloneAsNonPeriodic(weekPeriodicityCost));
+                        weekPeriodicityCost.Created = DateTime.Now.AddDays(7 * weekPeriodicityCost.PeriodicMultiplicity);
+                        Save(weekPeriodicityCost);
                     }
                 }
             }
@@ -191,7 +215,7 @@ namespace ExpenseManager.Business.Services.Implementations
 
         private void CheckDayPeriodicites()
         {
-            CostInfoFilter filter = new CostInfoFilter {Periodicity = Periodicity.Day};
+            CostInfoFilter filter = new CostInfoFilter { Periodicity = Periodicity.Day };
 
             Query.Filter = ExpenseManagerMapper.Map<CostInfoModelFilter>(filter);
             var dayPeriodicityCosts = GetList().ToList();
@@ -201,11 +225,11 @@ namespace ExpenseManager.Business.Services.Implementations
                 if (dayPeriodicityCost.Created != null)
                 {
                     var created = dayPeriodicityCost.Created.Value;
-                    if (created.AddDays(dayPeriodicityCost.PeriodicMultiplicity) >= DateTime.Today)
+                    if (created <= DateTime.Today)  // I look if today is later then next creating time
                     {
-                        dayPeriodicityCost.Created = DateTime.Now;
-                        Save(dayPeriodicityCost);
                         Save(CloneAsNonPeriodic(dayPeriodicityCost));
+                        dayPeriodicityCost.Created = DateTime.Now.AddDays(dayPeriodicityCost.PeriodicMultiplicity);
+                        Save(dayPeriodicityCost);
                     }
                 }
             }

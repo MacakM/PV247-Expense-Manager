@@ -33,7 +33,7 @@ namespace ExpenseManager.Business.DataTransferObjects
         /// How much money is desired to achieve this plan.
         /// </summary>
         [Required]
-        public int? PlannedMoney { get; set; }
+        public decimal? PlannedMoney { get; set; }
         /// <summary>
         /// Planned type id
         /// </summary>
@@ -46,11 +46,15 @@ namespace ExpenseManager.Business.DataTransferObjects
         /// <summary>
         /// Date when is the deadline of the plan.
         /// </summary>
-        [Required]
         public DateTime? Deadline { get; set; }
+        /// <summary>
+        /// Date when is the plan starts
+        /// </summary>
+        public DateTime? Start { get; set; }
         /// <summary>
         /// States whether this plan is achieved.
         /// </summary>
+        /// 
         public bool IsCompleted { get; set; }
         /// <summary>
         /// Makes string representation of object based on its properties
