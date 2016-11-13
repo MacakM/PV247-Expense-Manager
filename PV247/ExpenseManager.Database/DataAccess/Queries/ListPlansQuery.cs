@@ -70,6 +70,14 @@ namespace ExpenseManager.Database.DataAccess.Queries
             {
                 plans = plans.Where(plan => plan.Deadline <= Filter.DeadlineTo.Value);
             }
+            if (Filter.StartFrom != null)
+            {
+                plans = plans.Where(plan => plan.Start.Value >= Filter.StartFrom.Value);
+            }
+            if (Filter.StartTo != null)
+            {
+                plans = plans.Where(plan => plan.Start.Value <= Filter.StartTo.Value);
+            }
             if (Filter.PlannedMoneyFrom != null)
             {
                 plans = plans.Where(plan => plan.PlannedMoney >= Filter.PlannedMoneyFrom.Value);

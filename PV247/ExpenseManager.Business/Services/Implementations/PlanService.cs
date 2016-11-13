@@ -25,8 +25,8 @@ namespace ExpenseManager.Business.Services.Implementations
     {
 
         private readonly CostInfoRepository _costInfoRepository;
-        private readonly ListCostTypesQuery _costTypesQuery;
-        private readonly CostTypeRepository _costTypeRepository;
+        private readonly ListAccountsQuery _accountsQuery;
+        private readonly ListCostInfosQuery _costInfosQuery;
         /// <summary>
         /// 
         /// </summary>
@@ -35,6 +35,7 @@ namespace ExpenseManager.Business.Services.Implementations
             nameof(PlanModel.Account),
             nameof(PlanModel.PlannedType)
         };
+
         /// <summary>
         /// 
         /// </summary>
@@ -42,11 +43,14 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="repository"></param>
         /// <param name="expenseManagerMapper"></param>
         /// <param name="unitOfWorkProvider"></param>
-        public PlanService(ExpenseManagerQuery<PlanModel, PlanModelFilter> query, ExpenseManagerRepository<PlanModel, int> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider, CostInfoRepository costInfoRepository, CostTypeRepository costTypeRepository, ListCostTypesQuery costTypesQuery) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
+        /// <param name="costInfoRepository"></param>
+        /// <param name="accountsQuery"></param>
+        /// <param name="costInfosQuery"></param>
+        public PlanService(ExpenseManagerQuery<PlanModel, PlanModelFilter> query, ExpenseManagerRepository<PlanModel, int> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider, CostInfoRepository costInfoRepository, ListAccountsQuery accountsQuery, ListCostInfosQuery costInfosQuery) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
         {
             _costInfoRepository = costInfoRepository;
-            _costTypeRepository = costTypeRepository;
-            _costTypesQuery = costTypesQuery;
+            _accountsQuery = accountsQuery;
+            _costInfosQuery = costInfosQuery;
         }
 
         /// <summary>
@@ -110,16 +114,11 @@ namespace ExpenseManager.Business.Services.Implementations
         private void CloneToCost(Plan plan)
         {
 
-            CostTypeModel costType = new CostTypeModel();
-            costType.Name = plan.Description;
-            _costTypeRepository.Insert(costType);
-            _costTypesQuery.Filter = new CostTypeModelFilter() {Name = plan.Description, DoExactMatch = true};
-            var type = _costTypesQuery.Execute().Single();
 
             CostInfoModel costInfo = new CostInfoModel();
             if (plan.PlannedMoney != null) costInfo.Money = plan.PlannedMoney.Value;
             if (plan.AccountId != null) costInfo.AccountId = plan.AccountId.Value;
-            costInfo.TypeId = type.Id;
+            if (plan.PlannedTypeId != null) costInfo.TypeId = plan.PlannedTypeId.Value;
             costInfo.Created = DateTime.Now;
             costInfo.IsIncome = false;
             costInfo.Description = plan.Description;
@@ -146,6 +145,28 @@ namespace ExpenseManager.Business.Services.Implementations
         public void CheckAllMaxSpendDeadlines()
         {
             
+            var accounts = _accountsQuery.Execute();
+            foreach (var account in accounts) // FOR EACH ACCOUNT 
+            {
+                Query.Filter = new PlanModelFilter {AccountId = account.Id, PlanType = PlanTypeModel.MaxSpend, IsCompleted = false, DeadlineFrom = DateTime.Now};
+                var maxSpendPlans = GetList();
+                foreach (var plan in maxSpendPlans) // CHECK EVERY MAX SPEND PLAN THAT IS NO COMPLETED YET, REACHED ITS DEADLINE
+                {
+                    _costInfosQuery.Filter = new CostInfoModelFilter() // USES EVERY COST OF PLANNED TYPE FROM START TO DEADLINE
+                    {
+                        TypeId = plan.PlannedTypeId,
+                        CreatedFrom = plan.Start,
+                        CreatedTo = plan.Deadline
+                    };
+                    var costInfos = _costInfosQuery.Execute();
+                    if (costInfos.Sum(x => x.Money) <= plan.PlannedMoney)
+                    {
+                        plan.IsCompleted = true;
+                        Save(plan);
+                    }
+                }
+
+            }
         }
     }
 }

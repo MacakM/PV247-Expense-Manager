@@ -48,6 +48,11 @@ namespace ExpenseManager.Database.Entities
         [DataType(DataType.Date)]
         public DateTime? Deadline { get; set; }
         /// <summary>
+        /// Date when is the plan starts
+        /// </summary>
+        [DataType(DataType.Date)]
+        public DateTime? Start { get; set; }
+        /// <summary>
         /// States whether this plan is achieved.
         /// </summary>
         public bool IsCompleted { get; set; }

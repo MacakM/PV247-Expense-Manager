@@ -53,7 +53,15 @@ namespace ExpenseManager.Database.Filters
         /// </summary>
         public DateTime? DeadlineTo { get; set; }
         /// <summary>
-        /// Filters based on completition of plan
+        /// Date when is the plan starts
+        /// </summary>
+        public DateTime? StartFrom { get; set; }
+        /// <summary>
+        /// Date when is the plan starts
+        /// </summary>
+        public DateTime? StartTo { get; set; }
+        /// <summary>
+        /// If plan is completed
         /// </summary>
         public bool? IsCompleted { get; set; }
     }
