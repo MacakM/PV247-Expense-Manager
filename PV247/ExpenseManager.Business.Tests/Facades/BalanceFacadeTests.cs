@@ -116,7 +116,7 @@ namespace ExpenseManager.Business.Tests.Facades
         /// </summary>
         [TestMethod]
         public void CreateBadgeTest()
-        {
+        { 
             _balanceFacade.CreateBadge(new Badge
             {
                 Name = "Organizer",
