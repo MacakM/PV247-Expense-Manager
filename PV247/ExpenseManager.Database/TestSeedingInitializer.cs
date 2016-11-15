@@ -12,13 +12,13 @@ namespace ExpenseManager.Database
     /// <summary>
     /// Initializer
     /// </summary>
-    internal class TestSeedingInitializer : IDatabaseInitializer<ExpenseDbContext>
+    internal class TestSeedingInitializer : DropCreateDatabaseAlways<ExpenseDbContext>
     {
         /// <summary>
         /// Initialize database
         /// </summary>
         /// <param name="context">context</param>
-        public void InitializeDatabase(ExpenseDbContext context)
+        public override void InitializeDatabase(ExpenseDbContext context)
         {
             Seed(context);
         }
@@ -27,9 +27,18 @@ namespace ExpenseManager.Database
         /// Seed
         /// </summary>
         /// <param name="context">context</param>
-        protected void Seed(ExpenseDbContext context)
+        protected override void Seed(ExpenseDbContext context)
         {
             TruncateDB(context);
+            
+            var badge2 = new BadgeModel()
+            {
+                Name = "Officer",
+                BadgeImgUri = "mmm",
+                Description = "Buy donuts"
+            };
+
+            context.Badges.Add(badge2);
 
             var badge = new BadgeModel()
             {
@@ -39,15 +48,6 @@ namespace ExpenseManager.Database
             };
 
             context.Badges.Add(badge);
-
-            var badge2 = new BadgeModel()
-            {
-                Name = "Officer",
-                BadgeImgUri = "mmm",
-                Description = "Buy donuts"
-            };
-
-            context.Badges.Add(badge2);
 
             var account = new AccountModel()
             {
