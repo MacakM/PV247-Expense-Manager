@@ -139,7 +139,7 @@ namespace ExpenseManager.Business.Tests.Facades
         [TestMethod]
         public void DeleteBadgeTest()
         {
-            _balanceFacade.DeleteBadge(85);
+            _balanceFacade.DeleteBadge(2);
             using (var db = new ExpenseDbContext())
             {
                 var myBadge = db.Badges.FirstOrDefault(model => model.Name.Equals("Survivor"));
@@ -154,7 +154,7 @@ namespace ExpenseManager.Business.Tests.Facades
         {
             _balanceFacade.UpdateBadge(new Badge
             {
-                Id = 45,
+                Id = 3,
                 Name = "Officer",
                 Description = "Buy 5 donuts",
                 BadgeImgUri = "mmm"
@@ -162,7 +162,7 @@ namespace ExpenseManager.Business.Tests.Facades
 
             using (var db = new ExpenseDbContext())
             {
-                var myBadge = db.Badges.Find(45);
+                var myBadge = db.Badges.Find(3);
                 Assert.IsTrue(myBadge.Description == "Buy 5 donuts", "Badge was not updated successfuly");
             }
         }

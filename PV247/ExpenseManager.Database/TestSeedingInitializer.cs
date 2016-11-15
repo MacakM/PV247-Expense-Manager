@@ -33,7 +33,6 @@ namespace ExpenseManager.Database
 
             var badge = new BadgeModel()
             {
-                Id = 85,
                 Name = "Survivor",
                 BadgeImgUri = "hmm",
                 Description = "I will survive"
@@ -43,7 +42,6 @@ namespace ExpenseManager.Database
 
             var badge2 = new BadgeModel()
             {
-                Id = 45,
                 Name = "Officer",
                 BadgeImgUri = "mmm",
                 Description = "Buy donuts"
