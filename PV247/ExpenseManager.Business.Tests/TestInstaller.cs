@@ -34,10 +34,10 @@ namespace ExpenseManager.Business.Tests
     public class TestInstaller : IWindsorInstaller
     {
         /// <summary>
-        /// Instal dependencies
+        /// Configure dependencies for BL
         /// </summary>
-        /// <param name="container">container</param>
-        /// <param name="store">store</param>
+        /// <param name="container">The IoC container</param>
+        /// <param name="store">Provides a contract to obtain external configuration</param>
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
             var config = new MapperConfiguration(cfg =>
@@ -56,16 +56,18 @@ namespace ExpenseManager.Business.Tests
                     .LifestyleTransient(),
 
                 Component.For<IOptions<ConnectionOptions>>()
-                .Instance(new OptionsWrapper<ConnectionOptions>(new ConnectionOptions{ConnectionString =
-                            "Server=(localdb)\\mssqllocaldb;Database=ExpenseManagerDB;Trusted_Connection=True;MultipleActiveResultSets=true"}))
+                    .Instance(new OptionsWrapper<ConnectionOptions>(
+                        new ConnectionOptions
+                        {
+                            ConnectionString = "Server=(localdb)\\mssqllocaldb;Database=ExpenseManagerDB;Trusted_Connection=True;MultipleActiveResultSets=true"
+                        }))
                     .LifestyleSingleton(),
 
                 Component.For<Mapper>()
                     .Instance(mapper as Mapper)
                     .LifestyleSingleton(),
                 
-
-            Component.For<BalanceFacade>()
+                Component.For<BalanceFacade>()
                     .LifestyleTransient(),
 
                 Component.For<IUnitOfWorkProvider>()
@@ -76,112 +78,18 @@ namespace ExpenseManager.Business.Tests
                     .Instance(new HttpContextUnitOfWorkRegistry(new ThreadLocalUnitOfWorkRegistry()))
                     .LifestyleSingleton(),
 
-                /*Component.For(typeof(IRepository<,>))
-                    .ImplementedBy(typeof(ExpenseManagerRepository<,>))
+                Classes.FromAssemblyContaining<ExpenseManagerUnitOfWork>()
+                    .BasedOn(typeof(ExpenseManagerRepository<,>))
                     .LifestyleTransient(),
 
-                // repositories
-                Component.For(typeof(IRepository<,>))
-                    .ImplementedBy(typeof(ExpenseManagerRepository<,>))
+                Classes.FromAssemblyContaining<ExpenseManagerUnitOfWork>()
+                    .BasedOn(typeof(ExpenseManagerQuery<,>)).WithService.Base()
                     .LifestyleTransient(),
-                */
-                Component.For(typeof(ExpenseManagerRepository<BadgeModel, int>))
-                    .ImplementedBy(typeof(BadgeRepository))
-                    .LifestyleTransient(),
-                Component.For(typeof(ExpenseManagerRepository<CostTypeModel, int>))
-                    .ImplementedBy(typeof(CostTypeRepository))
-                    .LifestyleTransient(),
-                Component.For(typeof(ExpenseManagerRepository<PlanModel, int>))
-                    .ImplementedBy(typeof(PlanRepository))
-                    .LifestyleTransient(),
-                Component.For(typeof(ExpenseManagerRepository<UserModel, int>))
-                    .ImplementedBy(typeof(UserRepository))
-                    .LifestyleTransient(),
-                Component.For(typeof(ExpenseManagerRepository<AccountBadgeModel, int>))
-                    .ImplementedBy(typeof(AccountBadgeRepository))
-                    .LifestyleTransient(),
-                Component.For(typeof(ExpenseManagerRepository<AccountModel, int>))
-                    .ImplementedBy(typeof(AccountRepository))
-                    .LifestyleTransient(),
-                Component.For(typeof(ExpenseManagerRepository<CostInfoModel, int>))
-                    .ImplementedBy(typeof(CostInfoRepository))
-                    .LifestyleTransient(),
-                    
-                // query objects
-                Component.For(typeof(ExpenseManagerQuery<AccountBadgeModel, AccountBadgeModelFilter>))
-                    .ImplementedBy(typeof(ListAccountBadgesQuery))
-                    .LifestyleTransient(),
-                Component.For(typeof(ExpenseManagerQuery<AccountModel, AccountModelFilter>))
-                    .ImplementedBy(typeof(ListAccountsQuery))
-                    .LifestyleTransient(),
-                Component.For(typeof(ExpenseManagerQuery<BadgeModel, BadgeModelFilter>))
-                    .ImplementedBy(typeof(ListBadgesQuery))
-                    .LifestyleTransient(),
-                Component.For(typeof(ExpenseManagerQuery<CostInfoModel, CostInfoModelFilter>))
-                    .ImplementedBy(typeof(ListCostInfosQuery))
-                    .LifestyleTransient(),
-                Component.For(typeof(ExpenseManagerQuery<CostTypeModel, CostTypeModelFilter>))
-                    .ImplementedBy(typeof(ListCostTypesQuery))
-                    .LifestyleTransient(),
-                Component.For(typeof(ExpenseManagerQuery<PlanModel, PlanModelFilter>))
-                    .ImplementedBy(typeof(ListPlansQuery))
-                    .LifestyleTransient(),
-                Component.For(typeof(ExpenseManagerQuery<UserModel, UserModelFilter>))
-                    .ImplementedBy(typeof(ListUsersQuery))
-                    .LifestyleTransient(),
-
-                //services
+ 
                 Classes.FromAssemblyContaining<IService>()
                     .BasedOn<IService>()
                     .WithServiceDefaultInterfaces()
                     .LifestyleTransient()
-
-
-                /*Component.For(typeof(ExpenseManagerQueryAndCrudServiceBase<AccountBadgeModel, int, AccountBadge, AccountBadgeModelFilter>))
-                    .ImplementedBy(typeof(AccountBadgeService))
-                    .LifestyleTransient(),
-                Component.For<IAccountBadgeService>()
-                    .ImplementedBy(typeof(AccountBadgeService))
-                    .LifestyleTransient(),
-                Component.For(typeof(ExpenseManagerQueryAndCrudServiceBase<AccountModel, int, Account, AccountModelFilter>))
-                    .ImplementedBy(typeof(AccountService))
-                    .LifestyleTransient(),
-                Component.For<IAccountService>()
-                    .ImplementedBy(typeof(AccountService))
-                    .LifestyleTransient(),
-                Component.For(typeof(ExpenseManagerQueryAndCrudServiceBase<BadgeModel, int, Badge, BadgeModelFilter>))
-                    .ImplementedBy(typeof(BadgeService))
-                    .LifestyleTransient(),
-                Component.For<IBadgeService>()
-                    .ImplementedBy(typeof(BadgeService))
-                    .LifestyleTransient(),
-                Component.For(typeof(ExpenseManagerQueryAndCrudServiceBase<CostInfoModel, int, CostInfo, CostInfoModelFilter>))
-                    .ImplementedBy(typeof(CostInfoService))
-                    .LifestyleTransient(),
-                Component.For<ICostInfoService>()
-                    .ImplementedBy(typeof(CostInfoService))
-                    .LifestyleTransient(),
-                Component.For(typeof(ExpenseManagerQueryAndCrudServiceBase<CostTypeModel, int, CostType, CostTypeModelFilter>))
-                    .ImplementedBy(typeof(CostTypeService))
-                    .LifestyleTransient(),
-                Component.For<ICostTypeService>()
-                    .ImplementedBy(typeof(CostTypeService))
-                    .LifestyleTransient(),
-                Component.For(typeof(ExpenseManagerQueryAndCrudServiceBase<PlanModel, int, Plan, PlanModelFilter>))
-                    .ImplementedBy(typeof(PlanService))
-                    .LifestyleTransient(),
-                Component.For<IPlanService>()
-                    .ImplementedBy(typeof(PlanService))
-                    .LifestyleTransient(),
-                Component.For(typeof(ExpenseManagerQueryAndCrudServiceBase<UserModel, int, User, UserModelFilter>))
-                    .ImplementedBy(typeof(UserService))
-                    .LifestyleTransient(),
-                Component.For<IUserService>()
-                    .ImplementedBy(typeof(UserService))
-                    .LifestyleTransient(),
-                Component.For<IBadgeManagerService>()
-                    .ImplementedBy(typeof(BadgeManagerService))
-                    .LifestyleTransient()*/
             );
         }
     }
