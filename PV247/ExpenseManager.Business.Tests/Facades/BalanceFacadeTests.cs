@@ -172,7 +172,7 @@ namespace ExpenseManager.Business.Tests.Facades
         [TestMethod]
         public void GetBadgeTest()
         {
-            var badge = _balanceFacade.GetBadge(45);
+            var badge = _balanceFacade.GetBadge(3);
             Assert.IsTrue(
                 badge.Name.Equals("Officer") && badge.Description.Equals("Buy donuts") &&
                 badge.BadgeImgUri.Equals("mmm"), "Badge was not get successfuly");

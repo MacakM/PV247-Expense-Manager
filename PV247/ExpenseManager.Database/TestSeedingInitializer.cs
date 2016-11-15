@@ -12,13 +12,13 @@ namespace ExpenseManager.Database
     /// <summary>
     /// Initializer
     /// </summary>
-    internal class TestSeedingInitializer : DropCreateDatabaseAlways<ExpenseDbContext>
+    internal class TestSeedingInitializer : IDatabaseInitializer<ExpenseDbContext>
     {
         /// <summary>
         /// Initialize database
         /// </summary>
         /// <param name="context">context</param>
-        public override void InitializeDatabase(ExpenseDbContext context)
+        public void InitializeDatabase(ExpenseDbContext context)
         {
             Seed(context);
         }
@@ -27,7 +27,7 @@ namespace ExpenseManager.Database
         /// Seed
         /// </summary>
         /// <param name="context">context</param>
-        protected override void Seed(ExpenseDbContext context)
+        protected void Seed(ExpenseDbContext context)
         {
             TruncateDB(context);
 
@@ -151,6 +151,7 @@ namespace ExpenseManager.Database
             DeleteAll<CostTypeModel>(context);
             DeleteAll<UserModel>(context);
             DeleteAll<AccountModel>(context);
+            DeleteAll<BadgeModel>(context);
         }
 
         public static void DeleteAll<T>(DbContext context) where T : class
