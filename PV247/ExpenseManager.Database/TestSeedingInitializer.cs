@@ -9,14 +9,24 @@ using ExpenseManager.Database.Enums;
 
 namespace ExpenseManager.Database
 {
-    class TestSeedingInitializer : IDatabaseInitializer<ExpenseDbContext>
+    /// <summary>
+    /// Initializer
+    /// </summary>
+    internal class TestSeedingInitializer : IDatabaseInitializer<ExpenseDbContext>
     {
-
+        /// <summary>
+        /// Initialize database
+        /// </summary>
+        /// <param name="context">context</param>
         public void InitializeDatabase(ExpenseDbContext context)
         {
             Seed(context);
         }
 
+        /// <summary>
+        /// Seed
+        /// </summary>
+        /// <param name="context">context</param>
         protected void Seed(ExpenseDbContext context)
         {
             TruncateDB(context);

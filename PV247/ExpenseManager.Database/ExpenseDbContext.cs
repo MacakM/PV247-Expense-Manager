@@ -9,6 +9,7 @@ namespace ExpenseManager.Database
     {
         public ExpenseDbContext() : base("ExpenseManagerDB")
         {
+            System.Data.Entity.Database.SetInitializer(new TestSeedingInitializer());
         }
 
         public ExpenseDbContext(string nameOrConnectionString) : base(nameOrConnectionString) { }
