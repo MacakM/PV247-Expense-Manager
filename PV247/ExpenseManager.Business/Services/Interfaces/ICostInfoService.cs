@@ -7,7 +7,7 @@ namespace ExpenseManager.Business.Services.Interfaces
     /// <summary>
     /// Service handles cost info entity operations
     /// </summary>
-    public interface ICostInfoService
+    public interface ICostInfoService : IService
     {
         /// <summary>
         /// Creates new cost info object in databse

@@ -22,8 +22,8 @@ namespace ExpenseManager.Business.Services.Implementations
     /// </summary>
     public class CostInfoService : ExpenseManagerQueryAndCrudServiceBase<CostInfoModel, int, CostInfo, CostInfoModelFilter>, ICostInfoService
     {
-        private readonly CostTypeRepository _costTypeRepository;
-        private readonly AccountRepository _accountRepository;
+        private readonly ExpenseManagerRepository<CostTypeModel, int> _costTypeRepository;
+        private readonly ExpenseManagerRepository<AccountModel, int> _accountRepository;
 
         /// <summary>
         /// 
@@ -48,8 +48,8 @@ namespace ExpenseManager.Business.Services.Implementations
             ExpenseManagerRepository<CostInfoModel, int> repository, 
             Mapper expenseManagerMapper, 
             IUnitOfWorkProvider unitOfWorkProvider,
-            CostTypeRepository costTypeRepository,
-            AccountRepository accountRepository) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
+            ExpenseManagerRepository<CostTypeModel, int> costTypeRepository,
+            ExpenseManagerRepository<AccountModel, int> accountRepository) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
         {
             _costTypeRepository = costTypeRepository;
             _accountRepository = accountRepository;

@@ -4,12 +4,14 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.Facades;
 using ExpenseManager.Business.Infrastructure;
+using ExpenseManager.Business.Infrastructure.Mapping.Profiles;
 using ExpenseManager.Business.Services.Implementations;
 using ExpenseManager.Business.Services.Interfaces;
 using ExpenseManager.Database;
@@ -17,9 +19,11 @@ using ExpenseManager.Database.DataAccess.Queries;
 using ExpenseManager.Database.DataAccess.Repositories;
 using ExpenseManager.Database.Entities;
 using ExpenseManager.Database.Filters;
+using ExpenseManager.Database.Infrastructure.ConnectionConfiguration;
 using ExpenseManager.Database.Infrastructure.Query;
 using ExpenseManager.Database.Infrastructure.Repository;
 using ExpenseManager.Database.Infrastructure.UnitOfWork;
+using Microsoft.Extensions.Options;
 using Riganti.Utils.Infrastructure.Core;
 
 namespace ExpenseManager.Business.Tests
@@ -36,6 +40,13 @@ namespace ExpenseManager.Business.Tests
         /// <param name="store">store</param>
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile<DatabaseToBusinessStandardMapping>();
+            });
+            var mapper = config.CreateMapper();
+
+
             container.Register(
                 Component.For<Func<DbContext>>()
                     .Instance(() => new ExpenseDbContext())
@@ -44,7 +55,17 @@ namespace ExpenseManager.Business.Tests
                 Component.For<AccountFacade>()
                     .LifestyleTransient(),
 
-                Component.For<BalanceFacade>()
+                Component.For<IOptions<ConnectionOptions>>()
+                .Instance(new OptionsWrapper<ConnectionOptions>(new ConnectionOptions{ConnectionString =
+                            "Server=(localdb)\\mssqllocaldb;Database=ExpenseManagerDB;Trusted_Connection=True;MultipleActiveResultSets=true"}))
+                    .LifestyleSingleton(),
+
+                Component.For<Mapper>()
+                    .Instance(mapper as Mapper)
+                    .LifestyleSingleton(),
+                
+
+            Component.For<BalanceFacade>()
                     .LifestyleTransient(),
 
                 Component.For<IUnitOfWorkProvider>()
@@ -55,12 +76,17 @@ namespace ExpenseManager.Business.Tests
                     .Instance(new HttpContextUnitOfWorkRegistry(new ThreadLocalUnitOfWorkRegistry()))
                     .LifestyleSingleton(),
 
-                Component.For(typeof(IRepository<,>))
+                /*Component.For(typeof(IRepository<,>))
                     .ImplementedBy(typeof(ExpenseManagerRepository<,>))
                     .LifestyleTransient(),
 
                 // repositories
-                Component.For(typeof(ExpenseManagerRepository<BadgeModel, int>)).ImplementedBy(typeof(BadgeRepository))
+                Component.For(typeof(IRepository<,>))
+                    .ImplementedBy(typeof(ExpenseManagerRepository<,>))
+                    .LifestyleTransient(),
+                */
+                Component.For(typeof(ExpenseManagerRepository<BadgeModel, int>))
+                    .ImplementedBy(typeof(BadgeRepository))
                     .LifestyleTransient(),
                 Component.For(typeof(ExpenseManagerRepository<CostTypeModel, int>))
                     .ImplementedBy(typeof(CostTypeRepository))
@@ -80,7 +106,7 @@ namespace ExpenseManager.Business.Tests
                 Component.For(typeof(ExpenseManagerRepository<CostInfoModel, int>))
                     .ImplementedBy(typeof(CostInfoRepository))
                     .LifestyleTransient(),
-
+                    
                 // query objects
                 Component.For(typeof(ExpenseManagerQuery<AccountBadgeModel, AccountBadgeModelFilter>))
                     .ImplementedBy(typeof(ListAccountBadgesQuery))
@@ -103,9 +129,15 @@ namespace ExpenseManager.Business.Tests
                 Component.For(typeof(ExpenseManagerQuery<UserModel, UserModelFilter>))
                     .ImplementedBy(typeof(ListUsersQuery))
                     .LifestyleTransient(),
-                
+
                 //services
-                Component.For(typeof(ExpenseManagerQueryAndCrudServiceBase<AccountBadgeModel, int, AccountBadge, AccountBadgeModelFilter>))
+                Classes.FromAssemblyContaining<IService>()
+                    .BasedOn<IService>()
+                    .WithServiceDefaultInterfaces()
+                    .LifestyleTransient()
+
+
+                /*Component.For(typeof(ExpenseManagerQueryAndCrudServiceBase<AccountBadgeModel, int, AccountBadge, AccountBadgeModelFilter>))
                     .ImplementedBy(typeof(AccountBadgeService))
                     .LifestyleTransient(),
                 Component.For<IAccountBadgeService>()
@@ -149,7 +181,7 @@ namespace ExpenseManager.Business.Tests
                     .LifestyleTransient(),
                 Component.For<IBadgeManagerService>()
                     .ImplementedBy(typeof(BadgeManagerService))
-                    .LifestyleTransient()
+                    .LifestyleTransient()*/
             );
         }
     }

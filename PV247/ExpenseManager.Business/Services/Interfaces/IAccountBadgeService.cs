@@ -7,7 +7,7 @@ namespace ExpenseManager.Business.Services.Interfaces
     /// <summary>
     /// Service handles AccountBadge entity operations
     /// </summary>
-    public interface IAccountBadgeService
+    public interface IAccountBadgeService : IService
     {
         /// <summary>
         /// Add new badge to account by creating new AccountBadge object in database

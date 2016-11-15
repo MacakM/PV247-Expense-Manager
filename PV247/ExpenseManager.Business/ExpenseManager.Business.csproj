@@ -98,6 +98,7 @@
     <Compile Include="Services\Interfaces\ICostInfoService.cs" />
     <Compile Include="Services\Interfaces\ICostTypeService.cs" />
     <Compile Include="Services\Interfaces\IPlanService.cs" />
+    <Compile Include="Services\Interfaces\IService.cs" />
     <Compile Include="Services\Interfaces\IUserService.cs" />
     <Compile Include="Services\Implementations\PlanService.cs" />
     <Compile Include="Services\Implementations\UserService.cs" />

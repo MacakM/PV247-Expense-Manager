@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Castle.MicroKernel.Lifestyle;
 using Castle.Windsor;
 using ExpenseManager.Business.DataTransferObjects;
@@ -24,6 +25,8 @@ namespace ExpenseManager.Business.Tests.Facades
         [TestMethod]
         public void ListAllCloseablePlans()
         {
+            _balanceFacade.CreateBadge(new Badge() {Accounts = new List<AccountBadge>(), BadgeImgUri = "somePicture", Description = "Expense Manager badge", Name = "Penny Pincher"});
+
             throw new AssertFailedException();
         }
         [TestMethod]

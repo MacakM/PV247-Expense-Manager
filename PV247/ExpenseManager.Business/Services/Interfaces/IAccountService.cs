@@ -7,7 +7,7 @@ namespace ExpenseManager.Business.Services.Interfaces
     /// <summary>
     /// Service handles Account entity operations
     /// </summary>
-    public interface IAccountService
+    public interface IAccountService : IService
     {
         /// <summary>
         /// Creates new account
