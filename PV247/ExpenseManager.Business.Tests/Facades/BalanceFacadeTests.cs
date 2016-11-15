@@ -3,6 +3,7 @@ using System.Linq;
 using Castle.MicroKernel.Lifestyle;
 using Castle.Windsor;
 using ExpenseManager.Business.DataTransferObjects;
+using ExpenseManager.Business.DataTransferObjects.Filters;
 using ExpenseManager.Business.Facades;
 using ExpenseManager.Business.Services.Implementations;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -26,7 +27,7 @@ namespace ExpenseManager.Business.Tests.Facades
         public void ListAllCloseablePlans()
         {
             _balanceFacade.CreateBadge(new Badge() {Accounts = new List<AccountBadge>(), BadgeImgUri = "somePicture", Description = "Expense Manager badge", Name = "Penny Pincher"});
-
+            var x = _balanceFacade.ListBages(new BadgeFilter());
             throw new AssertFailedException();
         }
         [TestMethod]
