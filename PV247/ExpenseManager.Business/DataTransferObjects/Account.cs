@@ -62,7 +62,7 @@ namespace ExpenseManager.Business.DataTransferObjects
         /// <returns>This object hashcode</returns>
         public override int GetHashCode()
         {
-            return (Name != null ? Name.GetHashCode() : 0);
+            return Name?.GetHashCode() ?? 0;
         }
     }
 }

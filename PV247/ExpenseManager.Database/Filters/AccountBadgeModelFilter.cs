@@ -38,7 +38,6 @@ namespace ExpenseManager.Database.Filters
         /// Right edge of achieved time range
         /// </summary>
         public DateTime? AchievedTo { get; set; }
-
         /// <summary>
         /// Filters given query
         /// </summary>

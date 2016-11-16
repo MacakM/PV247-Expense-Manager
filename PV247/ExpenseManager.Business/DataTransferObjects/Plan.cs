@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 using ExpenseManager.Business.DataTransferObjects.Enums;
 
 
@@ -13,7 +12,6 @@ namespace ExpenseManager.Business.DataTransferObjects
         /// <summary>
         /// Account Id.
         /// </summary>
-        [Required]
         public int? AccountId { get; set; }
         /// <summary>
         /// Name of plans account
@@ -22,23 +20,19 @@ namespace ExpenseManager.Business.DataTransferObjects
         /// <summary>
         /// Description of the plan.
         /// </summary>
-        [MaxLength(256)]
         public string Description { get; set; }
         /// <summary>
         /// Type of this plan.
         /// </summary>
-        [Required]
-        public PlanType? PlanType { get; set; }
+        public PlanType PlanType { get; set; }
         /// <summary>
         /// How much money is desired to achieve this plan.
         /// </summary>
-        [Required]
-        public decimal? PlannedMoney { get; set; }
+        public decimal PlannedMoney { get; set; }
         /// <summary>
         /// Planned type id
         /// </summary>
-        [Required]
-        public int? PlannedTypeId { get; set; }
+        public int PlannedTypeId { get; set; }
         /// <summary>
         /// Plan type name.
         /// </summary>
@@ -54,7 +48,6 @@ namespace ExpenseManager.Business.DataTransferObjects
         /// <summary>
         /// States whether this plan is achieved.
         /// </summary>
-        /// 
         public bool IsCompleted { get; set; }
         /// <summary>
         /// Makes string representation of object based on its properties

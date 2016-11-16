@@ -117,9 +117,9 @@ namespace ExpenseManager.Business.Services.Implementations
            
             CostInfoModel costInfo = new CostInfoModel();
 
-            if (plan.PlannedMoney != null) costInfo.Money = plan.PlannedMoney.Value;
+            costInfo.Money = plan.PlannedMoney;
             if (plan.AccountId != null) costInfo.AccountId = plan.AccountId.Value;
-            if (plan.PlannedTypeId != null) costInfo.TypeId = plan.PlannedTypeId.Value;
+            costInfo.TypeId = plan.PlannedTypeId;
             costInfo.Created = DateTime.Now;
             costInfo.IsIncome = false;
             costInfo.Description = plan.Description;

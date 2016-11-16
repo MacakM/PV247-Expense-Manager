@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+
 namespace ExpenseManager.Business.DataTransferObjects
 {
     /// <summary>
@@ -10,19 +10,14 @@ namespace ExpenseManager.Business.DataTransferObjects
         /// <summary>
         /// Description how achieve this badge.
         /// </summary>
-        [MaxLength(256)]
-        [Required]
         public string Description { get; set; }
         /// <summary>
         /// Badge image uri.
         /// </summary>
-        [MaxLength(1024)]
-        [Required]
         public string BadgeImgUri { get; set; }
         /// <summary>
         /// Name of Badge
         /// </summary>
-        [Required]
         public string Name { get; set; }
         /// <summary>
         /// List of Accounts where badge is assigned

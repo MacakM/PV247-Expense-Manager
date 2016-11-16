@@ -18,7 +18,6 @@ namespace ExpenseManager.Database.Filters
         /// Determines if Equals() or Contains() should be used when matching string parameters
         /// </summary>
         public bool DoExactMatch { get; set; }
-
         /// <summary>
         /// Filters given query
         /// </summary>

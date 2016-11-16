@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace ExpenseManager.Business.DataTransferObjects
 {
@@ -11,7 +10,6 @@ namespace ExpenseManager.Business.DataTransferObjects
         /// <summary>
         /// Name of this type.
         /// </summary>
-        [MaxLength(128)]
         public string Name { get; set; }
         /// <summary>
         /// All costs of this type.

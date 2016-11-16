@@ -20,7 +20,7 @@ namespace ExpenseManager.Database.DataAccess.Queries
         /// <summary>
         /// Return IQueryable.
         /// </summary>
-        /// <returns>IQueryable</returns>D:\FI\3. Semestr\PV247\PV247\ExpenseManager.Database\DataAccess\Queries\ListPlansQuery.cs
+        /// <returns>IQueryable</returns>
         protected override IQueryable<PlanModel> GetQueryable()
         {
             IQueryable<PlanModel> plans = Context.Plans.Include(nameof(PlanModel.Account)).Include(nameof(PlanModel.PlannedType));

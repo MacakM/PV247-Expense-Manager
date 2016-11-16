@@ -40,7 +40,7 @@ namespace ExpenseManager.Presentation.Authentication
                 throw new InvalidOperationException("Logged-in user doesn't exists in expensemanagerDB");
             }
 
-            return !user.AccountId.HasValue ? null : _accountFacade.GetAccount(user.AccountId.Value);
+            return _accountFacade.GetAccount(user.AccountId);
         }
 
         /// <inheritdoc />

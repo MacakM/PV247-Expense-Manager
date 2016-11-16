@@ -155,18 +155,7 @@ namespace ExpenseManager.Business.Services.Implementations
             Query.Filter = new CostInfoModelFilter { IsIncome = false, Periodicity = PeriodicityModel.None, CreatedTo = DateTime.Now, AccountId = accountId };
             var outcomes = GetList();
 
-            return incomes.Sum(x =>
-            {
-                if (x.Money != null)
-                {
-                    return x.Money.Value;
-                }
-                return 0;
-            }) - outcomes.Sum(x =>
-            {
-                if (x.Money != null) { return x.Money.Value; }
-                return 0;
-            });
+            return incomes.Sum(x =>  x.Money) - outcomes.Sum(x => x.Money);
         }
 
         private void CheckMonthPeriodicities()

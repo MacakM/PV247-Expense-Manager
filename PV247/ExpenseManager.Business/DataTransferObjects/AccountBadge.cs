@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace ExpenseManager.Business.DataTransferObjects
 {
@@ -11,8 +10,7 @@ namespace ExpenseManager.Business.DataTransferObjects
         /// <summary>
         /// Account Id.
         /// </summary>
-        [Required]
-        public int? AccountId { get; set; }
+        public int AccountId { get; set; }
         /// <summary>
         /// Name of account
         /// </summary>
@@ -20,22 +18,18 @@ namespace ExpenseManager.Business.DataTransferObjects
         /// <summary>
         /// Badge id.
         /// </summary>
-        [Required]
-        public int? BadgeId { get; set; }
+        public int BadgeId { get; set; }
         /// <summary>
         /// Description of badge
         /// </summary>
-        [MaxLength(256)]
         public string BadgeDescription { get; set; }
         /// <summary>
         /// Badge image uri.
         /// </summary>
-        [MaxLength(1024)]
         public string BadgeImgUri { get; set; }
         /// <summary>
         /// Date when the badge was achieved.
         /// </summary>
-        [Required]
         public DateTime? Achieved { get; set; }
         /// <summary>
         /// Makes string representation of object based on its properties

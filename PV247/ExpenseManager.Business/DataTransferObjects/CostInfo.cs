@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 using ExpenseManager.Business.DataTransferObjects.Enums;
 
 namespace ExpenseManager.Business.DataTransferObjects
@@ -16,8 +15,7 @@ namespace ExpenseManager.Business.DataTransferObjects
         /// <summary>
         /// How much money has changed.
         /// </summary>
-        [Required]
-        public decimal? Money { get; set; }
+        public decimal Money { get; set; }
         /// <summary>
         /// More concrete description of the cost
         /// </summary>
@@ -25,7 +23,6 @@ namespace ExpenseManager.Business.DataTransferObjects
         /// <summary>
         /// Account id.
         /// </summary>
-        [Required]
         public int AccountId { get; set; }
         /// <summary>
         /// Account whom this cost belongs.
@@ -34,12 +31,10 @@ namespace ExpenseManager.Business.DataTransferObjects
         /// <summary>
         /// Date when the cost info was created.
         /// </summary>
-        [Required]
         public DateTime? Created { get; set; }
         /// <summary>
         /// Type id.
         /// </summary>
-        [Required]
         public int TypeId { get; set; }
         /// <summary>
         /// Type of the cost.
@@ -48,7 +43,7 @@ namespace ExpenseManager.Business.DataTransferObjects
         /// <summary>
         /// Periodicity of cost
         /// </summary>
-        public Periodicity? Periodicity { get; set; }
+        public Periodicity Periodicity { get; set; }
         /// <summary>
         /// Mulptiplies periodicity
         /// </summary>

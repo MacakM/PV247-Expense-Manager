@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using ExpenseManager.Business.DataTransferObjects.Enums;
+﻿using ExpenseManager.Business.DataTransferObjects.Enums;
 
 namespace ExpenseManager.Business.DataTransferObjects
 {
@@ -11,17 +10,15 @@ namespace ExpenseManager.Business.DataTransferObjects
         /// <summary>
         /// Name of the user.
         /// </summary>
-        [Required]
         public string Name { get; set; }
         /// <summary>
         /// Email of the user.
         /// </summary>
-        [Required]
         public string Email { get; set; }
         /// <summary>
         /// Account Id.
         /// </summary>
-        public int? AccountId { get; set; }
+        public int AccountId { get; set; }
         /// <summary>
         /// Name of users account
         /// </summary>
@@ -29,7 +26,6 @@ namespace ExpenseManager.Business.DataTransferObjects
         /// <summary>
         /// Access type of the user.
         /// </summary>
-        [Required]
         public AccountAccessType? AccessType { get; set; }
         /// <summary>
         /// Makes string representation of object based on its properties
