@@ -48,6 +48,7 @@ namespace ExpenseManager.Presentation.Authentication
         {
             var applicationUser = GetCurrentApplicationUser(principal);
             return _accountFacade.GetCurrentlySignedUser(applicationUser.Email, true);
+         
         }
 
         private ApplicationUser GetCurrentApplicationUser(ClaimsPrincipal principal)

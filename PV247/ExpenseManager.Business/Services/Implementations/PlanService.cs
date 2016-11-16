@@ -21,7 +21,7 @@ namespace ExpenseManager.Business.Services.Implementations
     /// <summary>
     /// Service handles plan entity operations
     /// </summary>
-    public class PlanService : ExpenseManagerQueryAndCrudServiceBase<PlanModel, int, Plan, PlanModelFilter>, IPlanService
+    public class PlanService : ExpenseManagerQueryAndCrudServiceBase<PlanModel, int, Plan>, IPlanService
     {
 
         private readonly CostInfoRepository _costInfoRepository;
@@ -46,7 +46,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="costInfoRepository"></param>
         /// <param name="accountsQuery"></param>
         /// <param name="costInfosQuery"></param>
-        public PlanService(ExpenseManagerQuery<PlanModel, PlanModelFilter> query, ExpenseManagerRepository<PlanModel, int> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider, CostInfoRepository costInfoRepository, ListAccountsQuery accountsQuery, ListCostInfosQuery costInfosQuery) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
+        public PlanService(ExpenseManagerQuery<PlanModel> query, ExpenseManagerRepository<PlanModel, int> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider, CostInfoRepository costInfoRepository, ListAccountsQuery accountsQuery, ListCostInfosQuery costInfosQuery) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
         {
             _costInfoRepository = costInfoRepository;
             _accountsQuery = accountsQuery;

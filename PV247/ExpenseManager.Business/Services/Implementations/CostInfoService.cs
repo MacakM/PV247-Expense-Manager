@@ -21,7 +21,7 @@ namespace ExpenseManager.Business.Services.Implementations
     /// <summary>
     /// Service handles AccountBadge entity operations
     /// </summary>
-    public class CostInfoService : ExpenseManagerQueryAndCrudServiceBase<CostInfoModel, int, CostInfo, CostInfoModelFilter>, ICostInfoService
+    public class CostInfoService : ExpenseManagerQueryAndCrudServiceBase<CostInfoModel, int, CostInfo>, ICostInfoService
     {
         private readonly CostTypeRepository _costTypeRepository;
         private readonly AccountRepository _accountRepository;
@@ -45,7 +45,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="costTypeRepository"></param>
         /// <param name="accountRepository"></param>
         public CostInfoService(
-            ExpenseManagerQuery<CostInfoModel, CostInfoModelFilter> query,
+            ExpenseManagerQuery<CostInfoModel> query,
             ExpenseManagerRepository<CostInfoModel, int> repository,
             Mapper expenseManagerMapper,
             IUnitOfWorkProvider unitOfWorkProvider,

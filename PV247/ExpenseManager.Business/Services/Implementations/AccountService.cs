@@ -20,7 +20,7 @@ namespace ExpenseManager.Business.Services.Implementations
     /// <summary>
     /// Service handles Account entity operations
     /// </summary>
-    public class AccountService : ExpenseManagerQueryAndCrudServiceBase<AccountModel, int, Account, AccountModelFilter>, IAccountService
+    public class AccountService : ExpenseManagerQueryAndCrudServiceBase<AccountModel, int, Account>, IAccountService
     {
         private readonly UserRepository _userRepository;
 
@@ -33,8 +33,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="unitOfWorkProvider"></param>
         /// <param name="userRepository"></param>
         public AccountService(
-            ExpenseManagerQuery<AccountModel, 
-                AccountModelFilter> query, 
+            ExpenseManagerQuery<AccountModel> query, 
             ExpenseManagerRepository<AccountModel, int> repository, 
             Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider,
             UserRepository userRepository) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)

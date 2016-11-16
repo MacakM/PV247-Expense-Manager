@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Linq;
+using ExpenseManager.Database.DataAccess.Queries;
+using ExpenseManager.Database.Entities;
 using ExpenseManager.Database.Enums;
 
 namespace ExpenseManager.Database.Filters
@@ -6,7 +9,7 @@ namespace ExpenseManager.Database.Filters
     /// <summary>
     /// Filter userd in queries in order to get cost infos with specifies parameters
     /// </summary>
-    public class CostInfoModelFilter : FilterModelBase
+    public class CostInfoModelFilter : FilterModelBase<CostInfoModel>
     {
         /// <summary>
         /// Filter of income if false, do not filter if is null
@@ -60,5 +63,80 @@ namespace ExpenseManager.Database.Filters
         /// Mulptiplies periodicity
         /// </summary>
         public int? PeriodicMultiplicityTo { get; set; }
+
+        /// <summary>
+        /// Filters given query
+        /// </summary>
+        /// <param name="queryable">Query to be filtered</param>
+        public override IQueryable<CostInfoModel> FilterQuery(IQueryable<CostInfoModel> queryable)
+        {
+            if (!string.IsNullOrEmpty(AccountName))
+            {
+                queryable = DoExactMatch ? queryable.Where(costInfo => costInfo.Account.Name.Equals(AccountName)) : queryable.Where(costInfo => costInfo.Account.Name.Contains(AccountName));
+            }
+            if (!string.IsNullOrEmpty(TypeName))
+            {
+                queryable = DoExactMatch ? queryable.Where(costInfo => costInfo.Type.Name.Equals(TypeName)) : queryable.Where(costInfo => costInfo.Type.Name.Contains(TypeName));
+            }
+            if (AccountId != null)
+            {
+                queryable = queryable.Where(costInfo => costInfo.AccountId == AccountId.Value);
+            }
+            if (IsIncome != null)
+            {
+                queryable = queryable.Where(costInfo => costInfo.IsIncome == IsIncome.Value);
+            }
+            if (Periodicity != null)
+            {
+                queryable = queryable.Where(costInfo => costInfo.Periodicity == Periodicity.Value);
+            }
+            if (PeriodicMultiplicityFrom != null)
+            {
+                queryable =
+                    queryable.Where(
+                        costInfo => costInfo.PeriodicMultiplicity.Value >= PeriodicMultiplicityFrom.Value);
+            }
+            if (PeriodicMultiplicityTo != null)
+            {
+                queryable =
+                    queryable.Where(
+                        costInfo => costInfo.PeriodicMultiplicity.Value <= PeriodicMultiplicityTo.Value);
+            }
+            if (TypeId != null)
+            {
+                queryable = queryable.Where(costInfo => costInfo.TypeId == TypeId.Value);
+            }
+            if (CreatedFrom != null)
+            {
+                queryable = queryable.Where(costInfo => costInfo.Created >= CreatedFrom.Value);
+            }
+            if (CreatedTo != null)
+            {
+                queryable = queryable.Where(costInfo => costInfo.Created <= CreatedTo.Value);
+            }
+            if (MoneyFrom != null)
+            {
+                queryable = queryable.Where(costInfo => costInfo.Money >= MoneyFrom.Value);
+            }
+            if (MoneyTo != null)
+            {
+                queryable = queryable.Where(costInfo => costInfo.Money <= MoneyTo.Value);
+            }
+            if (OrderByDesc == null || string.IsNullOrEmpty(OrderByPropertyName))
+            {
+                return queryable;
+            }
+            System.Reflection.PropertyInfo prop = typeof(CostInfoModel).GetProperty(OrderByPropertyName);
+            if (prop == null)
+            {
+                return queryable;
+            }
+            queryable = OrderByDesc.Value ? QueryOrderByHelper.OrderByDesc(queryable, OrderByPropertyName) : QueryOrderByHelper.OrderBy(queryable, OrderByPropertyName);
+            if (PageNumber != null)
+            {
+                queryable = queryable.Skip(Math.Max(0, PageNumber.Value - 1) * PageSize);
+            }
+            return queryable.Take(PageSize);
+        }
     }
 }

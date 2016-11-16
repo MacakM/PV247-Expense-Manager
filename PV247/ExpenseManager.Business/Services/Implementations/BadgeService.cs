@@ -17,7 +17,7 @@ namespace ExpenseManager.Business.Services.Implementations
     /// <summary>
     /// Service handles Badge entity operations
     /// </summary>
-    public class BadgeService : ExpenseManagerQueryAndCrudServiceBase<BadgeModel, int, Badge, BadgeModelFilter>, IBadgeService
+    public class BadgeService : ExpenseManagerQueryAndCrudServiceBase<BadgeModel, int, Badge>, IBadgeService
     {
         /// <summary>
         /// 
@@ -33,7 +33,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="repository"></param>
         /// <param name="expenseManagerMapper"></param>
         /// <param name="unitOfWorkProvider"></param>
-        public BadgeService(ExpenseManagerQuery<BadgeModel, BadgeModelFilter> query, ExpenseManagerRepository<BadgeModel, int> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
+        public BadgeService(ExpenseManagerQuery<BadgeModel> query, ExpenseManagerRepository<BadgeModel, int> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
         {
         }
         /// <summary>

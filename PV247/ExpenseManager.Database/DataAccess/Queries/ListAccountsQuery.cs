@@ -1,7 +1,5 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using ExpenseManager.Database.Entities;
-using ExpenseManager.Database.Filters;
 using ExpenseManager.Database.Infrastructure.Query;
 using Riganti.Utils.Infrastructure.Core;
 
@@ -10,7 +8,7 @@ namespace ExpenseManager.Database.DataAccess.Queries
     /// <summary>
     /// Implementation of Query for accounts.
     /// </summary>
-    public class ListAccountsQuery : ExpenseManagerQuery<AccountModel, AccountModelFilter>
+    public class ListAccountsQuery : ExpenseManagerQuery<AccountModel>
     {
         /// <summary>
         /// Create query.
@@ -20,10 +18,6 @@ namespace ExpenseManager.Database.DataAccess.Queries
         {
         }
         /// <summary>
-        /// Account filter
-        /// </summary>
-        public override AccountModelFilter Filter { get; set; }
-        /// <summary>
         /// Return IQueryable.
         /// </summary>
         /// <returns>IQueryable</returns>
@@ -31,29 +25,7 @@ namespace ExpenseManager.Database.DataAccess.Queries
         {
             IQueryable<AccountModel> accounts = Context.Accounts;
 
-            if (Filter == null)
-            {
-                return accounts;
-            }
-            if (!string.IsNullOrEmpty(Filter.Name))
-            {
-                accounts = Filter.DoExactMatch ? accounts.Where(account => account.Name.Equals(Filter.Name)) : accounts.Where(account => account.Name.Contains(Filter.Name));
-            }
-            if (Filter.OrderByDesc == null || string.IsNullOrEmpty(Filter.OrderByPropertyName))
-            {
-                return accounts;
-            }
-            System.Reflection.PropertyInfo prop = typeof(AccountModel).GetProperty(Filter.OrderByPropertyName);
-            if (prop == null)
-            {
-                return accounts;
-            }
-            accounts = Filter.OrderByDesc.Value ? QueryOrderByHelper.OrderByDesc(accounts, Filter.OrderByPropertyName) : QueryOrderByHelper.OrderBy(accounts, Filter.OrderByPropertyName);
-            if (Filter.PageNumber != null)
-            {
-                accounts = accounts.Skip(Math.Max(0, Filter.PageNumber.Value - 1) * Filter.PageSize);
-            }
-            return accounts.Take(Filter.PageSize);
+            return Filter == null ? accounts : Filter.FilterQuery(accounts);
         }
     }
 }
