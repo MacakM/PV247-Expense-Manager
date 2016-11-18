@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Filters;
@@ -144,7 +145,7 @@ namespace ExpenseManager.Business.Tests.Facades
         [Test]
         public void DeleteBadgeTest()
         {
-            int id;
+            Guid id;
             using (var db = new ExpenseDbContext(Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
             {
                 id = db.Badges.Max(b => b.Id);
@@ -173,7 +174,7 @@ namespace ExpenseManager.Business.Tests.Facades
         [Test]
         public void UpdateBadgeTest()
         {
-            int id;
+            Guid id;
             using (var db = new ExpenseDbContext(Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
             {
                 id = db.Badges.Min(b => b.Id);
@@ -198,7 +199,7 @@ namespace ExpenseManager.Business.Tests.Facades
         [Test]
         public void GetBadgeTest()
         {
-            int id;
+            Guid id;
             using (var db = new ExpenseDbContext(Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
             {
                 id = db.Badges.Min(b => b.Id);

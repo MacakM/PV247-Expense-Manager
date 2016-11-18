@@ -97,9 +97,9 @@ namespace ExpenseManager.Business.Facades
         /// Creates new account
         /// </summary>
         /// <param name="account"></param>
-        public void CreateAccount(Account account)
+        public Guid CreateAccount(Account account)
         {
-            _accountService.CreateAccount(account);
+            return _accountService.CreateAccount(account);
         }
         /// <summary>
         /// Creates account for user with given id

@@ -64,7 +64,7 @@ namespace ExpenseManager.Business.Tests
                     .LifestyleTransient(),
 
                 Classes.FromAssemblyContaining<ExpenseManagerUnitOfWork>()
-                    .BasedOn(typeof(ExpenseManagerQuery<,>)).WithService.Base()
+                    .BasedOn(typeof(ExpenseManagerQuery<>)).WithService.Base()
                     .LifestyleTransient(),
  
                 Classes.FromAssemblyContaining<IService>()

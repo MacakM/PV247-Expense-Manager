@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
+using System.Collections.Generic;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.Facades;
 using ExpenseManager.Database;
@@ -9,6 +9,9 @@ using Assert = NUnit.Framework.Assert;
 
 namespace ExpenseManager.Business.Tests.Facades
 {
+    /// <summary>
+    /// Integration tests for account facade.
+    /// </summary>
     [TestFixture]
     public class AccountFacadeTests
     {
@@ -30,19 +33,18 @@ namespace ExpenseManager.Business.Tests.Facades
         public void CreateAccount_NewAccount_CreatesAccount()
         {
             // Arrange
-            const string accountName = "ExpenseManagerAccount01";
             var account = new Account
             {
                 Badges = new List<AccountBadge>(),
                 Costs = new List<CostInfo>(),
-                Name = accountName
+                Name = "ExpenseManagerAccount01"
             };
 
             // Act
-            _accountFacade.CreateAccount(account);
+            var createdAccountId = _accountFacade.CreateAccount(account);
 
             // Assert
-            var createdAccount = GetAccountByName(accountName);
+            var createdAccount = GetAccountById(createdAccountId);
             Assert.That(createdAccount != null, "Account was not created.");
         }
 
@@ -50,31 +52,34 @@ namespace ExpenseManager.Business.Tests.Facades
         public void UpdateAccount_ExistingAccount_UpdatesAccountName()
         {
             // Arrange
-            const string accountName1 = "ExpenseManagerAccount01";
             const string accountName2 = "ExpenseManagerAccount02";
+            Guid accountId;      
+            var accountEntity = new AccountModel
+            {
+                Badges = new List<AccountBadgeModel>(),
+                Costs = new List<CostInfoModel>(),
+                Name = "ExpenseManagerAccount01"
+            };
+            using (var dbContext = new ExpenseDbContext(Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
+            {
+                dbContext.Accounts.Add(accountEntity);
+                dbContext.SaveChanges();
+                accountId = accountEntity.Id;
+            }
             var editedAccount = new Account
             {
+                Id = accountId,
                 Badges = new List<AccountBadge>(),
                 Costs = new List<CostInfo>(),
                 Name = accountName2
             };
-            using (var dbContext = new ExpenseDbContext(Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
-            {
-                dbContext.Accounts.Add(new AccountModel
-                {
-                    Badges = new List<AccountBadgeModel>(),
-                    Costs = new List<CostInfoModel>(),
-                    Name = accountName1
-                });
-                dbContext.SaveChanges();
-            }
 
             // Act
             _accountFacade.UpdateAccount(editedAccount);
 
             // Assert
-            var updatedAccount = GetAccountByName(accountName2);
-            Assert.That(updatedAccount != null, "Account name was not updated.");
+            var updatedAccount = GetAccountById(accountId);
+            Assert.That(updatedAccount.Name.Equals(accountName2), "Account name was not updated.");
         }
 
         /*
@@ -125,11 +130,11 @@ namespace ExpenseManager.Business.Tests.Facades
         }
         */
 
-        private static AccountModel GetAccountByName(string accountName)
+        private static AccountModel GetAccountById(Guid accountId)
         {
             using (var dbContext = new ExpenseDbContext(Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
             {
-                return dbContext.Accounts.FirstOrDefault(accountEntity => accountEntity.Name.Equals(accountName));
+                return dbContext.Accounts.Find(accountId);
             }
         }
     }

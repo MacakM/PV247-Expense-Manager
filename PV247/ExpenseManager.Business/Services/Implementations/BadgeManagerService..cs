@@ -17,11 +17,11 @@ namespace ExpenseManager.Business.Services.Implementations
     public class BadgeManagerService : IBadgeManagerService
     {
 
-        private readonly ExpenseManagerRepository<AccountBadgeModel, int> _accountBadgeRepository;
-        private readonly ExpenseManagerQuery<BadgeModel, BadgeModelFilter> _badgesQuery;
-        private readonly ExpenseManagerQuery<AccountModel, AccountModelFilter> _accountsQuery;
+        private readonly ExpenseManagerRepository<AccountBadgeModel, Guid> _accountBadgeRepository;
+        private readonly ExpenseManagerQuery<BadgeModel> _badgesQuery;
+        private readonly ExpenseManagerQuery<AccountModel> _accountsQuery;
        
-        public BadgeManagerService(ExpenseManagerQuery<AccountModel, AccountModelFilter> accountsQuery, ExpenseManagerRepository<AccountBadgeModel, int> accountBadgeRepository, ExpenseManagerQuery<BadgeModel, BadgeModelFilter> badgesQuery)
+        public BadgeManagerService(ExpenseManagerQuery<AccountModel> accountsQuery, ExpenseManagerRepository<AccountBadgeModel, Guid> accountBadgeRepository, ExpenseManagerQuery<BadgeModel> badgesQuery)
         {
             _accountsQuery = accountsQuery;
             _accountBadgeRepository = accountBadgeRepository;
