@@ -5,6 +5,9 @@ using ExpenseManager.Business.Services.Interfaces;
 using ExpenseManager.Database.DataAccess.Queries;
 using ExpenseManager.Database.DataAccess.Repositories;
 using ExpenseManager.Database.Entities;
+using ExpenseManager.Database.Filters;
+using ExpenseManager.Database.Infrastructure.Query;
+using ExpenseManager.Database.Infrastructure.Repository;
 
 namespace ExpenseManager.Business.Services.Implementations
 {
@@ -14,11 +17,11 @@ namespace ExpenseManager.Business.Services.Implementations
     public class BadgeManagerService : IBadgeManagerService
     {
 
-        private readonly AccountBadgeRepository _accountBadgeRepository;
-        private readonly ListBadgesQuery _badgesQuery;
-        private readonly ListAccountsQuery _accountsQuery;
+        private readonly ExpenseManagerRepository<AccountBadgeModel, int> _accountBadgeRepository;
+        private readonly ExpenseManagerQuery<BadgeModel, BadgeModelFilter> _badgesQuery;
+        private readonly ExpenseManagerQuery<AccountModel, AccountModelFilter> _accountsQuery;
        
-        public BadgeManagerService(ListAccountsQuery accountsQuery, AccountBadgeRepository accountBadgeRepository, ListBadgesQuery badgesQuery)
+        public BadgeManagerService(ExpenseManagerQuery<AccountModel, AccountModelFilter> accountsQuery, ExpenseManagerRepository<AccountBadgeModel, int> accountBadgeRepository, ExpenseManagerQuery<BadgeModel, BadgeModelFilter> badgesQuery)
         {
             _accountsQuery = accountsQuery;
             _accountBadgeRepository = accountBadgeRepository;

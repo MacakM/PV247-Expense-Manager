@@ -9,7 +9,7 @@ namespace ExpenseManager.Business.Services.Interfaces
     /// <summary>
     /// Service handles cost type entity operations
     /// </summary>
-    public interface ICostTypeService
+    public interface ICostTypeService : IService
     {
         /// <summary>
         /// Creaates new cost type
