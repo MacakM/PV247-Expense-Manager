@@ -1,12 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.Data.Common;
 using System.Linq;
-using Castle.Windsor;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.Facades;
 using ExpenseManager.Database;
 using ExpenseManager.Database.Entities;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NUnit.Framework;
 using Assert = NUnit.Framework.Assert;
 
@@ -15,16 +12,7 @@ namespace ExpenseManager.Business.Tests.Facades
     [TestFixture]
     public class AccountFacadeTests
     {
-        private AccountFacade _accountFacade;
-
-        /// <summary>
-        /// Initializes dependencies before every test
-        /// </summary>
-        [SetUp]
-        public void InitializeTestClass()
-        {
-            _accountFacade = GlobalTestInitializer.Container.Resolve<AccountFacade>();
-        }
+        private readonly AccountFacade _accountFacade = GlobalTestInitializer.Container.Resolve<AccountFacade>();
 
         /// <summary>
         /// Performs db cleanup after every test
