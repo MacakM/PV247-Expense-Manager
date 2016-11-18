@@ -16,7 +16,7 @@ namespace ExpenseManager.Business.Services.Interfaces
         /// Registers user according to provided information
         /// </summary>
         /// <param name="userRegistration">User registration information</param>
-        void RegisterNewUser(User userRegistration);
+        Guid RegisterNewUser(User userRegistration);
         /// <summary>
         /// Updates existing user according to provided information
         /// </summary>
@@ -47,11 +47,11 @@ namespace ExpenseManager.Business.Services.Interfaces
         /// </summary>
         /// <param name="userId">Unique user identifier</param>
         /// <returns>One user with id == userId</returns>
-        User GetUser(int userId);
+        User GetUser(Guid userId);
         /// <summary>
         /// Delete user specified by userId
         /// </summary>
         /// <param name="userId">Unique user identifier</param>
-        void DeleteUser(int userId);
+        void DeleteUser(Guid userId);
     }
 }

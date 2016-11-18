@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Enums;
 using ExpenseManager.Business.DataTransferObjects.Filters;
@@ -14,7 +15,7 @@ namespace ExpenseManager.Business.Services.Interfaces
         /// Creates new account
         /// </summary>
         /// <param name="account"></param>
-        void CreateAccount(Account account);
+        Guid CreateAccount(Account account);
         /// <summary>
         /// Updates existing account
         /// </summary>
@@ -24,13 +25,13 @@ namespace ExpenseManager.Business.Services.Interfaces
         /// Deletes account by specified unique id
         /// </summary>
         /// <param name="accountId"></param>
-        void DeleteAccount(int accountId);
+        void DeleteAccount(Guid accountId);
         /// <summary>
         /// Get account specified by id
         /// </summary>
         /// <param name="accountId"></param>
         /// <returns></returns>
-        Account GetAccount(int accountId);
+        Account GetAccount(Guid accountId);
         /// <summary>
         /// List filtered accounts
         /// </summary>
@@ -40,7 +41,7 @@ namespace ExpenseManager.Business.Services.Interfaces
         /// <summary>
         /// Creates account for user with given id
         /// </summary>
-        void CreateAccount(int userId);
+        Guid CreateAccount(Guid userId);
 
         /// <summary>
         /// Attaches account with given ID to user with given access type
@@ -48,6 +49,6 @@ namespace ExpenseManager.Business.Services.Interfaces
         /// <param name="userId"></param>
         /// <param name="accountId"></param>
         /// <param name="accessType"></param>
-        void AttachAccountToUser(int userId, int accountId, AccountAccessType accessType);
+        void AttachAccountToUser(Guid userId, Guid accountId, AccountAccessType accessType);
     }
 }

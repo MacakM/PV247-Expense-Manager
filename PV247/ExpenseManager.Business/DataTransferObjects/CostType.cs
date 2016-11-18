@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace ExpenseManager.Business.DataTransferObjects
 {
     /// <summary>
     /// Business layer representation of CostTypeModel object
     /// </summary>
-    public class CostType : BusinessObject<int>
+    public class CostType : BusinessObject<Guid>
     {
         /// <summary>
         /// Name of this type.

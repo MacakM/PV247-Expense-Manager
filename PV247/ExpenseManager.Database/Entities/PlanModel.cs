@@ -9,16 +9,17 @@ namespace ExpenseManager.Database.Entities
     /// <summary>
     /// Represents plan.
     /// </summary>
-    public class PlanModel : IEntity<int>
+    public class PlanModel : IEntity<Guid>
     {
         /// <summary>
         /// Id of the plan.
         /// </summary>
-        public int Id { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid Id { get; set; }
         /// <summary>
         /// Id of the account that created this plan.
         /// </summary>
-        public int AccountId { get; set; }
+        public Guid AccountId { get; set; }
         /// <summary>
         /// Account that created this plan.
         /// </summary>

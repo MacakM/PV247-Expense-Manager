@@ -5,12 +5,12 @@ namespace ExpenseManager.Business.DataTransferObjects
     /// <summary>
     /// Business layer representation of AccountBadgeModel object
     /// </summary>
-    public class AccountBadge : BusinessObject<int>
+    public class AccountBadge : BusinessObject<Guid>
     {
         /// <summary>
         /// Account Id.
         /// </summary>
-        public int AccountId { get; set; }
+        public Guid AccountId { get; set; }
         /// <summary>
         /// Name of account
         /// </summary>
@@ -18,7 +18,7 @@ namespace ExpenseManager.Business.DataTransferObjects
         /// <summary>
         /// Badge id.
         /// </summary>
-        public int BadgeId { get; set; }
+        public Guid BadgeId { get; set; }
         /// <summary>
         /// Description of badge
         /// </summary>

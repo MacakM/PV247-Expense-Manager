@@ -8,16 +8,17 @@ namespace ExpenseManager.Database.Entities
     /// <summary>
     /// Represents table of achieved badges by users.
     /// </summary>
-    public class AccountBadgeModel : IEntity<int>
+    public class AccountBadgeModel : IEntity<Guid>
     {
         /// <summary>
         /// Id of the achievement of user.
         /// </summary>
-        public int Id { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid Id { get; set; }
         /// <summary>
         /// Account Id.
         /// </summary>
-        public int AccountId { get; set; }
+        public Guid AccountId { get; set; }
         /// <summary>
         /// Account.
         /// </summary>
@@ -27,7 +28,7 @@ namespace ExpenseManager.Database.Entities
         /// <summary>
         /// Badge id.
         /// </summary>
-        public int BadgeId { get; set; }
+        public Guid BadgeId { get; set; }
         /// <summary>
         /// Badge that is achieved by user.
         /// </summary>

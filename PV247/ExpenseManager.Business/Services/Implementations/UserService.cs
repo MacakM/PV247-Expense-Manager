@@ -21,7 +21,7 @@ namespace ExpenseManager.Business.Services.Implementations
     /// <summary>
     /// Provides user related functionality
     /// </summary>
-    public class UserService : ExpenseManagerQueryAndCrudServiceBase<UserModel, int, User>, IUserService
+    public class UserService : ExpenseManagerQueryAndCrudServiceBase<UserModel, Guid, User>, IUserService
     {
         private readonly UserRepository _userRepository;
 
@@ -32,7 +32,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="repository"></param>
         /// <param name="expenseManagerMapper"></param>
         /// <param name="unitOfWorkProvider"></param>
-        public UserService(ExpenseManagerQuery<UserModel> query, ExpenseManagerRepository<UserModel, int> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
+        public UserService(ExpenseManagerQuery<UserModel> query, ExpenseManagerRepository<UserModel, Guid> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
         {
             _userRepository = repository as UserRepository;
         }
@@ -49,10 +49,10 @@ namespace ExpenseManager.Business.Services.Implementations
         /// Registers user according to provided information
         /// </summary>
         /// <param name="userRegistration">User registration information</param>
-        public void RegisterNewUser(User userRegistration)
+        public Guid RegisterNewUser(User userRegistration)
         {
             // create account too or join to another?
-            Save(userRegistration);
+            return Save(userRegistration);
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// </summary>
         /// <param name="userId">Unique user identifier</param>
         /// <returns>One user with id == userId</returns>
-        public User GetUser(int userId)
+        public User GetUser(Guid userId)
         {
             return GetDetail(userId);
         }
@@ -128,7 +128,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// Delete user specified by userId
         /// </summary>
         /// <param name="userId">Unique user identifier</param>
-        public void DeleteUser(int userId)
+        public void DeleteUser(Guid userId)
         {
             Delete(userId);
         }

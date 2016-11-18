@@ -13,7 +13,7 @@ namespace ExpenseManager.Database.Filters
         /// <summary>
         /// Account id to be filtered with
         /// </summary>
-        public int? AccountId { get; set; }
+        public Guid? AccountId { get; set; }
         /// <summary>
         /// Account name to be filtered with
         /// </summary>
@@ -25,7 +25,7 @@ namespace ExpenseManager.Database.Filters
         /// <summary>
         /// Badge id to be filtered with
         /// </summary>
-        public int? BadgeId { get; set; }
+        public Guid? BadgeId { get; set; }
         /// <summary>
         /// Badge description to be filtered with
         /// </summary>

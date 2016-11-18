@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace ExpenseManager.Business.DataTransferObjects
 {
     /// <summary>
     /// Business layer representation of BadgeModel object
     /// </summary>
-    public class Badge : BusinessObject<int>
+    public class Badge : BusinessObject<Guid>
     {
         /// <summary>
         /// Description how achieve this badge.

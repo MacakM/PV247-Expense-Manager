@@ -153,7 +153,7 @@ namespace ExpenseManager.Presentation.Controllers
         [ValidateAntiForgeryToken]
         [Authorize(Policy = "HasFullRights")]
         public IActionResult Delete(
-            [FromForm] int id,
+            [FromForm] Guid id,
             [FromForm] string returnRedirect)
         {
             var costInfo = _balanceFacade.GetItem(id);

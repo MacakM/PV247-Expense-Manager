@@ -20,7 +20,7 @@ namespace ExpenseManager.Business.Services.Implementations
     /// <summary>
     /// Service handles Account entity operations
     /// </summary>
-    public class AccountService : ExpenseManagerQueryAndCrudServiceBase<AccountModel, int, Account>, IAccountService
+    public class AccountService : ExpenseManagerQueryAndCrudServiceBase<AccountModel, Guid, Account>, IAccountService
     {
         private readonly UserRepository _userRepository;
 
@@ -34,7 +34,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="userRepository"></param>
         public AccountService(
             ExpenseManagerQuery<AccountModel> query, 
-            ExpenseManagerRepository<AccountModel, int> repository, 
+            ExpenseManagerRepository<AccountModel, Guid> repository, 
             Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider,
             UserRepository userRepository) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
         {
@@ -48,16 +48,17 @@ namespace ExpenseManager.Business.Services.Implementations
         /// Creates new account
         /// </summary>
         /// <param name="account"></param>
-        public void CreateAccount(Account account)
+        public Guid CreateAccount(Account account)
         {
-            Save(account);
+            return Save(account);
         }
 
         /// <summary>
         /// Creates account for user with given id
         /// </summary>
-        public void CreateAccount(int userId)
+        public Guid CreateAccount(Guid userId)
         {
+            Guid accountId;
             using (var uow = UnitOfWorkProvider.Create())
             {
                 var user = _userRepository.GetById(userId);
@@ -75,7 +76,9 @@ namespace ExpenseManager.Business.Services.Implementations
 
                 Repository.Insert(account);
                 uow.Commit();
+                accountId = account.Id;
             }
+            return accountId;
         }
 
         /// <summary>
@@ -90,7 +93,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// Deletes account by specified unique id
         /// </summary>
         /// <param name="accountId"></param>
-        public void DeleteAccount(int accountId)
+        public void DeleteAccount(Guid accountId)
         {
             Delete(accountId);
         }
@@ -99,7 +102,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// </summary>
         /// <param name="accountId"></param>
         /// <returns></returns>
-        public Account GetAccount(int accountId)
+        public Account GetAccount(Guid accountId)
         {
            return GetDetail(accountId);
         }
@@ -120,7 +123,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="userId"></param>
         /// <param name="accountId"></param>
         /// <param name="accessType"></param>
-        public void AttachAccountToUser(int userId, int accountId, AccountAccessType accessType)
+        public void AttachAccountToUser(Guid userId, Guid accountId, AccountAccessType accessType)
         {
             using (var uow = UnitOfWorkProvider.Create())
             {

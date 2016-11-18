@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace ExpenseManager.Business.DataTransferObjects
 {
     /// <summary>
     /// Business layer representation of AccountModel object
     /// </summary>
-    public class Account : BusinessObject<int>
+    public class Account : BusinessObject<Guid>
     {
         /// <summary>
         /// Name of the account.

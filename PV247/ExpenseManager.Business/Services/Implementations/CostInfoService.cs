@@ -21,7 +21,7 @@ namespace ExpenseManager.Business.Services.Implementations
     /// <summary>
     /// Service handles AccountBadge entity operations
     /// </summary>
-    public class CostInfoService : ExpenseManagerQueryAndCrudServiceBase<CostInfoModel, int, CostInfo>, ICostInfoService
+    public class CostInfoService : ExpenseManagerQueryAndCrudServiceBase<CostInfoModel, Guid, CostInfo>, ICostInfoService
     {
         private readonly CostTypeRepository _costTypeRepository;
         private readonly AccountRepository _accountRepository;
@@ -46,7 +46,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="accountRepository"></param>
         public CostInfoService(
             ExpenseManagerQuery<CostInfoModel> query,
-            ExpenseManagerRepository<CostInfoModel, int> repository,
+            ExpenseManagerRepository<CostInfoModel, Guid> repository,
             Mapper expenseManagerMapper,
             IUnitOfWorkProvider unitOfWorkProvider,
             CostTypeRepository costTypeRepository,
@@ -59,7 +59,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// Creates new cost info object in databse
         /// </summary>
         /// <param name="costInfo"></param>
-        public void CreateCostInfo(CostInfo costInfo)
+        public Guid CreateCostInfo(CostInfo costInfo)
         {
             var costInfoModel = ExpenseManagerMapper.Map<CostInfoModel>(costInfo);
             using (var uow = UnitOfWorkProvider.Create())
@@ -78,6 +78,7 @@ namespace ExpenseManager.Business.Services.Implementations
                 Repository.Insert(costInfoModel);
                 uow.Commit();
             }
+            return costInfoModel.Id;
         }
         /// <summary>
         /// Updates existing cost info
@@ -91,7 +92,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// Deletes cost info specified by cost info
         /// </summary>
         /// <param name="costInfoId"></param>
-        public void DeleteCostInfo(int costInfoId)
+        public void DeleteCostInfo(Guid costInfoId)
         {
             Delete(costInfoId);
         }
@@ -100,7 +101,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// </summary>
         /// <param name="costInfoId">Unique id</param>
         /// <returns>Cost info</returns>
-        public CostInfo GetCostInfo(int costInfoId)
+        public CostInfo GetCostInfo(Guid costInfoId)
         {
             return GetDetail(costInfoId);
         }
@@ -148,7 +149,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// </summary>
         /// <param name="accountId"></param>
         /// <returns></returns>
-        public decimal GetBalance(int accountId)
+        public decimal GetBalance(Guid accountId)
         {
             Query.Filter = new CostInfoModelFilter { IsIncome = true, Periodicity = PeriodicityModel.None, CreatedTo = DateTime.Now, AccountId = accountId};
             var incomes = GetList();

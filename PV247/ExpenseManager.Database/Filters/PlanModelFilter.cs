@@ -14,7 +14,7 @@ namespace ExpenseManager.Database.Filters
         /// <summary>
         /// Account id to be used in filter
         /// </summary>
-        public int? AccountId { get; set; }
+        public Guid? AccountId { get; set; }
         /// <summary>
         /// Account name to be used in filter
         /// </summary>
@@ -22,7 +22,7 @@ namespace ExpenseManager.Database.Filters
         /// <summary>
         /// Cost type id to be used in filter
         /// </summary>
-        public int? CostTypeId { get; set; }
+        public Guid? CostTypeId { get; set; }
         /// <summary>
         /// Cost type name to be used in filter
         /// </summary>

@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Riganti.Utils.Infrastructure.Core;
 
 namespace ExpenseManager.Database.Entities
@@ -7,12 +9,13 @@ namespace ExpenseManager.Database.Entities
     /// <summary>
     /// Represents type of the cost information.
     /// </summary>
-    public class CostTypeModel : IEntity<int>
+    public class CostTypeModel : IEntity<Guid>
     {
         /// <summary>
         /// Id of the cost type.
         /// </summary>
-        public int Id { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid Id { get; set; }
         /// <summary>
         /// Name of this type.
         /// </summary>
