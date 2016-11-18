@@ -8,6 +8,7 @@ using ExpenseManager.Business.Facades;
 using ExpenseManager.Business.Services.Implementations;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ExpenseManager.Database;
+using ExpenseManager.Database.Entities;
 
 namespace ExpenseManager.Business.Tests.Facades
 {
@@ -139,12 +140,28 @@ namespace ExpenseManager.Business.Tests.Facades
         [TestMethod]
         public void DeleteBadgeTest()
         {
-            _balanceFacade.DeleteBadge(85);
-            /*using (var db = new ExpenseDbContext())
+            int id;
+            using (var db = new ExpenseDbContext())
+            {
+                id = db.Badges.Max(b => b.Id);
+            }
+            _balanceFacade.DeleteBadge(id);
+            using (var db = new ExpenseDbContext())
             {
                 var myBadge = db.Badges.FirstOrDefault(model => model.Name.Equals("Survivor"));
                 Assert.IsTrue(myBadge == null, "Badge was not deleted successfuly");
-            }*/
+            }
+            //cleanup
+            var badge = new BadgeModel()
+            {
+                Name = "Survivor",
+                BadgeImgUri = "hmm",
+                Description = "I will survive"
+            };
+            using (var db = new ExpenseDbContext())
+            {
+                db.Badges.Add(badge);
+            }
         }
         /// <summary>
         /// Test Badge update.
@@ -152,9 +169,14 @@ namespace ExpenseManager.Business.Tests.Facades
         [TestMethod]
         public void UpdateBadgeTest()
         {
+            int id;
+            using (var db = new ExpenseDbContext())
+            {
+                id = db.Badges.Min(b => b.Id);
+            }
             _balanceFacade.UpdateBadge(new Badge
             {
-                Id = 45,
+                Id = id,
                 Name = "Officer",
                 Description = "Buy 5 donuts",
                 BadgeImgUri = "mmm"
@@ -162,7 +184,7 @@ namespace ExpenseManager.Business.Tests.Facades
 
             /*using (var db = new ExpenseDbContext())
             {
-                var myBadge = db.Badges.Find(45);
+                var myBadge = db.Badges.Find(id);
                 Assert.IsTrue(myBadge.Description == "Buy 5 donuts", "Badge was not updated successfuly");
             }*/
         }
@@ -172,7 +194,12 @@ namespace ExpenseManager.Business.Tests.Facades
         [TestMethod]
         public void GetBadgeTest()
         {
-            var badge = _balanceFacade.GetBadge(45);
+            int id;
+            using (var db = new ExpenseDbContext())
+            {
+                id = db.Badges.Min(b => b.Id);
+            }
+            var badge = _balanceFacade.GetBadge(id);
             Assert.IsTrue(
                 badge.Name.Equals("Officer") && badge.Description.Equals("Buy donuts") &&
                 badge.BadgeImgUri.Equals("mmm"), "Badge was not get successfuly");
