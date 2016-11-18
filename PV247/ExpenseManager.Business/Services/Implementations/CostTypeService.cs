@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using ExpenseManager.Business.DataTransferObjects;
@@ -16,7 +17,7 @@ namespace ExpenseManager.Business.Services.Implementations
     /// <summary>
     /// Service handles AccountBadge entity operations
     /// </summary>
-    public class CostTypeService : ExpenseManagerQueryAndCrudServiceBase<CostTypeModel, int, CostType>, ICostTypeService
+    public class CostTypeService : ExpenseManagerQueryAndCrudServiceBase<CostTypeModel, Guid, CostType>, ICostTypeService
     {
    
         /// <summary>
@@ -30,16 +31,16 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="repository"></param>
         /// <param name="expenseManagerMapper"></param>
         /// <param name="unitOfWorkProvider"></param>
-        public CostTypeService(ExpenseManagerQuery<CostTypeModel> query, ExpenseManagerRepository<CostTypeModel, int> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
+        public CostTypeService(ExpenseManagerQuery<CostTypeModel> query, ExpenseManagerRepository<CostTypeModel, Guid> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
         {
         }
         /// <summary>
         /// Creaates new cost type
         /// </summary>
         /// <param name="costType">Object to be added to database</param>
-        public void CreateCostType(CostType costType)
+        public Guid CreateCostType(CostType costType)
         {
-            Save(costType);
+            return Save(costType);
         }
         /// <summary>
         /// Updates existing cost type
@@ -53,7 +54,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// Deletes cost type specified by id
         /// </summary>
         /// <param name="costTypeId">Unique cost type id</param>
-        public void DeleteCostType(int costTypeId)
+        public void DeleteCostType(Guid costTypeId)
         {
            Delete(costTypeId);
         }
@@ -62,7 +63,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// </summary>
         /// <param name="costTypeId">Unique cost type id</param>
         /// <returns></returns>
-        public CostType GetCostType(int costTypeId)
+        public CostType GetCostType(Guid costTypeId)
         {
             return GetDetail(costTypeId);
         }

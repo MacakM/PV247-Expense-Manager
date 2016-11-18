@@ -24,7 +24,7 @@ namespace ExpenseManager.Database.Filters
         /// <summary>
         /// Specifies account id to filter with
         /// </summary>
-        public int? AccountId { get; set; }
+        public Guid? AccountId { get; set; }
 
         /// <summary>
         /// Specifies account name to filter with

@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using ExpenseManager.Database.Enums;
 using Riganti.Utils.Infrastructure.Core;
 
@@ -7,12 +9,13 @@ namespace ExpenseManager.Database.Entities
     /// <summary>
     /// Class representing user.
     /// </summary>
-    public class UserModel : IEntity<int>
+    public class UserModel : IEntity<Guid>
     {
         /// <summary>
         /// Id of the user.
         /// </summary>
-        public int Id { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid Id { get; set; }
         /// <summary>
         /// Name of the user.
         /// </summary>

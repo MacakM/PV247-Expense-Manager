@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Filters;
 using ExpenseManager.Business.Services.Interfaces;
@@ -40,7 +41,7 @@ namespace ExpenseManager.Business.Facades
         /// <summary>
         /// Lists all plans that can be closed by user - MUST BE PLANTYPE.SAVE
         /// </summary>
-        public List<Plan> ListAllCloseablePlans(int accountId)
+        public List<Plan> ListAllCloseablePlans(Guid accountId)
         {
             return _planService.ListAllCloseablePlans(accountId, GetBalance(accountId));
         }
@@ -55,7 +56,7 @@ namespace ExpenseManager.Business.Facades
         /// <summary>
         /// Returns current balance of account
         /// </summary>
-        public decimal GetBalance(int accountId)
+        public decimal GetBalance(Guid accountId)
         {
             return _costInfoService.GetBalance(accountId);
         }
@@ -87,15 +88,15 @@ namespace ExpenseManager.Business.Facades
         /// Creates new cost info object in databse
         /// </summary>
         /// <param name="costInfo"></param>
-        public void CreateItem(CostInfo costInfo)
+        public Guid CreateItem(CostInfo costInfo)
         {
-            _costInfoService.CreateCostInfo(costInfo);
+            return _costInfoService.CreateCostInfo(costInfo);
         }
         /// <summary>
         /// Deletes cost info specified by cost info
         /// </summary>
         /// <param name="costInfoId"></param>
-        public void DeleteItem(int costInfoId)
+        public void DeleteItem(Guid costInfoId)
         {
             _costInfoService.DeleteCostInfo(costInfoId);
         }
@@ -112,7 +113,7 @@ namespace ExpenseManager.Business.Facades
         /// </summary>
         /// <param name="costInfoId">Unique id</param>
         /// <returns>Cost info</returns>
-        public CostInfo GetItem(int costInfoId)
+        public CostInfo GetItem(Guid costInfoId)
         {
             return _costInfoService.GetCostInfo(costInfoId);
         }
@@ -143,15 +144,15 @@ namespace ExpenseManager.Business.Facades
         /// Creates new plan in databse
         /// </summary>
         /// <param name="plan">Object to be saved to database</param>
-        public void CreatePlan(Plan plan)
+        public Guid CreatePlan(Plan plan)
         {
-            _planService.CreatePlan(plan);
+            return _planService.CreatePlan(plan);
         }
         /// <summary>
         /// Deletes plen with specified id
         /// </summary>
         /// <param name="planId">Unique id of deleted plan</param>
-        public void DeletePlan(int planId)
+        public void DeletePlan(Guid planId)
         {
             _planService.DeletePlan(planId);
         }
@@ -168,7 +169,7 @@ namespace ExpenseManager.Business.Facades
         /// </summary>
         /// <param name="planId">Unique id of plan</param>
         /// <returns></returns>
-        public Plan GetPlan(int planId)
+        public Plan GetPlan(Guid planId)
         {
             return _planService.GetPlan(planId);
         }
@@ -187,15 +188,15 @@ namespace ExpenseManager.Business.Facades
         /// Creaates new cost type
         /// </summary>
         /// <param name="costType">Object to be added to database</param>
-        public void CreateItemType(CostType costType)
+        public Guid CreateItemType(CostType costType)
         {
-            _costTypeService.CreateCostType(costType);
+            return _costTypeService.CreateCostType(costType);
         }
         /// <summary>
         /// Deletes cost type specified by id
         /// </summary>
         /// <param name="costTypeId">Unique cost type id</param>
-        public void DeleteItemType(int costTypeId)
+        public void DeleteItemType(Guid costTypeId)
         {
             _costTypeService.DeleteCostType(costTypeId);
         }
@@ -212,7 +213,7 @@ namespace ExpenseManager.Business.Facades
         /// </summary>
         /// <param name="itemTypeId">Unique cost type id</param>
         /// <returns></returns>
-        public CostType GetItemType(int itemTypeId)
+        public CostType GetItemType(Guid itemTypeId)
         {
             return _costTypeService.GetCostType(itemTypeId);
         }
@@ -231,15 +232,15 @@ namespace ExpenseManager.Business.Facades
         /// Creates new Badge object in database
         /// </summary>
         /// <param name="badge">new Badge</param>
-        public void CreateBadge(Badge badge)
+        public Guid CreateBadge(Badge badge)
         {
-            _badgeService.CreateBadge(badge);
+            return _badgeService.CreateBadge(badge);
         }
         /// <summary>
         /// Deletes badge cpecified by id
         /// </summary>
         /// <param name="badgeId"></param>
-        public void DeleteBadge(int badgeId)
+        public void DeleteBadge(Guid badgeId)
         {
             _badgeService.DeleteBadge(badgeId);
         }
@@ -256,7 +257,7 @@ namespace ExpenseManager.Business.Facades
         /// </summary>
         /// <param name="badgeId"></param>
         /// <returns></returns>
-        public Badge GetBadge(int badgeId)
+        public Badge GetBadge(Guid badgeId)
         {
             return _badgeService.GetBadge(badgeId);
         }
@@ -275,15 +276,15 @@ namespace ExpenseManager.Business.Facades
         /// Add new badge to account by creating new AccountBadge object in database
         /// </summary>
         /// <param name="accountBadge"></param>
-        public void CreateAccountBadge(AccountBadge accountBadge)
+        public Guid CreateAccountBadge(AccountBadge accountBadge)
         {
-            _accountBadgeService.CreateAccountBadge(accountBadge);
+            return _accountBadgeService.CreateAccountBadge(accountBadge);
         }
         /// <summary>
         /// Deletes specified account badge
         /// </summary>
         /// <param name="accountBadgeId"></param>
-        public void DeleteAccountBadge(int accountBadgeId)
+        public void DeleteAccountBadge(Guid accountBadgeId)
         {
             _accountBadgeService.DeleteAccountBadge(accountBadgeId);
         }
@@ -300,7 +301,7 @@ namespace ExpenseManager.Business.Facades
         /// </summary>
         /// <param name="accountBadgeId"></param>
         /// <returns></returns>
-        public AccountBadge GetAccountBadge(int accountBadgeId)
+        public AccountBadge GetAccountBadge(Guid accountBadgeId)
         {
             return _accountBadgeService.GetAccountBadge(accountBadgeId);
         }

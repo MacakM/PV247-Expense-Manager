@@ -17,7 +17,7 @@ namespace ExpenseManager.Business.Services.Implementations
     /// <summary>
     /// Service handles Badge entity operations
     /// </summary>
-    public class BadgeService : ExpenseManagerQueryAndCrudServiceBase<BadgeModel, int, Badge>, IBadgeService
+    public class BadgeService : ExpenseManagerQueryAndCrudServiceBase<BadgeModel, Guid, Badge>, IBadgeService
     {
         /// <summary>
         /// 
@@ -33,15 +33,15 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="repository"></param>
         /// <param name="expenseManagerMapper"></param>
         /// <param name="unitOfWorkProvider"></param>
-        public BadgeService(ExpenseManagerQuery<BadgeModel> query, ExpenseManagerRepository<BadgeModel, int> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
+        public BadgeService(ExpenseManagerQuery<BadgeModel> query, ExpenseManagerRepository<BadgeModel, Guid> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
         {
         }
         /// <summary>
         /// Creates new Badge object in database
         /// </summary>
-        public void CreateBadge(Badge badge)
+        public Guid CreateBadge(Badge badge)
         {
-            Save(badge);
+            return Save(badge);
         }
         /// <summary>
         /// Updates existing badge in database
@@ -55,7 +55,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// Deletes badge cpecified by id
         /// </summary>
         /// <param name="badgeId"></param>
-        public void DeleteBadge(int badgeId)
+        public void DeleteBadge(Guid badgeId)
         {
             Delete(badgeId);
         }
@@ -64,7 +64,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// </summary>
         /// <param name="badgeId"></param>
         /// <returns></returns>
-        public Badge GetBadge(int badgeId)
+        public Badge GetBadge(Guid badgeId)
         {
             return GetDetail(badgeId);
         }

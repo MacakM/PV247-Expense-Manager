@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using System.Linq;
 using ExpenseManager.Database.Entities;
 using ExpenseManager.Database.Infrastructure.Repository;
@@ -9,7 +10,7 @@ namespace ExpenseManager.Database.DataAccess.Repositories
     /// <summary>
     /// Implementation of Repository for User entity.
     /// </summary>
-    public class UserRepository : ExpenseManagerRepository<UserModel, int>
+    public class UserRepository : ExpenseManagerRepository<UserModel, Guid>
     {
         /// <summary>
         /// Create repository.

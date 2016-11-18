@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Enums;
 using ExpenseManager.Business.Facades;
@@ -155,19 +156,19 @@ namespace ExpenseManager.Presentation
             });
 
             // Register all repositories
-            services.AddTransient<ExpenseManagerRepository<BadgeModel, int>, BadgeRepository>();
+            services.AddTransient<ExpenseManagerRepository<BadgeModel, Guid>, BadgeRepository>();
             services.AddTransient<BadgeRepository>();
-            services.AddTransient<ExpenseManagerRepository<CostInfoModel, int>, CostInfoRepository>();
+            services.AddTransient<ExpenseManagerRepository<CostInfoModel, Guid>, CostInfoRepository>();
             services.AddTransient<CostInfoRepository>();
-            services.AddTransient<ExpenseManagerRepository<CostTypeModel, int>, CostTypeRepository>();
+            services.AddTransient<ExpenseManagerRepository<CostTypeModel, Guid>, CostTypeRepository>();
             services.AddTransient<CostTypeRepository>();
-            services.AddTransient<ExpenseManagerRepository<PlanModel, int>, PlanRepository>();
+            services.AddTransient<ExpenseManagerRepository<PlanModel, Guid>, PlanRepository>();
             services.AddTransient<PlanRepository>();
-            services.AddTransient<ExpenseManagerRepository<UserModel, int>, UserRepository>();
+            services.AddTransient<ExpenseManagerRepository<UserModel, Guid>, UserRepository>();
             services.AddTransient<UserRepository>();
-            services.AddTransient<ExpenseManagerRepository<AccountBadgeModel, int>, AccountBadgeRepository>();
+            services.AddTransient<ExpenseManagerRepository<AccountBadgeModel, Guid>, AccountBadgeRepository>();
             services.AddTransient<AccountBadgeRepository>();
-            services.AddTransient<ExpenseManagerRepository<AccountModel, int>, AccountRepository>();
+            services.AddTransient<ExpenseManagerRepository<AccountModel, Guid>, AccountRepository>();
             services.AddTransient<AccountRepository>();
 
             // Register all query objects
@@ -188,25 +189,25 @@ namespace ExpenseManager.Presentation
             //TODO add more query objects
 
             // Register all services
-            services.AddTransient(typeof(ExpenseManagerQueryAndCrudServiceBase<AccountBadgeModel, int, AccountBadge>), typeof(AccountBadgeService));
+            services.AddTransient(typeof(ExpenseManagerQueryAndCrudServiceBase<AccountBadgeModel, Guid, AccountBadge>), typeof(AccountBadgeService));
             services.AddTransient<IAccountBadgeService, AccountBadgeService>();
 
-            services.AddTransient(typeof(ExpenseManagerQueryAndCrudServiceBase<AccountModel, int, Account>), typeof(AccountService));
+            services.AddTransient(typeof(ExpenseManagerQueryAndCrudServiceBase<AccountModel, Guid, Account>), typeof(AccountService));
             services.AddTransient<IAccountService, AccountService>();
 
-            services.AddTransient(typeof(ExpenseManagerQueryAndCrudServiceBase<BadgeModel, int, Badge>), typeof(BadgeService));
+            services.AddTransient(typeof(ExpenseManagerQueryAndCrudServiceBase<BadgeModel, Guid, Badge>), typeof(BadgeService));
             services.AddTransient<IBadgeService, BadgeService>();
 
-            services.AddTransient(typeof(ExpenseManagerQueryAndCrudServiceBase<CostInfoModel, int, CostInfo>), typeof(CostInfoService));
+            services.AddTransient(typeof(ExpenseManagerQueryAndCrudServiceBase<CostInfoModel, Guid, CostInfo>), typeof(CostInfoService));
             services.AddTransient<ICostInfoService, CostInfoService>();
 
-            services.AddTransient(typeof(ExpenseManagerQueryAndCrudServiceBase<CostTypeModel, int, CostType>), typeof(CostTypeService));
+            services.AddTransient(typeof(ExpenseManagerQueryAndCrudServiceBase<CostTypeModel, Guid, CostType>), typeof(CostTypeService));
             services.AddTransient<ICostTypeService, CostTypeService>();
 
-            services.AddTransient(typeof(ExpenseManagerQueryAndCrudServiceBase<PlanModel, int, Plan>), typeof(PlanService));
+            services.AddTransient(typeof(ExpenseManagerQueryAndCrudServiceBase<PlanModel, Guid, Plan>), typeof(PlanService));
             services.AddTransient<IPlanService, PlanService>();
 
-            services.AddTransient(typeof(ExpenseManagerQueryAndCrudServiceBase<UserModel, int, User>), typeof(UserService));
+            services.AddTransient(typeof(ExpenseManagerQueryAndCrudServiceBase<UserModel, Guid, User>), typeof(UserService));
             services.AddTransient<IUserService, UserService>();
             
             services.AddTransient<IBadgeManagerService, BadgeManagerService>();

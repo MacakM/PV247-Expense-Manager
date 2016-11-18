@@ -7,12 +7,12 @@ namespace ExpenseManager.Business.DataTransferObjects
     /// <summary>
     /// Business layer representation of PlanModel object
     /// </summary>
-    public class Plan : BusinessObject<int>
+    public class Plan : BusinessObject<Guid>
     {
         /// <summary>
         /// Account Id.
         /// </summary>
-        public int? AccountId { get; set; }
+        public Guid? AccountId { get; set; }
         /// <summary>
         /// Name of plans account
         /// </summary>
@@ -32,7 +32,7 @@ namespace ExpenseManager.Business.DataTransferObjects
         /// <summary>
         /// Planned type id
         /// </summary>
-        public int PlannedTypeId { get; set; }
+        public Guid PlannedTypeId { get; set; }
         /// <summary>
         /// Plan type name.
         /// </summary>

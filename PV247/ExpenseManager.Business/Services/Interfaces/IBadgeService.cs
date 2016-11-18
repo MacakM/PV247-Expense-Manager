@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Filters;
 
@@ -13,23 +14,23 @@ namespace ExpenseManager.Business.Services.Interfaces
         /// Creates new Badge object in database
         /// </summary>
         /// <param name="badge">new Badge</param>
-        void CreateBadge(Badge badge);
+        Guid CreateBadge(Badge badge);
         /// <summary>
         /// Updates existing badge in database
         /// </summary>
         /// <param name="badge"></param>
         void UpdateBadge(Badge badge);
         /// <summary>
-        /// Deletes badge cpecified by id
+        /// Deletes badge specified by id
         /// </summary>
         /// <param name="badgeId"></param>
-        void DeleteBadge(int badgeId);
+        void DeleteBadge(Guid badgeId);
         /// <summary>
         /// Get specific badge by unique id
         /// </summary>
         /// <param name="badgeId"></param>
         /// <returns></returns>
-        Badge GetBadge(int badgeId);
+        Badge GetBadge(Guid badgeId);
         /// <summary>
         /// Lists filtered badges
         /// </summary>

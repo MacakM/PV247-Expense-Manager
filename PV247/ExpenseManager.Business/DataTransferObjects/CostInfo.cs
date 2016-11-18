@@ -6,7 +6,7 @@ namespace ExpenseManager.Business.DataTransferObjects
     /// <summary>
     /// Business layer representation of CostInfoModel object
     /// </summary>
-    public class CostInfo : BusinessObject<int>
+    public class CostInfo : BusinessObject<Guid>
     {
         /// <summary>
         /// State whether set money is income or outcome.
@@ -23,7 +23,7 @@ namespace ExpenseManager.Business.DataTransferObjects
         /// <summary>
         /// Account id.
         /// </summary>
-        public int AccountId { get; set; }
+        public Guid AccountId { get; set; }
         /// <summary>
         /// Account whom this cost belongs.
         /// </summary>
@@ -35,7 +35,7 @@ namespace ExpenseManager.Business.DataTransferObjects
         /// <summary>
         /// Type id.
         /// </summary>
-        public int TypeId { get; set; }
+        public Guid TypeId { get; set; }
         /// <summary>
         /// Type of the cost.
         /// </summary>

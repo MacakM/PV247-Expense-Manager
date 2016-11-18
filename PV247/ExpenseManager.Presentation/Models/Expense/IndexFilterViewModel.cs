@@ -33,7 +33,7 @@ namespace ExpenseManager.Presentation.Models.Expense
         /// <summary>
         /// Cost type id to filter by
         /// </summary>
-        public int? CostTypeId { get; set; }
+        public Guid? CostTypeId { get; set; }
 
         /// <summary>
         /// Number of page to display

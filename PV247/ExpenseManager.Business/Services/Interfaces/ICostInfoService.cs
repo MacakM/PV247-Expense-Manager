@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Filters;
 
@@ -13,7 +14,7 @@ namespace ExpenseManager.Business.Services.Interfaces
         /// Creates new cost info object in databse
         /// </summary>
         /// <param name="costInfo"></param>
-        void CreateCostInfo(CostInfo costInfo);
+        Guid CreateCostInfo(CostInfo costInfo);
         /// <summary>
         /// Updates existing cost info
         /// </summary>
@@ -23,13 +24,13 @@ namespace ExpenseManager.Business.Services.Interfaces
         /// Deletes cost info specified by cost info
         /// </summary>
         /// <param name="costInfoId"></param>
-        void DeleteCostInfo(int costInfoId);
+        void DeleteCostInfo(Guid costInfoId);
         /// <summary>
         /// Get cost info specified by unique id
         /// </summary>
         /// <param name="costInfoId">Unique id</param>
         /// <returns>Cost info</returns>
-        CostInfo GetCostInfo(int costInfoId);
+        CostInfo GetCostInfo(Guid costInfoId);
         /// <summary>
         /// List cost types based on filter
         /// </summary>
@@ -50,6 +51,6 @@ namespace ExpenseManager.Business.Services.Interfaces
         /// </summary>
         /// <param name="accountId"></param>
         /// <returns></returns>
-        decimal GetBalance(int accountId);
+        decimal GetBalance(Guid accountId);
     }
 }

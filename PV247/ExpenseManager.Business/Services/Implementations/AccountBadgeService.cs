@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using ExpenseManager.Business.DataTransferObjects;
@@ -17,7 +18,7 @@ namespace ExpenseManager.Business.Services.Implementations
     /// <summary>
     /// Service handles AccountBadge entity operations
     /// </summary>
-    public class AccountBadgeService : ExpenseManagerQueryAndCrudServiceBase<AccountBadgeModel, int, AccountBadge>, IAccountBadgeService
+    public class AccountBadgeService : ExpenseManagerQueryAndCrudServiceBase<AccountBadgeModel, Guid, AccountBadge>, IAccountBadgeService
     {
 
         /// <summary>
@@ -27,7 +28,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="repository"></param>
         /// <param name="expenseManagerMapper"></param>
         /// <param name="unitOfWorkProvider"></param>
-        public AccountBadgeService(ExpenseManagerQuery<AccountBadgeModel> query, ExpenseManagerRepository<AccountBadgeModel, int> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
+        public AccountBadgeService(ExpenseManagerQuery<AccountBadgeModel> query, ExpenseManagerRepository<AccountBadgeModel, Guid> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
         {
         }
         /// <summary>
@@ -38,9 +39,9 @@ namespace ExpenseManager.Business.Services.Implementations
         /// Add new badge to account by creating new AccountBadge object in database
         /// </summary>
         /// <param name="accountBadge"></param>
-        public void CreateAccountBadge(AccountBadge accountBadge)
+        public Guid CreateAccountBadge(AccountBadge accountBadge)
         {
-            Save(accountBadge);
+            return Save(accountBadge);
         }
         /// <summary>
         /// Updates existing account badge
@@ -54,7 +55,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// Deletes specified account badge
         /// </summary>
         /// <param name="accountBadgeId"></param>
-        public void DeleteAccountBadge(int accountBadgeId)
+        public void DeleteAccountBadge(Guid accountBadgeId)
         {
             Delete(accountBadgeId);
         }
@@ -63,7 +64,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// </summary>
         /// <param name="accountBadgeId"></param>
         /// <returns></returns>
-        public AccountBadge GetAccountBadge(int accountBadgeId)
+        public AccountBadge GetAccountBadge(Guid accountBadgeId)
         {
             return GetDetail(accountBadgeId);
         }

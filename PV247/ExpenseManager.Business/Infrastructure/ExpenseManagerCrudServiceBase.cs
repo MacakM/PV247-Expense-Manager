@@ -71,7 +71,7 @@ namespace ExpenseManager.Business.Infrastructure
         /// <summary>
         /// Saves the changes on the specified  to the database.
         /// </summary>
-        public virtual void Save(T item)
+        public virtual TKey Save(T item)
         {
             var entity = ExpenseManagerMapper.Map<T, TEntity>(item);
             var isNew = item.Id.Equals(default(TKey));
@@ -92,6 +92,7 @@ namespace ExpenseManager.Business.Infrastructure
             {
                 item.Id = entity.Id;
             }
+            return item.Id;
         }
 
         /// <summary>

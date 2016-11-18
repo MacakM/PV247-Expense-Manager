@@ -1,11 +1,12 @@
-﻿using ExpenseManager.Business.DataTransferObjects.Enums;
+﻿using System;
+using ExpenseManager.Business.DataTransferObjects.Enums;
 
 namespace ExpenseManager.Business.DataTransferObjects
 {
     /// <summary>
     /// Business layer representation of UserModel object
     /// </summary>
-    public class User : BusinessObject<int>
+    public class User : BusinessObject<Guid>
     {
         /// <summary>
         /// Name of the user.
@@ -18,7 +19,7 @@ namespace ExpenseManager.Business.DataTransferObjects
         /// <summary>
         /// Account Id.
         /// </summary>
-        public int AccountId { get; set; }
+        public Guid AccountId { get; set; }
         /// <summary>
         /// Name of users account
         /// </summary>

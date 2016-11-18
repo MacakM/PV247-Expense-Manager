@@ -46,9 +46,13 @@ namespace ExpenseManager.Presentation.Authentication
         /// <inheritdoc />
         public User GetCurrentUser(ClaimsPrincipal principal)
         {
+            // Simpler solution:
+            return _accountFacade.GetCurrentlySignedUser(principal.Identity.Name, true);
+
+            /* temporarily commented out
             var applicationUser = GetCurrentApplicationUser(principal);
             return _accountFacade.GetCurrentlySignedUser(applicationUser.Email, true);
-         
+            */
         }
 
         private ApplicationUser GetCurrentApplicationUser(ClaimsPrincipal principal)
