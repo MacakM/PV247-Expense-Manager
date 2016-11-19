@@ -174,7 +174,7 @@ namespace ExpenseManager.Presentation.Controllers
 
         private List<IndexViewModel> GetFilteredExpenses(CostInfoFilter filter)
         {
-            var expenses = _balanceFacade.ListItem(filter);
+            var expenses = _balanceFacade.ListItems(filter);
             return _mapper.Map<List<IndexViewModel>>(expenses);
         }
 

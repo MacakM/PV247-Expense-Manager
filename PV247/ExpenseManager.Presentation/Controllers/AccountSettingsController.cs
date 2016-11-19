@@ -74,13 +74,13 @@ namespace ExpenseManager.Presentation.Controllers
                 Periodicity = Periodicity.Day
             };
 
-            var expenses = _balanceFacade.ListItem(filter);
+            var expenses = _balanceFacade.ListItems(filter);
 
             filter.Periodicity = Periodicity.Week;
-            expenses.AddRange(_balanceFacade.ListItem(filter));
+            expenses.AddRange(_balanceFacade.ListItems(filter));
 
             filter.Periodicity = Periodicity.Month;
-            expenses.AddRange(_balanceFacade.ListItem(filter));
+            expenses.AddRange(_balanceFacade.ListItems(filter));
 
             return _mapper.Map<List<IndexPermanentExpenseViewModel>>(expenses);
         }

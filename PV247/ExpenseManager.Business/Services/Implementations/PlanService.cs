@@ -46,7 +46,10 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="costInfoRepository"></param>
         /// <param name="accountsQuery"></param>
         /// <param name="costInfosQuery"></param>
-        public PlanService(ExpenseManagerQuery<PlanModel> query, ExpenseManagerRepository<PlanModel, Guid> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider, CostInfoRepository costInfoRepository, ListAccountsQuery accountsQuery, ListCostInfosQuery costInfosQuery) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
+        public PlanService(ExpenseManagerQuery<PlanModel> query, ExpenseManagerRepository<PlanModel, Guid> repository,
+            Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider, CostInfoRepository costInfoRepository,
+            ListAccountsQuery accountsQuery, ListCostInfosQuery costInfosQuery)
+            : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
         {
             _costInfoRepository = costInfoRepository;
             _accountsQuery = accountsQuery;
