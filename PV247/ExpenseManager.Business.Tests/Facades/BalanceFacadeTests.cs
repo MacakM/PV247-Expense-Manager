@@ -32,7 +32,7 @@ namespace ExpenseManager.Business.Tests.Facades
         public void ListAllCloseablePlans()
         {
             _balanceFacade.CreateBadge(new Badge() {Accounts = new List<AccountBadge>(), BadgeImgUri = "somePicture", Description = "Expense Manager badge", Name = "Penny Pincher"});
-            var x = _balanceFacade.ListBages(new BadgeFilter());
+            var x = _balanceFacade.ListBadges(new BadgeFilter());
             throw new AssertFailedException();
         }
         [Test]
@@ -253,7 +253,7 @@ namespace ExpenseManager.Business.Tests.Facades
             }
 
             // Act
-            var badges = _balanceFacade.ListBages(new BadgeFilter());
+            var badges = _balanceFacade.ListBadges(new BadgeFilter());
 
             // Assert
             Assert.That(badges.Count == 2, "Badges were not listed.");
@@ -285,7 +285,7 @@ namespace ExpenseManager.Business.Tests.Facades
             }
 
             // Act
-            var badges = _balanceFacade.ListBages(new BadgeFilter {Name = badgeName1});
+            var badges = _balanceFacade.ListBadges(new BadgeFilter {Name = badgeName1});
 
             // Assert
             Assert.That(badges.Count == 1, "Badge was not listed.");

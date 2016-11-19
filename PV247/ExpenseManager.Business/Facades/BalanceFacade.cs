@@ -229,7 +229,7 @@ namespace ExpenseManager.Business.Facades
         /// </summary>
         /// <param name="filter">Filters badges</param>
         /// <returns></returns>
-        public List<Badge> ListBages(BadgeFilter filter)
+        public List<Badge> ListBadges(BadgeFilter filter)
         {
             return _badgeService.ListBadges(filter);
         }
