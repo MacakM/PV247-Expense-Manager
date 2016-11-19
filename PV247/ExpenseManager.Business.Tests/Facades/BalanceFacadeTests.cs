@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Castle.Components.DictionaryAdapter;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Filters;
 using ExpenseManager.Business.Facades;
@@ -45,10 +47,50 @@ namespace ExpenseManager.Business.Tests.Facades
         {
             throw new AssertFailedException();
         }
+        /// <summary>
+        /// Tests CostInfo creation.
+        /// </summary>
         [Test]
         public void CreateItemTest()
         {
-            throw new AssertFailedException();
+            // Arrange
+            const string accountName = "ExpenseManagerAccount01";
+            const string typeName = "Food";
+            using (
+                var db =
+                    new ExpenseDbContext(
+                        Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
+            {
+                db.Accounts.Add(new AccountModel
+                {
+                    Badges = new List<AccountBadgeModel>(),
+                    Costs = new List<CostInfoModel>(),
+                    Name = accountName
+                });
+                db.CostTypes.Add(new CostTypeModel
+                {
+                    Name = typeName,
+                    CostInfoList = new EditableList<CostInfoModel>()
+                });
+                db.SaveChanges();
+            }
+            
+            var item = new CostInfo()
+            {
+                Description = "bread",
+                AccountId = 1,
+                TypeId = 1,
+                IsIncome = true,
+                Money = 25,
+                Created = DateTime.Now
+            };
+
+            // Act
+            _balanceFacade.CreateItem(item);
+
+            // Assert
+            var createdItem = GetItemById(1);
+            Assert.That(createdItem != null, "Item was not created.");
         }
         [Test]
         public void DeleteItemTest()
@@ -324,6 +366,16 @@ namespace ExpenseManager.Business.Tests.Facades
                         Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
             {
                 return db.Badges.FirstOrDefault(model => model.Name.Equals(badgeName));
+            }
+        }
+        private static CostInfoModel GetItemById(int id)
+        {
+            using (
+                var db =
+                    new ExpenseDbContext(
+                        Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
+            {
+                return db.CostInfos.Find(id);
             }
         }
     }

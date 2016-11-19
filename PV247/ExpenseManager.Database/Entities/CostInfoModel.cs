@@ -36,7 +36,7 @@ namespace ExpenseManager.Database.Entities
         /// </summary>
         [DataType(DataType.Date)]
         [Required]
-        public DateTime? Created { get; set; } = DateTime.Now;
+        public DateTime? Created { get; set; }
         /// <summary>
         /// Account whom this cost belongs.
         /// </summary>
