@@ -121,97 +121,174 @@ namespace ExpenseManager.Business.Tests.Facades
             throw new AssertFailedException();
         }
         /// <summary>
-        /// Test Badge creation.
+        /// Tests Badge creation.
         /// </summary>
         [Test]
         public void CreateBadgeTest()
-        { 
-            _balanceFacade.CreateBadge(new Badge
+        {
+            // Arrange
+            const string badgeName = "Organizer";
+            var badge = new Badge
             {
-                Name = "Organizer",
+                Name = badgeName,
                 Description = "Add your first expense",
-                BadgeImgUri = "lol"
-            });
-            using (var db = new ExpenseDbContext(Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
-            {
-                var myBadge = db.Badges.FirstOrDefault(model => model.Name.Equals("Organizer"));
-                Assert.IsTrue(myBadge != null && myBadge.Description.Equals("Add your first expense") && myBadge.BadgeImgUri.Equals("lol"), "Badge was not created successfuly");
-            }
+                BadgeImgUri = "picture"
+            };
+
+            // Act
+            _balanceFacade.CreateBadge(badge);
+
+            // Assert
+            var createdBadge = GetBadgeByName(badgeName);
+            Assert.That(createdBadge != null, "Badge was not created.");
         }
         /// <summary>
-        /// Test Badge deletion.
+        /// Tests Badge deletion.
         /// </summary>
         [Test]
         public void DeleteBadgeTest()
         {
-            int id;
-            using (var db = new ExpenseDbContext(Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
+            // Arrange
+            const string badgeName = "Organizer";
+            using (var dbContext = new ExpenseDbContext(Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
             {
-                id = db.Badges.Max(b => b.Id);
+                dbContext.Badges.Add(new BadgeModel()
+                {
+                    Name = badgeName,
+                    Description = "Add your first expense",
+                    BadgeImgUri = "picture"
+                });
+                dbContext.SaveChanges();
             }
-            _balanceFacade.DeleteBadge(id);
-            using (var db = new ExpenseDbContext(Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
-            {
-                var myBadge = db.Badges.FirstOrDefault(model => model.Name.Equals("Survivor"));
-                Assert.IsTrue(myBadge == null, "Badge was not deleted successfuly");
-            }
-            //cleanup
-            var badge = new BadgeModel()
-            {
-                Name = "Survivor",
-                BadgeImgUri = "hmm",
-                Description = "I will survive"
-            };
-            using (var db = new ExpenseDbContext(Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
-            {
-                db.Badges.Add(badge);
-            }
+
+            // Act
+            _balanceFacade.DeleteBadge(1);
+
+            // Assert
+            var deletedBadge = GetBadgeByName(badgeName);
+            Assert.That(deletedBadge == null, "Badge was not deleted.");
         }
         /// <summary>
-        /// Test Badge update.
+        /// Tests Badge update.
         /// </summary>
         [Test]
         public void UpdateBadgeTest()
         {
-            int id;
-            using (var db = new ExpenseDbContext(Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
+            // Arrange
+            const string badgeName1 = "Organizer";
+            const string badgeName2 = "Survivor";
+            var editedBadge = new Badge
             {
-                id = db.Badges.Min(b => b.Id);
+                Name = badgeName2,
+                BadgeImgUri = "picture",
+                Description = "I will survive"
+            };
+            using (var dbContext = new ExpenseDbContext(Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
+            {
+                dbContext.Badges.Add(new BadgeModel()
+                {
+                    Name = badgeName1,
+                    Description = "Add your first expense",
+                    BadgeImgUri = "picture"
+                });
+                dbContext.SaveChanges();
             }
-            _balanceFacade.UpdateBadge(new Badge
-            {
-                Id = id,
-                Name = "Officer",
-                Description = "Buy 5 donuts",
-                BadgeImgUri = "mmm"
-            });
 
-            using (var db = new ExpenseDbContext(Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
-            {
-                var myBadge = db.Badges.Find(id);
-                Assert.IsTrue(myBadge.Description == "Buy 5 donuts", "Badge was not updated successfuly");
-            }
+            // Act
+            _balanceFacade.UpdateBadge(editedBadge);
+
+            // Assert
+            var updatedBadge = GetBadgeByName(badgeName2);
+            Assert.That(updatedBadge != null, "Badge was not updated.");
         }
         /// <summary>
-        /// Test Badge get.
+        /// Tests Badge get.
         /// </summary>
         [Test]
         public void GetBadgeTest()
         {
-            int id;
-            using (var db = new ExpenseDbContext(Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
+            // Arrange
+            const string badgeName = "Organizer";
+            using (var dbContext = new ExpenseDbContext(Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
             {
-                id = db.Badges.Min(b => b.Id);
+                dbContext.Badges.Add(new BadgeModel()
+                {
+                    Name = badgeName,
+                    Description = "Add your first expense",
+                    BadgeImgUri = "picture"
+                });
+                dbContext.SaveChanges();
             }
-            var badge = _balanceFacade.GetBadge(id);
-            Assert.IsTrue(
-                badge.Name.Equals("Officer") && badge.Description.Equals("Buy donuts") &&
-                badge.BadgeImgUri.Equals("mmm"), "Badge was not get successfuly");
+
+            // Act
+            var badge = _balanceFacade.GetBadge(1);
+
+            // Assert
+            Assert.That(badge.Name == badgeName, "Badge was not got.");
         }
+        /// <summary>
+        /// Tests whether listing badges works.
+        /// </summary>
         [Test]
-        public void ListBadgesTest()
+        public void ListBadgesTest1()
         {
-            throw new AssertFailedException();
+            // Arrange
+            const string badgeName1 = "Organizer";
+            const string badgeName2 = "Survivor";
+            using (var dbContext = new ExpenseDbContext(Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
+            {
+                dbContext.Badges.Add(new BadgeModel()
+                {
+                    Name = badgeName1,
+                    Description = "Add your first expense",
+                    BadgeImgUri = "picture"
+                });
+                dbContext.Badges.Add(new BadgeModel()
+                {
+                    Name = badgeName2,
+                    Description = "I will survive",
+                    BadgeImgUri = "picture"
+                });
+                dbContext.SaveChanges();
+            }
+
+            // Act
+            var badges = _balanceFacade.ListBages(new BadgeFilter());
+
+            // Assert
+            Assert.That(badges.Count == 2, "Badges were not listed.");
+        }
+        /// <summary>
+        /// Tests whether BadgeFilter works.
+        /// </summary>
+        [Test]
+        public void ListBadgesTest2()
+        {
+            // Arrange
+            const string badgeName1 = "Organizer";
+            const string badgeName2 = "Survivor";
+            using (var dbContext = new ExpenseDbContext(Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
+            {
+                dbContext.Badges.Add(new BadgeModel()
+                {
+                    Name = badgeName1,
+                    Description = "Add your first expense",
+                    BadgeImgUri = "picture"
+                });
+                dbContext.Badges.Add(new BadgeModel()
+                {
+                    Name = badgeName2,
+                    Description = "I will survive",
+                    BadgeImgUri = "picture"
+                });
+                dbContext.SaveChanges();
+            }
+
+            // Act
+            var badges = _balanceFacade.ListBages(new BadgeFilter {Name = badgeName1});
+
+            // Assert
+            Assert.That(badges.Count == 1, "Badge was not listed.");
         }
         [Test]
         public void CreateAccountBadgeTest()
@@ -239,6 +316,15 @@ namespace ExpenseManager.Business.Tests.Facades
         {
            throw new AssertFailedException();
         }
-    
+        private static BadgeModel GetBadgeByName(string badgeName)
+        {
+            using (
+                var db =
+                    new ExpenseDbContext(
+                        Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
+            {
+                return db.Badges.FirstOrDefault(model => model.Name.Equals(badgeName));
+            }
+        }
     }
 }
