@@ -8,6 +8,7 @@ using ExpenseManager.Business.DataTransferObjects.Filters;
 using ExpenseManager.Business.Facades;
 using ExpenseManager.Database;
 using ExpenseManager.Database.Entities;
+using ExpenseManager.Database.Enums;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NUnit.Framework;
 using Assert = NUnit.Framework.Assert;
@@ -105,10 +106,10 @@ namespace ExpenseManager.Business.Tests.Facades
         [Test]
         public void DeleteItemTest()
         {
+            // Arrange
             Guid accountId;
             Guid typeId;
             Guid infoId;
-            // Arrange
             const string accountName = "ExpenseManagerAccount01";
             const string typeName = "Food";
             var account = new AccountModel
@@ -460,7 +461,52 @@ namespace ExpenseManager.Business.Tests.Facades
         [Test]
         public void DeletePlanTest()
         {
-            throw new AssertFailedException();
+            // Arrange
+            Guid accountId;
+            Guid planId;
+            const string accountName = "ExpenseManagerAccount01";
+            const string typeName = "Food";
+            var account = new AccountModel
+            {
+                Badges = new List<AccountBadgeModel>(),
+                Costs = new List<CostInfoModel>(),
+                Name = accountName
+            };
+            var type = new CostTypeModel
+            {
+                Name = typeName,
+                CostInfoList = new EditableList<CostInfoModel>()
+            };
+            var plan = new PlanModel
+            {
+                Description = "I want money for food!",
+                PlanType = PlanTypeModel.Save,
+                PlannedMoney = 10000,
+                Deadline = DateTime.Today,
+                IsCompleted = false,
+            };
+            using (
+                var db =
+                    new ExpenseDbContext(
+                        Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
+            {
+                db.Accounts.Add(account);
+                db.CostTypes.Add(type);
+                db.SaveChanges();
+                accountId = account.Id;
+                plan.AccountId = accountId;
+                plan.PlannedType = type;
+                db.Plans.Add(plan);
+                db.SaveChanges();
+                planId = plan.Id;
+            }
+
+            // Act
+            _balanceFacade.DeletePlan(planId);
+
+            // Assert
+            var deletedPlan = GetPlanById(planId);
+            Assert.That(deletedPlan == null, "Item was not deleted.");
         }
         [Test]
         public void UpdatePlanTest()
