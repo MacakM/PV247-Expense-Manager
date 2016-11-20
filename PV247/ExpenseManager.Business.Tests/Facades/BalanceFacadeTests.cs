@@ -458,6 +458,9 @@ namespace ExpenseManager.Business.Tests.Facades
             var createdPlan = GetPlanById(planId);
             Assert.That(createdPlan != null, "Plan was not created.");
         }
+        /// <summary>
+        /// Tests plan deletion.
+        /// </summary>
         [Test]
         public void DeletePlanTest()
         {
@@ -508,18 +511,27 @@ namespace ExpenseManager.Business.Tests.Facades
             var deletedPlan = GetPlanById(planId);
             Assert.That(deletedPlan == null, "Item was not deleted.");
         }
+        /// <summary>
+        /// Tests Plan update.
+        /// </summary>
         [Test]
         public void UpdatePlanTest()
         {
             throw new AssertFailedException();
         }
+        /// <summary>
+        /// Test Plan get.
+        /// </summary>
         [Test]
         public void GetPlanTest()
         {
             throw new AssertFailedException();
         }
+        /// <summary>
+        /// Test basic listing of Plans.
+        /// </summary>
         [Test]
-        public void ListPlansTest()
+        public void ListPlansTest1()
         {
             throw new AssertFailedException();
         }
