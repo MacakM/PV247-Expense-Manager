@@ -32,8 +32,13 @@ namespace ExpenseManager.Database.Infrastructure.UnitOfWork
                 }
             }
 
-            // internal DbContext shall not be injected in order to increase persistence separation
-            this.Context = new ExpenseDbContext(((ExpenseManagerUnitOfWorkProvider)provider).ConnectionOptions.Value.ConnectionString);
+            var uowProvider = (ExpenseManagerUnitOfWorkProvider) provider;
+           
+            this.Context = uowProvider.ConnectionOptions == null
+                ? uowProvider.DbContextFactory?.Invoke() as ExpenseDbContext 
+                // internal DbContext shall not be injected in some scenarios in order to increase persistence separation
+                : new ExpenseDbContext(uowProvider.ConnectionOptions.Value.ConnectionString);
+
             hasOwnContext = true;
         }
 

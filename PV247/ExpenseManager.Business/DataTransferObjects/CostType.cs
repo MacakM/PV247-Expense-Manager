@@ -1,17 +1,16 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
 
 namespace ExpenseManager.Business.DataTransferObjects
 {
     /// <summary>
     /// Business layer representation of CostTypeModel object
     /// </summary>
-    public class CostType : BusinessObject<int>
+    public class CostType : BusinessObject<Guid>
     {
         /// <summary>
         /// Name of this type.
         /// </summary>
-        [MaxLength(128)]
         public string Name { get; set; }
         /// <summary>
         /// All costs of this type.

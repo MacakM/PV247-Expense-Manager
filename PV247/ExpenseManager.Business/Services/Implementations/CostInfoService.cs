@@ -21,10 +21,10 @@ namespace ExpenseManager.Business.Services.Implementations
     /// <summary>
     /// Service handles AccountBadge entity operations
     /// </summary>
-    public class CostInfoService : ExpenseManagerQueryAndCrudServiceBase<CostInfoModel, int, CostInfo, CostInfoModelFilter>, ICostInfoService
+    public class CostInfoService : ExpenseManagerQueryAndCrudServiceBase<CostInfoModel, Guid, CostInfo>, ICostInfoService
     {
-        private readonly CostTypeRepository _costTypeRepository;
-        private readonly AccountRepository _accountRepository;
+        private readonly ExpenseManagerRepository<CostTypeModel, Guid> _costTypeRepository;
+        private readonly ExpenseManagerRepository<AccountModel, Guid> _accountRepository;
 
         /// <summary>
         /// 
@@ -45,12 +45,12 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="costTypeRepository"></param>
         /// <param name="accountRepository"></param>
         public CostInfoService(
-            ExpenseManagerQuery<CostInfoModel, CostInfoModelFilter> query,
-            ExpenseManagerRepository<CostInfoModel, int> repository,
+            ExpenseManagerQuery<CostInfoModel> query,
+            ExpenseManagerRepository<CostInfoModel, Guid> repository,
             Mapper expenseManagerMapper,
             IUnitOfWorkProvider unitOfWorkProvider,
-            CostTypeRepository costTypeRepository,
-            AccountRepository accountRepository) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
+            ExpenseManagerRepository<CostTypeModel, Guid> costTypeRepository,
+            ExpenseManagerRepository<AccountModel, Guid> accountRepository) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
         {
             _costTypeRepository = costTypeRepository;
             _accountRepository = accountRepository;
@@ -59,7 +59,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// Creates new cost info object in databse
         /// </summary>
         /// <param name="costInfo"></param>
-        public void CreateCostInfo(CostInfo costInfo)
+        public Guid CreateCostInfo(CostInfo costInfo)
         {
             var costInfoModel = ExpenseManagerMapper.Map<CostInfoModel>(costInfo);
             using (var uow = UnitOfWorkProvider.Create())
@@ -78,6 +78,7 @@ namespace ExpenseManager.Business.Services.Implementations
                 Repository.Insert(costInfoModel);
                 uow.Commit();
             }
+            return costInfoModel.Id;
         }
         /// <summary>
         /// Updates existing cost info
@@ -91,7 +92,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// Deletes cost info specified by cost info
         /// </summary>
         /// <param name="costInfoId"></param>
-        public void DeleteCostInfo(int costInfoId)
+        public void DeleteCostInfo(Guid costInfoId)
         {
             Delete(costInfoId);
         }
@@ -100,7 +101,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// </summary>
         /// <param name="costInfoId">Unique id</param>
         /// <returns>Cost info</returns>
-        public CostInfo GetCostInfo(int costInfoId)
+        public CostInfo GetCostInfo(Guid costInfoId)
         {
             return GetDetail(costInfoId);
         }
@@ -148,25 +149,14 @@ namespace ExpenseManager.Business.Services.Implementations
         /// </summary>
         /// <param name="accountId"></param>
         /// <returns></returns>
-        public decimal GetBalance(int accountId)
+        public decimal GetBalance(Guid accountId)
         {
             Query.Filter = new CostInfoModelFilter { IsIncome = true, Periodicity = PeriodicityModel.None, CreatedTo = DateTime.Now, AccountId = accountId};
             var incomes = GetList();
             Query.Filter = new CostInfoModelFilter { IsIncome = false, Periodicity = PeriodicityModel.None, CreatedTo = DateTime.Now, AccountId = accountId };
             var outcomes = GetList();
 
-            return incomes.Sum(x =>
-            {
-                if (x.Money != null)
-                {
-                    return x.Money.Value;
-                }
-                return 0;
-            }) - outcomes.Sum(x =>
-            {
-                if (x.Money != null) { return x.Money.Value; }
-                return 0;
-            });
+            return incomes.Sum(x =>  x.Money) - outcomes.Sum(x => x.Money);
         }
 
         private void CheckMonthPeriodicities()

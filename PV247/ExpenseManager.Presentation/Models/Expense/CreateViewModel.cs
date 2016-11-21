@@ -29,7 +29,6 @@ namespace ExpenseManager.Presentation.Models.Expense
         /// <summary>
         /// Type of the cost.
         /// </summary>
-        [Required]
-        public int TypeId { get; set; }
+        public Guid TypeId { get; set; }
     }
 }

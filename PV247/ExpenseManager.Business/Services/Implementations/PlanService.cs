@@ -21,7 +21,7 @@ namespace ExpenseManager.Business.Services.Implementations
     /// <summary>
     /// Service handles plan entity operations
     /// </summary>
-    public class PlanService : ExpenseManagerQueryAndCrudServiceBase<PlanModel, int, Plan, PlanModelFilter>, IPlanService
+    public class PlanService : ExpenseManagerQueryAndCrudServiceBase<PlanModel, Guid, Plan>, IPlanService
     {
 
         private readonly CostInfoRepository _costInfoRepository;
@@ -46,7 +46,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="costInfoRepository"></param>
         /// <param name="accountsQuery"></param>
         /// <param name="costInfosQuery"></param>
-        public PlanService(ExpenseManagerQuery<PlanModel, PlanModelFilter> query, ExpenseManagerRepository<PlanModel, int> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider, CostInfoRepository costInfoRepository, ListAccountsQuery accountsQuery, ListCostInfosQuery costInfosQuery) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
+        public PlanService(ExpenseManagerQuery<PlanModel> query, ExpenseManagerRepository<PlanModel, Guid> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider, CostInfoRepository costInfoRepository, ListAccountsQuery accountsQuery, ListCostInfosQuery costInfosQuery) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
         {
             _costInfoRepository = costInfoRepository;
             _accountsQuery = accountsQuery;
@@ -57,9 +57,9 @@ namespace ExpenseManager.Business.Services.Implementations
         /// Creates new plan in databse
         /// </summary>
         /// <param name="plan">Object to be saved to database</param>
-        public void CreatePlan(Plan plan)
+        public Guid CreatePlan(Plan plan)
         {
-            Save(plan);
+            return Save(plan);
         }
         /// <summary>
         /// Updates plan, must have id of updated plan!
@@ -73,7 +73,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// Deletes plen with specified id
         /// </summary>
         /// <param name="planId">Unique id of deleted plan</param>
-        public void DeletePlan(int planId)
+        public void DeletePlan(Guid planId)
         {
             Delete(planId);
         }
@@ -82,7 +82,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// </summary>
         /// <param name="planId">Unique id of plan</param>
         /// <returns></returns>
-        public Plan GetPlan(int planId)
+        public Plan GetPlan(Guid planId)
         {
             return GetDetail(planId);
         }
@@ -117,9 +117,9 @@ namespace ExpenseManager.Business.Services.Implementations
            
             CostInfoModel costInfo = new CostInfoModel();
 
-            if (plan.PlannedMoney != null) costInfo.Money = plan.PlannedMoney.Value;
+            costInfo.Money = plan.PlannedMoney;
             if (plan.AccountId != null) costInfo.AccountId = plan.AccountId.Value;
-            if (plan.PlannedTypeId != null) costInfo.TypeId = plan.PlannedTypeId.Value;
+            costInfo.TypeId = plan.PlannedTypeId;
             costInfo.Created = DateTime.Now;
             costInfo.IsIncome = false;
             costInfo.Description = plan.Description;
@@ -135,7 +135,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="accountId"></param>
         /// <param name="accountBalance"></param>
         /// <returns></returns>
-        public List<Plan> ListAllCloseablePlans(int accountId, decimal accountBalance)
+        public List<Plan> ListAllCloseablePlans(Guid accountId, decimal accountBalance)
         {
              Query.Filter = new PlanModelFilter {AccountId = accountId, PlannedMoneyFrom = accountBalance, PlanType = PlanTypeModel.Save, IsCompleted = false};
             return GetList().ToList();

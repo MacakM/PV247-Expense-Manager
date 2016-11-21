@@ -73,9 +73,6 @@ namespace ExpenseManager.Business.Infrastructure.Mapping.Profiles
             CreateMap<CostTypeFilter, CostTypeModelFilter>()
              .ReverseMap();
 
-            CreateMap<FilterBase, FilterModelBase>()
-             .ReverseMap();
-
             CreateMap<PlanFilter, PlanModelFilter>()
              .ReverseMap();
 

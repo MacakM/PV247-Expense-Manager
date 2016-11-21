@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace ExpenseManager.Business.DataTransferObjects
 {
     /// <summary>
     /// Business layer representation of AccountModel object
     /// </summary>
-    public class Account : BusinessObject<int>
+    public class Account : BusinessObject<Guid>
     {
         /// <summary>
         /// Name of the account.
@@ -62,7 +63,7 @@ namespace ExpenseManager.Business.DataTransferObjects
         /// <returns>This object hashcode</returns>
         public override int GetHashCode()
         {
-            return (Name != null ? Name.GetHashCode() : 0);
+            return Name?.GetHashCode() ?? 0;
         }
     }
 }

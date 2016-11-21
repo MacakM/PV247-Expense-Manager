@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Filters;
 
@@ -7,13 +8,13 @@ namespace ExpenseManager.Business.Services.Interfaces
     /// <summary>
     /// Service handles AccountBadge entity operations
     /// </summary>
-    public interface IAccountBadgeService
+    public interface IAccountBadgeService : IService
     {
         /// <summary>
         /// Add new badge to account by creating new AccountBadge object in database
         /// </summary>
         /// <param name="accountBadge"></param>
-        void CreateAccountBadge(AccountBadge accountBadge);
+        Guid CreateAccountBadge(AccountBadge accountBadge);
         /// <summary>
         /// Updates existing account badge
         /// </summary>
@@ -23,13 +24,13 @@ namespace ExpenseManager.Business.Services.Interfaces
         /// Deletes specified account badge
         /// </summary>
         /// <param name="accountBadgeId"></param>
-        void DeleteAccountBadge(int accountBadgeId);
+        void DeleteAccountBadge(Guid accountBadgeId);
         /// <summary>
         /// Get account badge specified by id
         /// </summary>
         /// <param name="accountBadgeId"></param>
         /// <returns></returns>
-        AccountBadge GetAccountBadge(int accountBadgeId);
+        AccountBadge GetAccountBadge(Guid accountBadgeId);
         /// <summary>
         /// List filtered account badges
         /// </summary>

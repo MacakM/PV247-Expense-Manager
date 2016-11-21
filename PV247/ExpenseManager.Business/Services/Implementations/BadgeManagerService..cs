@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.Services.Interfaces;
 using ExpenseManager.Database.DataAccess.Queries;
 using ExpenseManager.Database.DataAccess.Repositories;
 using ExpenseManager.Database.Entities;
+using ExpenseManager.Database.Filters;
+using ExpenseManager.Database.Infrastructure.Query;
+using ExpenseManager.Database.Infrastructure.Repository;
 
 namespace ExpenseManager.Business.Services.Implementations
 {
@@ -16,11 +17,11 @@ namespace ExpenseManager.Business.Services.Implementations
     public class BadgeManagerService : IBadgeManagerService
     {
 
-        private readonly AccountBadgeRepository _accountBadgeRepository;
-        private readonly ListBadgesQuery _badgesQuery;
-        private readonly ListAccountsQuery _accountsQuery;
+        private readonly ExpenseManagerRepository<AccountBadgeModel, Guid> _accountBadgeRepository;
+        private readonly ExpenseManagerQuery<BadgeModel> _badgesQuery;
+        private readonly ExpenseManagerQuery<AccountModel> _accountsQuery;
        
-        public BadgeManagerService(ListAccountsQuery accountsQuery, AccountBadgeRepository accountBadgeRepository, ListBadgesQuery badgesQuery)
+        public BadgeManagerService(ExpenseManagerQuery<AccountModel> accountsQuery, ExpenseManagerRepository<AccountBadgeModel, Guid> accountBadgeRepository, ExpenseManagerQuery<BadgeModel> badgesQuery)
         {
             _accountsQuery = accountsQuery;
             _accountBadgeRepository = accountBadgeRepository;

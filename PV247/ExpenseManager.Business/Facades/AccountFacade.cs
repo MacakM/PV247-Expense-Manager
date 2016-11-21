@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Enums;
 using ExpenseManager.Business.DataTransferObjects.Filters;
@@ -32,14 +33,15 @@ namespace ExpenseManager.Business.Facades
         /// </summary>
         /// <param name="userRegistration">User registration information</param>
         /// <param name="createAccount"></param>
-        public void RegisterNewUser(User userRegistration, bool createAccount = true)
+        public Guid RegisterNewUser(User userRegistration, bool createAccount = true)
         {
-            _userService.RegisterNewUser(userRegistration);
+            var id = _userService.RegisterNewUser(userRegistration);
 
             if (createAccount)
             {
                 CreateAccount(userRegistration.Id);
             }
+            return id;
         }
 
         /// <summary>
@@ -65,7 +67,7 @@ namespace ExpenseManager.Business.Facades
         /// Delete user specified by userId
         /// </summary>
         /// <param name="userId">Unique user identifier</param>
-        public void DeleteUser(int userId)
+        public void DeleteUser(Guid userId)
         {
             _userService.DeleteUser(userId);
         }
@@ -74,7 +76,7 @@ namespace ExpenseManager.Business.Facades
         /// </summary>
         /// <param name="userId">Unique user identifier</param>
         /// <returns>One user with id == userId</returns>
-        public User GetUser(int userId)
+        public User GetUser(Guid userId)
         {
             return _userService.GetUser(userId);
         }
@@ -95,23 +97,23 @@ namespace ExpenseManager.Business.Facades
         /// Creates new account
         /// </summary>
         /// <param name="account"></param>
-        public void CreateAccount(Account account)
+        public Guid CreateAccount(Account account)
         {
-            _accountService.CreateAccount(account);
+            return _accountService.CreateAccount(account);
         }
         /// <summary>
         /// Creates account for user with given id
         /// </summary>
-        public void CreateAccount(int userId)
+        public Guid CreateAccount(Guid userId)
         {
-            _accountService.CreateAccount(userId);
+            return _accountService.CreateAccount(userId);
         }
 
         /// <summary>
         /// Deletes account by specified unique id
         /// </summary>
         /// <param name="accountId"></param>
-        public void DeleteAccount(int accountId)
+        public void DeleteAccount(Guid accountId)
         {
             _accountService.DeleteAccount(accountId);
         }
@@ -128,7 +130,7 @@ namespace ExpenseManager.Business.Facades
         /// </summary>
         /// <param name="accountId"></param>
         /// <returns></returns>
-        public Account GetAccount(int accountId)
+        public Account GetAccount(Guid accountId)
         {
             return _accountService.GetAccount(accountId);
         }
@@ -148,7 +150,7 @@ namespace ExpenseManager.Business.Facades
         /// <param name="userId"></param>
         /// <param name="accountId"></param>
         /// <param name="accessType"></param>
-        public void AttachAccountToUser(int userId, int accountId, AccountAccessType accessType)
+        public void AttachAccountToUser(Guid userId, Guid accountId, AccountAccessType accessType)
         {
             _accountService.AttachAccountToUser(userId, accountId, accessType);
         }

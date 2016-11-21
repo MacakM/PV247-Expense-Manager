@@ -40,14 +40,19 @@ namespace ExpenseManager.Presentation.Authentication
                 throw new InvalidOperationException("Logged-in user doesn't exists in expensemanagerDB");
             }
 
-            return !user.AccountId.HasValue ? null : _accountFacade.GetAccount(user.AccountId.Value);
+            return _accountFacade.GetAccount(user.AccountId);
         }
 
         /// <inheritdoc />
         public User GetCurrentUser(ClaimsPrincipal principal)
         {
+            // Simpler solution:
+            return _accountFacade.GetCurrentlySignedUser(principal.Identity.Name, true);
+
+            /* temporarily commented out
             var applicationUser = GetCurrentApplicationUser(principal);
             return _accountFacade.GetCurrentlySignedUser(applicationUser.Email, true);
+            */
         }
 
         private ApplicationUser GetCurrentApplicationUser(ClaimsPrincipal principal)

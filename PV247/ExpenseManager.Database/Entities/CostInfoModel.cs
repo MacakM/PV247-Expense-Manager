@@ -9,12 +9,13 @@ namespace ExpenseManager.Database.Entities
     /// <summary>
     /// Represents information about user's costs.
     /// </summary>
-    public class CostInfoModel : IEntity<int>
+    public class CostInfoModel : IEntity<Guid>
     {
         /// <summary>
         /// Id of the cost info.
         /// </summary>
-        public int Id { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid Id { get; set; }
         /// <summary>
         /// State whether set money is income or outcome.
         /// </summary>
@@ -30,7 +31,7 @@ namespace ExpenseManager.Database.Entities
         /// <summary>
         /// Account id.
         /// </summary>
-        public int AccountId { get; set; }
+        public Guid AccountId { get; set; }
         /// <summary>
         /// Date when the cost info was created.
         /// </summary>
@@ -46,7 +47,7 @@ namespace ExpenseManager.Database.Entities
         /// <summary>
         /// Type id.
         /// </summary>
-        public int TypeId { get; set; }
+        public Guid TypeId { get; set; }
         /// <summary>
         /// Type of the cost.
         /// </summary>

@@ -1,3 +1,5 @@
+using System;
+using System.Data.Entity;
 using ExpenseManager.Database.Infrastructure.ConnectionConfiguration;
 using Microsoft.Extensions.Options;
 using Riganti.Utils.Infrastructure.Core;
@@ -9,18 +11,31 @@ namespace ExpenseManager.Database.Infrastructure.UnitOfWork
     /// </summary>
     public class ExpenseManagerUnitOfWorkProvider : UnitOfWorkProviderBase
     {
+        internal Func<DbContext> DbContextFactory { get; }
+
         internal IOptions<ConnectionOptions> ConnectionOptions { get; }
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="connectionOptions">connection options</param>
-        /// <param name="registry">UoW registry</param>
+        /// <param name="registry">Storage for UoW instances</param>
         public ExpenseManagerUnitOfWorkProvider(IOptions<ConnectionOptions> connectionOptions,
             IUnitOfWorkRegistry registry)
             : base(registry)
         {
             ConnectionOptions = connectionOptions;
+        }
+
+        /// <summary>
+        /// Alternative variant with db context factory for injecting custom Db Context (currently used for testing)
+        /// </summary>
+        /// <param name="dbContextFactory">db context factory</param>
+        /// <param name="registry">Storage for UoW instances</param>
+        public ExpenseManagerUnitOfWorkProvider(Func<DbContext> dbContextFactory, IUnitOfWorkRegistry registry)            
+            : base(registry)
+        {
+            DbContextFactory = dbContextFactory;
         }
 
         /// <summary>

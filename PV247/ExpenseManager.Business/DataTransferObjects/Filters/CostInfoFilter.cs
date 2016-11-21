@@ -23,7 +23,7 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters
         /// <summary>
         /// Account id to be filtered with
         /// </summary>
-        public int? AccountId { get; set; }
+        public Guid? AccountId { get; set; }
         /// <summary>
         /// Account name to be filtered with
         /// </summary>
@@ -43,7 +43,7 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters
         /// <summary>
         /// Type id to be filtered with
         /// </summary>
-        public int? TypeId { get; set; }
+        public Guid? TypeId { get; set; }
         /// <summary>
         /// Type name to be 
         /// </summary>

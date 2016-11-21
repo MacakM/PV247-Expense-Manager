@@ -9,17 +9,45 @@ using ExpenseManager.Database.Enums;
 
 namespace ExpenseManager.Database
 {
-    class TestSeedingInitializer : IDatabaseInitializer<ExpenseDbContext>
+    /// <summary>
+    /// Initializer
+    /// </summary>
+    internal class TestSeedingInitializer : IDatabaseInitializer<ExpenseDbContext>
     {
-
+        /// <summary>
+        /// Initialize database
+        /// </summary>
+        /// <param name="context">context</param>
         public void InitializeDatabase(ExpenseDbContext context)
         {
             Seed(context);
         }
 
+        /// <summary>
+        /// Seed
+        /// </summary>
+        /// <param name="context">context</param>
         protected void Seed(ExpenseDbContext context)
         {
             TruncateDB(context);
+            
+            var badge2 = new BadgeModel()
+            {
+                Name = "Officer",
+                BadgeImgUri = "mmm",
+                Description = "Buy donuts"
+            };
+
+            context.Badges.Add(badge2);
+
+            var badge = new BadgeModel()
+            {
+                Name = "Survivor",
+                BadgeImgUri = "hmm",
+                Description = "I will survive"
+            };
+
+            context.Badges.Add(badge);
 
             Random random = new Random();
 
@@ -147,6 +175,7 @@ namespace ExpenseManager.Database
             DeleteAll<CostTypeModel>(context);
             DeleteAll<UserModel>(context);
             DeleteAll<AccountModel>(context);
+            DeleteAll<BadgeModel>(context);
         }
 
         public static void DeleteAll<T>(DbContext context) where T : class

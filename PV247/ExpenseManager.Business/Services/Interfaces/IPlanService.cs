@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Filters;
 
@@ -7,13 +8,13 @@ namespace ExpenseManager.Business.Services.Interfaces
     /// <summary>
     /// Service handles plan entity operations
     /// </summary>
-    public interface IPlanService
+    public interface IPlanService : IService
     {
         /// <summary>
         /// Creates new plan in databse
         /// </summary>
         /// <param name="plan">Object to be saved to database</param>
-        void CreatePlan(Plan plan);
+        Guid CreatePlan(Plan plan);
         /// <summary>
         /// Updates plan, must have id of updated plan!
         /// </summary>
@@ -23,13 +24,13 @@ namespace ExpenseManager.Business.Services.Interfaces
         /// Deletes plen with specified id
         /// </summary>
         /// <param name="planId">Unique id of deleted plan</param>
-        void DeletePlan(int planId);
+        void DeletePlan(Guid planId);
         /// <summary>
         /// Get specific plan specified by unique id
         /// </summary>
         /// <param name="planId">Unique id of plan</param>
         /// <returns></returns>
-        Plan GetPlan(int planId);
+        Plan GetPlan(Guid planId);
         /// <summary>
         /// Lists all plans that match filters criterias
         /// </summary>
@@ -42,7 +43,7 @@ namespace ExpenseManager.Business.Services.Interfaces
        /// <param name="accountId"></param>
        /// <param name="accountBalance"></param>
        /// <returns></returns>
-        List<Plan> ListAllCloseablePlans(int accountId, decimal accountBalance);
+        List<Plan> ListAllCloseablePlans(Guid accountId, decimal accountBalance);
         /// <summary>
         /// Transfers plan into cost
         /// </summary>

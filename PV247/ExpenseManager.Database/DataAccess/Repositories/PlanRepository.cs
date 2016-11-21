@@ -1,4 +1,5 @@
-﻿using ExpenseManager.Database.Entities;
+﻿using System;
+using ExpenseManager.Database.Entities;
 using ExpenseManager.Database.Infrastructure.Repository;
 using Riganti.Utils.Infrastructure.Core;
 
@@ -7,7 +8,7 @@ namespace ExpenseManager.Database.DataAccess.Repositories
     /// <summary>
     /// Implementation of Repository for Plan entity.
     /// </summary>
-    public class PlanRepository : ExpenseManagerRepository<PlanModel, int>
+    public class PlanRepository : ExpenseManagerRepository<PlanModel, Guid>
     {
         /// <summary>
         /// Create repository.
