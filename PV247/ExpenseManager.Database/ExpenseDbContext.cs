@@ -8,6 +8,7 @@ namespace ExpenseManager.Database
 {
     internal class ExpenseDbContext : DbContext
     {
+
         public ExpenseDbContext(DbConnection connection) : base(connection, true) { }
 
         public ExpenseDbContext(string nameOrConnectionString) : base(nameOrConnectionString) { }
