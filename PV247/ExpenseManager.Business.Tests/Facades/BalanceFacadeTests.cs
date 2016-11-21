@@ -509,7 +509,7 @@ namespace ExpenseManager.Business.Tests.Facades
 
             // Assert
             var deletedPlan = GetPlanById(planId);
-            Assert.That(deletedPlan == null, "Item was not deleted.");
+            Assert.That(deletedPlan == null, "Plan was not deleted.");
         }
         /// <summary>
         /// Tests Plan update.
@@ -517,7 +517,64 @@ namespace ExpenseManager.Business.Tests.Facades
         [Test]
         public void UpdatePlanTest()
         {
-            throw new AssertFailedException();
+            // Arrange
+            Guid accountId;
+            Guid planId;
+            Guid typeId;
+            const string accountName = "ExpenseManagerAccount01";
+            const string typeName = "Food";
+            var account = new AccountModel
+            {
+                Badges = new List<AccountBadgeModel>(),
+                Costs = new List<CostInfoModel>(),
+                Name = accountName
+            };
+            var type = new CostTypeModel
+            {
+                Name = typeName,
+                CostInfoList = new EditableList<CostInfoModel>()
+            };
+            var plan = new PlanModel
+            {
+                Description = "I want money for food!",
+                PlanType = PlanTypeModel.Save,
+                PlannedMoney = 10000,
+                Deadline = DateTime.Today,
+                IsCompleted = false,
+            };
+            using (
+                var db =
+                    new ExpenseDbContext(
+                        Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
+            {
+                db.Accounts.Add(account);
+                db.CostTypes.Add(type);
+                db.SaveChanges();
+                accountId = account.Id;
+                typeId = plan.Id;
+                plan.AccountId = accountId;
+                plan.PlannedType = type;
+                db.Plans.Add(plan);
+                db.SaveChanges();
+                planId = plan.Id;
+            }
+
+            // Act
+            _balanceFacade.UpdatePlan(new Plan
+            {
+                Id = planId,
+                Description = "I want money for games!",
+                PlanType = PlanType.Save,
+                PlannedMoney = 10000,
+                Deadline = DateTime.Today,
+                IsCompleted = false,
+                AccountId = accountId,
+                PlannedTypeId = typeId
+            });
+
+            // Assert
+            var updatedPlan = GetPlanById(planId);
+            Assert.That(updatedPlan.Description == "I want money for games!", "Plan was not updated.");
         }
         /// <summary>
         /// Test Plan get.
@@ -525,7 +582,53 @@ namespace ExpenseManager.Business.Tests.Facades
         [Test]
         public void GetPlanTest()
         {
-            throw new AssertFailedException();
+            // Arrange
+            Guid accountId;
+            Guid planId;
+            Guid typeId;
+            const string accountName = "ExpenseManagerAccount01";
+            const string typeName = "Food";
+            var account = new AccountModel
+            {
+                Badges = new List<AccountBadgeModel>(),
+                Costs = new List<CostInfoModel>(),
+                Name = accountName
+            };
+            var type = new CostTypeModel
+            {
+                Name = typeName,
+                CostInfoList = new EditableList<CostInfoModel>()
+            };
+            var plan = new PlanModel
+            {
+                Description = "I want money for food!",
+                PlanType = PlanTypeModel.Save,
+                PlannedMoney = 10000,
+                Deadline = DateTime.Today,
+                IsCompleted = false,
+            };
+            using (
+                var db =
+                    new ExpenseDbContext(
+                        Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
+            {
+                db.Accounts.Add(account);
+                db.CostTypes.Add(type);
+                db.SaveChanges();
+                accountId = account.Id;
+                typeId = plan.Id;
+                plan.AccountId = accountId;
+                plan.PlannedType = type;
+                db.Plans.Add(plan);
+                db.SaveChanges();
+                planId = plan.Id;
+            }
+
+            // Act
+            var myPlan = _balanceFacade.GetPlan(planId);
+
+            // Assert
+            Assert.That(myPlan != null, "Plan was not got.");
         }
         /// <summary>
         /// Test basic listing of Plans.
