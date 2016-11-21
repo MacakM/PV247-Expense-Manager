@@ -94,24 +94,24 @@ namespace ExpenseManager.Presentation.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return RedirectWithError("Invalid input data");
+                return RedirectWithError(ExpenseManagerResource.InvalidInputData);
             }
 
             var user = GetUserFromEmail(model.Email);
             if (user == null)
             {
-                return RedirectWithError("User with given email doesn't exits");
+                return RedirectWithError(ExpenseManagerResource.EmailDoesntExist);
             }
-            if (user.AccountId != null)
+            if (user.AccountId != Guid.Empty) // todo this might not be best check
             {
-                return RedirectWithError("User with given email already has an account");
+                return RedirectWithError(ExpenseManagerResource.AlreadyHasAccount);
             }
 
             var account = _currentAccountProvider.GetCurrentAccount(HttpContext.User);
 
             _accountFacade.AttachAccountToUser(user.Id, account.Id, model.AccessType);
 
-            TempData["SuccessMessage"] = "Access to user was successfully granted";
+            TempData["SuccessMessage"] = ExpenseManagerResource.AccessGranted;
             return RedirectToAction("Index");
 
         }
@@ -147,13 +147,13 @@ namespace ExpenseManager.Presentation.Controllers
 
             if (account != null)
             {
-                return RedirectWithError("You already have an account, you can't create new one");
+                return RedirectWithError(ExpenseManagerResource.YouHaveAccount);
             }
 
             var user = _currentAccountProvider.GetCurrentUser(HttpContext.User);
             _accountFacade.CreateAccount(user.Id);
 
-            TempData["SuccessMessage"] = "Account successfuly created";
+            TempData["SuccessMessage"] = ExpenseManagerResource.AccessGranted;
             return RedirectToAction("Index", "Expense");
         }
     }

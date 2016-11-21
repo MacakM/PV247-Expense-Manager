@@ -96,7 +96,7 @@ namespace ExpenseManager.Presentation.Controllers
                     _logger.LogWarning(2, "User account locked out.");
                     return View("Lockout");
                 }
-                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                ModelState.AddModelError(string.Empty, ExpenseManagerResource.InvalidLoginAttempt);
                 return View(model);
             }
 
@@ -188,7 +188,7 @@ namespace ExpenseManager.Presentation.Controllers
                 return RedirectToAction("NoAccount", "AccountSettings");
             }
 
-            TempData["ErrorMessage"] = "Access denied";
+            TempData["ErrorMessage"] = ExpenseManagerResource.AccessDenied;
             return RedirectToAction("Index", "Error");
         }
 
@@ -228,7 +228,7 @@ namespace ExpenseManager.Presentation.Controllers
         {
             if (remoteError != null)
             {
-                ModelState.AddModelError(string.Empty, $"Error from external provider: {remoteError}");
+                ModelState.AddModelError(string.Empty, ExpenseManagerResource.ErrorFromExteralProvider + remoteError);
                 return View(nameof(Login));
             }
             var info = await _signInManager.GetExternalLoginInfoAsync();
@@ -348,9 +348,6 @@ namespace ExpenseManager.Presentation.Controllers
                 return View("Error");
             }
 
-            var message = "Your security code is: " + code;
-            
-
             return RedirectToAction(nameof(VerifyCode), new { Provider = model.SelectedProvider, ReturnUrl = model.ReturnUrl, RememberMe = model.RememberMe });
         }
 
@@ -404,7 +401,7 @@ namespace ExpenseManager.Presentation.Controllers
             }
             else
             {
-                ModelState.AddModelError(string.Empty, "Invalid code.");
+                ModelState.AddModelError(string.Empty, ExpenseManagerResource.InvalidCode);
                 return View(model);
             }
         }

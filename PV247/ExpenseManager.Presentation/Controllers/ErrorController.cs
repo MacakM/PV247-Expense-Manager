@@ -18,7 +18,7 @@ namespace ExpenseManager.Presentation.Controllers
         /// </summary>
         public IActionResult Index()
         {
-            var message = TempData["ErrorMessage"] ?? "Unknown error occured";
+            var message = TempData["ErrorMessage"] ?? ExpenseManagerResource.UnknownError;
 
             return View(message);
         }

@@ -32,12 +32,12 @@ namespace ExpenseManager.Presentation.Controllers
         public async Task<IActionResult> Index(ManageMessageId? message = null)
         {
             ViewData["StatusMessage"] =
-                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
-                : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
-                : message == ManageMessageId.SetTwoFactorSuccess ? "Your two-factor authentication provider has been set."
-                : message == ManageMessageId.Error ? "An error has occurred."
-                : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
-                : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
+                message == ManageMessageId.ChangePasswordSuccess ? ExpenseManagerResource.PasswordChanged
+                : message == ManageMessageId.SetPasswordSuccess ? ExpenseManagerResource.PasswordSet
+                : message == ManageMessageId.SetTwoFactorSuccess ? ExpenseManagerResource.TwoFactorAuthProviderSet
+                : message == ManageMessageId.Error ? ExpenseManagerResource.UnknownError
+                : message == ManageMessageId.AddPhoneSuccess ? ExpenseManagerResource.PhoneNumberAdded
+                : message == ManageMessageId.RemovePhoneSuccess ? ExpenseManagerResource.PhoneNumberRemoved
                 : "";
 
             var user = await GetCurrentUserAsync();
@@ -115,9 +115,9 @@ namespace ExpenseManager.Presentation.Controllers
         public async Task<IActionResult> ManageLogins(ManageMessageId? message = null)
         {
             ViewData["StatusMessage"] =
-                message == ManageMessageId.RemoveLoginSuccess ? "The external login was removed."
-                : message == ManageMessageId.AddLoginSuccess ? "The external login was added."
-                : message == ManageMessageId.Error ? "An error has occurred."
+                message == ManageMessageId.RemoveLoginSuccess ? ExpenseManagerResource.ExternalLoginRemoved
+                : message == ManageMessageId.AddLoginSuccess ? ExpenseManagerResource.ExternalLoginAdded
+                : message == ManageMessageId.Error ? ExpenseManagerResource.UnknownError
                 : "";
             var user = await GetCurrentUserAsync();
             if (user == null)

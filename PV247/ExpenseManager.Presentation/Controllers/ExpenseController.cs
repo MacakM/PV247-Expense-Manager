@@ -87,7 +87,7 @@ namespace ExpenseManager.Presentation.Controllers
 
             if (!ModelState.IsValid || costType == null)
             {
-                TempData["CreateExpenseMessage"] = "Invalid input data";
+                TempData["CreateExpenseMessage"] = ExpenseManagerResource.InvalidInputData;
                 return RedirectToAction("Create");
             }
 
@@ -101,7 +101,7 @@ namespace ExpenseManager.Presentation.Controllers
 
             _balanceFacade.CreateItem(costInfo);
 
-            TempData["SuccessMessage"] = "Expense successfully created";
+            TempData["SuccessMessage"] = ExpenseManagerResource.ExpenseCreated;
 
             return RedirectToAction("Index");
         }
@@ -128,7 +128,7 @@ namespace ExpenseManager.Presentation.Controllers
 
             if (!ModelState.IsValid || costType == null)
             {
-                TempData["CreateExpenseMessage"] = "Invalid input data";
+                TempData["CreateExpenseMessage"] = ExpenseManagerResource.InvalidInputData;
                 return RedirectToAction("CreatePermanentExpense");
             }
 
@@ -141,7 +141,7 @@ namespace ExpenseManager.Presentation.Controllers
 
             _balanceFacade.CreateItem(costInfo);
 
-            TempData["SuccessMessage"] = "Expense successfully created";
+            TempData["SuccessMessage"] = ExpenseManagerResource.ExpenseCreated;
 
             return RedirectToAction("Index", "AccountSettings");
         }
@@ -161,12 +161,12 @@ namespace ExpenseManager.Presentation.Controllers
 
             if (costInfo == null || costInfo.AccountId != account.Id)
             {
-                return RedirectWithError("Expense could not be deleted, it probably doesn't exist");
+                return RedirectWithError(ExpenseManagerResource.ExpenseNotDeleted);
             }
 
             _balanceFacade.DeleteItem(id);
 
-            TempData["SuccessMessage"] = "Expense sucessfully deleted";
+            TempData["SuccessMessage"] = ExpenseManagerResource.ExpenseDeleted;
             return Redirect(returnRedirect);
         }
 
