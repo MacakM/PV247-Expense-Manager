@@ -66,6 +66,7 @@ namespace ExpenseManager.Database.Infrastructure.UnitOfWork
             catch (Exception ex)
             {
                Debug.WriteLine("An exception was thrown while performing SaveChanges():" + ex.Message);
+               throw;
             }
 
         }
