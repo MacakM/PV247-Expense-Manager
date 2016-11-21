@@ -11,9 +11,9 @@ namespace ExpenseManager.Database.Migrations
                 "dbo.AccountBadgeModels",
                 c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
-                        AccountId = c.Int(nullable: false),
-                        BadgeId = c.Int(nullable: false),
+                        Id = c.Guid(nullable: false, identity: true),
+                        AccountId = c.Guid(nullable: false),
+                        BadgeId = c.Guid(nullable: false),
                         Achieved = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
@@ -26,7 +26,7 @@ namespace ExpenseManager.Database.Migrations
                 "dbo.AccountModels",
                 c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
+                        Id = c.Guid(nullable: false, identity: true),
                         Name = c.String(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
@@ -35,13 +35,13 @@ namespace ExpenseManager.Database.Migrations
                 "dbo.CostInfoModels",
                 c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
+                        Id = c.Guid(nullable: false, identity: true),
                         IsIncome = c.Boolean(nullable: false),
                         Money = c.Decimal(nullable: false, precision: 18, scale: 2),
                         Description = c.String(),
-                        AccountId = c.Int(nullable: false),
+                        AccountId = c.Guid(nullable: false),
                         Created = c.DateTime(nullable: false),
-                        TypeId = c.Int(nullable: false),
+                        TypeId = c.Guid(nullable: false),
                         Periodicity = c.Int(),
                         PeriodicMultiplicity = c.Int(),
                     })
@@ -55,7 +55,7 @@ namespace ExpenseManager.Database.Migrations
                 "dbo.CostTypeModels",
                 c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
+                        Id = c.Guid(nullable: false, identity: true),
                         Name = c.String(maxLength: 128),
                     })
                 .PrimaryKey(t => t.Id);
@@ -64,15 +64,15 @@ namespace ExpenseManager.Database.Migrations
                 "dbo.PlanModels",
                 c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
-                        AccountId = c.Int(nullable: false),
+                        Id = c.Guid(nullable: false, identity: true),
+                        AccountId = c.Guid(nullable: false),
                         Description = c.String(maxLength: 256),
                         PlanType = c.Int(nullable: false),
                         PlannedMoney = c.Decimal(nullable: false, precision: 18, scale: 2),
                         Deadline = c.DateTime(),
                         Start = c.DateTime(),
                         IsCompleted = c.Boolean(nullable: false),
-                        PlannedType_Id = c.Int(),
+                        PlannedType_Id = c.Guid(),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.AccountModels", t => t.AccountId, cascadeDelete: true)
@@ -84,11 +84,11 @@ namespace ExpenseManager.Database.Migrations
                 "dbo.UserModels",
                 c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
+                        Id = c.Guid(nullable: false, identity: true),
                         Name = c.String(nullable: false),
                         Email = c.String(nullable: false),
                         AccessType = c.Int(nullable: false),
-                        Account_Id = c.Int(),
+                        Account_Id = c.Guid(),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.AccountModels", t => t.Account_Id)
@@ -98,7 +98,7 @@ namespace ExpenseManager.Database.Migrations
                 "dbo.BadgeModels",
                 c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
+                        Id = c.Guid(nullable: false, identity: true),
                         Name = c.String(nullable: false),
                         Description = c.String(nullable: false, maxLength: 256),
                         BadgeImgUri = c.String(nullable: false, maxLength: 1024),
