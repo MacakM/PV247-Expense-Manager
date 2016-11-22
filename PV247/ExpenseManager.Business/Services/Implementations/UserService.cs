@@ -26,15 +26,15 @@ namespace ExpenseManager.Business.Services.Implementations
         private readonly UserRepository _userRepository;
 
         /// <summary>
-        /// 
+        /// Please note that usage of concrete type for UserRepository is used on purpose
         /// </summary>
         /// <param name="query"></param>
         /// <param name="repository"></param>
         /// <param name="expenseManagerMapper"></param>
         /// <param name="unitOfWorkProvider"></param>
-        public UserService(ExpenseManagerQuery<UserModel> query, ExpenseManagerRepository<UserModel, Guid> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
+        public UserService(ExpenseManagerQuery<UserModel> query, UserRepository repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
         {
-            _userRepository = repository as UserRepository;
+            _userRepository = repository;
         }
 
         /// <summary>
