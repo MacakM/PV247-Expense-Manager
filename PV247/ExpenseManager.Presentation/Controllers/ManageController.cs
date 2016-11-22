@@ -9,6 +9,9 @@ using ExpenseManager.Presentation.Models.ManageViewModels;
 
 namespace ExpenseManager.Presentation.Controllers
 {
+    /// <summary>
+    /// Controller for managing user
+    /// </summary>
     [Authorize]
     public class ManageController : Controller
     {
@@ -16,22 +19,31 @@ namespace ExpenseManager.Presentation.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger _logger;
 
+        /// <summary>
+        /// Constctructor
+        /// </summary>
+        /// <param name="userManager"></param>
+        /// <param name="signInManager"></param>
+        /// <param name="loggerFactory"></param>
         public ManageController(
-        UserManager<ApplicationUser> userManager,
-        SignInManager<ApplicationUser> signInManager,
-        ILoggerFactory loggerFactory)
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager,
+            ILoggerFactory loggerFactory)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = loggerFactory.CreateLogger<ManageController>();
         }
 
-        //
-        // GET: /Manage/Index
+        /// <summary>
+        /// GET: /Manage/Index
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> Index(ManageMessageId? message = null)
         {
-            ViewData["StatusMessage"] =
+            var statusMessage =
                 message == ManageMessageId.ChangePasswordSuccess ? ExpenseManagerResource.PasswordChanged
                 : message == ManageMessageId.SetPasswordSuccess ? ExpenseManagerResource.PasswordSet
                 : message == ManageMessageId.SetTwoFactorSuccess ? ExpenseManagerResource.TwoFactorAuthProviderSet
@@ -43,7 +55,7 @@ namespace ExpenseManager.Presentation.Controllers
             var user = await GetCurrentUserAsync();
             if (user == null)
             {
-                return View("Error");
+                return RedirectToAction("Index", "Error");
             }
             var model = new IndexViewModel
             {
@@ -51,13 +63,17 @@ namespace ExpenseManager.Presentation.Controllers
                 PhoneNumber = await _userManager.GetPhoneNumberAsync(user),
                 TwoFactor = await _userManager.GetTwoFactorEnabledAsync(user),
                 Logins = await _userManager.GetLoginsAsync(user),
-                BrowserRemembered = await _signInManager.IsTwoFactorClientRememberedAsync(user)
+                BrowserRemembered = await _signInManager.IsTwoFactorClientRememberedAsync(user),
+                StatusMessage = statusMessage
             };
             return View(model);
         }
 
-        //
-        // POST: /Manage/RemoveLogin
+        /// <summary>
+        /// POST: /Manage/RemoveLogin
+        /// </summary>
+        /// <param name="account"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> RemoveLogin(RemoveLoginViewModel account)
@@ -77,8 +93,10 @@ namespace ExpenseManager.Presentation.Controllers
         }
 
 
-        //
-        // POST: /Manage/EnableTwoFactorAuthentication
+        /// <summary>
+        /// POST: /Manage/EnableTwoFactorAuthentication
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EnableTwoFactorAuthentication()
@@ -93,8 +111,10 @@ namespace ExpenseManager.Presentation.Controllers
             return RedirectToAction(nameof(Index), "Manage");
         }
 
-        //
-        // POST: /Manage/DisableTwoFactorAuthentication
+        /// <summary>
+        /// POST: /Manage/DisableTwoFactorAuthentication
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DisableTwoFactorAuthentication()
@@ -110,11 +130,15 @@ namespace ExpenseManager.Presentation.Controllers
         }
 
 
-        //GET: /Manage/ManageLogins
+        /// <summary>
+        /// GET: /Manage/ManageLogins
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> ManageLogins(ManageMessageId? message = null)
         {
-            ViewData["StatusMessage"] =
+            var statusMessage =
                 message == ManageMessageId.RemoveLoginSuccess ? ExpenseManagerResource.ExternalLoginRemoved
                 : message == ManageMessageId.AddLoginSuccess ? ExpenseManagerResource.ExternalLoginAdded
                 : message == ManageMessageId.Error ? ExpenseManagerResource.UnknownError
@@ -126,16 +150,21 @@ namespace ExpenseManager.Presentation.Controllers
             }
             var userLogins = await _userManager.GetLoginsAsync(user);
             var otherLogins = _signInManager.GetExternalAuthenticationSchemes().Where(auth => userLogins.All(ul => auth.AuthenticationScheme != ul.LoginProvider)).ToList();
-            ViewData["ShowRemoveButton"] = user.PasswordHash != null || userLogins.Count > 1;
+            var showRemoveButton = user.PasswordHash != null || userLogins.Count > 1;
             return View(new ManageLoginsViewModel
             {
                 CurrentLogins = userLogins,
-                OtherLogins = otherLogins
+                OtherLogins = otherLogins,
+                ShowRemoveButton = showRemoveButton,
+                StatusMessage = statusMessage
             });
         }
 
-        //
-        // POST: /Manage/LinkLogin
+        /// <summary>
+        /// POST: /Manage/LinkLogin
+        /// </summary>
+        /// <param name="provider"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult LinkLogin(string provider)
@@ -146,8 +175,10 @@ namespace ExpenseManager.Presentation.Controllers
             return Challenge(properties, provider);
         }
 
-        //
-        // GET: /Manage/LinkLoginCallback
+        /// <summary>
+        /// GET: /Manage/LinkLoginCallback
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult> LinkLoginCallback()
         {

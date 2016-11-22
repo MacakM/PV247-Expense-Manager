@@ -30,5 +30,10 @@ namespace ExpenseManager.Presentation.Models.Expense
         /// Type of the cost.
         /// </summary>
         public Guid TypeId { get; set; }
+
+        /// <summary>
+        /// Cost types to choose
+        /// </summary>
+        public List<CostType.IndexViewModel> CostTypes { get; set; }
     }
 }

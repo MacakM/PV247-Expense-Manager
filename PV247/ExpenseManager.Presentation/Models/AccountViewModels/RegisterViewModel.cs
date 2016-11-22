@@ -37,5 +37,10 @@ namespace ExpenseManager.Presentation.Models.AccountViewModels
         /// </summary>
         [Required]
         public bool CreateAccount { get; set; }
+
+        /// <summary>
+        /// URL to redirect to after user is authenticated
+        /// </summary>
+        public string ReturnUrl { get; set; }
     }
 }

@@ -49,5 +49,10 @@ namespace ExpenseManager.Presentation.Models.Expense
         /// </summary>
         [Required]
         public bool IsIncome { get; set; }
+
+        /// <summary>
+        /// Cost types to choose
+        /// </summary>
+        public List<CostType.IndexViewModel> CostTypes { get; set; }
     }
 }

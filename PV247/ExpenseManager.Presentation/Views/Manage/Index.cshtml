@@ -1,10 +1,13 @@
-﻿@model IndexViewModel
-@{
-    ViewData["Title"] = "Manage your account";
+﻿@model ExpenseManager.Presentation.Models.ManageViewModels.IndexViewModel
+
+
+@section title
+{
+    Manage your account
 }
 
-<h2>@ViewData["Title"].</h2>
-<p class="text-success">@ViewData["StatusMessage"]</p>
+<h2>Manage your account</h2>
+<p class="text-success">@Model.StatusMessage</p>
 
 <div>
     <h4>Change your account settings</h4>

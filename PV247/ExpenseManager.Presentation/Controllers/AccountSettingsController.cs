@@ -49,9 +49,13 @@ namespace ExpenseManager.Presentation.Controllers
         public IActionResult Index()
         {
             var account = _currentAccountProvider.GetCurrentAccount(HttpContext.User);
-            ViewData["expenses"] = GetAllPermanentExpenses(account);
-            ViewData["usersWithAccess"] = GetAllUsersWithAccess(account);
-            return View();
+            var model = new AddAccessViewModel()
+            {
+                Expenses = GetAllPermanentExpenses(account),
+                UsersWithAccess = GetAllUsersWithAccess(account)
+            };
+
+            return View(model);
         }
 
         private List<IndexViewModel> GetAllUsersWithAccess(Account account)
@@ -113,7 +117,6 @@ namespace ExpenseManager.Presentation.Controllers
 
             TempData["SuccessMessage"] = ExpenseManagerResource.AccessGranted;
             return RedirectToAction("Index");
-
         }
 
         private User GetUserFromEmail(string email)
@@ -153,7 +156,7 @@ namespace ExpenseManager.Presentation.Controllers
             var user = _currentAccountProvider.GetCurrentUser(HttpContext.User);
             _accountFacade.CreateAccount(user.Id);
 
-            TempData["SuccessMessage"] = ExpenseManagerResource.AccessGranted;
+            TempData["SuccessMessage"] = ExpenseManagerResource.AccountCreated;
             return RedirectToAction("Index", "Expense");
         }
     }

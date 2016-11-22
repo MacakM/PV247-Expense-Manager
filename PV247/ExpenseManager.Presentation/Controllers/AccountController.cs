@@ -60,8 +60,11 @@ namespace ExpenseManager.Presentation.Controllers
         [AllowAnonymous]
         public IActionResult Login(string returnUrl = null)
         {
-            ViewData["ReturnUrl"] = returnUrl;
-            return View();
+            var model = new LoginViewModel()
+            {
+                ReturnUrl = returnUrl
+            };
+            return View(model);
         }
 
         /// <summary>
@@ -76,7 +79,7 @@ namespace ExpenseManager.Presentation.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
         {
-            ViewData["ReturnUrl"] = returnUrl;
+            model.ReturnUrl = returnUrl;
             if (ModelState.IsValid)
             {
                 // This doesn't count login failures towards account lockout
@@ -114,8 +117,11 @@ namespace ExpenseManager.Presentation.Controllers
         [AllowAnonymous]
         public IActionResult Register(string returnUrl = null)
         {
-            ViewData["ReturnUrl"] = returnUrl;
-            return View();
+            var model = new RegisterViewModel()
+            {
+                ReturnUrl = returnUrl
+            };
+            return View(model);
         }
 
         /// <summary>
@@ -130,7 +136,7 @@ namespace ExpenseManager.Presentation.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
         {
-            ViewData["ReturnUrl"] = returnUrl;
+            model.ReturnUrl = returnUrl;
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
@@ -253,10 +259,14 @@ namespace ExpenseManager.Presentation.Controllers
                 return View("Lockout");
             }
             // If the user does not have an account, then ask the user to create an account.
-            ViewData["ReturnUrl"] = returnUrl;
-            ViewData["LoginProvider"] = info.LoginProvider;
             var email = info.Principal.FindFirstValue(ClaimTypes.Email);
-            return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = email });
+            var model = new ExternalLoginConfirmationViewModel()
+            {
+                Email = email,
+                ReturnUrl = returnUrl,
+                LoginProvider = info.LoginProvider
+            };
+            return View("ExternalLoginConfirmation", model);
         }
 
         /// <summary>
@@ -296,7 +306,7 @@ namespace ExpenseManager.Presentation.Controllers
                 AddErrors(result);
             }
 
-            ViewData["ReturnUrl"] = returnUrl;
+            model.ReturnUrl = returnUrl;
             return View(model);
         }
 

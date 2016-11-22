@@ -61,7 +61,6 @@ namespace ExpenseManager.Presentation.Controllers
         {
             TempData["ErrorMessage"] = message;
             return RedirectToAction("Index", "Error");
-
         }
     }
 }

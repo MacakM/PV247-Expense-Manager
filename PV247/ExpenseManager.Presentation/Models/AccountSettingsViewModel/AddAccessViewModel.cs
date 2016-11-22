@@ -1,5 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using ExpenseManager.Business.DataTransferObjects.Enums;
+using ExpenseManager.Presentation.Models.Expense;
 
 namespace ExpenseManager.Presentation.Models.AccountSettingsViewModel
 {
@@ -20,5 +22,15 @@ namespace ExpenseManager.Presentation.Models.AccountSettingsViewModel
         /// </summary>
         [Required]
         public AccountAccessType AccessType { get; set; }
+
+        /// <summary>
+        /// Expenses of current user
+        /// </summary>
+        public List<IndexPermanentExpenseViewModel> Expenses { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public List<User.IndexViewModel> UsersWithAccess { get; set; }
     }
 }

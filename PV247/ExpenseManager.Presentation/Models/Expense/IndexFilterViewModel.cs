@@ -39,5 +39,20 @@ namespace ExpenseManager.Presentation.Models.Expense
         /// Number of page to display
         /// </summary>
         public int? PageNumber { get; set; }
+
+        /// <summary>
+        /// Currently displayed expenses
+        /// </summary>
+        public List<IndexViewModel> Expenses { get; set; }
+
+        /// <summary>
+        /// Number of pages with current filtering
+        /// </summary>
+        public int PageCount { get; set; }
+
+        /// <summary>
+        /// Cost types to filter by
+        /// </summary>
+        public List<CostType.IndexViewModel> CostTypes { get; set; }
     }
 }

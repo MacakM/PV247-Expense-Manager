@@ -11,8 +11,6 @@
 }
 
 @{
-    List<IndexPermanentExpenseViewModel> expenses = (List<IndexPermanentExpenseViewModel>) ViewData["expenses"];
-    List<IndexViewModel> usersWithAccess = (List<IndexViewModel>) ViewData["usersWithAccess"];
     IndexViewModel user = (IndexViewModel)ViewData["currentUser"];
 }
 
@@ -24,7 +22,7 @@
             <th>Email</th>
             <th>Access type</th>
         </tr>
-        @foreach (var userWithAccess in usersWithAccess)
+        @foreach (var userWithAccess in Model.UsersWithAccess)
         {
             <tr>
                 <td>@userWithAccess.Email</td>
@@ -86,7 +84,7 @@
                 <th class="text-center">Delete</th>
             }
         </tr>
-        @foreach (var expense in expenses)
+        @foreach (var expense in Model.Expenses)
         {
             <tr>
                 <td>@expense.TypeName</td>

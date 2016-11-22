@@ -57,9 +57,9 @@ namespace ExpenseManager.Presentation.Controllers
                 PageSize = NumberOfExpensesPerPage
             };
             
-            ViewData["indexViewModels"] = GetFilteredExpenses(filter);
-            ViewData["pageCount"] = (int) Math.Ceiling(_balanceFacade.GetCostInfosCount(filter)/ (double) NumberOfExpensesPerPage);
-            ViewData["costTypes"] = GetAllCostTypes();
+            filterModel.Expenses = GetFilteredExpenses(filter);
+            filterModel.PageCount = (int)Math.Ceiling(_balanceFacade.GetCostInfosCount(filter) / (double)NumberOfExpensesPerPage);
+            filterModel.CostTypes = GetAllCostTypes();
             return View(filterModel);
         }
 
@@ -70,8 +70,11 @@ namespace ExpenseManager.Presentation.Controllers
         [Authorize(Policy = "HasFullRights")]
         public IActionResult Create()
         {
-            ViewData["costTypes"] = GetAllCostTypes();
-            return View();
+            var model = new CreateViewModel
+            {
+                CostTypes = GetAllCostTypes()
+            };
+            return View(model);
         }
 
 
@@ -112,8 +115,11 @@ namespace ExpenseManager.Presentation.Controllers
         [Authorize(Policy = "HasFullRights")]
         public IActionResult CreatePermanentExpense()
         {
-            ViewData["costTypes"] = GetAllCostTypes();
-            return View();
+            var model = new CreatePermanentExpenseViewModel
+            {
+                CostTypes = GetAllCostTypes()
+            };
+            return View(model);
         }
 
         /// <summary>
@@ -137,7 +143,6 @@ namespace ExpenseManager.Presentation.Controllers
             var account = _currentAccountProvider.GetCurrentAccount(HttpContext.User);
 
             costInfo.AccountId = account.Id;
-            costInfo.Created = DateTime.Now;
 
             _balanceFacade.CreateItem(costInfo);
 

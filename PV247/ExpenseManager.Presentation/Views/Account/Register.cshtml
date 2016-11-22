@@ -9,7 +9,7 @@
     Register
 }
 
-<form asp-controller="Account" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
+<form asp-controller="Account" asp-action="Register" asp-route-returnurl="@Model.ReturnUrl" method="post" class="form-horizontal">
     <h3>Create a new account.</h3>
     <hr />
     <div asp-validation-summary="All" class="text-danger"></div>
