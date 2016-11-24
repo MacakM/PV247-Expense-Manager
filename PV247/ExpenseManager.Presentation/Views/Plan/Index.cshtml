@@ -1,5 +1,5 @@
 ﻿@using ExpenseManager.Business.DataTransferObjects.Enums
-@model List<ExpenseManager.Presentation.Models.Plan.IndexViewModel>
+@model ExpenseManager.Presentation.Models.Plan.IndexViewModel
 
 @section title
 {
@@ -7,7 +7,31 @@
 }
 
 <div class="col-sm-9 content-holder">
-    <h1>Plans</h1>
+    <h2>Plans which could be closed</h2>
+    @if (Model.ClosablePlans.Count == 0)
+    {
+        <span>No plans</span>
+    }
+    else
+    {
+        <table class="table">
+            <tr>
+                <th>Description</th>
+                <th>Ammount</th>
+                <th></th>
+            </tr>
+            @foreach (var plan in Model.ClosablePlans)
+            {
+                <tr>
+                    <td>@plan.Description</td>
+                    <td>@plan.PlannedMoney</td>
+                    <td><a href="#">Mark as finished</a></td>
+                </tr>
+            }
+        </table>
+    }
+    
+    <h2>All plans</h2>
     <table class="table">
         <tr>
             <th>Description</th>
@@ -18,7 +42,7 @@
             <th>Ammount</th>
             <th></th>
         </tr>
-        @foreach (var plan in Model)
+        @foreach (var plan in Model.AllPlans)
         {
             <tr>
                 <td>@plan.Description</td>
@@ -33,7 +57,7 @@
                     <td>Saving</td>
                 }
                 <td>@plan.PlannedTypeName</td>
-                <td>@plan.PlannedMoney $</td>
+                <td>@plan.PlannedMoney&nbsp;$</td>
                 @if (plan.IsCompleted)
                 {
                     <td class="positive">Finished</td>

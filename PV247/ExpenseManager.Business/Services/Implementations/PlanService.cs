@@ -137,7 +137,14 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <returns></returns>
         public List<Plan> ListAllCloseablePlans(Guid accountId, decimal accountBalance)
         {
-             Query.Filter = new PlanModelFilter {AccountId = accountId, PlannedMoneyFrom = accountBalance, PlanType = PlanTypeModel.Save, IsCompleted = false};
+            Query.Filter = new PlanModelFilter
+            {
+                AccountId = accountId,
+                PlannedMoneyTo = accountBalance,
+                PlanType = PlanTypeModel.Save,
+                IsCompleted = false,
+                DeadlineFrom = DateTime.Now
+            };
             return GetList().ToList();
         }
         /// <summary>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Filters;
 using ExpenseManager.Business.Facades;
 using ExpenseManager.Presentation.Authentication;
@@ -39,14 +40,31 @@ namespace ExpenseManager.Presentation.Controllers
         public IActionResult Index()
         {
             var account = _currentAccountProvider.GetCurrentAccount(HttpContext.User);
-            var filter = new PlanFilter()
+
+            var model = new IndexViewModel()
+            {
+                AllPlans = GetAllPlans(account),
+                ClosablePlans = GetClosablePlans(account)
+            };
+
+            return View(model);
+        }
+
+        private List<PlanViewModel> GetClosablePlans(Account account)
+        {
+            var plans = _balanceFacade.ListAllCloseablePlans(account.Id);
+            return _mapper.Map<List<PlanViewModel>>(plans);
+        }
+
+        private List<PlanViewModel> GetAllPlans(Account account)
+        {
+            var allPlansFilter = new PlanFilter()
             {
                 AccountId = account.Id
             };
 
-            var plans = _balanceFacade.ListPlans(filter);
-            var planViewModels = _mapper.Map<List<IndexViewModel>>(plans);
-            return View(planViewModels);
+            var allPlans = _balanceFacade.ListPlans(allPlansFilter);
+            return _mapper.Map<List<PlanViewModel>>(allPlans);
         }
     }
 }

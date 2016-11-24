@@ -164,13 +164,79 @@ namespace ExpenseManager.Database
                 };
                 context.CostInfos.Add(cost);
             }
-            
-            
+
+            var plan1 = new PlanModel()
+            {
+                Account = account,
+                Start = Convert.ToDateTime("22.11.2016"),
+                Deadline = Convert.ToDateTime("24.12.2016"),
+                Description = "Ušetriť na rohlík",
+                IsCompleted = false,
+                PlannedMoney = 100,
+                PlannedType = costType1,
+                PlanType = PlanTypeModel.Save
+            };
+
+            var plan2 = new PlanModel()
+            {
+                Account = account,
+                Start = Convert.ToDateTime("15.11.2016"),
+                Deadline = Convert.ToDateTime("20.11.2016"),
+                Description = "Ušetriť na Škodovku",
+                IsCompleted = false,
+                PlannedMoney = 5200,
+                PlannedType = costType2,
+                PlanType = PlanTypeModel.Save
+            };
+
+            var plan3 = new PlanModel()
+            {
+                Account = account,
+                Start = Convert.ToDateTime("22.11.2016"),
+                Deadline = Convert.ToDateTime("24.12.2016"),
+                Description = "Neprežierať sa",
+                IsCompleted = false,
+                PlannedMoney = 2000,
+                PlannedType = costType1,
+                PlanType = PlanTypeModel.MaxSpend
+            };
+
+            var plan4 = new PlanModel()
+            {
+                Account = account,
+                Start = Convert.ToDateTime("11.10.2016"),
+                Deadline = Convert.ToDateTime("15.10.2016"),
+                Description = "Ušetrené na niečo",
+                IsCompleted = true,
+                PlannedMoney = 2000,
+                PlannedType = costType1,
+                PlanType = PlanTypeModel.MaxSpend
+            };
+
+            var plan5 = new PlanModel()
+            {
+                Account = account,
+                Start = Convert.ToDateTime("15.11.2016"),
+                Deadline = Convert.ToDateTime("24.12.2016"),
+                Description = "Ušetriť na Škodovku",
+                IsCompleted = false,
+                PlannedMoney = 3200,
+                PlannedType = costType2,
+                PlanType = PlanTypeModel.Save
+            };
+
+            context.Plans.Add(plan1);
+            context.Plans.Add(plan2);
+            context.Plans.Add(plan3);
+            context.Plans.Add(plan4);
+            context.Plans.Add(plan5);
+
             context.SaveChanges();
         }
 
         private void TruncateDB(ExpenseDbContext context)
         {
+            DeleteAll<PlanModel>(context);
             DeleteAll<CostInfoModel>(context);
             DeleteAll<CostTypeModel>(context);
             DeleteAll<UserModel>(context);

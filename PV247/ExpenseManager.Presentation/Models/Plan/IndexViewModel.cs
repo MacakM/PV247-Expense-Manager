@@ -1,52 +1,23 @@
 ﻿using System;
-using ExpenseManager.Business.DataTransferObjects.Enums;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ExpenseManager.Presentation.Models.Plan
 {
     /// <summary>
-    /// View model for displaying plan info
+    /// Index view model
     /// </summary>
-    public class IndexViewModel : ViewModelId
+    public class IndexViewModel
     {
         /// <summary>
-        /// Account Id.
+        /// All plans to display
         /// </summary>
-        public Guid AccountId { get; set; }
+        public List<PlanViewModel> AllPlans { get; set; }
+
         /// <summary>
-        /// Name of plans account
+        /// Plans which is possible to close
         /// </summary>
-        public string AccountName { get; set; }
-        /// <summary>
-        /// Description of the plan.
-        /// </summary>
-        public string Description { get; set; }
-        /// <summary>
-        /// Type of this plan.
-        /// </summary>
-        public PlanType PlanType { get; set; }
-        /// <summary>
-        /// How much money is desired to achieve this plan.
-        /// </summary>
-        public decimal PlannedMoney { get; set; }
-        /// <summary>
-        /// Planned type id
-        /// </summary>
-        public Guid PlannedTypeId { get; set; }
-        /// <summary>
-        /// Plan type name.
-        /// </summary>
-        public string PlannedTypeName { get; set; }
-        /// <summary>
-        /// Date when is the deadline of the plan.
-        /// </summary>
-        public DateTime Deadline { get; set; }
-        /// <summary>
-        /// Date when is the plan starts
-        /// </summary>
-        public DateTime Start { get; set; }
-        /// <summary>
-        /// States whether this plan is achieved.
-        /// </summary>
-        public bool IsCompleted { get; set; }
+        public List<PlanViewModel> ClosablePlans { get; set; }
     }
 }
