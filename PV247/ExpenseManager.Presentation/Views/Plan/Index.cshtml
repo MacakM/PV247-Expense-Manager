@@ -1,6 +1,5 @@
-﻿@{
-    Layout = "_layout";
-}
+﻿@using ExpenseManager.Business.DataTransferObjects.Enums
+@model List<ExpenseManager.Presentation.Models.Plan.IndexViewModel>
 
 @section title
 {
@@ -9,61 +8,45 @@
 
 <div class="col-sm-9 content-holder">
     <h1>Plans</h1>
-    <a href="#">Add new plan for current month</a>
-    <br/>
-    <h2>October 2016</h2>
     <table class="table">
         <tr>
-            <td>Save something</td>
-            <td class="neutral">In progress</td>
+            <th>Description</th>
+            <th>Start</th>
+            <th>Deadline</th>
+            <th>Type</th>
+            <th>Related category</th>
+            <th>Ammount</th>
+            <th></th>
         </tr>
-        <tr>
-            <td>Save something else</td>
-            <td class="positive">Fullfiled</td>
-        </tr>
-        <tr>
-            <td>Save something else</td>
-            <td class="neutral">In progress</td>
-        </tr>
-        <tr>
-            <td>Save something else</td>
-            <td class="neutral">In progress</td>
-        </tr>
-    </table>
-    
-    <h2>September 2016</h2>
-    <table class="table">
-        <tr>
-            <td>Save something</td>
-            <td class="positive">Fullfiled</td>
-        </tr>
-        <tr>
-            <td>Save something else</td>
-            <td class="negative">Not fullfiled</td>
-        </tr>
-        <tr>
-            <td>Save something else</td>
-            <td class="negative">Not fullfiled</td>
-        </tr>
-    </table>
-    
-    <h2>August 2016</h2>
-    <table class="table">
-        <tr>
-            <td>Save something</td>
-            <td class="positive">Fullfiled</td>
-        </tr>
-        <tr>
-            <td>Save something else</td>
-            <td class="negative">Not fullfiled</td>
-        </tr>
-        <tr>
-            <td>Save something else</td>
-            <td class="negative">Not fullfiled</td>
-        </tr>
-        <tr>
-            <td>Save something else</td>
-            <td class="positive">Fullfiled</td>
-        </tr>
+        @foreach (var plan in Model)
+        {
+            <tr>
+                <td>@plan.Description</td>
+                <td>@plan.Start.ToShortDateString()</td>
+                <td>@plan.Deadline.ToShortDateString()</td>
+                @if (plan.PlanType == PlanType.MaxSpend)
+                {
+                    <td>Maximum spending</td>
+                }
+                else
+                {
+                    <td>Saving</td>
+                }
+                <td>@plan.PlannedTypeName</td>
+                <td>@plan.PlannedMoney $</td>
+                @if (plan.IsCompleted)
+                {
+                    <td class="positive">Finished</td>
+                }
+                else if (plan.Deadline < DateTime.Now)
+                {
+                    <td class="negative">Not finished</td>
+                }
+                else
+                {
+                    <td class="neutral">In progress</td>
+                }
+            </tr>
+        }
     </table>
 </div>
