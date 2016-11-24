@@ -60,6 +60,7 @@ namespace ExpenseManager.Presentation.Controllers
             filterModel.Expenses = GetFilteredExpenses(filter);
             filterModel.PageCount = (int)Math.Ceiling(_balanceFacade.GetCostInfosCount(filter) / (double)NumberOfExpensesPerPage);
             filterModel.CostTypes = GetAllCostTypes();
+            filterModel.CurrentUser = _mapper.Map<Models.User.IndexViewModel>(_currentAccountProvider.GetCurrentUser(HttpContext.User));
             return View(filterModel);
         }
 

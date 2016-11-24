@@ -39,19 +39,6 @@ namespace ExpenseManager.Presentation.Controllers
             _mapper = mapper.DefaultContext.Mapper;
         }
 
-        /// <inheritdoc />
-        public override void OnActionExecuting(ActionExecutingContext ctx)
-        {
-            base.OnActionExecuting(ctx);
-            SetCurrentUserToViewData();
-        }
-
-        private void SetCurrentUserToViewData()
-        {
-            var user = _currentAccountProvider.GetCurrentUser(HttpContext.User);
-            ViewData["currentUser"] = _mapper.Map<IndexViewModel>(user);
-        }
-
         /// <summary>
         /// Retirets to error page with message
         /// </summary>

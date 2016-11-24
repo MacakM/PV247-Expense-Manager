@@ -49,10 +49,13 @@ namespace ExpenseManager.Presentation.Controllers
         public IActionResult Index()
         {
             var account = _currentAccountProvider.GetCurrentAccount(HttpContext.User);
+            var currentUserModel = _mapper.Map<IndexViewModel>(_currentAccountProvider.GetCurrentUser(HttpContext.User));
+
             var model = new AddAccessViewModel()
             {
                 Expenses = GetAllPermanentExpenses(account),
-                UsersWithAccess = GetAllUsersWithAccess(account)
+                UsersWithAccess = GetAllUsersWithAccess(account),
+                CurrentUser = currentUserModel
             };
 
             return View(model);

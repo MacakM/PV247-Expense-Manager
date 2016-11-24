@@ -1,7 +1,5 @@
 ﻿@using System.Threading.Tasks
 @using ExpenseManager.Business.DataTransferObjects.Enums
-@using ExpenseManager.Presentation.Models.Expense
-@using IndexViewModel = ExpenseManager.Presentation.Models.User.IndexViewModel
 
 @model ExpenseManager.Presentation.Models.AccountSettingsViewModel.AddAccessViewModel
 
@@ -10,9 +8,6 @@
     Account Settings
 }
 
-@{
-    IndexViewModel user = (IndexViewModel)ViewData["currentUser"];
-}
 
 <div class="col-sm-9 content-holder account-settings">
     <h1>Account settings</h1>
@@ -38,7 +33,7 @@
         }
     </table>
     
-    @if (user.HasFullRights)
+    @if (@Model.CurrentUser.HasFullRights)
     {
         <h3>Add new user to account</h3>
         <form asp-action="AddAccessToAccount">
@@ -79,7 +74,7 @@
             <th class="text-center">Ammount</th>
             <th class="text-center">Periodicity</th>
             <th class="text-center">Periodicity multiplicity</th>
-            @if (user.HasFullRights)
+            @if (@Model.CurrentUser.HasFullRights)
             {
                 <th class="text-center">Delete</th>
             }
@@ -113,7 +108,7 @@
                     }
                 </td>
                 <td class="text-center">@expense.PeriodicMultiplicity</td>
-                @if (user.HasFullRights)
+                @if (Model.CurrentUser.HasFullRights)
                 {
                     <td class="text-center">
                         <form method="post" action="@Url.Action("Delete", "Expense")">
@@ -126,7 +121,7 @@
                 }
             </tr>
         }
-        @if (user.HasFullRights)
+        @if (Model.CurrentUser.HasFullRights)
         {
             <tr class="add-new-permanent-expense">
                 <td colspan="3">

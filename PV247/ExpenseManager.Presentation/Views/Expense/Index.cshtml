@@ -1,13 +1,8 @@
-﻿@using ExpenseManager.Presentation.Models.User
-@model ExpenseManager.Presentation.Models.Expense.IndexFilterViewModel
+﻿@model ExpenseManager.Presentation.Models.Expense.IndexFilterViewModel
 
 @section title
 {
     Expenses
-}
-
-@{
-    IndexViewModel user = (IndexViewModel)ViewData["currentUser"];
 }
 
 <div class="col-sm-3 sidebar left">
@@ -39,7 +34,7 @@
     </div>
     <div class="col-sm-6 main-content">
         <h1>Expenses</h1>
-        @if (user.HasFullRights)
+        @if (@Model.CurrentUser.HasFullRights)
         {
             @Html.ActionLink("+", "Create", "Expense", null, new { @class = "add-new" })
         }
@@ -49,7 +44,7 @@
                 <th>Description</th>
                 <th class="text-center">Date</th>
                 <th class="text-center">Cost</th>
-                @if (user.HasFullRights)
+                @if (@Model.CurrentUser.HasFullRights)
                 {
                     <th class="text-center">Delete</th>
                 }
@@ -69,7 +64,7 @@
                         <td class="negative text-center">-@expense.Money $</td>
                     }
 
-                    @if (user.HasFullRights)
+                    @if (Model.CurrentUser.HasFullRights)
                     {
                         <td class="text-center">
                             <form asp-action="Delete">

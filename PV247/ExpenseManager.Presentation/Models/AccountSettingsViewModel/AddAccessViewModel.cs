@@ -29,8 +29,13 @@ namespace ExpenseManager.Presentation.Models.AccountSettingsViewModel
         public List<IndexPermanentExpenseViewModel> Expenses { get; set; }
 
         /// <summary>
-        /// 
+        /// Users with access to account
         /// </summary>
         public List<User.IndexViewModel> UsersWithAccess { get; set; }
+
+        /// <summary>
+        /// Currently logged in user
+        /// </summary>
+        public User.IndexViewModel CurrentUser { get; set; }
     }
 }
