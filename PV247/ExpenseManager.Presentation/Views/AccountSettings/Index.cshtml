@@ -88,11 +88,11 @@
                 <td>@expense.Created.ToShortDateString()</td>
                 @if (@expense.IsIncome)
                 {
-                    <td class="positive text-center">+@expense.Money $</td>
+                    <td class="positive text-center">+@expense.Money&nbsp;$</td>
                 }
                 else
                 {
-                    <td class="negative text-center">-@expense.Money $</td>
+                    <td class="negative text-center">-@expense.Money&nbsp;$</td>
                 }
                 <td class="text-center">
                     @if (expense.Periodicity == Periodicity.Day)
