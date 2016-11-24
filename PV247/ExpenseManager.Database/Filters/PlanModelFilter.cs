@@ -88,11 +88,11 @@ namespace ExpenseManager.Database.Filters
             }
             if (CostTypeId != null)
             {
-                queryable = queryable.Where(plan => plan.PlannedType.Id == CostTypeId);
+                queryable = queryable.Where(plan => plan.PlannedType.Id == CostTypeId.Value);
             }
             if (AccountId != null)
             {
-                queryable = queryable.Where(plan => plan.AccountId == AccountId);
+                queryable = queryable.Where(plan => plan.AccountId == AccountId.Value);
             }
             if (PlanType != null)
             {

@@ -44,7 +44,7 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters
         /// <summary>
         /// Right edge of planned money range
         /// </summary>
-        public decimal PlannedMoneyTo { get; set; }
+        public decimal? PlannedMoneyTo { get; set; }
         /// <summary>
         /// Left edge of deadline range
         /// </summary>

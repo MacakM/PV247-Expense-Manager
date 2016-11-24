@@ -62,11 +62,11 @@ namespace ExpenseManager.Database.Filters
             }
             if (AchievedFrom != null)
             {
-                queryable = queryable.Where(plan => plan.Achieved >= AchievedFrom);
+                queryable = queryable.Where(plan => plan.Achieved >= AchievedFrom.Value);
             }
             if (AchievedFrom != null)
             {
-                queryable = queryable.Where(plan => plan.Achieved <= AchievedTo);
+                queryable = queryable.Where(plan => plan.Achieved <= AchievedTo.Value);
             }
             if (OrderByDesc == null || string.IsNullOrEmpty(OrderByPropertyName))
             {
