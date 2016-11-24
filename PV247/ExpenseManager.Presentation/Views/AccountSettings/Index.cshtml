@@ -1,5 +1,6 @@
 ﻿@using System.Threading.Tasks
 @using ExpenseManager.Business.DataTransferObjects.Enums
+@using ExpenseManager.Presentation
 
 @model ExpenseManager.Presentation.Models.AccountSettingsViewModel.AddAccessViewModel
 
@@ -113,7 +114,7 @@
                     <td class="text-center">
                         <form method="post" action="@Url.Action("Delete", "Expense")">
                             @Html.AntiForgeryToken()
-                            <input type="hidden" name="returnRedirect" value="@Url.Action("Index", "AccountSettings")" />
+                            <input type="hidden" name="returnRedirect" value="@Url.Action("Index", "AccountSettings", new { successMessage = ExpenseManagerResource.ExpenseDeleted })" />
                             <input type="hidden" name="id" value="@expense.Id" />
                             <button class="link-button negative"><i class="fa fa-times" aria-hidden="true"></i></button>
                         </form>

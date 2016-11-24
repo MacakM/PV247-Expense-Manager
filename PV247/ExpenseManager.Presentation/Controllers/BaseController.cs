@@ -46,8 +46,7 @@ namespace ExpenseManager.Presentation.Controllers
         /// <returns></returns>
         protected IActionResult RedirectWithError(string message)
         {
-            TempData["ErrorMessage"] = message;
-            return RedirectToAction("Index", "Error");
+            return RedirectToAction("Index", "Error", new { errorMessage = message });
         }
     }
 }

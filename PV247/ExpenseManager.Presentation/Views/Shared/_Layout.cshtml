@@ -98,13 +98,7 @@
     </div>
 </div>
     
-@if (TempData["SuccessMessage"] != null)
-{
-    <div class="alert alert-success success-message">
-        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-        @TempData["SuccessMessage"]
-    </div>
-}
+@await Component.InvokeAsync("SuccessMessage")
 </body>
 
 @RenderSection("scripts", required: false)

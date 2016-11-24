@@ -118,8 +118,7 @@ namespace ExpenseManager.Presentation.Controllers
 
             _accountFacade.AttachAccountToUser(user.Id, account.Id, model.AccessType);
 
-            TempData["SuccessMessage"] = ExpenseManagerResource.AccessGranted;
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { successMessage = ExpenseManagerResource.AccessGranted });
         }
 
         private User GetUserFromEmail(string email)
@@ -159,8 +158,7 @@ namespace ExpenseManager.Presentation.Controllers
             var user = _currentAccountProvider.GetCurrentUser(HttpContext.User);
             _accountFacade.CreateAccount(user.Id);
 
-            TempData["SuccessMessage"] = ExpenseManagerResource.AccountCreated;
-            return RedirectToAction("Index", "Expense");
+            return RedirectToAction("Index", "Expense", new { sucessMessage = ExpenseManagerResource.AccountCreated });
         }
     }
 }

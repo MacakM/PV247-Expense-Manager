@@ -194,8 +194,7 @@ namespace ExpenseManager.Presentation.Controllers
                 return RedirectToAction("NoAccount", "AccountSettings");
             }
 
-            TempData["ErrorMessage"] = ExpenseManagerResource.AccessDenied;
-            return RedirectToAction("Index", "Error");
+            return RedirectToAction("Index", "Error", new { errorMessage = ExpenseManagerResource.AccessDenied });
         }
 
         private bool DoesntHaveAccount()

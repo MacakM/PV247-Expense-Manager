@@ -69,11 +69,12 @@ namespace ExpenseManager.Presentation.Controllers
         /// Displays form for creating new expense
         /// </summary>
         [Authorize(Policy = "HasFullRights")]
-        public IActionResult Create()
+        public IActionResult Create([FromQuery] string errorMessage = null)
         {
             var model = new CreateViewModel
             {
-                CostTypes = GetAllCostTypes()
+                CostTypes = GetAllCostTypes(),
+                ErrorMessage = errorMessage
             };
             return View(model);
         }
@@ -91,8 +92,7 @@ namespace ExpenseManager.Presentation.Controllers
 
             if (!ModelState.IsValid || costType == null)
             {
-                TempData["CreateExpenseMessage"] = ExpenseManagerResource.InvalidInputData;
-                return RedirectToAction("Create");
+                return RedirectToAction("Create", new { errorMessage = ExpenseManagerResource.InvalidInputData });
             }
 
             var costInfo = _mapper.Map<CostInfo>(costInfoViewModel);
@@ -105,20 +105,19 @@ namespace ExpenseManager.Presentation.Controllers
 
             _balanceFacade.CreateItem(costInfo);
 
-            TempData["SuccessMessage"] = ExpenseManagerResource.ExpenseCreated;
-
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { successMessage = ExpenseManagerResource.ExpenseCreated });
         }
 
         /// <summary>
         /// Displays form for creating permanent expenses
         /// </summary>
         [Authorize(Policy = "HasFullRights")]
-        public IActionResult CreatePermanentExpense()
+        public IActionResult CreatePermanentExpense([FromQuery] string errorMessage = null)
         {
             var model = new CreatePermanentExpenseViewModel
             {
-                CostTypes = GetAllCostTypes()
+                CostTypes = GetAllCostTypes(),
+                ErrorMessage = errorMessage
             };
             return View(model);
         }
@@ -135,8 +134,7 @@ namespace ExpenseManager.Presentation.Controllers
 
             if (!ModelState.IsValid || costType == null)
             {
-                TempData["CreateExpenseMessage"] = ExpenseManagerResource.InvalidInputData;
-                return RedirectToAction("CreatePermanentExpense");
+                return RedirectToAction("CreatePermanentExpense", new { errorMessage = ExpenseManagerResource.InvalidInputData });
             }
 
             var costInfo = _mapper.Map<CostInfo>(costInfoViewModel);
@@ -147,9 +145,7 @@ namespace ExpenseManager.Presentation.Controllers
 
             _balanceFacade.CreateItem(costInfo);
 
-            TempData["SuccessMessage"] = ExpenseManagerResource.ExpenseCreated;
-
-            return RedirectToAction("Index", "AccountSettings");
+            return RedirectToAction("Index", "AccountSettings", new { successMessage = ExpenseManagerResource.ExpenseCreated });
         }
 
         /// <summary>
@@ -172,7 +168,6 @@ namespace ExpenseManager.Presentation.Controllers
 
             _balanceFacade.DeleteItem(id);
 
-            TempData["SuccessMessage"] = ExpenseManagerResource.ExpenseDeleted;
             return Redirect(returnRedirect);
         }
 

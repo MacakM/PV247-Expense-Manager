@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using ExpenseManager.Presentation.Authentication;
+using ExpenseManager.Presentation.Models.Error;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExpenseManager.Presentation.Controllers
@@ -16,11 +17,14 @@ namespace ExpenseManager.Presentation.Controllers
         /// <summary>
         /// Displays error message
         /// </summary>
-        public IActionResult Index()
+        public IActionResult Index([FromQuery] string errorMessage)
         {
-            var message = TempData["ErrorMessage"] ?? ExpenseManagerResource.UnknownError;
+            var model = new IndexViewModel()
+            {
+                Message = errorMessage ?? ExpenseManagerResource.UnknownError
+            };
 
-            return View(message);
+            return View(model);
         }
 
         /// <summary>
