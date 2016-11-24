@@ -323,7 +323,7 @@ namespace ExpenseManager.Presentation.Controllers
             var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
             if (user == null)
             {
-                return View("Error");
+                return RedirectToAction("Index", "Error");
             }
             var userFactors = await _userManager.GetValidTwoFactorProvidersAsync(user);
             var factorOptions = userFactors.Select(purpose => new SelectListItem { Text = purpose, Value = purpose }).ToList();
@@ -348,14 +348,14 @@ namespace ExpenseManager.Presentation.Controllers
             var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
             if (user == null)
             {
-                return View("Error");
+                return RedirectToAction("Index", "Error");
             }
 
             // Generate the token and send it
             var code = await _userManager.GenerateTwoFactorTokenAsync(user, model.SelectedProvider);
             if (string.IsNullOrWhiteSpace(code))
             {
-                return View("Error");
+                return RedirectToAction("Index", "Error");
             }
 
             return RedirectToAction(nameof(VerifyCode), new { Provider = model.SelectedProvider, ReturnUrl = model.ReturnUrl, RememberMe = model.RememberMe });
@@ -376,7 +376,7 @@ namespace ExpenseManager.Presentation.Controllers
             var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
             if (user == null)
             {
-                return View("Error");
+                return RedirectToAction("Index", "Error");
             }
             return View(new VerifyCodeViewModel { Provider = provider, ReturnUrl = returnUrl, RememberMe = rememberMe });
         }
