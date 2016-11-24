@@ -204,7 +204,7 @@ header .right-part .logout {
 .sidebar.right .money-info .remaining-money {
   display: block;
   font-weight: normal;
-  font-size: 60px;
+  font-size: 40px;
   clear: both;
 }
 .sidebar.right .money-info h3 {
@@ -363,7 +363,7 @@ button.btn:focus {
 }
 @media screen and (max-width: 1200px) {
   .remaining-money {
-    font-size: 30px !important;
+    font-size: 25px !important;
   }
 }
 @media screen and (max-width: 768px) {

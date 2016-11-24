@@ -50,9 +50,8 @@
     @RenderBody()
     <div class="col-sm-3 sidebar right">
         <div class="money-info">
-            <h3>Money remaining:</h3>
-            <span class="remaining-money">5000 kč</span>
-            <span>Total money for this month: 30000kč</span>
+            <h3>Balance:</h3>
+            @await Component.InvokeAsync("Balance")
         </div>
         <hr/>
         <div class="achievements">
