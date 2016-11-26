@@ -7,33 +7,34 @@
 }
 
 <div class="col-sm-9 content-holder">
+
     @if (Model.CurrentUser.HasFullRights)
     {
         <a href="@Url.Action("Create", "Plan")" class="add-new">+</a>
-    }
-
-    <h2>Plans which could be closed</h2>
-    @if (Model.ClosablePlans.Count == 0)
-    {
-        <span>No plans</span>
-    }
-    else
-    {
-        <table class="table">
-            <tr>
-                <th>Description</th>
-                <th>Ammount</th>
-                <th></th>
-            </tr>
-            @foreach (var plan in Model.ClosablePlans)
-            {
+        <h2>Plans which could be closed</h2>
+        
+        if (Model.ClosablePlans.Count == 0)
+        {
+            <span>No plans</span>
+        }
+        else
+        {
+            <table class="table">
                 <tr>
-                    <td>@plan.Description</td>
-                    <td>@plan.PlannedMoney</td>
-                    <td><a href="#">Mark as finished</a></td>
+                    <th>Description</th>
+                    <th>Ammount</th>
+                    <th></th>
                 </tr>
-            }
-        </table>
+                @foreach (var plan in Model.ClosablePlans)
+                {
+                    <tr>
+                        <td>@plan.Description</td>
+                        <td>@plan.PlannedMoney</td>
+                        <td><a href="#">Mark as finished</a></td>
+                    </tr>
+                }
+            </table>
+        }
     }
 
     <h2>All plans</h2>
@@ -66,11 +67,11 @@
                 <td>@plan.PlannedMoney&nbsp;$</td>
                 @if (plan.IsCompleted)
                 {
-                    <td class="positive">Finished</td>
+                    <td class="positive">Fulfilled</td>
                 }
                 else if (plan.Deadline < DateTime.Now)
                 {
-                    <td class="negative">Not finished</td>
+                    <td class="negative">Not fulfilled</td>
                 }
                 else
                 {
