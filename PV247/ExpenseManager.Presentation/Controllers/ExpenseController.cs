@@ -36,6 +36,8 @@ namespace ExpenseManager.Presentation.Controllers
             _balanceFacade = balanceFacade;
         }
 
+        #region Nonpermanent expenses
+
         /// <summary>
         /// Displays expenses for loged-in user
         /// </summary>
@@ -107,6 +109,48 @@ namespace ExpenseManager.Presentation.Controllers
             return RedirectToAction("Index", new { successMessage = ExpenseManagerResource.ExpenseCreated });
         }
 
+        private List<IndexPermanentExpenseViewModel> GetAllPermanentExpenses(Account account)
+        {
+            var filter = new CostInfoFilter()
+            {
+                AccountId = account.Id,
+                Periodicity = Periodicity.Day
+            };
+
+            var expenses = _balanceFacade.ListItem(filter);
+
+            filter.Periodicity = Periodicity.Week;
+            expenses.AddRange(_balanceFacade.ListItem(filter));
+
+            filter.Periodicity = Periodicity.Month;
+            expenses.AddRange(_balanceFacade.ListItem(filter));
+
+            return Mapper.Map<List<IndexPermanentExpenseViewModel>>(expenses);
+        }
+
+        #endregion
+
+        #region Permanent expenses
+
+        /// <summary>
+        /// Displays permanent expenses
+        /// </summary>
+        /// <returns></returns>
+        [Authorize(Policy = "HasAccount")]
+        public IActionResult PermanentExpensesIndex()
+        {
+            var account = CurrentAccountProvider.GetCurrentAccount(HttpContext.User);
+            var currentUserModel = Mapper.Map<Models.User.IndexViewModel>(CurrentAccountProvider.GetCurrentUser(HttpContext.User));
+
+            var model = new PermanentExpensesIndexViewModel()
+            {
+                Expenses = GetAllPermanentExpenses(account),
+                CurrentUser = currentUserModel
+            };
+
+            return View(model);
+        }
+
         /// <summary>
         /// Displays form for creating permanent expenses
         /// </summary>
@@ -146,6 +190,8 @@ namespace ExpenseManager.Presentation.Controllers
 
             return RedirectToAction("Index", "AccountSettings", new { successMessage = ExpenseManagerResource.ExpenseCreated });
         }
+
+        #endregion
 
         /// <summary>
         /// Deletes expense with given id

@@ -33,13 +33,23 @@
         <input type="hidden" name="PageNumber" value="1"/>
         <input type="submit" class="search form-control" value="Search"/>
     </form>
-    </div>
-    <div class="col-sm-6 main-content">
-        <h1>Expenses</h1>
-        @if (@Model.CurrentUser.HasFullRights)
-        {
-            @Html.ActionLink("+", "Create", "Expense", null, new { @class = "add-new" })
-        }
+</div>
+<div class="col-sm-6 main-content">
+    <h1>Expenses</h1>
+    @if (Model.CurrentUser.HasFullRights)
+    {
+        @Html.ActionLink("+", "Create", "Expense", null, new { @class = "add-new" })
+    }
+    @if (Model.Expenses.Count == 0)
+    {
+        <br />
+        <br />
+        <br />
+        <br />
+        <div>No expenses</div>
+    }
+    else
+    {
         <table class="table">
             <tr>
                 <th>Type</th>
@@ -83,9 +93,10 @@
         <div class="expense-pagination">
             <ul class="pagination">
                 @for (int i = 1; i <= Model.PageCount; i++)
-                {
+            {
                     <li @((i == 1 && Model.PageNumber == null) || Model.PageNumber == i ? "class=active" : "")><a href="#">@i</a></li>
                 }
             </ul>
         </div>
-    </div>
+    }
+</div>

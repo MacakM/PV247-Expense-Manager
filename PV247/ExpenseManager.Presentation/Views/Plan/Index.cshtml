@@ -45,56 +45,63 @@
     }
 
     <h2>All plans</h2>
-    <table class="table">
-        <tr>
-            <th>Description</th>
-            <th>Start</th>
-            <th>Deadline</th>
-            <th>Type</th>
-            <th>Related category</th>
-            <th>Ammount</th>
-            <th></th>
-            <th></th>
-        </tr>
-        @foreach (var plan in Model.AllPlans)
-        {
+    @if (Model.AllPlans.Count == 0)
+    {
+        <div>No plans</div>
+    }
+    else
+    {
+        <table class="table">
             <tr>
-                <td>@plan.Description</td>
-                <td>@plan.Start.ToShortDateString()</td>
-                <td>@plan.Deadline.ToShortDateString()</td>
-                @if (plan.PlanType == PlanType.MaxSpend)
-                {
-                    <td>Maximum spending</td>
-                }
-                else
-                {
-                    <td>Saving</td>
-                }
-                <td>@plan.PlannedTypeName</td>
-                <td>@plan.PlannedMoney&nbsp;$</td>
-                @if (plan.IsCompleted)
-                {
-                    <td class="positive">Fulfilled</td>
-                }
-                else if (plan.Deadline < DateTime.Now)
-                {
-                    <td class="negative">Not&nbsp;fulfilled</td>
-                }
-                else
-                {
-                    <td class="neutral">In&nbsp;progress</td>
-                }
-                @if (Model.CurrentUser.HasFullRights)
-                {
-                    <td class="text-center">
-                        <form asp-action="Delete">
-                            @Html.AntiForgeryToken()
-                            <input type="hidden" name="id" value="@plan.Id" />
-                            <button class="link-button negative"><i class="fa fa-times" aria-hidden="true"></i></button>
-                        </form>
-                    </td>
-                }
+                <th>Description</th>
+                <th>Start</th>
+                <th>Deadline</th>
+                <th>Type</th>
+                <th>Related category</th>
+                <th>Ammount</th>
+                <th></th>
+                <th></th>
             </tr>
-        }
-    </table>
+            @foreach (var plan in Model.AllPlans)
+            {
+                <tr>
+                    <td>@plan.Description</td>
+                    <td>@plan.Start.ToShortDateString()</td>
+                    <td>@plan.Deadline.ToShortDateString()</td>
+                    @if (plan.PlanType == PlanType.MaxSpend)
+                    {
+                        <td>Maximum spending</td>
+                    }
+                    else
+                    {
+                        <td>Saving</td>
+                    }
+                    <td>@plan.PlannedTypeName</td>
+                    <td>@plan.PlannedMoney&nbsp;$</td>
+                    @if (plan.IsCompleted)
+                    {
+                        <td class="positive">Fulfilled</td>
+                    }
+                    else if (plan.Deadline < DateTime.Now)
+                    {
+                        <td class="negative">Not&nbsp;fulfilled</td>
+                    }
+                    else
+                    {
+                        <td class="neutral">In&nbsp;progress</td>
+                    }
+                    @if (Model.CurrentUser.HasFullRights)
+                    {
+                        <td class="text-center">
+                            <form asp-action="Delete">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="id" value="@plan.Id" />
+                                <button class="link-button negative"><i class="fa fa-times" aria-hidden="true"></i></button>
+                            </form>
+                        </td>
+                    }
+                </tr>
+            }
+        </table>
+    }
 </div>
