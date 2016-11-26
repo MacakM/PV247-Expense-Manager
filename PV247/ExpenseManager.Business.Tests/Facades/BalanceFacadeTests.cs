@@ -36,91 +36,109 @@ namespace ExpenseManager.Business.Tests.Facades
             var x = _balanceFacade.ListBages(new BadgeFilter());
             throw new AssertFailedException();
         }
+
         [Test]
         public void CheckBadgesRequirements()
         {
             throw new AssertFailedException();
         }
+
         [Test]
         public void RecomputePeriodicCosts()
         {
             throw new AssertFailedException();
         }
+
         [Test]
         public void CreateItemTest()
         {
             throw new AssertFailedException();
         }
+
         [Test]
         public void DeleteItemTest()
         {
             throw new AssertFailedException();
         }
+
         [Test]
         public void UpdateItemTest()
         {
             throw new AssertFailedException();
         }
+
         [Test]
         public void GetItemTest()
         {
             throw new AssertFailedException();
         }
+
         [Test]
         public void ListItemTest()
         {
             throw new AssertFailedException();
         }
+
         [Test]
         public void CreatePlanTest()
         {
             throw new AssertFailedException();
         }
+
         [Test]
         public void DeletePlanTest()
         {
             throw new AssertFailedException();
         }
+
         [Test]
         public void UpdatePlanTest()
         {
             throw new AssertFailedException();
         }
+
         [Test]
         public void GetPlanTest()
         {
             throw new AssertFailedException();
         }
+
         [Test]
         public void ListPlansTest()
         {
             throw new AssertFailedException();
         }
+
         [Test]
         public void CreateItemTypeTest()
         {
             throw new AssertFailedException();
         }
+
         [Test]
         public void DeleteItemTypeTest()
         {
             throw new AssertFailedException();
         }
+
         [Test]
         public void UpdateItemTypeTest()
         {
             throw new AssertFailedException();
         }
+
         [Test]
         public void GetItemTypeTest()
         {
             throw new AssertFailedException();
         }
+
         [Test]
         public void ListItemTypesTest()
         {
             throw new AssertFailedException();
         }
+
         /// <summary>
         /// Test Badge creation.
         /// </summary>
@@ -139,6 +157,7 @@ namespace ExpenseManager.Business.Tests.Facades
                 Assert.IsTrue(myBadge != null && myBadge.Description.Equals("Add your first expense") && myBadge.BadgeImgUri.Equals("lol"), "Badge was not created successfuly");
             }
         }
+
         /// <summary>
         /// Test Badge deletion.
         /// </summary>
@@ -168,6 +187,7 @@ namespace ExpenseManager.Business.Tests.Facades
                 db.Badges.Add(badge);
             }
         }
+
         /// <summary>
         /// Test Badge update.
         /// </summary>
@@ -193,6 +213,7 @@ namespace ExpenseManager.Business.Tests.Facades
                 Assert.IsTrue(myBadge.Description == "Buy 5 donuts", "Badge was not updated successfuly");
             }
         }
+
         /// <summary>
         /// Test Badge get.
         /// </summary>
@@ -209,37 +230,42 @@ namespace ExpenseManager.Business.Tests.Facades
                 badge.Name.Equals("Officer") && badge.Description.Equals("Buy donuts") &&
                 badge.BadgeImgUri.Equals("mmm"), "Badge was not get successfuly");
         }
+
         [Test]
         public void ListBadgesTest()
         {
             throw new AssertFailedException();
         }
+
         [Test]
         public void CreateAccountBadgeTest()
         {
             throw new AssertFailedException();
         }
+
         [Test]
         public void DeleteAccountBadgeTest()
         {
             throw new AssertFailedException();
         }
+
         [Test]
         public void UpdateAccountBadgeTest()
         {
             throw new AssertFailedException();
 
         }
+
         [Test]
         public void GetAccountBadgeTest()
         {
             throw new AssertFailedException();
         }
+
         [Test]
         public void ListAccountBadgesTest()
         {
            throw new AssertFailedException();
         }
-    
     }
 }
