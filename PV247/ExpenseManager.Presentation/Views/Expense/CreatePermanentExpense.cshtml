@@ -64,7 +64,7 @@
             <div class="form-group">
                 <label asp-for="Created" class="col-md-4 control-label">Next time to apply</label>
                 <div class="col-md-6">
-                    <input type="text" name="Created" class="form-control"/>
+                    <input type="text" name="Created" class="form-control" placeholder="@DateTime.Now.ToShortDateString()"/>
                     <!--
                     <input asp-for="Created" class="form-control"/>
                     <span asp-validation-for="Created" class="text-danger" />-->

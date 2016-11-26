@@ -14,9 +14,9 @@
         <input asp-for="DateFrom" class="form-control"/>
         <span asp-validation-for="DateFrom" class="text-danger" />-->
         <label for="date-from">Created from: </label>
-        <input name="DateFrom" class="form-control" id="date-from" type="text" @(Model.DateFrom != null ? "value=" + Model.DateFrom : "") />
+        <input name="DateFrom" class="form-control" id="date-from" type="text" @(Model.DateFrom != null ? "value=" + Model.DateFrom : "") placeholder="DD.MM.YYYY"/>
         <!--<br class="datepicker-separator"/>-->
-        <label for="date-to">Created to: </label><input name="DateTo" class="form-control" id="date-to" type="text" @(Model.DateTo != null ? "value=" + Model.DateTo : "") />
+        <label for="date-to">Created to: </label><input name="DateTo" class="form-control" id="date-to" type="text" @(Model.DateTo != null ? "value=" + Model.DateTo : "") placeholder="DD.MM.YYYY"/>
         <br/>
         <label for="money-from">Minimal ammount: </label><input name="MoneyFrom" class="form-control" id="money-from" type="text" @(Model.MoneyFrom != null ? "value=" + Model.MoneyFrom : "") />
         <label for="money-to">Maximal ammount: </label><input name="MoneyTo" class="form-control" id="money-to" type="text" @(Model.MoneyTo != null ? "value=" + Model.MoneyTo : "") />
