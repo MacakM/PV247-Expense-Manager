@@ -30,7 +30,14 @@
                     <tr>
                         <td>@plan.Description</td>
                         <td>@plan.PlannedMoney</td>
-                        <td><a href="#">Mark as finished</a></td>
+                        <td>
+                            <form asp-action="Close">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="returnRedirect" value="@Url.Action("Index", "Expense")" />
+                                <input type="hidden" name="id" value="@plan.Id" />
+                                <button class="link-button">Mark as finished</button>
+                            </form>
+                        </td>
                     </tr>
                 }
             </table>
@@ -82,7 +89,6 @@
                     <td class="text-center">
                         <form asp-action="Delete">
                             @Html.AntiForgeryToken()
-                            <input type="hidden" name="returnRedirect" value="@Url.Action("Index", "Expense")" />
                             <input type="hidden" name="id" value="@plan.Id" />
                             <button class="link-button negative"><i class="fa fa-times" aria-hidden="true"></i></button>
                         </form>

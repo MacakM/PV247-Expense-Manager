@@ -183,6 +183,15 @@
   <data name="PlanDeleted" xml:space="preserve">
     <value>Plan successfully deleted</value>
   </data>
+  <data name="PlanNotClosedDoesntExist" xml:space="preserve">
+    <value>Plan could not be marked as finished, it probably doesn't exits.</value>
+  </data>
+  <data name="PlanNotClosed" xml:space="preserve">
+    <value>Plan could not be marked as finished.</value>
+  </data>
+  <data name="PlanClosed" xml:space="preserve">
+    <value>Plan was successfully marked as finished</value>
+  </data>
   <data name="InvalidInputData" xml:space="preserve">
     <value>Invalid input data</value>
   </data>

@@ -141,5 +141,32 @@ namespace ExpenseManager.Presentation.Controllers
             var costTypeViewModels = _mapper.Map<List<Models.CostType.IndexViewModel>>(costTypes);
             return costTypeViewModels;
         }
+
+        /// <summary>
+        /// Marks given plan as finished
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public IActionResult Close([FromForm] Guid id)
+        {
+            var plan = _balanceFacade.GetPlan(id);
+            var account = _currentAccountProvider.GetCurrentAccount(HttpContext.User);
+
+            if (plan == null || plan.AccountId != account.Id)
+            {
+                return RedirectWithError(ExpenseManagerResource.PlanNotClosedDoesntExist);
+            }
+
+            try
+            {
+                _balanceFacade.ClosePlan(plan);
+            }
+            catch (Exception ex)
+            {
+                return RedirectWithError(ExpenseManagerResource.PlanNotClosed);
+            }
+
+            return RedirectToAction("Index", new {successMessage = ExpenseManagerResource.PlanClosed});
+        }
     }
 }

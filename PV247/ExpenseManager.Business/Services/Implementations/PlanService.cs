@@ -126,6 +126,7 @@ namespace ExpenseManager.Business.Services.Implementations
         public List<Plan> ListPlans(PlanFilter filter)
         {
             Query.Filter = ExpenseManagerMapper.Map<PlanModelFilter>(filter);
+            Query.AddSortCriteria(x => x.Start, SortDirection.Descending);
             return GetList().ToList();
         }
    
@@ -135,29 +136,40 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="plan"></param>
         public void ClosePlan(Plan plan)
         {
-            if (plan.PlanType == PlanType.Save)
+            if (plan.PlanType != PlanType.Save)
             {
-                plan.IsCompleted = true;
-                CloneToCost(plan);
-                Save(plan);
-            } 
-            throw new ArgumentException("PlanType.Save is the right one.");
+               throw new ArgumentException("PlanType.Save is the right one.");
+            }
+
+            using (var uow = UnitOfWorkProvider.Create())
+            {
+                var planModel = Repository.GetById(plan.Id, EntityIncludes);
+                if (planModel == null)
+                {
+                    throw new InvalidOperationException("Plan with given id doesn't exist");
+                }
+
+                planModel.IsCompleted = true;
+                CloneToCost(planModel);
+                uow.Commit();
+            }
         }
 
-        private void CloneToCost(Plan plan)
+        private void CloneToCost(PlanModel plan)
         {
-           
-            CostInfoModel costInfo = new CostInfoModel();
 
-            costInfo.Money = plan.PlannedMoney;
-            if (plan.AccountId != null) costInfo.AccountId = plan.AccountId.Value;
-            costInfo.TypeId = plan.PlannedTypeId;
-            costInfo.Created = DateTime.Now;
-            costInfo.IsIncome = false;
-            costInfo.Description = plan.Description;
-            costInfo.PeriodicMultiplicity = 0;
-            costInfo.Periodicity = PeriodicityModel.None;
-            
+            CostInfoModel costInfo = new CostInfoModel
+            {
+                Money = plan.PlannedMoney,
+                Account = plan.Account,
+                Type = plan.PlannedType,
+                Created = DateTime.Now,
+                IsIncome = false,
+                Description = plan.Description,
+                PeriodicMultiplicity = 0,
+                Periodicity = PeriodicityModel.None
+            };
+
             _costInfoRepository.Insert(costInfo);
         }
 

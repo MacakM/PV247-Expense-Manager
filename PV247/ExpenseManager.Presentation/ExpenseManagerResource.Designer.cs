@@ -222,6 +222,15 @@ namespace ExpenseManager.Presentation {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to Plan was successfully marked as finished.
+        /// </summary>
+        public static string PlanClosed {
+            get {
+                return ResourceManager.GetString("PlanClosed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to Plan was successfully created.
         /// </summary>
         public static string PlanCreated {
@@ -236,6 +245,24 @@ namespace ExpenseManager.Presentation {
         public static string PlanDeleted {
             get {
                 return ResourceManager.GetString("PlanDeleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Plan could not be marked as finished..
+        /// </summary>
+        public static string PlanNotClosed {
+            get {
+                return ResourceManager.GetString("PlanNotClosed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Plan could not be marked as finished, it probably doesn&apos;t exits..
+        /// </summary>
+        public static string PlanNotClosedDoesntExist {
+            get {
+                return ResourceManager.GetString("PlanNotClosedDoesntExist", resourceCulture);
             }
         }
         

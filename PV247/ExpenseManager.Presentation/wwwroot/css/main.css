@@ -330,18 +330,18 @@ button.btn:focus {
   width: 100px;
 }
 .positive {
-  color: #00A65A;
+  color: #00A65A !important;
 }
 .negative {
-  color: #c10c1c;
+  color: #c10c1c !important;
 }
 .negative:hover,
 .negative:active,
 .negative:focus {
-  color: #c10c1c;
+  color: #c10c1c !important;
 }
 .neutral {
-  color: #4948a9;
+  color: #4948a9 !important;
 }
 .success-message {
   position: fixed;
@@ -352,11 +352,17 @@ button.btn:focus {
   border: 2px solid #00A65A;
 }
 .link-button {
-  background: none!important;
+  background: none !important;
   border: none;
-  padding: 0!important;
+  padding: 0 !important;
   font: inherit;
   cursor: pointer;
+  color: #00A65A;
+}
+.link-button:hover,
+.link-button:active,
+.link-button:focus {
+  color: #00A65A;
 }
 .empty-page-content {
   padding-top: 70px;
