@@ -17,7 +17,7 @@ School project for PV247 (FI MUNI Brno)
 * There is exactly one empty line between usings and namespace
 * There is exactly one empty line between namespace and class -> documentation is a part of class
 * There is exactly one empty line between each class member(properties, methods...) -> documentation and anotations are parts of class member 
-* There is exactly one empty line in front of the first class member, but there is no empty line after last one
+* There is no empty line in front of the first class member and there is no empty line after last one.
 
 ### Naming ###
 * Every identifier must be named in english
