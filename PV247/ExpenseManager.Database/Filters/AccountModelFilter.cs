@@ -14,10 +14,12 @@ namespace ExpenseManager.Database.Filters
         /// Name that has to match in filtered accounts
         /// </summary>
         public string Name { get; set; }
+
         /// <summary>
         /// Determines if Equals() or Contains() should be used when matching string parameters
         /// </summary>
         public bool DoExactMatch { get; set; }
+
         /// <summary>
         /// Filters given query
         /// </summary>

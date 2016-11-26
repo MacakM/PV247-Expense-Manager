@@ -15,10 +15,12 @@ namespace ExpenseManager.Database.Filters
         /// Name of Badge
         /// </summary>
         public string Name { get; set; }
+
         /// <summary>
         /// Description to be filtered with
         /// </summary>
         public string Description { get; set; }
+
         /// <summary>
         /// Determines if Equals() or Contains() should be used when matching string parameters
         /// </summary>

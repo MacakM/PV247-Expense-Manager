@@ -9,6 +9,7 @@
         /// User can read.
         /// </summary>
         Read = 1,
+
         /// <summary>
         /// User can read and write.
         /// </summary>

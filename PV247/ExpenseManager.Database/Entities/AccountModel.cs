@@ -16,23 +16,28 @@ namespace ExpenseManager.Database.Entities
         /// </summary>
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
+
         /// <summary>
         /// Name of the account.
         /// </summary>
         [Required]
         public string Name { get; set; }
+
         /// <summary>
         /// List of users that have access to this account.
         /// </summary>
         public virtual List<UserModel> Users { get; set; }
+
         /// <summary>
         /// User's costs.
         /// </summary>
         public virtual List<CostInfoModel> Costs { get; set; }
+
         /// <summary>
         /// All plans of the user.
         /// </summary>
         public virtual List<PlanModel> Plans { get; set; }
+
         /// <summary>
         /// All badges of the user.
         /// </summary>

@@ -17,8 +17,8 @@ namespace ExpenseManager.Database.DataAccess.Queries
         /// <param name="provider">UoW provider</param>
         public ListUsersQuery(IUnitOfWorkProvider provider) : base(provider)
         {
-
         }
+
         /// <summary>
         /// Return IQueryable.
         /// </summary>
