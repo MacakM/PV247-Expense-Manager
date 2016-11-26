@@ -156,24 +156,6 @@ header {
         color: @mainColor;
     }
 
-    .add-new {
-        @addNewSize: 50px;
-
-        position: absolute;
-        right: 30px;
-        display: block;
-        border-radius: 50%;
-        background-color: @mainColor;
-        color: @textOnMainColor;
-        width: @addNewSize;
-        height: @addNewSize;
-        text-align: center;
-        vertical-align: middle;
-        font-size: 30px;
-        line-height: @addNewSize;
-        margin-bottom: 20px;
-    }
-
     .table {
         margin-bottom: 0px;
     }
@@ -254,6 +236,28 @@ header {
 a, a:hover, a:active, a:focus {
     text-decoration: none;
     color: @mainColor;
+}
+
+.add-new {
+    @addNewSize: 50px;
+
+    position: absolute;
+    right: 30px;
+    display: block;
+    border-radius: 50%;
+    background-color: @mainColor;
+    color: @textOnMainColor;
+    width: @addNewSize;
+    height: @addNewSize;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 30px;
+    line-height: @addNewSize;
+    margin-bottom: 20px;
+
+    &:hover, &:active, &:focus {
+        color: @textOnMainColor;
+    }
 }
 
 .pagination {

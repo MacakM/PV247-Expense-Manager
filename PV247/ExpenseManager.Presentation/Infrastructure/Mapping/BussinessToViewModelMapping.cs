@@ -27,6 +27,9 @@ namespace ExpenseManager.Presentation.Infrastructure.Mapping
 
             CreateMap<Plan, Models.Plan.PlanViewModel>()
                 .ReverseMap();
+
+            CreateMap<Plan, Models.Plan.CreateViewModel>()
+                .ReverseMap();
         }
     }
 }

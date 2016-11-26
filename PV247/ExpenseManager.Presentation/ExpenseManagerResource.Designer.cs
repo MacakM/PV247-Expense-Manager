@@ -222,6 +222,15 @@ namespace ExpenseManager.Presentation {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to Plan was sucessfully created.
+        /// </summary>
+        public static string PlanCreated {
+            get {
+                return ResourceManager.GetString("PlanCreated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to Your two-factor authentication provider has been set..
         /// </summary>
         public static string TwoFactorAuthProviderSet {

@@ -66,5 +66,53 @@ namespace ExpenseManager.Presentation.Controllers
             var allPlans = _balanceFacade.ListPlans(allPlansFilter);
             return _mapper.Map<List<PlanViewModel>>(allPlans);
         }
+
+        /// <summary>
+        /// Displays form for creating new plan
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult Create()
+        {
+            var model = new CreateViewModel()
+            {
+                CostTypes = GetAllCostTypes()
+            };
+            return View(model);
+        }
+
+        /// <summary>
+        /// Stores given plan
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public IActionResult Store(CreateViewModel model)
+        {
+            var costType = _balanceFacade.GetItemType(model.PlannedTypeId);
+
+            if (!ModelState.IsValid || costType == null)
+            {
+                ModelState.AddModelError(string.Empty, ExpenseManagerResource.InvalidInputData);
+                model.CostTypes = GetAllCostTypes();
+                return View("Create", model);
+            }
+
+            var plan = _mapper.Map<Plan>(model);
+
+            var account = _currentAccountProvider.GetCurrentAccount(HttpContext.User);
+
+            plan.AccountId = account.Id;
+            plan.Start = DateTime.Now;
+
+            _balanceFacade.CreatePlan(plan);
+
+            return RedirectToAction("Index", new { successMessage = ExpenseManagerResource.PlanCreated});
+        }
+
+        private List<Models.CostType.IndexViewModel> GetAllCostTypes()
+        {
+            var costTypes = _balanceFacade.ListItemTypes(null);
+            var costTypeViewModels = _mapper.Map<List<Models.CostType.IndexViewModel>>(costTypes);
+            return costTypeViewModels;
+        }
     }
 }

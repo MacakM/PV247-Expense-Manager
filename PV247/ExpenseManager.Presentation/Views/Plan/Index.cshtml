@@ -7,6 +7,7 @@
 }
 
 <div class="col-sm-9 content-holder">
+    <a href="@Url.Action("Create", "Plan")" class="add-new">+</a>
     <h2>Plans which could be closed</h2>
     @if (Model.ClosablePlans.Count == 0)
     {
@@ -30,7 +31,7 @@
             }
         </table>
     }
-    
+
     <h2>All plans</h2>
     <table class="table">
         <tr>

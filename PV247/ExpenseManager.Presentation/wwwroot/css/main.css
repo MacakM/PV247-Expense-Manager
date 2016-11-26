@@ -155,21 +155,6 @@ header .right-part .logout {
   margin-bottom: 20px;
   color: #00A65A;
 }
-.main-content .add-new {
-  position: absolute;
-  right: 30px;
-  display: block;
-  border-radius: 50%;
-  background-color: #00A65A;
-  color: white;
-  width: 50px;
-  height: 50px;
-  text-align: center;
-  vertical-align: middle;
-  font-size: 30px;
-  line-height: 50px;
-  margin-bottom: 20px;
-}
 .main-content .table {
   margin-bottom: 0px;
 }
@@ -248,6 +233,26 @@ a:active,
 a:focus {
   text-decoration: none;
   color: #00A65A;
+}
+.add-new {
+  position: absolute;
+  right: 30px;
+  display: block;
+  border-radius: 50%;
+  background-color: #00A65A;
+  color: white;
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 30px;
+  line-height: 50px;
+  margin-bottom: 20px;
+}
+.add-new:hover,
+.add-new:active,
+.add-new:focus {
+  color: white;
 }
 .pagination li {
   border-color: #00A65A;

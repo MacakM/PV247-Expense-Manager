@@ -27,6 +27,9 @@ namespace ExpenseManager.Business.Services.Implementations
         private readonly CostInfoRepository _costInfoRepository;
         private readonly ListAccountsQuery _accountsQuery;
         private readonly ListCostInfosQuery _costInfosQuery;
+        private readonly ExpenseManagerRepository<CostTypeModel, Guid> _costTypeRepository;
+        private readonly ExpenseManagerRepository<AccountModel, Guid> _accountRepository;
+
         /// <summary>
         /// 
         /// </summary>
@@ -46,11 +49,23 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="costInfoRepository"></param>
         /// <param name="accountsQuery"></param>
         /// <param name="costInfosQuery"></param>
-        public PlanService(ExpenseManagerQuery<PlanModel> query, ExpenseManagerRepository<PlanModel, Guid> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider, CostInfoRepository costInfoRepository, ListAccountsQuery accountsQuery, ListCostInfosQuery costInfosQuery) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
+        /// <param name="costTypeRepository"></param>
+        /// <param name="accountRepository"></param>
+        public PlanService(ExpenseManagerQuery<PlanModel> query, 
+            ExpenseManagerRepository<PlanModel, Guid> repository,
+            Mapper expenseManagerMapper, 
+            IUnitOfWorkProvider unitOfWorkProvider, 
+            CostInfoRepository costInfoRepository, 
+            ListAccountsQuery accountsQuery, 
+            ListCostInfosQuery costInfosQuery,
+            ExpenseManagerRepository<CostTypeModel, Guid> costTypeRepository,
+            ExpenseManagerRepository<AccountModel, Guid> accountRepository) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
         {
             _costInfoRepository = costInfoRepository;
             _accountsQuery = accountsQuery;
             _costInfosQuery = costInfosQuery;
+            _costTypeRepository = costTypeRepository;
+            _accountRepository = accountRepository;
         }
 
         /// <summary>
@@ -59,7 +74,24 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="plan">Object to be saved to database</param>
         public Guid CreatePlan(Plan plan)
         {
-            return Save(plan);
+            var planModel = ExpenseManagerMapper.Map<PlanModel>(plan);
+            using (var uow = UnitOfWorkProvider.Create())
+            {
+                var account = _accountRepository.GetById(plan.AccountId.Value);
+                var type = _costTypeRepository.GetById(plan.PlannedTypeId);
+
+                if (account == null || type == null)
+                {
+                    throw new InvalidOperationException("Account of type doesn't exists");
+                }
+
+                planModel.Account = account;
+                planModel.PlannedType = type;
+
+                Repository.Insert(planModel);
+                uow.Commit();
+            }
+            return planModel.Id;
         }
         /// <summary>
         /// Updates plan, must have id of updated plan!
