@@ -14,7 +14,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ExpenseManager.Presentation.Controllers
 {
-
     /// <summary>
     /// Controller for managing expenses
     /// </summary>
@@ -43,7 +42,7 @@ namespace ExpenseManager.Presentation.Controllers
         /// <returns></returns>
         public IActionResult Index(IndexFilterViewModel filterModel)
         {
-            var account = _currentAccountProvider.GetCurrentAccount(HttpContext.User);
+            var account = CurrentAccountProvider.GetCurrentAccount(HttpContext.User);
             var filter = new CostInfoFilter()
             {
                 AccountId = account.Id,
@@ -60,7 +59,7 @@ namespace ExpenseManager.Presentation.Controllers
             filterModel.Expenses = GetFilteredExpenses(filter);
             filterModel.PageCount = (int)Math.Ceiling(_balanceFacade.GetCostInfosCount(filter) / (double)NumberOfExpensesPerPage);
             filterModel.CostTypes = GetAllCostTypes();
-            filterModel.CurrentUser = _mapper.Map<Models.User.IndexViewModel>(_currentAccountProvider.GetCurrentUser(HttpContext.User));
+            filterModel.CurrentUser = Mapper.Map<Models.User.IndexViewModel>(CurrentAccountProvider.GetCurrentUser(HttpContext.User));
             return View(filterModel);
         }
 
@@ -95,9 +94,9 @@ namespace ExpenseManager.Presentation.Controllers
                 return RedirectToAction("Create", new { errorMessage = ExpenseManagerResource.InvalidInputData });
             }
 
-            var costInfo = _mapper.Map<CostInfo>(costInfoViewModel);
+            var costInfo = Mapper.Map<CostInfo>(costInfoViewModel);
 
-            var account = _currentAccountProvider.GetCurrentAccount(HttpContext.User);
+            var account = CurrentAccountProvider.GetCurrentAccount(HttpContext.User);
 
             costInfo.AccountId = account.Id;
             costInfo.Created = DateTime.Now;
@@ -137,9 +136,9 @@ namespace ExpenseManager.Presentation.Controllers
                 return RedirectToAction("CreatePermanentExpense", new { errorMessage = ExpenseManagerResource.InvalidInputData });
             }
 
-            var costInfo = _mapper.Map<CostInfo>(costInfoViewModel);
+            var costInfo = Mapper.Map<CostInfo>(costInfoViewModel);
 
-            var account = _currentAccountProvider.GetCurrentAccount(HttpContext.User);
+            var account = CurrentAccountProvider.GetCurrentAccount(HttpContext.User);
 
             costInfo.AccountId = account.Id;
 
@@ -159,7 +158,7 @@ namespace ExpenseManager.Presentation.Controllers
             [FromForm] string returnRedirect)
         {
             var costInfo = _balanceFacade.GetItem(id);
-            var account = _currentAccountProvider.GetCurrentAccount(HttpContext.User);
+            var account = CurrentAccountProvider.GetCurrentAccount(HttpContext.User);
 
             if (costInfo == null || costInfo.AccountId != account.Id)
             {
@@ -172,20 +171,18 @@ namespace ExpenseManager.Presentation.Controllers
         }
 
         #region Helpers
-
         private List<IndexViewModel> GetFilteredExpenses(CostInfoFilter filter)
         {
             var expenses = _balanceFacade.ListItem(filter);
-            return _mapper.Map<List<IndexViewModel>>(expenses);
+            return Mapper.Map<List<IndexViewModel>>(expenses);
         }
 
         private List<Models.CostType.IndexViewModel> GetAllCostTypes()
         {
             var costTypes = _balanceFacade.ListItemTypes(null);
-            var costTypeViewModels = _mapper.Map<List<Models.CostType.IndexViewModel>>(costTypes);
+            var costTypeViewModels = Mapper.Map<List<Models.CostType.IndexViewModel>>(costTypes);
             return costTypeViewModels;
         }
-
         #endregion
     }
 }

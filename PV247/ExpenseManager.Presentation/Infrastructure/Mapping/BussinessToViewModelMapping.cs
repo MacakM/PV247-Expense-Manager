@@ -3,7 +3,7 @@ using ExpenseManager.Business.DataTransferObjects;
 
 namespace ExpenseManager.Presentation.Infrastructure.Mapping
 {
-    class BussinessToViewModelMapping : Profile
+    public class BussinessToViewModelMapping : Profile
     {
         public BussinessToViewModelMapping()
         {

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using ExpenseManager.Presentation.Models.ViewComponent;
+﻿using ExpenseManager.Presentation.Models.ViewComponent;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExpenseManager.Presentation.ViewComponents

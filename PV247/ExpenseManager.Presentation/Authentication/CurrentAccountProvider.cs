@@ -14,6 +14,7 @@ namespace ExpenseManager.Presentation.Authentication
     public class CurrentAccountProvider : ICurrentAccountProvider
     {
         private readonly UserManager<ApplicationUser> _userManager;
+
         private readonly AccountFacade _accountFacade;
 
         /// <summary>

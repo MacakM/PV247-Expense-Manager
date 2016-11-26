@@ -23,9 +23,13 @@ namespace ExpenseManager.Presentation.Controllers
     public class AccountController : Controller
     {
         private readonly AccountFacade _userFacade;
+
         private readonly UserManager<ApplicationUser> _userManager;
+
         private readonly SignInManager<ApplicationUser> _signInManager;
+
         private readonly ICurrentAccountProvider _currentAccountProvider;
+
         private readonly ILogger _logger;
 
         /// <summary>
@@ -416,7 +420,6 @@ namespace ExpenseManager.Presentation.Controllers
         }
 
         #region Helpers
-
         private void AddErrors(IdentityResult result)
         {
             foreach (var error in result.Errors)
@@ -436,12 +439,8 @@ namespace ExpenseManager.Presentation.Controllers
             {
                 return Redirect(returnUrl);
             }
-            else
-            {
-                return RedirectToAction("Index", "Expense");
-            }
+            return RedirectToAction("Index", "Expense");
         }
-
         #endregion
     }
 }

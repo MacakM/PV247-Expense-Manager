@@ -16,7 +16,9 @@ namespace ExpenseManager.Presentation.Controllers
     public class ManageController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
+
         private readonly SignInManager<ApplicationUser> _signInManager;
+
         private readonly ILogger _logger;
 
         /// <summary>

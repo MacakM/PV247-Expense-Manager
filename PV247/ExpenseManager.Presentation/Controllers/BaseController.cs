@@ -1,12 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using ExpenseManager.Presentation.Authentication;
-using ExpenseManager.Presentation.Models.User;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace ExpenseManager.Presentation.Controllers
 {
@@ -15,16 +9,15 @@ namespace ExpenseManager.Presentation.Controllers
     /// </summary>
     public class BaseController : Controller
     {
-
         /// <summary>
         /// current account provider
         /// </summary>
-        protected ICurrentAccountProvider _currentAccountProvider;
+        protected ICurrentAccountProvider CurrentAccountProvider;
 
         /// <summary>
         /// mapper
         /// </summary>
-        protected readonly IRuntimeMapper _mapper;
+        protected readonly IRuntimeMapper Mapper;
 
         /// <summary>
         /// Constructor
@@ -35,8 +28,8 @@ namespace ExpenseManager.Presentation.Controllers
             ICurrentAccountProvider currentAccountProvider, 
             Mapper mapper)
         {
-            _currentAccountProvider = currentAccountProvider;
-            _mapper = mapper.DefaultContext.Mapper;
+            CurrentAccountProvider = currentAccountProvider;
+            Mapper = mapper.DefaultContext.Mapper;
         }
 
         /// <summary>

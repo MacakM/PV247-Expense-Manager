@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 using ExpenseManager.Business.DataTransferObjects.Enums;
 
 namespace ExpenseManager.Presentation.Models.Expense
@@ -17,11 +15,13 @@ namespace ExpenseManager.Presentation.Models.Expense
         /// </summary>
         [Required]
         public decimal Money { get; set; }
+
         /// <summary>
         /// More concrete description of the cost
         /// </summary>
         [Required]
         public string Description { get; set; }
+
         /// <summary>
         /// Type of the cost.
         /// </summary>
@@ -33,17 +33,20 @@ namespace ExpenseManager.Presentation.Models.Expense
         /// </summary>
         [Required]
         public Periodicity Periodicity { get; set; }
+
         /// <summary>
         /// Mulptiplies periodicity
         /// </summary>
         [Required]
         [Range(0, int.MaxValue)]
         public int PeriodicMultiplicity { get; set; }
+
         /// <summary>
         /// Date when the cost will be first applied
         /// </summary>
         [Required]
         public DateTime Created { get; set; }
+
         /// <summary>
         /// State whether set money is income or outcome.
         /// </summary>

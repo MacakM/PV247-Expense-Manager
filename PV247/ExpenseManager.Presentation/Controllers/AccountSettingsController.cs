@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Enums;
@@ -23,6 +22,7 @@ namespace ExpenseManager.Presentation.Controllers
     public class AccountSettingsController : BaseController
     {
         private readonly BalanceFacade _balanceFacade;
+
         private readonly AccountFacade _accountFacade;
 
         /// <summary>
@@ -48,8 +48,8 @@ namespace ExpenseManager.Presentation.Controllers
         [Authorize(Policy = "HasAccount")]
         public IActionResult Index()
         {
-            var account = _currentAccountProvider.GetCurrentAccount(HttpContext.User);
-            var currentUserModel = _mapper.Map<IndexViewModel>(_currentAccountProvider.GetCurrentUser(HttpContext.User));
+            var account = CurrentAccountProvider.GetCurrentAccount(HttpContext.User);
+            var currentUserModel = Mapper.Map<IndexViewModel>(CurrentAccountProvider.GetCurrentUser(HttpContext.User));
 
             var model = new AddAccessViewModel()
             {
@@ -70,7 +70,7 @@ namespace ExpenseManager.Presentation.Controllers
 
             var users = _accountFacade.ListUsers(userFilter);
 
-            return _mapper.Map<List<IndexViewModel>>(users);
+            return Mapper.Map<List<IndexViewModel>>(users);
         }
 
         private List<IndexPermanentExpenseViewModel> GetAllPermanentExpenses(Account account)
@@ -89,7 +89,7 @@ namespace ExpenseManager.Presentation.Controllers
             filter.Periodicity = Periodicity.Month;
             expenses.AddRange(_balanceFacade.ListItem(filter));
 
-            return _mapper.Map<List<IndexPermanentExpenseViewModel>>(expenses);
+            return Mapper.Map<List<IndexPermanentExpenseViewModel>>(expenses);
         }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace ExpenseManager.Presentation.Controllers
                 return RedirectWithError(ExpenseManagerResource.AlreadyHasAccount);
             }
 
-            var account = _currentAccountProvider.GetCurrentAccount(HttpContext.User);
+            var account = CurrentAccountProvider.GetCurrentAccount(HttpContext.User);
 
             _accountFacade.AttachAccountToUser(user.Id, account.Id, model.AccessType);
 
@@ -148,14 +148,14 @@ namespace ExpenseManager.Presentation.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult CreateAccount()
         {
-            var account = _currentAccountProvider.GetCurrentAccount(HttpContext.User);
+            var account = CurrentAccountProvider.GetCurrentAccount(HttpContext.User);
 
             if (account != null)
             {
                 return RedirectWithError(ExpenseManagerResource.YouHaveAccount);
             }
 
-            var user = _currentAccountProvider.GetCurrentUser(HttpContext.User);
+            var user = CurrentAccountProvider.GetCurrentUser(HttpContext.User);
             _accountFacade.CreateAccount(user.Id);
 
             return RedirectToAction("Index", "Expense", new { sucessMessage = ExpenseManagerResource.AccountCreated });
