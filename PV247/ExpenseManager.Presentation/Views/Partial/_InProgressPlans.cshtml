@@ -1,0 +1,17 @@
+﻿@model ExpenseManager.Presentation.Models.ViewComponent.InProgressPlansViewModel
+
+<div class="plans">
+    <h3>Plans in progress</h3>
+    <table>
+        @foreach (var plan in Model.Plans)
+        {
+            <tr>
+                <td>@plan.Description</td>
+                <td>@plan.PlannedMoney&nbsp;$</td>
+            </tr>
+        }
+    </table>
+    <div>
+        <a href="@Url.Action("Index", "Plan")" class="more">All plans</a>
+    </div>
+</div>

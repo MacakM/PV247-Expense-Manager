@@ -45,6 +45,17 @@ namespace ExpenseManager.Business.Facades
         {
             return _planService.ListAllCloseablePlans(accountId, GetBalance(accountId));
         }
+
+        /// <summary>
+        /// Lists all plans that are in progress for current user
+        /// </summary>
+        /// <param name="accountId"></param>
+        /// <returns></returns>
+        public List<Plan> ListPlansInProgress(Guid accountId)
+        {
+            return _planService.ListPlansInProgress(accountId);
+        }
+
         /// <summary>
         /// Check all MaxSpend plans and in they at deadline and accomplished set em as completed
         /// </summary>

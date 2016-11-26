@@ -191,6 +191,19 @@ namespace ExpenseManager.Business.Services.Implementations
             };
             return GetList().ToList();
         }
+
+        /// <inheritdoc />
+        public List<Plan> ListPlansInProgress(Guid accountId)
+        {
+            Query.Filter = new PlanModelFilter
+            {
+                AccountId = accountId,
+                IsCompleted = false,
+                DeadlineFrom = DateTime.Now
+            };
+            return GetList().ToList();
+        }
+
         /// <summary>
         /// Check all MaxSpent plans and in they at deadline and accomplished set em as completed
         /// </summary>

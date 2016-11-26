@@ -206,7 +206,7 @@ namespace ExpenseManager.Database
                 Account = account,
                 Start = Convert.ToDateTime("22.11.2016"),
                 Deadline = Convert.ToDateTime("24.12.2016"),
-                Description = "Neprežierať sa",
+                Description = "Nemíňať na jedlo",
                 IsCompleted = false,
                 PlannedMoney = 2000,
                 PlannedType = costType1,

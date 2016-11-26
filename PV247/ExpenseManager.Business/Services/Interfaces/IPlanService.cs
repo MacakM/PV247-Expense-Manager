@@ -54,5 +54,12 @@ namespace ExpenseManager.Business.Services.Interfaces
         /// </summary>
         /// <returns></returns>
         void CheckAllMaxSpendDeadlines();
+
+        /// <summary>
+        /// Lists all plans that are in progress for current user
+        /// </summary>
+        /// <param name="accountId"></param>
+        /// <returns></returns>
+        List<Plan> ListPlansInProgress(Guid accountId);
     }
 }

@@ -78,22 +78,7 @@
             </div>
         </div>
         <hr/>
-        <div class="plans">
-            <h3>Plans for this month</h3>
-            <div>Ušetriť 5000kč</div>
-            <div>Ušetriť 5000kč</div>
-            <div>Ušetriť 5000kč</div>
-            <div>Ušetriť 5000kč</div>
-            <div>Ušetriť 5000kč</div>
-            <div>Ušetriť 5000kč</div>
-            <div>Ušetriť 5000kč</div>
-            <div>Ušetriť 5000kč</div>
-            <div>Ušetriť 5000kč</div>
-            <div>Ušetriť 5000kč</div>
-            <div>Ušetriť 5000kč</div>
-            <div><a href="@Url.Action("Index", "Plan")" class="more">More</a>
-            </div>
-        </div>
+        @await Component.InvokeAsync("InProgressPlans")
     </div>
 </div>
     

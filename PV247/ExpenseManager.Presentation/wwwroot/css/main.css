@@ -211,6 +211,15 @@ header .right-part .logout {
 .sidebar.right .plans div {
   margin-top: 3px;
 }
+.sidebar.right .plans table {
+  width: 100%;
+}
+.sidebar.right .plans table td {
+  padding: 2px;
+}
+.sidebar.right .plans table td:nth-of-type(2) {
+  text-align: right;
+}
 .sidebar.right a,
 .sidebar.right a:hover,
 .sidebar.right a:active,
