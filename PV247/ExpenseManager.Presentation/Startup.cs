@@ -65,7 +65,7 @@ namespace ExpenseManager.Presentation
             services.Configure<ConnectionOptions>(options => options.ConnectionString = Configuration.GetConnectionString("DefaultConnection"));
 
             // Configure Identity persistence         
-            IdentityDALInstaller.Install(services, Configuration.GetConnectionString("IdentityConnection"));
+            IdentityDatabaseInstaller.Install(services, Configuration.GetConnectionString("IdentityConnection"));
 
             // Configure BL
             RegisterBusinessLayerDependencies(services);

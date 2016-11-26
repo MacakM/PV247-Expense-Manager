@@ -230,7 +230,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IdentityDALInstaller.cs" />
+    <Compile Include="IdentityDatabaseInstaller.cs" />
     <Compile Include="IdentityDbContext.cs" />
     <Compile Include="Entities\ApplicationUser.cs" />
     <Compile Include="Migrations\IdentityDbContextModelSnapshot.cs" />
