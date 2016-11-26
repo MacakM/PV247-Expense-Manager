@@ -15,8 +15,9 @@ School project for PV247 (FI MUNI Brno)
 * Every LINQ clause have to be put on new line
 * Use only maximum one empty line between code within methods, there is no empty line between closing bracket of block and its last expression
 * There is exactly one empty line between usings and namespace
-* There is exactly one empty line between namespace and class -> documentation is part of class
-* There is exactly one empty line between each class member(properties, methods...) -> documentation and anotations are part of class member 
+* There is exactly one empty line between namespace and class -> documentation is a part of class
+* There is exactly one empty line between each class member(properties, methods...) -> documentation and anotations are parts of class member 
+* There is exactly one empty line in front of the first class member, but there is no empty line after last one
 
 ### Naming ###
 * Every identifier must be named in english
