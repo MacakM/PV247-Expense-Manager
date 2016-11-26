@@ -3,8 +3,14 @@ using ExpenseManager.Business.DataTransferObjects;
 
 namespace ExpenseManager.Presentation.Infrastructure.Mapping
 {
+    /// <summary>
+    /// Class for managing mapping
+    /// </summary>
     public class BussinessToViewModelMapping : Profile
     {
+        /// <summary>
+        /// Constructor where mapping is done
+        /// </summary>
         public BussinessToViewModelMapping()
         {
             CreateMap<CostInfo, Models.Expense.IndexViewModel>()

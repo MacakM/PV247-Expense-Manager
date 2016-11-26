@@ -53,6 +53,9 @@ namespace ExpenseManager.Presentation
             Configuration = builder.Build();
         }
 
+        /// <summary>
+        /// Configuration
+        /// </summary>
         public IConfigurationRoot Configuration { get; }
 
         /// <summary>

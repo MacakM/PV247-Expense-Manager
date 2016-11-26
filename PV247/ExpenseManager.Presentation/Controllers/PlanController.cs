@@ -44,7 +44,7 @@ namespace ExpenseManager.Presentation.Controllers
                 AllPlans = GetAllPlans(account),
                 ClosablePlans = GetClosablePlans(account),
                 CurrentUser = Mapper.Map<Models.User.IndexViewModel>(CurrentAccountProvider.GetCurrentUser(HttpContext.User))
-        };
+            };
 
             return View(model);
         }
@@ -159,7 +159,7 @@ namespace ExpenseManager.Presentation.Controllers
             {
                 _balanceFacade.ClosePlan(plan);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return RedirectWithError(ExpenseManagerResource.PlanNotClosed);
             }

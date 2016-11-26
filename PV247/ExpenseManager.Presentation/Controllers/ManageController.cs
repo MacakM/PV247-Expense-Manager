@@ -209,15 +209,42 @@ namespace ExpenseManager.Presentation.Controllers
             }
         }
 
+        /// <summary>
+        /// Messages
+        /// </summary>
         public enum ManageMessageId
         {
+            /// <summary>
+            /// phone added successfully
+            /// </summary>
             AddPhoneSuccess,
+            /// <summary>
+            /// login added successfully
+            /// </summary>
             AddLoginSuccess,
+            /// <summary>
+            /// password changed successfully
+            /// </summary>
             ChangePasswordSuccess,
+            /// <summary>
+            /// two factor auth set successfully
+            /// </summary>
             SetTwoFactorSuccess,
+            /// <summary>
+            /// password set successfully
+            /// </summary>
             SetPasswordSuccess,
+            /// <summary>
+            /// login removed successfully
+            /// </summary>
             RemoveLoginSuccess,
+            /// <summary>
+            /// phone removed successfully
+            /// </summary>
             RemovePhoneSuccess,
+            /// <summary>
+            /// unknown error
+            /// </summary>
             Error
         }
 
