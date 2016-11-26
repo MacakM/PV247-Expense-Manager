@@ -19,5 +19,10 @@ namespace ExpenseManager.Presentation.Models.Plan
         /// Plans which is possible to close
         /// </summary>
         public List<PlanViewModel> ClosablePlans { get; set; }
+
+        /// <summary>
+        /// Currently loged-in user
+        /// </summary>
+        public User.IndexViewModel CurrentUser { get; set; }
     }
 }

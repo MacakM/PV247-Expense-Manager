@@ -71,6 +71,7 @@ namespace ExpenseManager.Presentation.Controllers
         /// Displays form for creating new plan
         /// </summary>
         /// <returns></returns>
+        [Authorize(Policy = "HasFullRights")]
         public IActionResult Create()
         {
             var model = new CreateViewModel()
@@ -85,6 +86,9 @@ namespace ExpenseManager.Presentation.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Policy = "HasFullRights")]
         public IActionResult Store(CreateViewModel model)
         {
             var costType = _balanceFacade.GetItemType(model.PlannedTypeId);
