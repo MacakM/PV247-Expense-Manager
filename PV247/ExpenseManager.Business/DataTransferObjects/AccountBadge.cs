@@ -11,26 +11,32 @@ namespace ExpenseManager.Business.DataTransferObjects
         /// Account Id.
         /// </summary>
         public Guid AccountId { get; set; }
+        
         /// <summary>
         /// Name of account
         /// </summary>
         public string AccountName { get; set; }
+        
         /// <summary>
         /// Badge id.
         /// </summary>
         public Guid BadgeId { get; set; }
+        
         /// <summary>
         /// Description of badge
         /// </summary>
         public string BadgeDescription { get; set; }
+       
         /// <summary>
         /// Badge image uri.
         /// </summary>
         public string BadgeImgUri { get; set; }
+        
         /// <summary>
         /// Date when the badge was achieved.
         /// </summary>
         public DateTime? Achieved { get; set; }
+        
         /// <summary>
         /// Makes string representation of object based on its properties
         /// </summary>
@@ -39,6 +45,7 @@ namespace ExpenseManager.Business.DataTransferObjects
         {
             return $"AccountName: {AccountName}, BadgeDescription: {BadgeDescription}, Achieved: {Achieved}";
         }
+        
         /// <summary>
         /// Determites if two objects are the same one
         /// </summary>
@@ -48,6 +55,7 @@ namespace ExpenseManager.Business.DataTransferObjects
         {
             return AccountId == other.AccountId && string.Equals(AccountName, other.AccountName) && BadgeId == other.BadgeId && string.Equals(BadgeDescription, other.BadgeDescription);
         }
+      
         /// <summary>
         /// Determites if two objects are the same one
         /// </summary>
@@ -60,6 +68,7 @@ namespace ExpenseManager.Business.DataTransferObjects
             if (obj.GetType() != this.GetType()) return false;
             return Equals((AccountBadge) obj);
         }
+        
         /// <summary>
         /// Compute hash of this object based on his properties
         /// </summary>

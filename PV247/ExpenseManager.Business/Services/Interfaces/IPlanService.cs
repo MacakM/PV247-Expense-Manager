@@ -15,40 +15,47 @@ namespace ExpenseManager.Business.Services.Interfaces
         /// </summary>
         /// <param name="plan">Object to be saved to database</param>
         Guid CreatePlan(Plan plan);
+
         /// <summary>
         /// Updates plan, must have id of updated plan!
         /// </summary>
         /// <param name="plan">Plan object with id of existing plan</param>
         void UpdatePlan(Plan plan);
+
         /// <summary>
         /// Deletes plen with specified id
         /// </summary>
         /// <param name="planId">Unique id of deleted plan</param>
         void DeletePlan(Guid planId);
+
         /// <summary>
         /// Get specific plan specified by unique id
         /// </summary>
         /// <param name="planId">Unique id of plan</param>
         /// <returns></returns>
         Plan GetPlan(Guid planId);
+
         /// <summary>
         /// Lists all plans that match filters criterias
         /// </summary>
         /// <param name="filter">Filters plans</param>
         /// <returns></returns>
         List<Plan> ListPlans(PlanFilter filter);
-       /// <summary>
-       /// List closeable plans of account
-       /// </summary>
-       /// <param name="accountId"></param>
-       /// <param name="accountBalance"></param>
-       /// <returns></returns>
+
+        /// <summary>
+        /// List closeable plans of account
+        /// </summary>
+        /// <param name="accountId"></param>
+        /// <param name="accountBalance"></param>
+        /// <returns></returns>
         List<Plan> ListAllCloseablePlans(Guid accountId, decimal accountBalance);
+
         /// <summary>
         /// Transfers plan into cost
         /// </summary>
         /// <param name="plan"></param>
         void ClosePlan(Plan plan);
+
         /// <summary>
         /// Check all MaxSpent plans and in they at deadline and accomplished set em as completed
         /// </summary>

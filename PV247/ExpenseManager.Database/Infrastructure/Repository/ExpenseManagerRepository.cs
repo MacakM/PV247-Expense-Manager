@@ -24,7 +24,7 @@ namespace ExpenseManager.Database.Infrastructure.Repository
         /// </summary>
         public ExpenseManagerRepository(IUnitOfWorkProvider provider)
         {
-            this._provider = provider;
+            _provider = provider;
         }
 
         /// <summary>

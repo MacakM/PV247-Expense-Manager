@@ -5,7 +5,6 @@ using Riganti.Utils.Infrastructure.Core;
 
 namespace ExpenseManager.Business.Infrastructure
 {
-    
     /// <summary>
     /// A base class for CRUD-enabled service, taken from unreleased project of RigantiInfrastructure solution, all credit goes to Tomas Herceg.
     /// </summary>
@@ -17,7 +16,7 @@ namespace ExpenseManager.Business.Infrastructure
         where T : BusinessObject<TKey>, new()
     {
         /// <summary>
-        /// 
+        /// Unit of work provider
         /// </summary>
         public IUnitOfWorkProvider UnitOfWorkProvider { get; }
 
@@ -67,7 +66,7 @@ namespace ExpenseManager.Business.Infrastructure
                 uow.Commit();
             }
         }
-        
+
         /// <summary>
         /// Saves the changes on the specified  to the database.
         /// </summary>

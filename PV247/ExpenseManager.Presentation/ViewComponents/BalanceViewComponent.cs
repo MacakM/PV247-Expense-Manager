@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using ExpenseManager.Business.Facades;
+﻿using ExpenseManager.Business.Facades;
 using ExpenseManager.Presentation.Authentication;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExpenseManager.Presentation.ViewComponents
@@ -15,6 +10,7 @@ namespace ExpenseManager.Presentation.ViewComponents
     public class BalanceViewComponent : ViewComponent
     {
         private readonly BalanceFacade _balanceFacade;
+
         private readonly ICurrentAccountProvider _currentAccountProvider;
 
         /// <summary>

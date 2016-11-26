@@ -23,15 +23,18 @@ namespace ExpenseManager.Business.Services.Implementations
     /// </summary>
     public class PlanService : ExpenseManagerQueryAndCrudServiceBase<PlanModel, Guid, Plan>, IPlanService
     {
-
         private readonly CostInfoRepository _costInfoRepository;
+
         private readonly ListAccountsQuery _accountsQuery;
+
         private readonly ListCostInfosQuery _costInfosQuery;
+
         private readonly ExpenseManagerRepository<CostTypeModel, Guid> _costTypeRepository;
+
         private readonly ExpenseManagerRepository<AccountModel, Guid> _accountRepository;
 
         /// <summary>
-        /// 
+        /// Entity includes
         /// </summary>
         protected override string[] EntityIncludes { get; } =
         {
@@ -40,17 +43,17 @@ namespace ExpenseManager.Business.Services.Implementations
         };
 
         /// <summary>
-        /// 
+        /// Plan service constructor
         /// </summary>
-        /// <param name="query"></param>
-        /// <param name="repository"></param>
-        /// <param name="expenseManagerMapper"></param>
-        /// <param name="unitOfWorkProvider"></param>
-        /// <param name="costInfoRepository"></param>
-        /// <param name="accountsQuery"></param>
-        /// <param name="costInfosQuery"></param>
-        /// <param name="costTypeRepository"></param>
-        /// <param name="accountRepository"></param>
+        /// <param name="query">Query</param>
+        /// <param name="repository">Repository</param>
+        /// <param name="expenseManagerMapper">Mapper</param>
+        /// <param name="unitOfWorkProvider">Unit of work provider</param>
+        /// <param name="costInfoRepository">Repository</param>
+        /// <param name="accountsQuery">Accounts query</param>
+        /// <param name="costInfosQuery">Cost info query</param>
+        /// <param name="costTypeRepository">Cost type repository</param>
+        /// <param name="accountRepository">Account repository</param>
         public PlanService(ExpenseManagerQuery<PlanModel> query, 
             ExpenseManagerRepository<PlanModel, Guid> repository,
             Mapper expenseManagerMapper, 
@@ -93,6 +96,7 @@ namespace ExpenseManager.Business.Services.Implementations
             }
             return planModel.Id;
         }
+
         /// <summary>
         /// Updates plan, must have id of updated plan!
         /// </summary>
@@ -101,6 +105,7 @@ namespace ExpenseManager.Business.Services.Implementations
         {
            Save(planUpdated);
         }
+
         /// <summary>
         /// Deletes plen with specified id
         /// </summary>
@@ -109,6 +114,7 @@ namespace ExpenseManager.Business.Services.Implementations
         {
             Delete(planId);
         }
+
         /// <summary>
         /// Get specific plan specified by unique id
         /// </summary>
@@ -118,6 +124,7 @@ namespace ExpenseManager.Business.Services.Implementations
         {
             return GetDetail(planId);
         }
+
         /// <summary>
         /// Lists all plans that match filters criterias
         /// </summary>
@@ -157,7 +164,6 @@ namespace ExpenseManager.Business.Services.Implementations
 
         private void CloneToCost(PlanModel plan)
         {
-
             CostInfoModel costInfo = new CostInfoModel
             {
                 Money = plan.PlannedMoney,
@@ -209,7 +215,6 @@ namespace ExpenseManager.Business.Services.Implementations
         /// </summary>
         public void CheckAllMaxSpendDeadlines()
         {
-            
             var accounts = _accountsQuery.Execute();
             foreach (var account in accounts) // FOR EACH ACCOUNT 
             {
@@ -230,7 +235,6 @@ namespace ExpenseManager.Business.Services.Implementations
                         Save(plan);
                     }
                 }
-
             }
         }
     }

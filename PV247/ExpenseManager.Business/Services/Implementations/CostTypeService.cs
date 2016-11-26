@@ -19,21 +19,22 @@ namespace ExpenseManager.Business.Services.Implementations
     /// </summary>
     public class CostTypeService : ExpenseManagerQueryAndCrudServiceBase<CostTypeModel, Guid, CostType>, ICostTypeService
     {
-   
         /// <summary>
-        /// 
+        /// Entity includes
         /// </summary>
         protected override string[] EntityIncludes { get; } = new string[0];
+
         /// <summary>
-        /// 
+        /// Cost type service constructor
         /// </summary>
-        /// <param name="query"></param>
-        /// <param name="repository"></param>
-        /// <param name="expenseManagerMapper"></param>
-        /// <param name="unitOfWorkProvider"></param>
+        /// <param name="query">Query</param>
+        /// <param name="repository">Repository</param>
+        /// <param name="expenseManagerMapper">Mapper</param>
+        /// <param name="unitOfWorkProvider">Unit of work provider</param>
         public CostTypeService(ExpenseManagerQuery<CostTypeModel> query, ExpenseManagerRepository<CostTypeModel, Guid> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
         {
         }
+
         /// <summary>
         /// Creaates new cost type
         /// </summary>
@@ -42,6 +43,7 @@ namespace ExpenseManager.Business.Services.Implementations
         {
             return Save(costType);
         }
+
         /// <summary>
         /// Updates existing cost type
         /// </summary>
@@ -50,6 +52,7 @@ namespace ExpenseManager.Business.Services.Implementations
         {
            Save(costType);
         }
+
         /// <summary>
         /// Deletes cost type specified by id
         /// </summary>
@@ -58,6 +61,7 @@ namespace ExpenseManager.Business.Services.Implementations
         {
            Delete(costTypeId);
         }
+
         /// <summary>
         /// Get cost type specified by unique id
         /// </summary>
@@ -67,6 +71,7 @@ namespace ExpenseManager.Business.Services.Implementations
         {
             return GetDetail(costTypeId);
         }
+
         /// <summary>
         /// List cost types specified by filter
         /// </summary>
@@ -77,8 +82,5 @@ namespace ExpenseManager.Business.Services.Implementations
             Query.Filter = ExpenseManagerMapper.Map<CostTypeModelFilter>(filter);
             return GetList().ToList();
         }
-
-
-    
     }
 }

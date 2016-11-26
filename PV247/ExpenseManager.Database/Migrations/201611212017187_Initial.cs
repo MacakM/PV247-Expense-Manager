@@ -1,10 +1,15 @@
+using System.Data.Entity.Migrations;
+
 namespace ExpenseManager.Database.Migrations
 {
-    using System;
-    using System.Data.Entity.Migrations;
-    
+    /// <summary>
+    /// Migration settings
+    /// </summary>
     public partial class Initial : DbMigration
     {
+        /// <summary>
+        /// Up method
+        /// </summary>
         public override void Up()
         {
             CreateTable(
@@ -106,7 +111,9 @@ namespace ExpenseManager.Database.Migrations
                 .PrimaryKey(t => t.Id);
             
         }
-        
+        /// <summary>
+        /// Down method
+        /// </summary>
         public override void Down()
         {
             DropForeignKey("dbo.AccountBadgeModels", "BadgeId", "dbo.BadgeModels");

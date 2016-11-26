@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using ExpenseManager.Presentation.Authentication;
 using ExpenseManager.Presentation.Models.User;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +11,7 @@ namespace ExpenseManager.Presentation.ViewComponents
     public class UserEmailViewComponent : ViewComponent
     {
         private readonly ICurrentAccountProvider _currentAccountProvider;
+
         private readonly IRuntimeMapper _mapper;
 
         /// <summary>

@@ -16,11 +16,13 @@ namespace ExpenseManager.Database.Entities
         /// </summary>
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
+
         /// <summary>
         /// Name of this type.
         /// </summary>
         [MaxLength(128)]
         public string Name { get; set; }
+
         /// <summary>
         /// All costs of this type.
         /// </summary>

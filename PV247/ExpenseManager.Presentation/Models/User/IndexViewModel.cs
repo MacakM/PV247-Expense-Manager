@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using ExpenseManager.Business.DataTransferObjects.Enums;
+﻿using ExpenseManager.Business.DataTransferObjects.Enums;
 
 namespace ExpenseManager.Presentation.Models.User
 {
@@ -15,10 +11,12 @@ namespace ExpenseManager.Presentation.Models.User
         /// Name of the user.
         /// </summary>
         public string Name { get; set; }
+
         /// <summary>
         /// Email of the user.
         /// </summary>
         public string Email { get; set; }
+
         /// <summary>
         /// Access type of the user.
         /// </summary>

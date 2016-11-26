@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using AutoMapper;
 using ExpenseManager.Business.DataTransferObjects;
-using ExpenseManager.Database.Filters;
 using ExpenseManager.Database.Infrastructure.Query;
 using ExpenseManager.Database.Infrastructure.Repository;
 using Riganti.Utils.Infrastructure.Core;
@@ -22,16 +21,17 @@ namespace ExpenseManager.Business.Infrastructure
         /// Gets the query object used to populate the list or records.
         /// </summary>
         public ExpenseManagerQuery<TEntity> Query { get; }
+
         /// <summary>
-        /// 
+        /// Service base class
         /// </summary>
-        /// <param name="query"></param>
-        /// <param name="repository"></param>
-        /// <param name="expenseManagerMapper"></param>
-        /// <param name="unitOfWorkProvider"></param>
+        /// <param name="query">Query</param>
+        /// <param name="repository">Repository</param>
+        /// <param name="expenseManagerMapper">Mapper</param>
+        /// <param name="unitOfWorkProvider">Unit of work provider</param>
         protected ExpenseManagerQueryAndCrudServiceBase(ExpenseManagerQuery<TEntity> query, ExpenseManagerRepository<TEntity, TKey> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) : base(repository, expenseManagerMapper, unitOfWorkProvider)
         {
-            this.Query = query;
+            Query = query;
         }
 
         /// <summary>

@@ -10,7 +10,7 @@ namespace ExpenseManager.Database.Infrastructure.UnitOfWork
     /// </summary>
     public class ExpenseManagerUnitOfWork : UnitOfWorkBase
     {
-        private bool hasOwnContext;
+        private readonly bool _hasOwnContext;
 
         /// <summary>
         /// Gets the <see cref="DbContext"/>.
@@ -34,12 +34,12 @@ namespace ExpenseManager.Database.Infrastructure.UnitOfWork
 
             var uowProvider = (ExpenseManagerUnitOfWorkProvider) provider;
            
-            this.Context = uowProvider.ConnectionOptions == null
+            Context = uowProvider.ConnectionOptions == null
                 ? uowProvider.DbContextFactory?.Invoke() as ExpenseDbContext 
                 // internal DbContext shall not be injected in some scenarios in order to increase persistence separation
                 : new ExpenseDbContext(uowProvider.ConnectionOptions.Value.ConnectionString);
 
-            hasOwnContext = true;
+            _hasOwnContext = true;
         }
 
 
@@ -48,7 +48,7 @@ namespace ExpenseManager.Database.Infrastructure.UnitOfWork
         /// </summary>
         public override void Commit()
         {
-            if (hasOwnContext)
+            if (_hasOwnContext)
             {
                 base.Commit();
             }
@@ -68,7 +68,6 @@ namespace ExpenseManager.Database.Infrastructure.UnitOfWork
                Debug.WriteLine("An exception was thrown while performing SaveChanges():" + ex.Message);
                throw;
             }
-
         }
 
         /// <summary>
@@ -76,7 +75,7 @@ namespace ExpenseManager.Database.Infrastructure.UnitOfWork
         /// </summary>
         protected override void DisposeCore()
         {
-            if (hasOwnContext)
+            if (_hasOwnContext)
             {
                 Context.Dispose();
             }

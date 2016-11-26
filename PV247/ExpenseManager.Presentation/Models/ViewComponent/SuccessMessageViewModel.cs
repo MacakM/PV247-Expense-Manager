@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace ExpenseManager.Presentation.Models.ViewComponent
+﻿namespace ExpenseManager.Presentation.Models.ViewComponent
 {
     /// <summary>
     /// View model for displaying success message

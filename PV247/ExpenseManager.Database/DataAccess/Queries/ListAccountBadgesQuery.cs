@@ -17,6 +17,7 @@ namespace ExpenseManager.Database.DataAccess.Queries
         public ListAccountBadgesQuery(IUnitOfWorkProvider provider) : base(provider)
         {
         }
+
         /// <summary>
         /// Return IQueryable.
         /// </summary>
@@ -27,6 +28,5 @@ namespace ExpenseManager.Database.DataAccess.Queries
 
             return Filter == null ? accountBadges : Filter.FilterQuery(accountBadges);
         }
-
     }
 }

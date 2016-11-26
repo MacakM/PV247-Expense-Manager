@@ -12,10 +12,12 @@ namespace ExpenseManager.Business.DataTransferObjects
         /// Name of this type.
         /// </summary>
         public string Name { get; set; }
+       
         /// <summary>
         /// All costs of this type.
         /// </summary>
         public List<CostInfo> CostInfoList { get; set; }
+        
         /// <summary>
         /// Makes string representation of object based on its properties
         /// </summary>
@@ -24,6 +26,7 @@ namespace ExpenseManager.Business.DataTransferObjects
         {
             return $"Name: {Name}";
         }
+        
         /// <summary>
         /// Determites if two objects are the same one
         /// </summary>
@@ -33,6 +36,7 @@ namespace ExpenseManager.Business.DataTransferObjects
         {
             return string.Equals(Name, other.Name);
         }
+        
         /// <summary>
         /// Determites if two objects are the same one
         /// </summary>
@@ -45,6 +49,7 @@ namespace ExpenseManager.Business.DataTransferObjects
             if (obj.GetType() != this.GetType()) return false;
             return Equals((CostType) obj);
         }
+        
         /// <summary>
         /// Compute hash of this object based on his properties
         /// </summary>

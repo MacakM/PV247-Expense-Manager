@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Filters;
@@ -39,13 +37,13 @@ namespace ExpenseManager.Presentation.Controllers
         /// <returns></returns>
         public IActionResult Index()
         {
-            var account = _currentAccountProvider.GetCurrentAccount(HttpContext.User);
+            var account = CurrentAccountProvider.GetCurrentAccount(HttpContext.User);
 
             var model = new IndexViewModel()
             {
                 AllPlans = GetAllPlans(account),
                 ClosablePlans = GetClosablePlans(account),
-                CurrentUser = _mapper.Map<Models.User.IndexViewModel>(_currentAccountProvider.GetCurrentUser(HttpContext.User))
+                CurrentUser = Mapper.Map<Models.User.IndexViewModel>(CurrentAccountProvider.GetCurrentUser(HttpContext.User))
         };
 
             return View(model);
@@ -54,7 +52,7 @@ namespace ExpenseManager.Presentation.Controllers
         private List<PlanViewModel> GetClosablePlans(Account account)
         {
             var plans = _balanceFacade.ListAllCloseablePlans(account.Id);
-            return _mapper.Map<List<PlanViewModel>>(plans);
+            return Mapper.Map<List<PlanViewModel>>(plans);
         }
 
         private List<PlanViewModel> GetAllPlans(Account account)
@@ -65,7 +63,7 @@ namespace ExpenseManager.Presentation.Controllers
             };
 
             var allPlans = _balanceFacade.ListPlans(allPlansFilter);
-            return _mapper.Map<List<PlanViewModel>>(allPlans);
+            return Mapper.Map<List<PlanViewModel>>(allPlans);
         }
 
         /// <summary>
@@ -101,9 +99,9 @@ namespace ExpenseManager.Presentation.Controllers
                 return View("Create", model);
             }
 
-            var plan = _mapper.Map<Plan>(model);
+            var plan = Mapper.Map<Plan>(model);
 
-            var account = _currentAccountProvider.GetCurrentAccount(HttpContext.User);
+            var account = CurrentAccountProvider.GetCurrentAccount(HttpContext.User);
 
             plan.AccountId = account.Id;
             plan.Start = DateTime.Now;
@@ -123,7 +121,7 @@ namespace ExpenseManager.Presentation.Controllers
         public IActionResult Delete([FromForm] Guid id)
         {
             var plan = _balanceFacade.GetPlan(id);
-            var account = _currentAccountProvider.GetCurrentAccount(HttpContext.User);
+            var account = CurrentAccountProvider.GetCurrentAccount(HttpContext.User);
 
             if (plan == null || plan.AccountId != account.Id)
             {
@@ -138,7 +136,7 @@ namespace ExpenseManager.Presentation.Controllers
         private List<Models.CostType.IndexViewModel> GetAllCostTypes()
         {
             var costTypes = _balanceFacade.ListItemTypes(null);
-            var costTypeViewModels = _mapper.Map<List<Models.CostType.IndexViewModel>>(costTypes);
+            var costTypeViewModels = Mapper.Map<List<Models.CostType.IndexViewModel>>(costTypes);
             return costTypeViewModels;
         }
 
@@ -150,7 +148,7 @@ namespace ExpenseManager.Presentation.Controllers
         public IActionResult Close([FromForm] Guid id)
         {
             var plan = _balanceFacade.GetPlan(id);
-            var account = _currentAccountProvider.GetCurrentAccount(HttpContext.User);
+            var account = CurrentAccountProvider.GetCurrentAccount(HttpContext.User);
 
             if (plan == null || plan.AccountId != account.Id)
             {
@@ -165,7 +163,6 @@ namespace ExpenseManager.Presentation.Controllers
             {
                 return RedirectWithError(ExpenseManagerResource.PlanNotClosed);
             }
-
             return RedirectToAction("Index", new {successMessage = ExpenseManagerResource.PlanClosed});
         }
     }

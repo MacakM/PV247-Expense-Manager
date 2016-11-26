@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Sockets;
 using AutoMapper;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Enums;
 using ExpenseManager.Business.DataTransferObjects.Filters;
 using ExpenseManager.Business.Infrastructure;
 using ExpenseManager.Business.Services.Interfaces;
-using ExpenseManager.Database.DataAccess.Repositories;
 using ExpenseManager.Database.Entities;
 using ExpenseManager.Database.Enums;
 using ExpenseManager.Database.Filters;
@@ -24,10 +22,11 @@ namespace ExpenseManager.Business.Services.Implementations
     public class CostInfoService : ExpenseManagerQueryAndCrudServiceBase<CostInfoModel, Guid, CostInfo>, ICostInfoService
     {
         private readonly ExpenseManagerRepository<CostTypeModel, Guid> _costTypeRepository;
+
         private readonly ExpenseManagerRepository<AccountModel, Guid> _accountRepository;
 
         /// <summary>
-        /// 
+        /// Incluede entities
         /// </summary>
         protected override string[] EntityIncludes { get; } =
         {
@@ -36,14 +35,14 @@ namespace ExpenseManager.Business.Services.Implementations
         };
 
         /// <summary>
-        /// 
+        /// Cost infore service constructor
         /// </summary>
-        /// <param name="query"></param>
-        /// <param name="repository"></param>
-        /// <param name="expenseManagerMapper"></param>
-        /// <param name="unitOfWorkProvider"></param>
-        /// <param name="costTypeRepository"></param>
-        /// <param name="accountRepository"></param>
+        /// <param name="query">Query</param>
+        /// <param name="repository">Repository</param>
+        /// <param name="expenseManagerMapper">Expense manager mapper</param>
+        /// <param name="unitOfWorkProvider">Unit of work provider</param>
+        /// <param name="costTypeRepository">Cost type repository</param>
+        /// <param name="accountRepository">Account repository</param>
         public CostInfoService(
             ExpenseManagerQuery<CostInfoModel> query,
             ExpenseManagerRepository<CostInfoModel, Guid> repository,
@@ -55,6 +54,7 @@ namespace ExpenseManager.Business.Services.Implementations
             _costTypeRepository = costTypeRepository;
             _accountRepository = accountRepository;
         }
+
         /// <summary>
         /// Creates new cost info object in databse
         /// </summary>
@@ -80,6 +80,7 @@ namespace ExpenseManager.Business.Services.Implementations
             }
             return costInfoModel.Id;
         }
+
         /// <summary>
         /// Updates existing cost info
         /// </summary>
@@ -88,6 +89,7 @@ namespace ExpenseManager.Business.Services.Implementations
         {
             Save(updatedCostInfo);
         }
+
         /// <summary>
         /// Deletes cost info specified by cost info
         /// </summary>
@@ -96,6 +98,7 @@ namespace ExpenseManager.Business.Services.Implementations
         {
             Delete(costInfoId);
         }
+
         /// <summary>
         /// Get cost info specified by unique id
         /// </summary>
@@ -105,6 +108,7 @@ namespace ExpenseManager.Business.Services.Implementations
         {
             return GetDetail(costInfoId);
         }
+
         /// <summary>
         /// List cost types based on filter
         /// </summary>
@@ -144,6 +148,7 @@ namespace ExpenseManager.Business.Services.Implementations
             CheckWeekPeriodicities();
             CheckMonthPeriodicities();
         }
+
         /// <summary>
         /// Returns current balance of account
         /// </summary>
@@ -240,10 +245,8 @@ namespace ExpenseManager.Business.Services.Implementations
                 TypeId = periodic.TypeId,
                 TypeName = periodic.TypeName
             };
-
-
+            
             return nonPeriodic;
-
         }
     }
 }

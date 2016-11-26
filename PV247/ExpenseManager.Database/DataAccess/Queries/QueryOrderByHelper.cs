@@ -20,6 +20,7 @@ namespace ExpenseManager.Database.DataAccess.Queries
         {
             return (IQueryable<T>)OrderBy((IQueryable)source, propertyName);
         }
+
         /// <summary>
         /// Default order by
         /// </summary>
@@ -31,8 +32,8 @@ namespace ExpenseManager.Database.DataAccess.Queries
             var x = Expression.Parameter(source.ElementType);
             var selector = Expression.Lambda(Expression.PropertyOrField(x, propertyName), x);
             return source.Provider.CreateQuery(Expression.Call(typeof(Queryable), "OrderBy", new Type[] { source.ElementType, selector.Body.Type },source.Expression, selector));
-
         }
+
         /// <summary>
         /// Orders descending
         /// </summary>
@@ -44,6 +45,7 @@ namespace ExpenseManager.Database.DataAccess.Queries
         {
             return (IQueryable<T>)OrderByDesc((IQueryable)source, propertyName);
         }
+
         /// <summary>
         /// Orders descending
         /// </summary>
@@ -55,9 +57,7 @@ namespace ExpenseManager.Database.DataAccess.Queries
             var x = Expression.Parameter(source.ElementType);
             var selector = Expression.Lambda(Expression.PropertyOrField(x, propertyName), x);
             return source.Provider.CreateQuery(Expression.Call(typeof(Queryable), "OrderByDescending", new Type[] { source.ElementType, selector.Body.Type },source.Expression, selector));
-
         }
-
     }
 }
 

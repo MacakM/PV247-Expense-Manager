@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace ExpenseManager.Presentation.Models.CostType
+﻿namespace ExpenseManager.Presentation.Models.CostType
 {
     /// <summary>
     /// Presentation layer representation of CostTypeModel object

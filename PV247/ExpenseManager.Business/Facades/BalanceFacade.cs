@@ -12,21 +12,26 @@ namespace ExpenseManager.Business.Facades
     public class BalanceFacade
     {
         private readonly IAccountBadgeService _accountBadgeService;
+
         private readonly IBadgeService _badgeService;
+
         private readonly ICostInfoService _costInfoService;
+
         private readonly ICostTypeService _costTypeService;
+
         private readonly IPlanService _planService;
+
         private readonly IBadgeManagerService _badgeManagerService;
 
         /// <summary>
-        /// 
+        /// Balance facade construtor
         /// </summary>
-        /// <param name="accountBadgeService"></param>
-        /// <param name="badgeService"></param>
-        /// <param name="costInfoService"></param>
-        /// <param name="costTypeService"></param>
-        /// <param name="planService"></param>
-        /// <param name="badgeManagerService"></param>
+        /// <param name="accountBadgeService">Account Badge service</param>
+        /// <param name="badgeService">Badge service</param>
+        /// <param name="costInfoService">Cost info service</param>
+        /// <param name="costTypeService">Cost type service</param>
+        /// <param name="planService">Plan service</param>
+        /// <param name="badgeManagerService">Badge manager service</param>
         public BalanceFacade(IAccountBadgeService accountBadgeService, IBadgeService badgeService, ICostInfoService costInfoService, ICostTypeService costTypeService, IPlanService planService, IBadgeManagerService badgeManagerService)
         {
             _accountBadgeService = accountBadgeService;
@@ -36,7 +41,7 @@ namespace ExpenseManager.Business.Facades
             _planService = planService;
             _badgeManagerService = badgeManagerService;
         }
-        
+
         #region Business operations
         /// <summary>
         /// Lists all plans that can be closed by user - MUST BE PLANTYPE.SAVE
@@ -64,6 +69,7 @@ namespace ExpenseManager.Business.Facades
         {
              _planService.CheckAllMaxSpendDeadlines();
         }
+
         /// <summary>
         /// Returns current balance of account
         /// </summary>
@@ -71,6 +77,7 @@ namespace ExpenseManager.Business.Facades
         {
             return _costInfoService.GetBalance(accountId);
         }
+
         /// <summary>
         /// Plan is marked as closed and is transfered into database as CostInfo - user spent m
         /// </summary>
@@ -79,6 +86,7 @@ namespace ExpenseManager.Business.Facades
         {
             _planService.ClosePlan(plan);
         }
+
         /// <summary>
         /// Checks all account if they can get badge
         /// </summary>
@@ -86,6 +94,7 @@ namespace ExpenseManager.Business.Facades
         {
             _badgeManagerService.CheckBadgesRequirements();
         }
+
         /// <summary>
         /// Recomputes periodic costs, should be called every day in order to refresh all costs. Smallest period was set as one day
         /// </summary>
@@ -93,6 +102,7 @@ namespace ExpenseManager.Business.Facades
         {
             _costInfoService.RecomputePeriodicCosts();
         }
+
         #endregion
         #region CostInfo CRUD
         /// <summary>
@@ -103,6 +113,7 @@ namespace ExpenseManager.Business.Facades
         {
             return _costInfoService.CreateCostInfo(costInfo);
         }
+
         /// <summary>
         /// Deletes cost info specified by cost info
         /// </summary>
@@ -111,6 +122,7 @@ namespace ExpenseManager.Business.Facades
         {
             _costInfoService.DeleteCostInfo(costInfoId);
         }
+
         /// <summary>
         /// Updates existing cost info
         /// </summary>
@@ -119,6 +131,7 @@ namespace ExpenseManager.Business.Facades
         {
             _costInfoService.UpdateCostInfo(updatedCostInfo);
         }
+
         /// <summary>
         /// Get cost info specified by unique id
         /// </summary>
@@ -128,6 +141,7 @@ namespace ExpenseManager.Business.Facades
         {
             return _costInfoService.GetCostInfo(costInfoId);
         }
+
         /// <summary>
         /// List cost types based on filter
         /// </summary>
@@ -159,6 +173,7 @@ namespace ExpenseManager.Business.Facades
         {
             return _planService.CreatePlan(plan);
         }
+
         /// <summary>
         /// Deletes plen with specified id
         /// </summary>
@@ -175,6 +190,7 @@ namespace ExpenseManager.Business.Facades
         {
             _planService.UpdatePlan(updatedPlan);
         }
+
         /// <summary>
         /// Get specific plan specified by unique id
         /// </summary>
@@ -184,6 +200,7 @@ namespace ExpenseManager.Business.Facades
         {
             return _planService.GetPlan(planId);
         }
+
         /// <summary>
         /// Lists all plans that match filters criterias
         /// </summary>
@@ -193,6 +210,7 @@ namespace ExpenseManager.Business.Facades
         {
             return _planService.ListPlans(filter);
         }
+
         #endregion
         #region CostType CRUD
         /// <summary>
@@ -203,6 +221,7 @@ namespace ExpenseManager.Business.Facades
         {
             return _costTypeService.CreateCostType(costType);
         }
+
         /// <summary>
         /// Deletes cost type specified by id
         /// </summary>
@@ -211,6 +230,7 @@ namespace ExpenseManager.Business.Facades
         {
             _costTypeService.DeleteCostType(costTypeId);
         }
+
         /// <summary>
         /// Updates existing cost type
         /// </summary>
@@ -219,6 +239,7 @@ namespace ExpenseManager.Business.Facades
         {
             _costTypeService.UpdateCostType(updatedCostType);
         }
+
         /// <summary>
         /// Get cost type specified by unique id
         /// </summary>
@@ -228,6 +249,7 @@ namespace ExpenseManager.Business.Facades
         {
             return _costTypeService.GetCostType(itemTypeId);
         }
+
         /// <summary>
         /// List cost types specified by filter
         /// </summary>
@@ -237,6 +259,7 @@ namespace ExpenseManager.Business.Facades
         {
             return _costTypeService.ListCostTypes(filter);
         }
+
         #endregion
         #region Badge CRUD
         /// <summary>
@@ -247,6 +270,7 @@ namespace ExpenseManager.Business.Facades
         {
             return _badgeService.CreateBadge(badge);
         }
+
         /// <summary>
         /// Deletes badge cpecified by id
         /// </summary>
@@ -255,6 +279,7 @@ namespace ExpenseManager.Business.Facades
         {
             _badgeService.DeleteBadge(badgeId);
         }
+
         /// <summary>
         /// Updates existing badge in database
         /// </summary>
@@ -263,6 +288,7 @@ namespace ExpenseManager.Business.Facades
         {
             _badgeService.UpdateBadge(updatedBadge);
         }
+
         /// <summary>
         /// Get specific badge by unique id
         /// </summary>
@@ -272,6 +298,7 @@ namespace ExpenseManager.Business.Facades
         {
             return _badgeService.GetBadge(badgeId);
         }
+
         /// <summary>
         /// Lists filtered badges
         /// </summary>
@@ -281,6 +308,7 @@ namespace ExpenseManager.Business.Facades
         {
             return _badgeService.ListBadges(filter);
         }
+
         #endregion
         #region AccountBadge CRUD
         /// <summary>
@@ -291,6 +319,7 @@ namespace ExpenseManager.Business.Facades
         {
             return _accountBadgeService.CreateAccountBadge(accountBadge);
         }
+
         /// <summary>
         /// Deletes specified account badge
         /// </summary>
@@ -299,6 +328,7 @@ namespace ExpenseManager.Business.Facades
         {
             _accountBadgeService.DeleteAccountBadge(accountBadgeId);
         }
+
         /// <summary>
         /// Updates existing account badge
         /// </summary>
@@ -307,6 +337,7 @@ namespace ExpenseManager.Business.Facades
         {
             _accountBadgeService.UpdateAccountBadge(updatedAccountBadge);
         }
+
         /// <summary>
         /// Get account badge specified by id
         /// </summary>
@@ -316,6 +347,7 @@ namespace ExpenseManager.Business.Facades
         {
             return _accountBadgeService.GetAccountBadge(accountBadgeId);
         }
+
         /// <summary>
         /// List filtered account badges
         /// </summary>

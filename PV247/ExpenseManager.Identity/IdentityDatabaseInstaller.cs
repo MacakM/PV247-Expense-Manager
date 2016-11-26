@@ -4,8 +4,16 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace ExpenseManager.Identity
 {
-    public static class IdentityDALInstaller
+    /// <summary>
+    /// Identity data access installer
+    /// </summary>
+    public static class IdentityDatabaseInstaller
     {
+        /// <summary>
+        /// Install method
+        /// </summary>
+        /// <param name="services">Services</param>
+        /// <param name="connectionString">Connection string</param>
         public static void Install(IServiceCollection services, string connectionString)
         {
             services.AddDbContext<IdentityDbContext>(builder => builder.UseSqlServer(connectionString)).BuildServiceProvider();

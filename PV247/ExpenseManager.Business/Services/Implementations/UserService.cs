@@ -26,19 +26,19 @@ namespace ExpenseManager.Business.Services.Implementations
         private readonly UserRepository _userRepository;
 
         /// <summary>
-        /// 
+        /// User service constructor
         /// </summary>
-        /// <param name="query"></param>
-        /// <param name="repository"></param>
-        /// <param name="expenseManagerMapper"></param>
-        /// <param name="unitOfWorkProvider"></param>
+        /// <param name="query">Query</param>
+        /// <param name="repository">Repository</param>
+        /// <param name="expenseManagerMapper">Mapper</param>
+        /// <param name="unitOfWorkProvider">Unit of work provider</param>
         public UserService(ExpenseManagerQuery<UserModel> query, ExpenseManagerRepository<UserModel, Guid> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
         {
             _userRepository = repository as UserRepository;
         }
 
         /// <summary>
-        /// 
+        /// Entity includes
         /// </summary>
         protected override string[] EntityIncludes { get; } =
         {
@@ -105,6 +105,7 @@ namespace ExpenseManager.Business.Services.Implementations
                 return ExpenseManagerMapper.Map<UserModel, User>(entity);
             }
         }
+
         /// <summary>
         /// List users that match parameters given in filter 
         /// </summary>
@@ -115,6 +116,7 @@ namespace ExpenseManager.Business.Services.Implementations
             Query.Filter = ExpenseManagerMapper.Map<UserModelFilter>(filter);
             return GetList().ToList();
         }
+
         /// <summary>
         /// Get specific user that had id == userId
         /// </summary>
@@ -124,6 +126,7 @@ namespace ExpenseManager.Business.Services.Implementations
         {
             return GetDetail(userId);
         }
+
         /// <summary>
         /// Delete user specified by userId
         /// </summary>

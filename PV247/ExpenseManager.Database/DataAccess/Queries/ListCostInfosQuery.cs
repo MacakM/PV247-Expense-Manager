@@ -17,6 +17,7 @@ namespace ExpenseManager.Database.DataAccess.Queries
         public ListCostInfosQuery(IUnitOfWorkProvider provider) : base(provider)
         {
         }
+
         /// <summary>
         /// Return IQueryable.
         /// </summary>

@@ -9,6 +9,7 @@
         /// Save some ammount of money
         /// </summary>
         Save,
+
         /// <summary>
         /// Not to spend more then limit
         /// </summary>

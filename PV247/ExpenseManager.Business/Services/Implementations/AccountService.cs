@@ -25,13 +25,13 @@ namespace ExpenseManager.Business.Services.Implementations
         private readonly UserRepository _userRepository;
 
         /// <summary>
-        /// 
+        /// Account service
         /// </summary>
-        /// <param name="query"></param>
-        /// <param name="repository"></param>
-        /// <param name="expenseManagerMapper"></param>
-        /// <param name="unitOfWorkProvider"></param>
-        /// <param name="userRepository"></param>
+        /// <param name="query">Query</param>
+        /// <param name="repository">Account repository</param>
+        /// <param name="expenseManagerMapper">Mapper</param>
+        /// <param name="unitOfWorkProvider">Unit of work provider</param>
+        /// <param name="userRepository">User repository</param>
         public AccountService(
             ExpenseManagerQuery<AccountModel> query, 
             ExpenseManagerRepository<AccountModel, Guid> repository, 
@@ -40,10 +40,12 @@ namespace ExpenseManager.Business.Services.Implementations
         {
             _userRepository = userRepository;
         }
+
         /// <summary>
-        /// 
+        /// Included entities
         /// </summary>
         protected override string[] EntityIncludes { get; } = new string[0];
+
         /// <summary>
         /// Creates new account
         /// </summary>
@@ -89,6 +91,7 @@ namespace ExpenseManager.Business.Services.Implementations
         {
             Save(updatedAccount);
         }
+
         /// <summary>
         /// Deletes account by specified unique id
         /// </summary>
@@ -97,6 +100,7 @@ namespace ExpenseManager.Business.Services.Implementations
         {
             Delete(accountId);
         }
+
         /// <summary>
         /// Get account specified by id
         /// </summary>
@@ -106,6 +110,7 @@ namespace ExpenseManager.Business.Services.Implementations
         {
            return GetDetail(accountId);
         }
+
         /// <summary>
         /// List filtered accounts
         /// </summary>

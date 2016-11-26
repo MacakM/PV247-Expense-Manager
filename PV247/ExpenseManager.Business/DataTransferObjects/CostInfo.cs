@@ -12,43 +12,52 @@ namespace ExpenseManager.Business.DataTransferObjects
         /// State whether set money is income or outcome.
         /// </summary>
         public bool IsIncome { get; set; }
+       
         /// <summary>
         /// How much money has changed.
         /// </summary>
         public decimal Money { get; set; }
+        
         /// <summary>
         /// More concrete description of the cost
         /// </summary>
         public string Description { get; set; }
+       
         /// <summary>
         /// Account id.
         /// </summary>
         public Guid AccountId { get; set; }
+       
         /// <summary>
         /// Account whom this cost belongs.
         /// </summary>
         public string AccountName { get; set; }
+      
         /// <summary>
         /// Date when the cost info was created.
         /// </summary>
         public DateTime? Created { get; set; }
+       
         /// <summary>
         /// Type id.
         /// </summary>
         public Guid TypeId { get; set; }
+      
         /// <summary>
         /// Type of the cost.
         /// </summary>
         public string TypeName { get; set; }
+      
         /// <summary>
         /// Periodicity of cost
         /// </summary>
         public Periodicity Periodicity { get; set; }
+       
         /// <summary>
         /// Mulptiplies periodicity
         /// </summary>
         public int PeriodicMultiplicity { get; set; }
-
+       
         /// <summary>
         /// Makes string representation of object based on its properties
         /// </summary>
@@ -57,7 +66,7 @@ namespace ExpenseManager.Business.DataTransferObjects
         {
             return $"IsIncome: {IsIncome}, Money: {Money}, Description: {Description}, AccountId: {AccountId}, AccountName: {AccountName}, Created: {Created}, TypeId: {TypeId}, TypeName: {TypeName}, Periodicity: {Periodicity}, PeriodicMultiplicity: {PeriodicMultiplicity}";
         }
-
+       
         /// <summary>
         /// Determites if two objects are the same one
         /// </summary>
@@ -67,7 +76,6 @@ namespace ExpenseManager.Business.DataTransferObjects
         {
             return IsIncome == other.IsIncome && Money == other.Money && string.Equals(Description, other.Description) && AccountId == other.AccountId && string.Equals(AccountName, other.AccountName) && Created.Equals(other.Created) && TypeId == other.TypeId && string.Equals(TypeName, other.TypeName) && Periodicity == other.Periodicity && PeriodicMultiplicity == other.PeriodicMultiplicity;
         }
-
        
         /// <summary>
         /// Determites if two objects are the same one
@@ -81,7 +89,7 @@ namespace ExpenseManager.Business.DataTransferObjects
             if (obj.GetType() != this.GetType()) return false;
             return Equals((CostInfo)obj);
         }
-
+      
         /// <summary>
         /// Compute hash of this object based on his properties
         /// </summary>
