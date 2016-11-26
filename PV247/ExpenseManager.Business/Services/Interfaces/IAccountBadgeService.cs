@@ -15,22 +15,26 @@ namespace ExpenseManager.Business.Services.Interfaces
         /// </summary>
         /// <param name="accountBadge"></param>
         Guid CreateAccountBadge(AccountBadge accountBadge);
+
         /// <summary>
         /// Updates existing account badge
         /// </summary>
         /// <param name="updatedAccountBadge"></param>
         void UpdateAccountBadge(AccountBadge updatedAccountBadge);
+
         /// <summary>
         /// Deletes specified account badge
         /// </summary>
         /// <param name="accountBadgeId"></param>
         void DeleteAccountBadge(Guid accountBadgeId);
+
         /// <summary>
         /// Get account badge specified by id
         /// </summary>
         /// <param name="accountBadgeId"></param>
         /// <returns></returns>
         AccountBadge GetAccountBadge(Guid accountBadgeId);
+
         /// <summary>
         /// List filtered account badges
         /// </summary>

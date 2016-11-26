@@ -13,13 +13,14 @@ namespace ExpenseManager.Business.Facades
     public class AccountFacade
     {
         private readonly IUserService _userService;
-        private readonly IAccountService _accountService;
 
+        private readonly IAccountService _accountService;
+        
         /// <summary>
-        /// 
+        /// Accont Facade constructor
         /// </summary>
-        /// <param name="userService"></param>
-        /// <param name="accountService"></param>
+        /// <param name="userService">User service</param>
+        /// <param name="accountService">Accounet service</param>
         public AccountFacade(IUserService userService, IAccountService accountService)
         {
             _userService = userService;
@@ -27,12 +28,11 @@ namespace ExpenseManager.Business.Facades
         }
 
         #region User CRUD
-
         /// <summary>
         /// Registers user according to provided information
         /// </summary>
         /// <param name="userRegistration">User registration information</param>
-        /// <param name="createAccount"></param>
+        /// <param name="createAccount">If account should be created</param>
         public Guid RegisterNewUser(User userRegistration, bool createAccount = true)
         {
             var id = _userService.RegisterNewUser(userRegistration);
@@ -63,6 +63,7 @@ namespace ExpenseManager.Business.Facades
         {
             return _userService.GetCurrentlySignedUser(email, includeAllProperties);
         }
+
         /// <summary>
         /// Delete user specified by userId
         /// </summary>
@@ -71,6 +72,7 @@ namespace ExpenseManager.Business.Facades
         {
             _userService.DeleteUser(userId);
         }
+
         /// <summary>
         /// Get specific user that had id == userId
         /// </summary>
@@ -80,6 +82,7 @@ namespace ExpenseManager.Business.Facades
         {
             return _userService.GetUser(userId);
         }
+
         /// <summary>
         /// List users that match parameters given in filter 
         /// </summary>
@@ -91,7 +94,6 @@ namespace ExpenseManager.Business.Facades
         }
 
         #endregion
-
         #region Account CRUD
         /// <summary>
         /// Creates new account
@@ -101,6 +103,7 @@ namespace ExpenseManager.Business.Facades
         {
             return _accountService.CreateAccount(account);
         }
+
         /// <summary>
         /// Creates account for user with given id
         /// </summary>
@@ -117,6 +120,7 @@ namespace ExpenseManager.Business.Facades
         {
             _accountService.DeleteAccount(accountId);
         }
+
         /// <summary>
         /// Updates existing account
         /// </summary>
@@ -125,6 +129,7 @@ namespace ExpenseManager.Business.Facades
         {
             _accountService.UpdateAccount(updatedAccount);
         }
+
         /// <summary>
         /// Get account specified by id
         /// </summary>
@@ -134,6 +139,7 @@ namespace ExpenseManager.Business.Facades
         {
             return _accountService.GetAccount(accountId);
         }
+
         /// <summary>
         /// List filtered accounts
         /// </summary>
@@ -154,7 +160,6 @@ namespace ExpenseManager.Business.Facades
         {
             _accountService.AttachAccountToUser(userId, accountId, accessType);
         }
-
         #endregion
     }
 }

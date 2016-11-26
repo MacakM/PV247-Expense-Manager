@@ -12,22 +12,27 @@ namespace ExpenseManager.Business.DataTransferObjects
         /// Name of the user.
         /// </summary>
         public string Name { get; set; }
+        
         /// <summary>
         /// Email of the user.
         /// </summary>
         public string Email { get; set; }
+        
         /// <summary>
         /// Account Id.
         /// </summary>
         public Guid AccountId { get; set; }
+        
         /// <summary>
         /// Name of users account
         /// </summary>
         public string AccountName { get; set; }
+       
         /// <summary>
         /// Access type of the user.
         /// </summary>
         public AccountAccessType? AccessType { get; set; }
+        
         /// <summary>
         /// Makes string representation of object based on its properties
         /// </summary>
@@ -36,7 +41,7 @@ namespace ExpenseManager.Business.DataTransferObjects
         {
             return $"Name: {Name}, Email: {Email}, AccountId: {AccountId}, AccountName: {AccountName}, AccessType: {AccessType}";
         }
-
+        
         /// <summary>
         /// Determites if two objects are the same one
         /// </summary>
@@ -46,6 +51,7 @@ namespace ExpenseManager.Business.DataTransferObjects
         {
             return string.Equals(Name, other.Name) && string.Equals(Email, other.Email) && AccountId == other.AccountId && string.Equals(AccountName, other.AccountName) && AccessType == other.AccessType;
         }
+        
         /// <summary>
         /// Determites if two objects are the same one
         /// </summary>
@@ -58,6 +64,7 @@ namespace ExpenseManager.Business.DataTransferObjects
             if (obj.GetType() != this.GetType()) return false;
             return Equals((User) obj);
         }
+        
         /// <summary>
         /// Compute hash of this object based on his properties
         /// </summary>

@@ -16,28 +16,33 @@ namespace ExpenseManager.Business.Services.Interfaces
         /// </summary>
         /// <param name="account"></param>
         Guid CreateAccount(Account account);
+
         /// <summary>
         /// Updates existing account
         /// </summary>
         /// <param name="updatedAccount"></param>
         void UpdateAccount(Account updatedAccount);
+
         /// <summary>
         /// Deletes account by specified unique id
         /// </summary>
         /// <param name="accountId"></param>
         void DeleteAccount(Guid accountId);
+
         /// <summary>
         /// Get account specified by id
         /// </summary>
         /// <param name="accountId"></param>
         /// <returns></returns>
         Account GetAccount(Guid accountId);
+
         /// <summary>
         /// List filtered accounts
         /// </summary>
         /// <param name="filter">Filters accounts</param>
         /// <returns></returns>
         List<Account> ListAccounts(AccountFilter filter);
+
         /// <summary>
         /// Creates account for user with given id
         /// </summary>

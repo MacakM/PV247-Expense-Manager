@@ -14,35 +14,36 @@ using Riganti.Utils.Infrastructure.Core;
 
 namespace ExpenseManager.Business.Services.Implementations
 {
-
     /// <summary>
     /// Service handles AccountBadge entity operations
     /// </summary>
     public class AccountBadgeService : ExpenseManagerQueryAndCrudServiceBase<AccountBadgeModel, Guid, AccountBadge>, IAccountBadgeService
     {
-
         /// <summary>
         /// Service constructor takes service specific query base class props
         /// </summary>
-        /// <param name="query"></param>
-        /// <param name="repository"></param>
-        /// <param name="expenseManagerMapper"></param>
-        /// <param name="unitOfWorkProvider"></param>
+        /// <param name="query">Query</param>
+        /// <param name="repository">Repository</param>
+        /// <param name="expenseManagerMapper">Mapper</param>
+        /// <param name="unitOfWorkProvider">Unit of work provider</param>
         public AccountBadgeService(ExpenseManagerQuery<AccountBadgeModel> query, ExpenseManagerRepository<AccountBadgeModel, Guid> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
         {
         }
+
         /// <summary>
-        /// 
+        /// Included entities
         /// </summary>
         protected override string[] EntityIncludes { get; } = new string[0];
+
         /// <summary>
         /// Add new badge to account by creating new AccountBadge object in database
         /// </summary>
-        /// <param name="accountBadge"></param>
+        /// <param name="accountBadge">Account badge</param>
         public Guid CreateAccountBadge(AccountBadge accountBadge)
         {
             return Save(accountBadge);
         }
+
         /// <summary>
         /// Updates existing account badge
         /// </summary>
@@ -51,6 +52,7 @@ namespace ExpenseManager.Business.Services.Implementations
         {
             Save(updatedAccountBadge);
         }
+
         /// <summary>
         /// Deletes specified account badge
         /// </summary>
@@ -59,6 +61,7 @@ namespace ExpenseManager.Business.Services.Implementations
         {
             Delete(accountBadgeId);
         }
+
         /// <summary>
         /// Get account badge specified by id
         /// </summary>
@@ -68,6 +71,7 @@ namespace ExpenseManager.Business.Services.Implementations
         {
             return GetDetail(accountBadgeId);
         }
+
         /// <summary>
         /// List filtered account badges
         /// </summary>
@@ -78,6 +82,5 @@ namespace ExpenseManager.Business.Services.Implementations
             Query.Filter = ExpenseManagerMapper.Map<AccountBadgeModelFilter>(filter);
             return GetList().ToList();
         }
-
     }
 }

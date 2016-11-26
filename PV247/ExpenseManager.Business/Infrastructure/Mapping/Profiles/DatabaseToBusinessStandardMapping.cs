@@ -52,12 +52,6 @@ namespace ExpenseManager.Business.Infrastructure.Mapping.Profiles
             CreateMap<AccountModel, Account>()
                .ReverseMap();
 
-            /*      CreateMap<AccountAccessType, AccountAccessTypeModel>()
-                    .ReverseMap();
-
-                  CreateMap<PlanType, PlanTypeModel>()
-                   .ReverseMap();*/
-
             CreateMap<AccountBadgeFilter, AccountBadgeModelFilter>()
              .ReverseMap();
 
@@ -78,7 +72,6 @@ namespace ExpenseManager.Business.Infrastructure.Mapping.Profiles
 
             CreateMap<UserFilter, UserModelFilter>()
              .ReverseMap();
-
         }
     }
 }

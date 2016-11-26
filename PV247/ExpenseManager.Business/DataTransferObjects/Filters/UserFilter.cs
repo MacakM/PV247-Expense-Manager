@@ -12,22 +12,27 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters
         /// Specifies users name to filter with
         /// </summary>
         public string Name { get; set; }
+        
         /// <summary>
         /// Specifies users email to filter with
         /// </summary>
         public string Email { get; set; }
+        
         /// <summary>
         /// Specifies account id to filter with
         /// </summary>
         public Guid? AccountId { get; set; }
+        
         /// <summary>
         /// Specifies account name to filter with
         /// </summary>
         public string AccountName { get; set; }
+       
         /// <summary>
         /// Determines if Equals() or Contains() should be use while filtering with strings
         /// </summary>
         public bool DoExactMatch { get; set; }
+        
         /// <summary>
         /// Specifies users access type to filter with
         /// </summary>

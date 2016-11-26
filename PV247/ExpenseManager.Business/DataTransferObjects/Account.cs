@@ -12,22 +12,27 @@ namespace ExpenseManager.Business.DataTransferObjects
         /// Name of the account.
         /// </summary>
         public string Name { get; set; }
+        
         /// <summary>
         /// List of users that have access to this account.
         /// </summary>
         public List<User> Users { get; set; }
+        
         /// <summary>
         /// User's costs.
         /// </summary>
         public List<CostInfo> Costs { get; set; }
+        
         /// <summary>
         /// All plans of the user.
         /// </summary>
         public List<Plan> Plans { get; set; }
+        
         /// <summary>
         /// All badges of the user.
         /// </summary>
         public List<AccountBadge> Badges { get; set; }
+        
         /// <summary>
         /// Makes string representation of object based on its properties
         /// </summary>
@@ -36,6 +41,7 @@ namespace ExpenseManager.Business.DataTransferObjects
         {
             return $"Name: {Name}";
         }
+        
         /// <summary>
         /// Determites if two objects are the same one
         /// </summary>
@@ -45,6 +51,7 @@ namespace ExpenseManager.Business.DataTransferObjects
         {
             return string.Equals(Name, other.Name);
         }
+       
         /// <summary>
         /// Determites if two objects are the same one
         /// </summary>
@@ -57,6 +64,7 @@ namespace ExpenseManager.Business.DataTransferObjects
             if (obj.GetType() != this.GetType()) return false;
             return Equals((Account) obj);
         }
+       
         /// <summary>
         /// Compute hash of this object based on his properties
         /// </summary>

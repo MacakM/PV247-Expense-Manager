@@ -12,18 +12,22 @@ namespace ExpenseManager.Business.DataTransferObjects
         /// Description how achieve this badge.
         /// </summary>
         public string Description { get; set; }
+        
         /// <summary>
         /// Badge image uri.
         /// </summary>
         public string BadgeImgUri { get; set; }
+       
         /// <summary>
         /// Name of Badge
         /// </summary>
         public string Name { get; set; }
+        
         /// <summary>
         /// List of Accounts where badge is assigned
         /// </summary>
         public List<AccountBadge> Accounts { get; set; }
+        
         /// <summary>
         /// Makes string representation of object based on its properties
         /// </summary>
@@ -32,6 +36,7 @@ namespace ExpenseManager.Business.DataTransferObjects
         {
             return $"Description: {Description}, BadgeImgUri: {BadgeImgUri}";
         }
+        
         /// <summary>
         /// Determites if two objects are the same one
         /// </summary>
@@ -41,6 +46,7 @@ namespace ExpenseManager.Business.DataTransferObjects
         {
             return string.Equals(Description, other.Description) && string.Equals(BadgeImgUri, other.BadgeImgUri) && Equals(Accounts, other.Accounts);
         }
+       
         /// <summary>
         /// Determites if two objects are the same one
         /// </summary>
@@ -53,6 +59,7 @@ namespace ExpenseManager.Business.DataTransferObjects
             if (obj.GetType() != this.GetType()) return false;
             return Equals((Badge) obj);
         }
+       
         /// <summary>
         /// Compute hash of this object based on his properties
         /// </summary>

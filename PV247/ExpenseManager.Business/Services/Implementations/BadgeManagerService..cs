@@ -2,10 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using ExpenseManager.Business.Services.Interfaces;
-using ExpenseManager.Database.DataAccess.Queries;
-using ExpenseManager.Database.DataAccess.Repositories;
 using ExpenseManager.Database.Entities;
-using ExpenseManager.Database.Filters;
 using ExpenseManager.Database.Infrastructure.Query;
 using ExpenseManager.Database.Infrastructure.Repository;
 
@@ -16,11 +13,18 @@ namespace ExpenseManager.Business.Services.Implementations
     /// </summary>
     public class BadgeManagerService : IBadgeManagerService
     {
-
         private readonly ExpenseManagerRepository<AccountBadgeModel, Guid> _accountBadgeRepository;
+
         private readonly ExpenseManagerQuery<BadgeModel> _badgesQuery;
+
         private readonly ExpenseManagerQuery<AccountModel> _accountsQuery;
-       
+
+        /// <summary>
+        /// Badge manager service constructor
+        /// </summary>
+        /// <param name="accountsQuery">Accounts query</param>
+        /// <param name="accountBadgeRepository">Repository</param>
+        /// <param name="badgesQuery">Badges query</param>
         public BadgeManagerService(ExpenseManagerQuery<AccountModel> accountsQuery, ExpenseManagerRepository<AccountBadgeModel, Guid> accountBadgeRepository, ExpenseManagerQuery<BadgeModel> badgesQuery)
         {
             _accountsQuery = accountsQuery;
@@ -56,6 +60,7 @@ namespace ExpenseManager.Business.Services.Implementations
                 }
             }
         }
+
         private List<BadgeModel> GetBadgesForAccount(AccountModel account)
         {
             List<BadgeModel> badges = new List<BadgeModel>();
@@ -69,16 +74,16 @@ namespace ExpenseManager.Business.Services.Implementations
             }
             return badges;
         }
+
         /// <summary>
         ///  We hardcode if account deserves badge. We switch badge.Name and we make new check method for every badge we have.
         ///  WE WILL HAVE ONLY SMALL NUMBER OF BADGES, so we have decided to do it this way.
         /// </summary>
-        /// <param name="account"></param>
-        /// <param name="badge"></param>
+        /// <param name="account">Account</param>
+        /// <param name="badge">Badge</param>
         /// <returns></returns>
         private bool AccountDeservesBadge(AccountModel account, BadgeModel badge)
         {
-
             switch (badge.Name)
             {
                 case "Foo":

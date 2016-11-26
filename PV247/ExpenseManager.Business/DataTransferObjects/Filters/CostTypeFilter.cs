@@ -9,6 +9,7 @@
         /// Used for filtering based on cost type name
         /// </summary>
         public string Name { get; set; }
+       
         /// <summary>
         /// Determines if Equals() or Contains() should be used when matching string parameters
         /// </summary>

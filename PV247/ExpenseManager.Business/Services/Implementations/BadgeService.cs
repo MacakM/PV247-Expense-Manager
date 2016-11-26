@@ -20,22 +20,24 @@ namespace ExpenseManager.Business.Services.Implementations
     public class BadgeService : ExpenseManagerQueryAndCrudServiceBase<BadgeModel, Guid, Badge>, IBadgeService
     {
         /// <summary>
-        /// 
+        /// Included entities
         /// </summary>
         protected override string[] EntityIncludes { get; } =
-       {
+        {
             nameof(BadgeModel.Accounts)
         };
+
         /// <summary>
-        /// 
+        /// Badge service constructor
         /// </summary>
-        /// <param name="query"></param>
-        /// <param name="repository"></param>
-        /// <param name="expenseManagerMapper"></param>
-        /// <param name="unitOfWorkProvider"></param>
+        /// <param name="query">Query</param>
+        /// <param name="repository">Repository</param>
+        /// <param name="expenseManagerMapper">Mapper</param>
+        /// <param name="unitOfWorkProvider">Unit of work provider</param>
         public BadgeService(ExpenseManagerQuery<BadgeModel> query, ExpenseManagerRepository<BadgeModel, Guid> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
         {
         }
+
         /// <summary>
         /// Creates new Badge object in database
         /// </summary>
@@ -43,6 +45,7 @@ namespace ExpenseManager.Business.Services.Implementations
         {
             return Save(badge);
         }
+
         /// <summary>
         /// Updates existing badge in database
         /// </summary>
@@ -51,6 +54,7 @@ namespace ExpenseManager.Business.Services.Implementations
         {
             Save(badgeEdited);
         }
+
         /// <summary>
         /// Deletes badge cpecified by id
         /// </summary>
@@ -59,6 +63,7 @@ namespace ExpenseManager.Business.Services.Implementations
         {
             Delete(badgeId);
         }
+
         /// <summary>
         /// Get specific badge by unique id
         /// </summary>
@@ -68,6 +73,7 @@ namespace ExpenseManager.Business.Services.Implementations
         {
             return GetDetail(badgeId);
         }
+
         /// <summary>
         /// Lists filtered badges
         /// </summary>
@@ -78,6 +84,7 @@ namespace ExpenseManager.Business.Services.Implementations
             Query.Filter = ExpenseManagerMapper.Map<BadgeModelFilter>(filter);
             return GetList().ToList();
         }
+
         /// <summary>
         /// Check all accounts if they dont deserve some badges
         /// </summary>
