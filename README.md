@@ -14,6 +14,9 @@ School project for PV247 (FI MUNI Brno)
 * Braces should always be on the new line (except from empty constructor body)
 * Every LINQ clause have to be put on new line
 * Use only maximum one empty line between code
+* There is exactly one empty line between usings and namespace
+* There is exactly one empty line between namespace and class -> documentation is part of class
+* There is exactly one empty line between each class member(properties, methods...) -> documentation and anotations are part of class member 
 
 ### Naming ###
 * Every identifier must be named in english
