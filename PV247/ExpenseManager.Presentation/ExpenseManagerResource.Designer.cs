@@ -222,11 +222,29 @@ namespace ExpenseManager.Presentation {
         }
         
         /// <summary>
-        ///    Looks up a localized string similar to Plan was sucessfully created.
+        ///    Looks up a localized string similar to Plan was successfully created.
         /// </summary>
         public static string PlanCreated {
             get {
                 return ResourceManager.GetString("PlanCreated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Plan successfully deleted.
+        /// </summary>
+        public static string PlanDeleted {
+            get {
+                return ResourceManager.GetString("PlanDeleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Plan could not be deleted, it probably doesn&apos;t exist..
+        /// </summary>
+        public static string PlanNotDeleted {
+            get {
+                return ResourceManager.GetString("PlanNotDeleted", resourceCulture);
             }
         }
         

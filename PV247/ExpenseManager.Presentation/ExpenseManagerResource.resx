@@ -175,7 +175,13 @@
     <value>Expense could not be deleted, it probably doesn't exist.</value>
   </data>
   <data name="PlanCreated" xml:space="preserve">
-    <value>Plan was sucessfully created</value>
+    <value>Plan was successfully created</value>
+  </data>
+  <data name="PlanNotDeleted" xml:space="preserve">
+    <value>Plan could not be deleted, it probably doesn't exist.</value>
+  </data>
+  <data name="PlanDeleted" xml:space="preserve">
+    <value>Plan successfully deleted</value>
   </data>
   <data name="InvalidInputData" xml:space="preserve">
     <value>Invalid input data</value>

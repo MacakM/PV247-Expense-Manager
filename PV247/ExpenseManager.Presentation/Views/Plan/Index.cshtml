@@ -46,6 +46,7 @@
             <th>Related category</th>
             <th>Ammount</th>
             <th></th>
+            <th></th>
         </tr>
         @foreach (var plan in Model.AllPlans)
         {
@@ -74,6 +75,17 @@
                 else
                 {
                     <td class="neutral">In progress</td>
+                }
+                @if (Model.CurrentUser.HasFullRights)
+                {
+                    <td class="text-center">
+                        <form asp-action="Delete">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="returnRedirect" value="@Url.Action("Index", "Expense")" />
+                            <input type="hidden" name="id" value="@plan.Id" />
+                            <button class="link-button negative"><i class="fa fa-times" aria-hidden="true"></i></button>
+                        </form>
+                    </td>
                 }
             </tr>
         }

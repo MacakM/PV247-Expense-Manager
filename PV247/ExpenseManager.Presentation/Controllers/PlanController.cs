@@ -44,8 +44,9 @@ namespace ExpenseManager.Presentation.Controllers
             var model = new IndexViewModel()
             {
                 AllPlans = GetAllPlans(account),
-                ClosablePlans = GetClosablePlans(account)
-            };
+                ClosablePlans = GetClosablePlans(account),
+                CurrentUser = _mapper.Map<Models.User.IndexViewModel>(_currentAccountProvider.GetCurrentUser(HttpContext.User))
+        };
 
             return View(model);
         }
@@ -110,6 +111,28 @@ namespace ExpenseManager.Presentation.Controllers
             _balanceFacade.CreatePlan(plan);
 
             return RedirectToAction("Index", new { successMessage = ExpenseManagerResource.PlanCreated});
+        }
+
+        /// <summary>
+        /// Deletes plan
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Policy = "HasFullRights")]
+        public IActionResult Delete([FromForm] Guid id)
+        {
+            var plan = _balanceFacade.GetPlan(id);
+            var account = _currentAccountProvider.GetCurrentAccount(HttpContext.User);
+
+            if (plan == null || plan.AccountId != account.Id)
+            {
+                return RedirectWithError(ExpenseManagerResource.PlanNotDeleted);
+            }
+
+            _balanceFacade.DeletePlan(id);
+
+            return RedirectToAction("Index", new {sucessMessage = ExpenseManagerResource.PlanDeleted});
         }
 
         private List<Models.CostType.IndexViewModel> GetAllCostTypes()

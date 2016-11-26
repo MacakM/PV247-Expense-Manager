@@ -144,11 +144,23 @@ namespace ExpenseManager.Database
                 Type = costType1
             };
 
+            var cost6 = new CostInfoModel()
+            {
+                Account = account,
+                Created = DateTime.Now,
+                Description = "Príjem",
+                IsIncome = true,
+                Periodicity = PeriodicityModel.None,
+                Money = 2700,
+                Type = costType1
+            };
+
             context.CostInfos.Add(cost1);
             context.CostInfos.Add(cost2);
             context.CostInfos.Add(cost3);
             context.CostInfos.Add(cost4);
             context.CostInfos.Add(cost5);
+            context.CostInfos.Add(cost6);
 
             for (int i = 0; i < 30; i++)
             {
