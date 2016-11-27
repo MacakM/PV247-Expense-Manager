@@ -9,7 +9,6 @@ using ExpenseManager.Business.DataTransferObjects.Filters;
 using ExpenseManager.Business.Infrastructure;
 using ExpenseManager.Database.DataAccess.Repositories;
 using ExpenseManager.Database.Entities;
-using ExpenseManager.Database.Infrastructure.Repository;
 using ExpenseManager.Database.Infrastructure.Utils;
 using Riganti.Utils.Infrastructure.Core;
 using ExpenseManager.Business.Services.Interfaces;
@@ -109,11 +108,14 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <summary>
         /// List users that match parameters given in filter 
         /// </summary>
-        /// <param name="filter"></param>
+        /// <param name="filters"></param>
+        /// <param name="pageAndOrder"></param>
         /// <returns></returns>
-        public List<User> ListUsers(UserFilter filter)
+        public List<User> ListUsers(List<IFilter<User>> filters, PageAndOrderFilter pageAndOrder)
         {
-            Query.Filter = ExpenseManagerMapper.Map<UserModelFilter>(filter);
+            Query.Filters = ExpenseManagerMapper.Map<List<IFilterModel<UserModel>>>(filters);
+            Query.PageAndOrderModelFilterModel =
+                ExpenseManagerMapper.Map<PageAndOrderModelFilterModel<UserModel>>(pageAndOrder);
             return GetList().ToList();
         }
 

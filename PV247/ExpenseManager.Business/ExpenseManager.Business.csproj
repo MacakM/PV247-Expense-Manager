@@ -69,14 +69,24 @@
     <Compile Include="DataTransferObjects\Enums\AccountAccessTye.cs" />
     <Compile Include="DataTransferObjects\Enums\Periodicity.cs" />
     <Compile Include="DataTransferObjects\Enums\PlanType.cs" />
-    <Compile Include="DataTransferObjects\Filters\AccountBadgeFilter.cs" />
-    <Compile Include="DataTransferObjects\Filters\AccountFilter.cs" />
-    <Compile Include="DataTransferObjects\Filters\BadgeFilter.cs" />
-    <Compile Include="DataTransferObjects\Filters\CostInfoFilter.cs" />
-    <Compile Include="DataTransferObjects\Filters\CostTypeFilter.cs" />
-    <Compile Include="DataTransferObjects\Filters\FilterBase.cs" />
-    <Compile Include="DataTransferObjects\Filters\PlanFilter.cs" />
-    <Compile Include="DataTransferObjects\Filters\UserFilter.cs" />
+    <Compile Include="DataTransferObjects\Filters\Accounts\AccountsByName.cs" />
+    <Compile Include="DataTransferObjects\Filters\Badges\BadgesByName.cs" />
+    <Compile Include="DataTransferObjects\Filters\CostInfos\CostInfosByAccountId.cs" />
+    <Compile Include="DataTransferObjects\Filters\CostInfos\CostInfosByCreatedFrom.cs" />
+    <Compile Include="DataTransferObjects\Filters\CostInfos\CostInfosByCreatedTo.cs" />
+    <Compile Include="DataTransferObjects\Filters\CostInfos\CostInfosByMoneyFrom.cs" />
+    <Compile Include="DataTransferObjects\Filters\CostInfos\CostInfosByMoneyTo.cs" />
+    <Compile Include="DataTransferObjects\Filters\CostInfos\CostInfosByPeriodicity.cs" />
+    <Compile Include="DataTransferObjects\Filters\CostInfos\CostInfosByTypeId.cs" />
+    <Compile Include="DataTransferObjects\Filters\CostTypes\CostTypesByName.cs" />
+    <Compile Include="DataTransferObjects\Filters\IFilter.cs" />
+    <Compile Include="DataTransferObjects\Filters\PageAndOrderFilter.cs" />
+    <Compile Include="DataTransferObjects\Filters\Plans\PlansByAccountId.cs" />
+    <Compile Include="DataTransferObjects\Filters\Users\UsersByAccessType.cs" />
+    <Compile Include="DataTransferObjects\Filters\Users\UsersByAccountId.cs" />
+    <Compile Include="DataTransferObjects\Filters\Users\UsersByAccountName.cs" />
+    <Compile Include="DataTransferObjects\Filters\Users\UsersByEmail.cs" />
+    <Compile Include="DataTransferObjects\Filters\Users\UsersByName.cs" />
     <Compile Include="DataTransferObjects\Plan.cs" />
     <Compile Include="DataTransferObjects\AccountBadge.cs" />
     <Compile Include="DataTransferObjects\User.cs" />
@@ -110,7 +120,9 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="DataTransferObjects\Filters\AccountBadges\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ExpenseManager.Database\ExpenseManager.Database.csproj">
       <Project>{dc7d8469-e72e-46b6-9d12-f5102efd49b1}</Project>

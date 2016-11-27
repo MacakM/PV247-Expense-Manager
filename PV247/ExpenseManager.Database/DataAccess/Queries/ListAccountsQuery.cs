@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using ExpenseManager.Database.Entities;
+using ExpenseManager.Database.Filters;
 using ExpenseManager.Database.Infrastructure.Query;
 using Riganti.Utils.Infrastructure.Core;
 
@@ -23,9 +24,7 @@ namespace ExpenseManager.Database.DataAccess.Queries
         /// <returns>IQueryable</returns>
         protected override IQueryable<AccountModel> GetQueryable()
         {
-            IQueryable<AccountModel> accounts = Context.Accounts;
-
-            return Filter == null ? accounts : Filter.FilterQuery(accounts);
+            return ApplyFilters(Context.Accounts);
         }
     }
 }
