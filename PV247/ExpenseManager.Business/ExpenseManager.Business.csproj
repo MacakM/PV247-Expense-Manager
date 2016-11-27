@@ -102,6 +102,9 @@
     <Compile Include="Services\Interfaces\IUserService.cs" />
     <Compile Include="Services\Implementations\PlanService.cs" />
     <Compile Include="Services\Implementations\UserService.cs" />
+    <Compile Include="Utilities\BadgeCertification\BadgeCertifierResolver.cs" />
+    <Compile Include="Utilities\BadgeCertification\BadgeCertifiers\IBadgeCertifier.cs" />
+    <Compile Include="Utilities\BadgeCertification\IBadgeCertifierResolver.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

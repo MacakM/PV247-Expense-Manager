@@ -9,6 +9,8 @@ using ExpenseManager.Database.Entities;
 using ExpenseManager.Database.Infrastructure.Repository;
 using Riganti.Utils.Infrastructure.Core;
 using ExpenseManager.Business.Services.Interfaces;
+using ExpenseManager.Business.Utilities.BadgeCertification;
+using ExpenseManager.Database.DataAccess.Queries;
 using ExpenseManager.Database.Filters;
 using ExpenseManager.Database.Infrastructure.Query;
 
@@ -19,6 +21,14 @@ namespace ExpenseManager.Business.Services.Implementations
     /// </summary>
     public class BadgeService : ExpenseManagerQueryAndCrudServiceBase<BadgeModel, Guid, Badge>, IBadgeService
     {
+        private readonly IBadgeCertifierResolver _certifierResolver;
+
+        private readonly ListBadgesQuery _badgesQuery;
+
+        private readonly ListAccountsQuery _accountsQuery;
+
+        private readonly ExpenseManagerRepository<AccountModel, Guid> _accountRepository;
+
         /// <summary>
         /// Included entities
         /// </summary>
@@ -34,8 +44,12 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="repository">Repository</param>
         /// <param name="expenseManagerMapper">Mapper</param>
         /// <param name="unitOfWorkProvider">Unit of work provider</param>
-        public BadgeService(ExpenseManagerQuery<BadgeModel> query, ExpenseManagerRepository<BadgeModel, Guid> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
+        public BadgeService(ExpenseManagerQuery<BadgeModel> query, ExpenseManagerRepository<BadgeModel, Guid> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider, ListBadgesQuery badgesQuery, ListAccountsQuery accountsQuery, ExpenseManagerRepository<AccountModel, Guid> accountRepository, IBadgeCertifierResolver certifierResolver) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
         {
+            _badgesQuery = badgesQuery;
+            _accountsQuery = accountsQuery;
+            _accountRepository = accountRepository;
+            _certifierResolver = certifierResolver;
         }
 
         /// <summary>
@@ -86,11 +100,31 @@ namespace ExpenseManager.Business.Services.Implementations
         }
 
         /// <summary>
-        /// Check all accounts if they dont deserve some badges
+        /// Check all accounts if they deserve to assign badges
         /// </summary>
         public void CheckBadgesRequirements()
         {
-            throw new NotImplementedException();
+            using (var uow = UnitOfWorkProvider.Create())
+            {
+                var allAccounts = _accountsQuery.Execute();
+                var allBadges = _badgesQuery.Execute();
+                foreach (var account in allAccounts)
+                {
+                    var initialBadgesCount = account.Badges.Count;
+                    foreach (var badge in allBadges)
+                    {
+                        _certifierResolver.ResolveBadgeCertifier(badge.Name)
+                            ?.AssignBadge(account);
+                    }
+
+                    // perform update only if badges were added
+                    if (initialBadgesCount < account.Badges.Count)
+                    {
+                        _accountRepository.Update(account);
+                    }                  
+                }
+                uow.Commit();
+            }
         }
     }
 }
