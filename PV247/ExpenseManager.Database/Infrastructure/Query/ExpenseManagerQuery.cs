@@ -1,4 +1,6 @@
 ﻿using System.Data.Entity;
+using System.Data.Entity.Core;
+using System.Linq;
 using ExpenseManager.Database.Filters;
 using ExpenseManager.Database.Infrastructure.UnitOfWork;
 using Riganti.Utils.Infrastructure.Core;
@@ -15,8 +17,8 @@ namespace ExpenseManager.Database.Infrastructure.Query
         /// <summary>
         /// Filter used to determine parameters of query
         /// </summary>
-        public FilterModelBase<TResult> Filter { get; set; }
-
+        protected FilterModelBase<TResult> Filter;
+        
         /// <summary>
         /// Initializes a new instance of the <see cref="ExpenseManagerQuery{TResult}"/> class.
         /// </summary>
@@ -29,5 +31,7 @@ namespace ExpenseManager.Database.Infrastructure.Query
         /// Gets the <see cref="DbContext"/>.
         /// </summary>
         internal ExpenseDbContext Context => (ExpenseDbContext)ExpenseManagerUnitOfWork.TryGetDbContext(_provider);
+
+        
     }
 }

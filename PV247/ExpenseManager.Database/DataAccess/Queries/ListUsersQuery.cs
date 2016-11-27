@@ -3,6 +3,7 @@ using ExpenseManager.Database.Entities;
 using ExpenseManager.Database.Infrastructure.Query;
 using Riganti.Utils.Infrastructure.Core;
 using System.Data.Entity;
+using ExpenseManager.Database.Filters;
 
 namespace ExpenseManager.Database.DataAccess.Queries
 {
