@@ -107,6 +107,7 @@
     <Compile Include="Enums\PeriodicityModel.cs" />
     <Compile Include="Enums\PlanTypeModel.cs" />
     <Compile Include="ExpenseDbContext.cs" />
+    <Compile Include="ExpenseDbInitializer.cs" />
     <Compile Include="Filters\AccountBadgeModelFilter.cs" />
     <Compile Include="Filters\AccountModelFilter.cs" />
     <Compile Include="Filters\BadgeModelFilter.cs" />
@@ -130,7 +131,6 @@
     <Compile Include="DataAccess\Repositories\PlanRepository.cs" />
     <Compile Include="DataAccess\Repositories\AccountBadgeRepository.cs" />
     <Compile Include="DataAccess\Repositories\UserRepository.cs" />
-    <Compile Include="TestSeedingInitializer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
