@@ -233,7 +233,6 @@
     <Compile Include="IdentityDatabaseInstaller.cs" />
     <Compile Include="IdentityDbContext.cs" />
     <Compile Include="Entities\ApplicationUser.cs" />
-    <Compile Include="Migrations\IdentityDbContextModelSnapshot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
