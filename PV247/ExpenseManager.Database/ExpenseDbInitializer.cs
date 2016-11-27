@@ -20,7 +20,7 @@ namespace ExpenseManager.Database
                 Accounts = new List<AccountBadgeModel>(),
                 BadgeImgUri = "badge.png",
                 Name = "PassionatePennyPincher",
-                Description = "Save at least 10 000,- CZK within 30 days"
+                Description = "Save >=20k CZK within all completed plans"
             });
 
             context.Badges.AddOrUpdate(new BadgeModel
@@ -28,34 +28,8 @@ namespace ExpenseManager.Database
                 Accounts = new List<AccountBadgeModel>(),
                 BadgeImgUri = "badge.png",
                 Name = "PlanCompleter",
-                Description = "Complete at least 3 plans within 30 days"
+                Description = "Complete at least 5 plans"
             });
-
-            context.Badges.AddOrUpdate(new BadgeModel
-            {
-                Accounts = new List<AccountBadgeModel>(),
-                BadgeImgUri = "badge.png",
-                Name = "Passionate Penny Pincher",
-                Description = "Save at least 10 000,- CZK within one month"
-            });
-
-            var badge2 = new BadgeModel()
-            {
-                Name = "Officer",
-                BadgeImgUri = "mmm",
-                Description = "Buy donuts"
-            };
-
-            context.Badges.AddOrUpdate(badge2);
-
-            var badge = new BadgeModel()
-            {
-                Name = "Survivor",
-                BadgeImgUri = "hmm",
-                Description = "I will survive"
-            };
-
-            context.Badges.AddOrUpdate(badge);
 
             Random random = new Random();
 

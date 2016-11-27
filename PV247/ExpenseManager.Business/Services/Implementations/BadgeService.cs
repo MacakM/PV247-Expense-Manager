@@ -114,7 +114,7 @@ namespace ExpenseManager.Business.Services.Implementations
                     foreach (var badge in allBadges)
                     {
                         _certifierResolver.ResolveBadgeCertifier(badge.Name)
-                            ?.AssignBadge(account);
+                            ?.CanAssignBadge(account);
                     }
 
                     // perform update only if badges were added

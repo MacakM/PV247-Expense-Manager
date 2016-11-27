@@ -11,7 +11,7 @@ namespace ExpenseManager.Business.Utilities.BadgeCertification
     /// </summary>
     public class BadgeCertifierResolver : IBadgeCertifierResolver
     {
-        private readonly IList<IBadgeCertifier> _badgeCertifiers = new List<IBadgeCertifier>(); 
+        private readonly IList<BadgeCertifier> _badgeCertifiers = new List<BadgeCertifier>(); 
 
         /// <summary>
         /// For now the badge certifier resolver, instantiates all its dependencies (classes implementing IBadgeCertifier),
@@ -21,9 +21,9 @@ namespace ExpenseManager.Business.Utilities.BadgeCertification
         {
             // TODO: this is far from optimal solution, the best way will be to integrate proper DI framework within PL to do the job and solve several issues at once
             foreach (var type in Assembly.GetExecutingAssembly().GetTypes()
-                .Where(type => type.GetInterfaces().Contains(typeof(IBadgeCertifier))))
+                .Where(type => type.GetInterfaces().Contains(typeof(BadgeCertifier))))
             {
-                _badgeCertifiers.Add(Activator.CreateInstance(type) as IBadgeCertifier);
+                _badgeCertifiers.Add(Activator.CreateInstance(type) as BadgeCertifier);
             }
         }
 
@@ -32,10 +32,10 @@ namespace ExpenseManager.Business.Utilities.BadgeCertification
         /// </summary>
         /// <param name="badgeName">The name of the badge to find certifier for</param>
         /// <returns>Badge certifier with corresponding name or null, if not found</returns>
-        public IBadgeCertifier ResolveBadgeCertifier(string badgeName)
+        public BadgeCertifier ResolveBadgeCertifier(string badgeName)
         {
             return string.IsNullOrEmpty(badgeName) ? null :
-                _badgeCertifiers.FirstOrDefault(certifier => certifier.BadgeName.Equals(badgeName));
+                _badgeCertifiers.FirstOrDefault(certifier => certifier.GetBadgeName().Equals(badgeName));
         }
     }
 }
