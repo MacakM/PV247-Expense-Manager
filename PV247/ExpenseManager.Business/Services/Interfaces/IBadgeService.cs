@@ -40,8 +40,8 @@ namespace ExpenseManager.Business.Services.Interfaces
         /// </summary>
         /// <param name="filters">Filters badges</param>
         /// <param name="pageAndOrder"></param>
-        /// <returns></returns>
-        List<Badge> ListBadges(List<Badge> filters, PageAndOrderFilter pageAndOrder);
+        /// <returns></returns>s
+        List<Badge> ListBadges(List<IFilter<Badge>> filters, PageAndOrderFilter pageAndOrder);
 
         /// <summary>
         /// Check all accounts if they dont deserve some badges

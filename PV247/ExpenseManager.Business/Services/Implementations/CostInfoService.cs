@@ -112,13 +112,14 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <summary>
         /// List cost types based on filter
         /// </summary>
-        /// <param name="filter">Filters cost infos</param>
+        /// <param name="filters">Filters cost infos</param>
+        /// <param name="pageAndOrder"></param>
         /// <returns>List of cost infos</returns>
-        public List<CostInfo> ListCostInfos(CostInfoFilter filter)
+        public List<CostInfo> ListCostInfos(List<IFilter<CostInfo>> filters, PageAndOrderFilter pageAndOrder)
         {
-            Query.Filter = ExpenseManagerMapper.Map<CostInfoModelFilter>(filter);
-            Query.Filter.OrderByDesc = true;
-            Query.Filter.OrderByPropertyName = nameof(CostInfo.Created);
+            Query.Filters = ExpenseManagerMapper.Map<List<IFilterModel<CostInfoModel>>>(filters);
+            Query.PageAndOrderModelFilterModel =
+                ExpenseManagerMapper.Map<PageAndOrderModelFilterModel<CostInfoModel>>(pageAndOrder);
             return GetList().ToList();
         }
 
@@ -126,11 +127,12 @@ namespace ExpenseManager.Business.Services.Implementations
         /// Gets the count of rows in database filtered by filter
         /// Used for pagination
         /// </summary>
-        /// <param name="filter"></param>
+        /// <param name="filters"></param>
+        /// <param name="pageAndOrder"></param>
         /// <returns></returns>
-        public int GetCostInfosCount(CostInfoFilter filter)
+        public int GetCostInfosCount(List<IFilter<CostInfo>> filters, PageAndOrderFilter pageAndOrder)
         {
-            Query.Filter = ExpenseManagerMapper.Map<CostInfoModelFilter>(filter);
+            Query.Filters = ExpenseManagerMapper.Map<List<IFilterModel<CostInfoModel>>>(filters);
             using (UnitOfWorkProvider.Create())
             {
                 return Query.GetTotalRowCount();
@@ -156,9 +158,9 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <returns></returns>
         public decimal GetBalance(Guid accountId)
         {
-            Query.Filter = new CostInfoModelFilter { IsIncome = true, Periodicity = PeriodicityModel.None, CreatedTo = DateTime.Now, AccountId = accountId};
+            Query.Filters = new CostInfoModelFilter { IsIncome = true, Periodicity = PeriodicityModel.None, CreatedTo = DateTime.Now, AccountId = accountId};
             var incomes = GetList();
-            Query.Filter = new CostInfoModelFilter { IsIncome = false, Periodicity = PeriodicityModel.None, CreatedTo = DateTime.Now, AccountId = accountId };
+            Query.Filters = new CostInfoModelFilter { IsIncome = false, Periodicity = PeriodicityModel.None, CreatedTo = DateTime.Now, AccountId = accountId };
             var outcomes = GetList();
 
             return incomes.Sum(x =>  x.Money) - outcomes.Sum(x => x.Money);

@@ -41,7 +41,6 @@ namespace ExpenseManager.Database.Filters
         /// <returns></returns>
         public IQueryable<T> FilterQuery(IQueryable<T> queryable)
         {
-
             if (OrderByDesc == null || string.IsNullOrEmpty(OrderByPropertyName))
             {
                 return queryable;

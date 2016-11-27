@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using ExpenseManager.Database.DataAccess.Queries;
 using ExpenseManager.Database.Entities;
 using ExpenseManager.Database.Enums;
 
