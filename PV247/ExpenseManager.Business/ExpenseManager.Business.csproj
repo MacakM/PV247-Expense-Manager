@@ -68,14 +68,14 @@
     <Compile Include="DataTransferObjects\Enums\AccountAccessTye.cs" />
     <Compile Include="DataTransferObjects\Enums\Periodicity.cs" />
     <Compile Include="DataTransferObjects\Enums\PlanType.cs" />
-    <Compile Include="DataTransferObjects\Filters\AccountBadgeFilter.cs" />
-    <Compile Include="DataTransferObjects\Filters\AccountFilter.cs" />
-    <Compile Include="DataTransferObjects\Filters\BadgeFilter.cs" />
-    <Compile Include="DataTransferObjects\Filters\CostInfoFilter.cs" />
-    <Compile Include="DataTransferObjects\Filters\CostTypeFilter.cs" />
-    <Compile Include="DataTransferObjects\Filters\FilterBase.cs" />
-    <Compile Include="DataTransferObjects\Filters\PlanFilter.cs" />
-    <Compile Include="DataTransferObjects\Filters\UserFilter.cs" />
+    <Compile Include="DataTransferObjects\Filters\Accounts\AccountsByName.cs" />
+    <Compile Include="DataTransferObjects\Filters\IFilter.cs" />
+    <Compile Include="DataTransferObjects\Filters\PageAndOrderFilter.cs" />
+    <Compile Include="DataTransferObjects\Filters\Users\UsersByAccessType.cs" />
+    <Compile Include="DataTransferObjects\Filters\Users\UsersByAccountId.cs" />
+    <Compile Include="DataTransferObjects\Filters\Users\UsersByAccountName.cs" />
+    <Compile Include="DataTransferObjects\Filters\Users\UsersByEmail.cs" />
+    <Compile Include="DataTransferObjects\Filters\Users\UsersByName.cs" />
     <Compile Include="DataTransferObjects\Plan.cs" />
     <Compile Include="DataTransferObjects\AccountBadge.cs" />
     <Compile Include="DataTransferObjects\User.cs" />
@@ -107,7 +107,13 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="DataTransferObjects\Filters\AccountBadges\" />
+    <Folder Include="DataTransferObjects\Filters\Badges\" />
+    <Folder Include="DataTransferObjects\Filters\CostInfos\" />
+    <Folder Include="DataTransferObjects\Filters\CostTypes\" />
+    <Folder Include="DataTransferObjects\Filters\Plans\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ExpenseManager.Database\ExpenseManager.Database.csproj">
       <Project>{dc7d8469-e72e-46b6-9d12-f5102efd49b1}</Project>

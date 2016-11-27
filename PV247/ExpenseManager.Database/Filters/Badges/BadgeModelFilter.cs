@@ -9,7 +9,7 @@ namespace ExpenseManager.Database.Filters.Badges
     /// <summary>
     /// Filter userd in queries in order to get badges with specifies parameters
     /// </summary>
-    public class BadgeModelFilter : IFilter<BadgeModel>
+    public class BadgeModelFilterModel : IFilterModel<BadgeModel>
     {
         /// <summary>
         /// Name of Badge

@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Linq;
 using ExpenseManager.Database.DataAccess.Queries;
-using ExpenseManager.Database.Entities;
 
 namespace ExpenseManager.Database.Filters
 {
     /// <summary>
     /// Filter that handles pages and ordering
     /// </summary>
-    public class PageAndOrderFilter<T> : IFilter<T>
+    public class PageAndOrderModelFilterModel<T> : IFilterModel<T>
     {
         private int _pageSize = 10;
 

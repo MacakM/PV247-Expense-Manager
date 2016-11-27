@@ -1,12 +1,9 @@
-﻿using System.Linq;
-using ExpenseManager.Database.Entities;
-
-namespace ExpenseManager.Database.Filters.Users
+﻿namespace ExpenseManager.Business.DataTransferObjects.Filters.Users
 {
     /// <summary>
     /// Filters by user name
     /// </summary>
-    public class UserModelsByName : IFilterModel<UserModel>
+    public class UserModelsByName : IFilter<User>
     {
         /// <summary>
         /// User name
@@ -27,16 +24,6 @@ namespace ExpenseManager.Database.Filters.Users
         {
             Name = name;
             DoExactMatch = doExactMatch;
-        }
-
-        /// <summary>
-        /// Filters by user name
-        /// </summary>
-        /// <param name="queryable"></param>
-        /// <returns></returns>
-        public IQueryable<UserModel> FilterQuery(IQueryable<UserModel> queryable)
-        {
-            return DoExactMatch ? queryable.Where(user => user.Name.Equals(Name)) : queryable.Where(user => user.Name.Contains(Name));
         }
     }
 }

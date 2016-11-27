@@ -18,12 +18,12 @@ namespace ExpenseManager.Database.Infrastructure.Query
         /// <summary>
         /// Filters used to determine parameters of query
         /// </summary>
-        public List<FilterModelBase<TResult>> Filters;
+        public List<IFilterModel<TResult>> Filters;
 
         /// <summary>
         /// Filter used for paging and filtering
         /// </summary>
-        public PageAndOrderFilter<TResult> PageAndOrderFilter;
+        public PageAndOrderModelFilterModel<TResult> PageAndOrderModelFilterModel;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ExpenseManagerQuery{TResult}"/> class.

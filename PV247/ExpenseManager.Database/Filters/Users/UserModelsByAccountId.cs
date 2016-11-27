@@ -7,12 +7,12 @@ namespace ExpenseManager.Database.Filters.Users
     /// <summary>
     /// Filters by account id
     /// </summary>
-    public class UserModelsByAccountId : IFilter<UserModel>
+    public class UserModelsByAccountId : IFilterModel<UserModel>
     {
         /// <summary>
         /// Specifies account id to filter with
         /// </summary>
-        private readonly Guid _accountId;
+        public Guid AccountId { get; set; }
 
         /// <summary>
         /// Filters by account id
@@ -20,7 +20,7 @@ namespace ExpenseManager.Database.Filters.Users
         /// <param name="accountId"></param>
         public UserModelsByAccountId(Guid accountId)
         {
-            _accountId = accountId;
+            AccountId = accountId;
         }
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace ExpenseManager.Database.Filters.Users
         /// <returns></returns>
         public IQueryable<UserModel> FilterQuery(IQueryable<UserModel> queryable)
         {
-             return queryable.Where(user => user.Account.Id == _accountId);
+             return queryable.Where(user => user.Account.Id == AccountId);
         }
     }
 }

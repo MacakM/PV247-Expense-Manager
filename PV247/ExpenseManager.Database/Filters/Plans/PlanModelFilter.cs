@@ -9,7 +9,7 @@ namespace ExpenseManager.Database.Filters.Plans
     /// <summary>
     /// Filter userd in queries in order to get plans with specifies parameters
     /// </summary>
-    public class PlanModelFilter : IFilter<PlanModel>
+    public class PlanModelFilterModel : IFilterModel<PlanModel>
     {
         /// <summary>
         /// Account id to be used in filter

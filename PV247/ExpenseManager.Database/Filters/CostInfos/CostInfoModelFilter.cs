@@ -9,7 +9,7 @@ namespace ExpenseManager.Database.Filters.CostInfos
     /// <summary>
     /// Filter userd in queries in order to get cost infos with specifies parameters
     /// </summary>
-    public class CostInfoModelFilter : IFilter<CostInfoModel>
+    public class CostInfoModelFilterModel : IFilterModel<CostInfoModel>
     {
         /// <summary>
         /// Filter of income if false, do not filter if is null

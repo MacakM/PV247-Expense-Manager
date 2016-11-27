@@ -108,12 +108,12 @@
     <Compile Include="Enums\PlanTypeModel.cs" />
     <Compile Include="ExpenseDbContext.cs" />
     <Compile Include="Filters\AccountBadges\AccountBadgeModelFilter.cs" />
-    <Compile Include="Filters\Accounts\AccountModelByName.cs" />
+    <Compile Include="Filters\Accounts\AccountModelsByName.cs" />
     <Compile Include="Filters\Badges\BadgeModelFilter.cs" />
     <Compile Include="Filters\CostInfos\CostInfoModelFilter.cs" />
     <Compile Include="Filters\CostTypes\CostTypeModelFilter.cs" />
-    <Compile Include="Filters\IFilter.cs" />
-    <Compile Include="Filters\PageAndOrderFilter.cs" />
+    <Compile Include="Filters\IFilterModel.cs" />
+    <Compile Include="Filters\PageAndOrderModelFilter.cs" />
     <Compile Include="Filters\Plans\PlanModelFilter.cs" />
     <Compile Include="Filters\Users\UserModelsByAccessType.cs" />
     <Compile Include="Filters\Users\UserModelsByAccountId.cs" />

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using ExpenseManager.Database.DataAccess.Queries;
 using ExpenseManager.Database.Entities;
 
 namespace ExpenseManager.Database.Filters.AccountBadges
@@ -8,7 +7,7 @@ namespace ExpenseManager.Database.Filters.AccountBadges
     /// <summary>
     /// Filter userd in queries in order to get account badges with specifies parameters
     /// </summary>
-    public class AccountBadgeModelFilter : IFilter<AccountBadgeModel>
+    public class AccountBadgeModelFilterModel : IFilterModel<AccountBadgeModel>
     {
         /// <summary>
         /// Account id to be filtered with

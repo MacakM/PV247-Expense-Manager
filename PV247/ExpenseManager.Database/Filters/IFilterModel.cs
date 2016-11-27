@@ -5,7 +5,7 @@ namespace ExpenseManager.Database.Filters
     /// <summary>
     /// General filter interface
     /// </summary>
-    public interface IFilter<T>
+    public interface IFilterModel<T>
     {
         /// <summary>
         /// In this method filter should apply himself on queryable

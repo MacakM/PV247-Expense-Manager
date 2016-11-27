@@ -12,6 +12,8 @@ using ExpenseManager.Database.DataAccess.Repositories;
 using ExpenseManager.Database.Entities;
 using ExpenseManager.Database.Enums;
 using ExpenseManager.Database.Filters;
+using ExpenseManager.Database.Filters.CostInfos;
+using ExpenseManager.Database.Filters.Plans;
 using ExpenseManager.Database.Infrastructure.Query;
 using ExpenseManager.Database.Infrastructure.Repository;
 using Riganti.Utils.Infrastructure.Core;
@@ -128,11 +130,12 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <summary>
         /// Lists all plans that match filters criterias
         /// </summary>
-        /// <param name="filter">Filters plans</param>
+        /// <param name="filters">Filters plans</param>
+        /// <param name="pageAndOrder">Orders</param>
         /// <returns></returns>
-        public List<Plan> ListPlans(PlanFilter filter)
+        public List<Plan> ListPlans(List<IFilter<Plan>> filters, PageAndOrderFilter pageAndOrder)
         {
-            Query.Filter = ExpenseManagerMapper.Map<PlanModelFilter>(filter);
+            Query.Filters = ExpenseManagerMapper.Map<List<IFilter<PlanModel>>>(filters);
             Query.AddSortCriteria(x => x.Start, SortDirection.Descending);
             return GetList().ToList();
         }
@@ -187,7 +190,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <returns></returns>
         public List<Plan> ListAllCloseablePlans(Guid accountId, decimal accountBalance)
         {
-            Query.Filter = new PlanModelFilter
+            Query.Filter = new PlanModelFilterModel
             {
                 AccountId = accountId,
                 PlannedMoneyTo = accountBalance,
@@ -201,7 +204,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <inheritdoc />
         public List<Plan> ListPlansInProgress(Guid accountId)
         {
-            Query.Filter = new PlanModelFilter
+            Query.Filter = new PlanModelFilterModel
             {
                 AccountId = accountId,
                 IsCompleted = false,
@@ -218,11 +221,11 @@ namespace ExpenseManager.Business.Services.Implementations
             var accounts = _accountsQuery.Execute();
             foreach (var account in accounts) // FOR EACH ACCOUNT 
             {
-                Query.Filter = new PlanModelFilter {AccountId = account.Id, PlanType = PlanTypeModel.MaxSpend, IsCompleted = false, DeadlineFrom = DateTime.Now};
+                Query.Filter = new PlanModelFilterModel {AccountId = account.Id, PlanType = PlanTypeModel.MaxSpend, IsCompleted = false, DeadlineFrom = DateTime.Now};
                 var maxSpendPlans = GetList();
                 foreach (var plan in maxSpendPlans) // CHECK EVERY MAX SPEND PLAN THAT IS NO COMPLETED YET, REACHED ITS DEADLINE
                 {
-                    _costInfosQuery.Filter = new CostInfoModelFilter() // USES EVERY COST OF PLANNED TYPE FROM START TO DEADLINE
+                    _costInfosQuery.Filter = new CostInfoModelFilterModel() // USES EVERY COST OF PLANNED TYPE FROM START TO DEADLINE
                     {
                         TypeId = plan.PlannedTypeId,
                         CreatedFrom = plan.Start,

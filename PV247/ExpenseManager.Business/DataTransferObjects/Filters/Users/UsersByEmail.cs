@@ -1,12 +1,9 @@
-﻿using System.Linq;
-using ExpenseManager.Database.Entities;
-
-namespace ExpenseManager.Database.Filters.Users
+﻿namespace ExpenseManager.Business.DataTransferObjects.Filters.Users
 {
     /// <summary>
     /// Filter used to filter users by their email
     /// </summary>
-    public class UserModelsByEmail : IFilterModel<UserModel>
+    public class UsersByEmail : IFilter<User>
     {
         /// <summary>
         /// Determines if Equals() or Contains() should be use while filtering with strings
@@ -23,20 +20,10 @@ namespace ExpenseManager.Database.Filters.Users
         /// </summary>
         /// <param name="doExactMatch"></param>
         /// <param name="email"></param>
-        public UserModelsByEmail(string email, bool doExactMatch = false)
+        public UsersByEmail(string email, bool doExactMatch = false)
         {
             DoExactMatch = doExactMatch;
             Email = email;
-        }
-
-        /// <summary>
-        /// Filters users by their email
-        /// </summary>
-        /// <param name="queryable"></param>
-        /// <returns></returns>
-        public IQueryable<UserModel> FilterQuery(IQueryable<UserModel> queryable)
-        {
-            return DoExactMatch ? queryable.Where(user => user.Email.Equals(Email)) : queryable.Where(user => user.Email.Contains(Email));
         }
     }
 }

@@ -8,7 +8,7 @@ namespace ExpenseManager.Database.Filters.CostTypes
     /// <summary>
     /// Filter userd in queries in order to get cost types with specifies parameters
     /// </summary>
-    public class CostTypeModelFilter : IFilter<CostTypeModel>
+    public class CostTypeModelFilterModel : IFilterModel<CostTypeModel>
     {
         /// <summary>
         /// Used for filtering based on cost type name
