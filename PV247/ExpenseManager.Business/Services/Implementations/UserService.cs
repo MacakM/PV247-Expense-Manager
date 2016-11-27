@@ -111,9 +111,9 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="filters"></param>
         /// <param name="pageAndOrder"></param>
         /// <returns></returns>
-        public List<User> ListUsers(List<IFilter<User>> filters, PageAndOrderFilter pageAndOrder)
+        public List<User> ListUsers(List<Filter<User>> filters, PageAndOrderFilter pageAndOrder)
         {
-            Query.Filters = ExpenseManagerMapper.Map<List<IFilterModel<UserModel>>>(filters);
+            Query.Filters = ExpenseManagerMapper.Map<List<FilterModel<UserModel>>>(filters);
             Query.PageAndOrderModelFilterModel =
                 ExpenseManagerMapper.Map<PageAndOrderModelFilterModel<UserModel>>(pageAndOrder);
             return GetList().ToList();

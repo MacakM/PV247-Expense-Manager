@@ -3,7 +3,7 @@
     /// <summary>
     /// Filtery by money to
     /// </summary>
-    public class CostInfosByMoneyTo : IFilter<CostInfo>
+    public class CostInfosByMoneyTo : Filter<CostInfo>
     {
         /// <summary>
         /// Money to

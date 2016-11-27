@@ -18,7 +18,7 @@ namespace ExpenseManager.Database.Infrastructure.Query
         /// <summary>
         /// Filters used to determine parameters of query
         /// </summary>
-        public List<IFilterModel<TResult>> Filters;
+        public List<FilterModel<TResult>> Filters;
 
         /// <summary>
         /// Filter used for paging and filtering
@@ -46,7 +46,10 @@ namespace ExpenseManager.Database.Infrastructure.Query
         {
             if (Filters != null)
             {
-                queryable = Filters.Aggregate(queryable, (current, filter) => filter.FilterQuery(current));
+                foreach (var filter in Filters)
+                {
+                    queryable = filter.FilterQuery(queryable);
+                }
             }
 
             return PageAndOrderModelFilterModel == null ? queryable : PageAndOrderModelFilterModel.FilterQuery(queryable);

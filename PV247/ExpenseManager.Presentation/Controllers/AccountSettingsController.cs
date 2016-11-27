@@ -65,7 +65,7 @@ namespace ExpenseManager.Presentation.Controllers
 
         private List<IndexViewModel> GetAllUsersWithAccess(Account account)
         {
-            var userFilters = new List<IFilter<User>>
+            var userFilters = new List<Filter<User>>
             {
                 new UsersByAccountId(account.Id)
             };
@@ -77,7 +77,7 @@ namespace ExpenseManager.Presentation.Controllers
 
         private List<IndexPermanentExpenseViewModel> GetAllPermanentExpenses(Account account)
         {
-            var filters = new List<IFilter<CostInfo>>
+            var filters = new List<Filter<CostInfo>>
             {
                 new CostInfosByAccountId(account.Id),
                 new CostInfosByItsPeriodicity(Periodicity.Day)
@@ -129,7 +129,7 @@ namespace ExpenseManager.Presentation.Controllers
 
         private User GetUserFromEmail(string email)
         {
-            var userFilters = new List<IFilter<User>>();
+            var userFilters = new List<Filter<User>>();
             {
                 new UsersByEmail(email);
             };

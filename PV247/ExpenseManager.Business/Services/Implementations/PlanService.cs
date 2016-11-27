@@ -136,9 +136,9 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="filters">Filters plans</param>
         /// <param name="pageAndOrder">Orders</param>
         /// <returns></returns>
-        public List<Plan> ListPlans(List<IFilter<Plan>> filters, PageAndOrderFilter pageAndOrder)
+        public List<Plan> ListPlans(List<Filter<Plan>> filters, PageAndOrderFilter pageAndOrder)
         {
-            Query.Filters = ExpenseManagerMapper.Map<List<IFilterModel<PlanModel>>>(filters);
+            Query.Filters = ExpenseManagerMapper.Map<List<FilterModel<PlanModel>>>(filters);
             Query.PageAndOrderModelFilterModel =
                 ExpenseManagerMapper.Map<PageAndOrderModelFilterModel<PlanModel>>(pageAndOrder);
             Query.AddSortCriteria(x => x.Start, SortDirection.Descending);
@@ -196,7 +196,7 @@ namespace ExpenseManager.Business.Services.Implementations
         public List<Plan> ListAllCloseablePlans(Guid accountId, decimal accountBalance)
         {
 
-            Query.Filters = new List<IFilterModel<PlanModel>>
+            Query.Filters = new List<FilterModel<PlanModel>>
             {
                 new PlanModelsByAccountId(accountId),
                 new PlanModelsByPlannedMoneyTo(accountBalance),
@@ -210,7 +210,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <inheritdoc />
         public List<Plan> ListPlansInProgress(Guid accountId)
         {
-            Query.Filters = new List<IFilterModel<PlanModel>>
+            Query.Filters = new List<FilterModel<PlanModel>>
             {
                 new PlanModelsByAccountId(accountId),
                 new PlanModelsByCompletition(false),
@@ -227,7 +227,7 @@ namespace ExpenseManager.Business.Services.Implementations
             var accounts = _accountsQuery.Execute();
             foreach (var account in accounts) // FOR EACH ACCOUNT 
             {
-                Query.Filters = new  List<IFilterModel<PlanModel>>
+                Query.Filters = new  List<FilterModel<PlanModel>>
                 {
                        new PlanModelsByAccountId(account.Id),
                         new PlanModelsByPlanType(PlanTypeModel.MaxSpend),
@@ -238,7 +238,7 @@ namespace ExpenseManager.Business.Services.Implementations
                 foreach (var plan in maxSpendPlans) // CHECK EVERY MAX SPEND PLAN THAT IS NO COMPLETED YET, REACHED ITS DEADLINE
                 {
                     if (plan.Deadline != null)
-                        _costInfosQuery.Filters = new List<IFilterModel<CostInfoModel>> // USES EVERY COST OF PLANNED TYPE FROM START TO DEADLINE
+                        _costInfosQuery.Filters = new List<FilterModel<CostInfoModel>> // USES EVERY COST OF PLANNED TYPE FROM START TO DEADLINE
                         {
                             new CostInfoModelsByPlannedTypeId(plan.PlannedTypeId),
                             new CostInfoModelsByCreatedFrom(plan.Start),

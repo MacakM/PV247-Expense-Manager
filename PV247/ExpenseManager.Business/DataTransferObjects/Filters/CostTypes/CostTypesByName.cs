@@ -3,7 +3,7 @@
     /// <summary>
     /// Filters by name
     /// </summary>
-    public class CostTypesByName : IFilter<CostType>
+    public class CostTypesByName : Filter<CostType>
     {
         /// <summary>
         /// Used for filtering based on cost type name

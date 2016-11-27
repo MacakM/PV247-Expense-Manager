@@ -167,7 +167,7 @@ namespace ExpenseManager.Business.Facades
         /// <param name="filters">Filters cost infos</param>
         /// <param name="pageAndOrder"></param>
         /// <returns>List of cost infos</returns>
-        public List<CostInfo> ListItems(List<IFilter<CostInfo>> filters, PageAndOrderFilter pageAndOrder)
+        public List<CostInfo> ListItems(List<Filter<CostInfo>> filters, PageAndOrderFilter pageAndOrder)
         {
             return _costInfoService.ListCostInfos(filters, pageAndOrder);
         }
@@ -179,7 +179,7 @@ namespace ExpenseManager.Business.Facades
         /// <param name="filters"></param>
         /// <param name="pageAndOrder"></param>
         /// <returns></returns>
-        public int GetCostInfosCount(List<IFilter<CostInfo>> filters, PageAndOrderFilter pageAndOrder)
+        public int GetCostInfosCount(List<Filter<CostInfo>> filters, PageAndOrderFilter pageAndOrder)
         {
             return _costInfoService.GetCostInfosCount(filters, pageAndOrder);
         }
@@ -228,7 +228,7 @@ namespace ExpenseManager.Business.Facades
         /// <param name="filters">Filters plans</param>
         /// <param name="pageAndOrder"></param>
         /// <returns></returns>
-        public List<Plan> ListPlans(List<IFilter<Plan>> filters, PageAndOrderFilter pageAndOrder)
+        public List<Plan> ListPlans(List<Filter<Plan>> filters, PageAndOrderFilter pageAndOrder)
         {
             return _planService.ListPlans(filters, pageAndOrder);
         }
@@ -278,7 +278,7 @@ namespace ExpenseManager.Business.Facades
         /// <param name="filters">Filters cost types</param>
         /// <param name="pageAndOrder"></param>
         /// <returns>List of cost typer</returns>
-        public List<CostType> ListItemTypes(List<IFilter<CostType>> filters, PageAndOrderFilter pageAndOrder)
+        public List<CostType> ListItemTypes(List<Filter<CostType>> filters, PageAndOrderFilter pageAndOrder)
         {
             return _costTypeService.ListCostTypes(filters, pageAndOrder);
         }
@@ -328,7 +328,7 @@ namespace ExpenseManager.Business.Facades
         /// <param name="filters">Filters badges</param>
         /// <param name="pageAndOrder"></param>
         /// <returns></returns>
-        public List<Badge> ListBadges(List<IFilter<Badge>> filters, PageAndOrderFilter pageAndOrder)
+        public List<Badge> ListBadges(List<Filter<Badge>> filters, PageAndOrderFilter pageAndOrder)
         {
             return _badgeService.ListBadges(filters, pageAndOrder);
         }

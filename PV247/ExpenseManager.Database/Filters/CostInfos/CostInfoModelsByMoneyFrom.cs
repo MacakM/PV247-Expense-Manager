@@ -6,7 +6,7 @@ namespace ExpenseManager.Database.Filters.CostInfos
     /// <summary>
     /// Filtery by money from
     /// </summary>
-    public class CostInfoModelsByMoneyFrom : IFilterModel<CostInfoModel>
+    public class CostInfoModelsByMoneyFrom : FilterModel<CostInfoModel>
     {
         /// <summary>
         /// Money from
@@ -27,7 +27,7 @@ namespace ExpenseManager.Database.Filters.CostInfos
         /// </summary>
         /// <param name="queryable"></param>
         /// <returns></returns>
-        public IQueryable<CostInfoModel> FilterQuery(IQueryable<CostInfoModel> queryable)
+        public override IQueryable<CostInfoModel> FilterQuery(IQueryable<CostInfoModel> queryable)
         {
             return queryable.Where(x => x.Money >= MoneyFrom);
         }

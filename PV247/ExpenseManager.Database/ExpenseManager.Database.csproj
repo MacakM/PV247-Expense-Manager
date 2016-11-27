@@ -119,7 +119,7 @@
     <Compile Include="Filters\CostInfos\CostInfoModelsByPlannedTypeId.cs" />
     <Compile Include="Filters\CostInfos\CostInfoModelsByMoneyFrom.cs" />
     <Compile Include="Filters\CostTypes\CostTypeModelsByName.cs" />
-    <Compile Include="Filters\IFilterModel.cs" />
+    <Compile Include="Filters\FilterModel.cs" />
     <Compile Include="Filters\PageAndOrderModelFilter.cs" />
     <Compile Include="Filters\Plans\PlanModelsByAccountId.cs" />
     <Compile Include="Filters\Plans\PlanModelsByCompletition.cs" />

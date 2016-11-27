@@ -52,7 +52,7 @@ namespace ExpenseManager.Presentation.Controllers
                     {
                         if (filterModel.CostTypeId != null)
                         {
-                            var filters = new List<IFilter<CostInfo>>
+                            var filters = new List<Filter<CostInfo>>
                             {
                                 new CostInfosByAccountId(account.Id),
                                 new CostInfosByItsPeriodicity(Periodicity.None),
@@ -124,7 +124,7 @@ namespace ExpenseManager.Presentation.Controllers
 
         private List<IndexPermanentExpenseViewModel> GetAllPermanentExpenses(Account account)
         {
-            var filters = new List<IFilter<CostInfo>>
+            var filters = new List<Filter<CostInfo>>
             {
                 new CostInfosByAccountId(account.Id),
                 new CostInfosByItsPeriodicity(Periodicity.Day)
@@ -133,7 +133,7 @@ namespace ExpenseManager.Presentation.Controllers
             var expenses = _balanceFacade.ListItems(filters, null);
 
             filters.Clear();
-            filters = new List<IFilter<CostInfo>>
+            filters = new List<Filter<CostInfo>>
             {
                 new CostInfosByAccountId(account.Id),
                 new CostInfosByItsPeriodicity(Periodicity.Week)
@@ -141,7 +141,7 @@ namespace ExpenseManager.Presentation.Controllers
             expenses.AddRange(_balanceFacade.ListItems(filters, null));
 
             filters.Clear();
-            filters = new List<IFilter<CostInfo>>
+            filters = new List<Filter<CostInfo>>
             {
                 new CostInfosByAccountId(account.Id),
                 new CostInfosByItsPeriodicity(Periodicity.Month)
@@ -240,7 +240,7 @@ namespace ExpenseManager.Presentation.Controllers
         }
 
         #region Helpers
-        private List<IndexViewModel> GetFilteredExpenses(List<IFilter<CostInfo>> filters, PageAndOrderFilter pageAndOrder)
+        private List<IndexViewModel> GetFilteredExpenses(List<Filter<CostInfo>> filters, PageAndOrderFilter pageAndOrder)
         {
             var expenses = _balanceFacade.ListItems(filters, pageAndOrder);
             return Mapper.Map<List<IndexViewModel>>(expenses);

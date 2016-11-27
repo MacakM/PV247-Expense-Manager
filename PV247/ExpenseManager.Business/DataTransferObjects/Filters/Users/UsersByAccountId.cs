@@ -5,7 +5,7 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.Users
     /// <summary>
     /// Filters by account id
     /// </summary>
-    public class UsersByAccountId : IFilter<User>
+    public class UsersByAccountId : Filter<User>
     {
         /// <summary>
         /// Specifies account id to filter with

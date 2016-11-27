@@ -5,7 +5,7 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.Users
     /// <summary>
     /// Filter query by access type
     /// </summary>
-    public class UsersByAccessType : IFilter<User>
+    public class UsersByAccessType : Filter<User>
     {
         /// <summary>
         /// Specifies users access type to filter with

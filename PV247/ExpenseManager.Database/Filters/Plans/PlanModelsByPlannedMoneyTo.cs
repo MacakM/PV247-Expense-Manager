@@ -6,7 +6,7 @@ namespace ExpenseManager.Database.Filters.Plans
     /// <summary>
     /// Filters plans by planned money
     /// </summary>
-    public class PlanModelsByPlannedMoneyTo : IFilterModel<PlanModel>
+    public class PlanModelsByPlannedMoneyTo : FilterModel<PlanModel>
     {
         /// <summary>
         /// Right edge of planned money range
@@ -27,7 +27,7 @@ namespace ExpenseManager.Database.Filters.Plans
         /// </summary>
         /// <param name="queryable"></param>
         /// <returns></returns>
-        public IQueryable<PlanModel> FilterQuery(IQueryable<PlanModel> queryable)
+        public override IQueryable<PlanModel> FilterQuery(IQueryable<PlanModel> queryable)
         {
              return queryable.Where(plan => plan.PlannedMoney <= PlannedMoneyTo);
         }

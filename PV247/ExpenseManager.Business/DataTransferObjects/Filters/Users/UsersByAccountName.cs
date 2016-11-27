@@ -3,7 +3,7 @@
     /// <summary>
     /// Filters by user name
     /// </summary>
-    public class UsersByAccountName : IFilter<User>
+    public class UsersByAccountName : Filter<User>
     {
         /// <summary>
         /// Determines if Equals() or Contains() should be use while filtering with strings

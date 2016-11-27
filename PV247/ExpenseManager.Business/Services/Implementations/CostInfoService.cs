@@ -117,9 +117,9 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="filters">Filters cost infos</param>
         /// <param name="pageAndOrder"></param>
         /// <returns>List of cost infos</returns>
-        public List<CostInfo> ListCostInfos(List<IFilter<CostInfo>> filters, PageAndOrderFilter pageAndOrder)
+        public List<CostInfo> ListCostInfos(List<Filter<CostInfo>> filters, PageAndOrderFilter pageAndOrder)
         {
-            Query.Filters = ExpenseManagerMapper.Map<List<IFilterModel<CostInfoModel>>>(filters);
+            Query.Filters = ExpenseManagerMapper.Map<List<FilterModel<CostInfoModel>>>(filters);
             Query.PageAndOrderModelFilterModel =
                 ExpenseManagerMapper.Map<PageAndOrderModelFilterModel<CostInfoModel>>(pageAndOrder);
             return GetList().ToList();
@@ -132,9 +132,9 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="filters"></param>
         /// <param name="pageAndOrder"></param>
         /// <returns></returns>
-        public int GetCostInfosCount(List<IFilter<CostInfo>> filters, PageAndOrderFilter pageAndOrder)
+        public int GetCostInfosCount(List<Filter<CostInfo>> filters, PageAndOrderFilter pageAndOrder)
         {
-            Query.Filters = ExpenseManagerMapper.Map<List<IFilterModel<CostInfoModel>>>(filters);
+            Query.Filters = ExpenseManagerMapper.Map<List<FilterModel<CostInfoModel>>>(filters);
             using (UnitOfWorkProvider.Create())
             {
                 return Query.GetTotalRowCount();
@@ -160,7 +160,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <returns></returns>
         public decimal GetBalance(Guid accountId)
         {
-            Query.Filters = new List<IFilterModel<CostInfoModel>>
+            Query.Filters = new List<FilterModel<CostInfoModel>>
             {
                 new CostInfoModelsByIsIncome(true),
                 new CostInfoModelsByItsPeriodicity(PeriodicityModel.None),
@@ -168,7 +168,7 @@ namespace ExpenseManager.Business.Services.Implementations
                 new CostInfoModelsByAccountId(accountId)
             }; 
             var incomes = GetList();
-            Query.Filters = new List<IFilterModel<CostInfoModel>>
+            Query.Filters = new List<FilterModel<CostInfoModel>>
             {
                 new CostInfoModelsByIsIncome(false),
                 new CostInfoModelsByItsPeriodicity(PeriodicityModel.None),
@@ -185,7 +185,7 @@ namespace ExpenseManager.Business.Services.Implementations
 
             CostInfoModelsByItsPeriodicity filter = new CostInfoModelsByItsPeriodicity(PeriodicityModel.Month);
 
-            Query.Filters = new List<IFilterModel<CostInfoModel>> { filter };
+            Query.Filters = new List<FilterModel<CostInfoModel>> { filter };
             var monthPeriodicityCosts = GetList().ToList();
 
             foreach (var monthPeriodicity in monthPeriodicityCosts)
@@ -208,7 +208,7 @@ namespace ExpenseManager.Business.Services.Implementations
 
             CostInfoModelsByItsPeriodicity filter = new CostInfoModelsByItsPeriodicity(PeriodicityModel.Week);
 
-            Query.Filters = new List<IFilterModel<CostInfoModel>> { filter };
+            Query.Filters = new List<FilterModel<CostInfoModel>> { filter };
             var dayPeriodicityCosts = GetList().ToList();
 
             foreach (var weekPeriodicityCost in dayPeriodicityCosts)
@@ -230,7 +230,7 @@ namespace ExpenseManager.Business.Services.Implementations
         {
             CostInfoModelsByItsPeriodicity filter = new CostInfoModelsByItsPeriodicity(PeriodicityModel.Day);
 
-            Query.Filters = new List<IFilterModel<CostInfoModel>> { filter};
+            Query.Filters = new List<FilterModel<CostInfoModel>> { filter};
             var dayPeriodicityCosts = GetList().ToList();
 
             foreach (var dayPeriodicityCost in dayPeriodicityCosts)

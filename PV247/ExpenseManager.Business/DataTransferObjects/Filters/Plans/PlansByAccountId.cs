@@ -5,7 +5,7 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.Plans
     /// <summary>
     /// Filters plans by account id
     /// </summary>
-    public class PlansByAccountId : IFilter<Plan>
+    public class PlansByAccountId : Filter<Plan>
     {
         /// <summary>
         /// Account id to be used in filter

@@ -7,7 +7,7 @@ namespace ExpenseManager.Database.Filters.CostInfos
     /// <summary>
     /// Filters cost infos by periodicity
     /// </summary>
-    public class CostInfoModelsByItsPeriodicity : IFilterModel<CostInfoModel>
+    public class CostInfoModelsByItsPeriodicity : FilterModel<CostInfoModel>
     {
         /// <summary>
         /// Periodicity of cost 
@@ -28,7 +28,7 @@ namespace ExpenseManager.Database.Filters.CostInfos
         /// </summary>
         /// <param name="queryable"></param>
         /// <returns></returns>
-        public IQueryable<CostInfoModel> FilterQuery(IQueryable<CostInfoModel> queryable)
+        public override IQueryable<CostInfoModel> FilterQuery(IQueryable<CostInfoModel> queryable)
         {
             return queryable.Where(x => x.Periodicity == Periodicity);
         }

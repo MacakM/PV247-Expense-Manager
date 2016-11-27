@@ -9,7 +9,7 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.Accounts
     /// <summary>
     /// Filter userd in queries in order to get accounts with specifies parameters
     /// </summary>
-    public class AccountsByName : IFilter<Account>
+    public class AccountsByName : Filter<Account>
     { 
         /// <summary>
         /// Name that has to match in filtered accounts

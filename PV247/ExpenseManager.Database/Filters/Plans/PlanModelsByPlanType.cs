@@ -8,7 +8,7 @@ namespace ExpenseManager.Database.Filters.Plans
     /// <summary>
     /// Filter plans based on planned type
     /// </summary>
-    public class PlanModelsByPlanType : IFilterModel<PlanModel>
+    public class PlanModelsByPlanType : FilterModel<PlanModel>
     {
         /// <summary>
         /// Plan type to be used in filter
@@ -29,7 +29,7 @@ namespace ExpenseManager.Database.Filters.Plans
         /// </summary>
         /// <param name="queryable"></param>
         /// <returns></returns>
-        public IQueryable<PlanModel> FilterQuery(IQueryable<PlanModel> queryable)
+        public override IQueryable<PlanModel> FilterQuery(IQueryable<PlanModel> queryable)
         {
             return queryable.Where(plan => plan.PlanType == PlanType);
         }

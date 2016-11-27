@@ -7,7 +7,7 @@ namespace ExpenseManager.Database.Filters.CostInfos
     /// <summary>
     /// Filters by planned type id
     /// </summary>
-    public class CostInfoModelsByPlannedTypeId : IFilterModel<CostInfoModel>
+    public class CostInfoModelsByPlannedTypeId : FilterModel<CostInfoModel>
     {
         /// <summary>
         /// Type id to be filtered with
@@ -28,7 +28,7 @@ namespace ExpenseManager.Database.Filters.CostInfos
         /// </summary>
         /// <param name="queryable"></param>
         /// <returns></returns>
-        public IQueryable<CostInfoModel> FilterQuery(IQueryable<CostInfoModel> queryable)
+        public override IQueryable<CostInfoModel> FilterQuery(IQueryable<CostInfoModel> queryable)
         {
             return queryable.Where(costInfo => costInfo.TypeId == TypeId);
         }

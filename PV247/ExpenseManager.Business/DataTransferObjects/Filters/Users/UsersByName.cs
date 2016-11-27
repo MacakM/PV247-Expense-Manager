@@ -3,7 +3,7 @@
     /// <summary>
     /// Filters by user name
     /// </summary>
-    public class UserModelsByName : IFilter<User>
+    public class UserModelsByName : Filter<User>
     {
         /// <summary>
         /// User name

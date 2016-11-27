@@ -6,7 +6,7 @@ namespace ExpenseManager.Database.Filters.Badges
     /// <summary>
     /// Filters by badge name
     /// </summary>
-    public class BadgeModelsByName : IFilterModel<BadgeModel>
+    public class BadgeModelsByName : FilterModel<BadgeModel>
     {
         /// <summary>
         /// Name of Badge
@@ -33,7 +33,7 @@ namespace ExpenseManager.Database.Filters.Badges
         /// Filters given query
         /// </summary>
         /// <param name="queryable">Query to be filtered</param>
-        public IQueryable<BadgeModel> FilterQuery(IQueryable<BadgeModel> queryable)
+        public override IQueryable<BadgeModel> FilterQuery(IQueryable<BadgeModel> queryable)
         {
             return DoExactMatch ? queryable.Where(badge => badge.Name.Equals(Name)) : queryable.Where(badge => badge.Name.Contains(Name));
         }

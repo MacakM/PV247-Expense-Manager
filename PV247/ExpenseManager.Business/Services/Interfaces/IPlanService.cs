@@ -41,7 +41,7 @@ namespace ExpenseManager.Business.Services.Interfaces
         /// <param name="filters">Filters plans</param>
         /// <param name="pageAndOrder">Orders</param>
         /// <returns></returns>
-        List<Plan> ListPlans(List<IFilter<Plan>> filters, PageAndOrderFilter pageAndOrder);
+        List<Plan> ListPlans(List<Filter<Plan>> filters, PageAndOrderFilter pageAndOrder);
 
         /// <summary>
         /// List closeable plans of account

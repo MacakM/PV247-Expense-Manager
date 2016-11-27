@@ -6,7 +6,7 @@ namespace ExpenseManager.Database.Filters.CostTypes
     /// <summary>
     /// Filters by name
     /// </summary>
-    public class CostTypeModelsByName : IFilterModel<CostTypeModel>
+    public class CostTypeModelsByName : FilterModel<CostTypeModel>
     {
         /// <summary>
         /// Used for filtering based on cost type name
@@ -34,7 +34,7 @@ namespace ExpenseManager.Database.Filters.CostTypes
         /// </summary>
         /// <param name="queryable"></param>
         /// <returns></returns>
-        public IQueryable<CostTypeModel> FilterQuery(IQueryable<CostTypeModel> queryable)
+        public override IQueryable<CostTypeModel> FilterQuery(IQueryable<CostTypeModel> queryable)
         {
             return DoExactMatch? queryable.Where(costType => costType.Name.Equals(Name)) : queryable.Where(costType => costType.Name.Contains(Name));
         }

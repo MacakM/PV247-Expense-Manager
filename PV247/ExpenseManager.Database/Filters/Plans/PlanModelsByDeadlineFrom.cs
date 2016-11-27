@@ -7,7 +7,7 @@ namespace ExpenseManager.Database.Filters.Plans
     /// <summary>
     /// Filters plans based on deadline 
     /// </summary>
-    public class PlanModelsByDeadlineFrom : IFilterModel<PlanModel>
+    public class PlanModelsByDeadlineFrom : FilterModel<PlanModel>
     {
         /// <summary>
         /// Left edge of deadline range
@@ -28,7 +28,7 @@ namespace ExpenseManager.Database.Filters.Plans
         /// </summary>
         /// <param name="queryable"></param>
         /// <returns></returns>
-        public IQueryable<PlanModel> FilterQuery(IQueryable<PlanModel> queryable)
+        public override IQueryable<PlanModel> FilterQuery(IQueryable<PlanModel> queryable)
         {
             return queryable.Where(plan => plan.Deadline >= DeadlineFrom);
         }

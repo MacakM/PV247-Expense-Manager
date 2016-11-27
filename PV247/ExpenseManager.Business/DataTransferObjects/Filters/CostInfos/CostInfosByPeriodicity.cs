@@ -5,7 +5,7 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.CostInfos
     /// <summary>
     /// Filters cost infos by periodicity
     /// </summary>
-    public class CostInfosByItsPeriodicity : IFilter<CostInfo>
+    public class CostInfosByItsPeriodicity : Filter<CostInfo>
     {
         /// <summary>
         /// Periodicity of cost 

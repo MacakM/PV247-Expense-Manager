@@ -410,7 +410,7 @@ namespace ExpenseManager.Business.Tests.Facades
             }
 
             // Act
-            var items = _balanceFacade.ListItems(new List<IFilter<CostInfo>>{ new CostInfosByTypeId(typeId2) }, null);
+            var items = _balanceFacade.ListItems(new List<Filter<CostInfo>>{ new CostInfosByTypeId(typeId2) }, null);
 
             // Assert
             Assert.That(items.Count == 1, "Item was not listed.");
@@ -828,7 +828,7 @@ namespace ExpenseManager.Business.Tests.Facades
             }
 
             // Act
-            var types = _balanceFacade.ListItemTypes(new List<IFilter<CostType>> {new CostTypesByName("PC", true)}, null);
+            var types = _balanceFacade.ListItemTypes(new List<Filter<CostType>> {new CostTypesByName("PC", true)}, null);
 
             // Assert
             Assert.That(types.Count == 1, "Type was not listed.");
@@ -1008,7 +1008,7 @@ namespace ExpenseManager.Business.Tests.Facades
             }
 
             // Act
-            var badges = _balanceFacade.ListBadges(new List<IFilter<Badge>>{ new BadgesByName(badgeName1,true)}, null);
+            var badges = _balanceFacade.ListBadges(new List<Filter<Badge>>{ new BadgesByName(badgeName1,true)}, null);
 
             // Assert
             Assert.That(badges.Count == 1, "Badge was not listed.");

@@ -6,7 +6,7 @@ namespace ExpenseManager.Database.Filters.Accounts
     /// <summary>
     /// Filter userd in queries in order to get accounts with specifies parameters
     /// </summary>
-    public class AccountModelsByName : IFilterModel<AccountModel>
+    public class AccountModelsByName : FilterModel<AccountModel>
     {
         /// <summary>
         /// Name that has to match in filtered accounts
@@ -33,7 +33,7 @@ namespace ExpenseManager.Database.Filters.Accounts
         /// Filters given query
         /// </summary>
         /// <param name="queryable">Query to be filtered</param>
-        public IQueryable<AccountModel> FilterQuery(IQueryable<AccountModel> queryable)
+        public override IQueryable<AccountModel> FilterQuery(IQueryable<AccountModel> queryable)
         {
                return DoExactMatch ? queryable.Where(account => account.Name.Equals(Name)) : queryable.Where(account => account.Name.Contains(Name));
         }

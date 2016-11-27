@@ -41,6 +41,6 @@ namespace ExpenseManager.Business.Services.Interfaces
         /// <param name="filters">Filters account badgess</param>
         /// <param name="pageAndOrder"></param>
         /// <returns></returns>
-        List<AccountBadge> ListAccountBadges(List<IFilter<AccountBadge>> filters, PageAndOrderFilter pageAndOrder);
+        List<AccountBadge> ListAccountBadges(List<Filter<AccountBadge>> filters, PageAndOrderFilter pageAndOrder);
     }
 }

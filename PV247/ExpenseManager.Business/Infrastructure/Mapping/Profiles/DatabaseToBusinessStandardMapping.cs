@@ -118,7 +118,10 @@ namespace ExpenseManager.Business.Infrastructure.Mapping.Profiles
             CreateMap<PlansByAccountId, PlanModelsByAccountId>()
              .ReverseMap();
 
-            CreateMap<IFilter<User>, IFilterModel<UserModel>>()
+            CreateMap(typeof(Filter<>), typeof(FilterModel<>))
+             .ReverseMap();
+
+            CreateMap(typeof(PageAndOrderFilter), typeof(PageAndOrderModelFilterModel<>))
              .ReverseMap();
         }
     }

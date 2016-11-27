@@ -78,9 +78,9 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="filters">Filters cost types</param>
         /// <param name="pageAndOrder"></param>
         /// <returns>List of cost typer</returns>
-        public List<CostType> ListCostTypes(List<IFilter<CostType>> filters, PageAndOrderFilter pageAndOrder)
+        public List<CostType> ListCostTypes(List<Filter<CostType>> filters, PageAndOrderFilter pageAndOrder)
         {
-            Query.Filters = ExpenseManagerMapper.Map<List<IFilterModel<CostTypeModel>>>(filters);
+            Query.Filters = ExpenseManagerMapper.Map<List<FilterModel<CostTypeModel>>>(filters);
             return GetList().ToList();
         }
     }

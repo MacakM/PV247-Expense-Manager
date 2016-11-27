@@ -3,7 +3,7 @@
     /// <summary>
     /// Filters by badge name
     /// </summary>
-    public class BadgesByName : IFilter<Badge>
+    public class BadgesByName : Filter<Badge>
     {
         /// <summary>
         /// Name of Badge

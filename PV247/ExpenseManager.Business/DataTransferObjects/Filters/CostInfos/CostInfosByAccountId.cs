@@ -5,7 +5,7 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.CostInfos
     /// <summary>
     /// Filters by account id
     /// </summary>
-    public class CostInfosByAccountId : IFilter<CostInfo>
+    public class CostInfosByAccountId : Filter<CostInfo>
     {
         /// <summary>
         /// Account id

@@ -4,7 +4,7 @@
     /// Interface for filters in business project
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public interface IFilter<T>
+    public class Filter<T>
     {
     }
 }

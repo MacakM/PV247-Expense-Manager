@@ -6,7 +6,7 @@ namespace ExpenseManager.Database.Filters.CostInfos
     /// <summary>
     /// Filters cost by its income type
     /// </summary>
-    public class CostInfoModelsByIsIncome : IFilterModel<CostInfoModel>
+    public class CostInfoModelsByIsIncome : FilterModel<CostInfoModel>
     {
         /// <summary>
         /// If cost type is income or ourcome
@@ -27,7 +27,7 @@ namespace ExpenseManager.Database.Filters.CostInfos
         /// </summary>
         /// <param name="queryable"></param>
         /// <returns></returns>
-        public IQueryable<CostInfoModel> FilterQuery(IQueryable<CostInfoModel> queryable)
+        public override IQueryable<CostInfoModel> FilterQuery(IQueryable<CostInfoModel> queryable)
         {
             return queryable.Where(x => x.IsIncome == IsIncome);
         }

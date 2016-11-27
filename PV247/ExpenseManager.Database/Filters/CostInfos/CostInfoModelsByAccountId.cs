@@ -7,7 +7,7 @@ namespace ExpenseManager.Database.Filters.CostInfos
     /// <summary>
     /// Filters by account id
     /// </summary>
-    public class CostInfoModelsByAccountId : IFilterModel<CostInfoModel>
+    public class CostInfoModelsByAccountId : FilterModel<CostInfoModel>
     {
         /// <summary>
         /// Account id
@@ -28,7 +28,7 @@ namespace ExpenseManager.Database.Filters.CostInfos
         /// </summary>
         /// <param name="queryable"></param>
         /// <returns></returns>
-        public IQueryable<CostInfoModel> FilterQuery(IQueryable<CostInfoModel> queryable)
+        public override IQueryable<CostInfoModel> FilterQuery(IQueryable<CostInfoModel> queryable)
         {
             return queryable.Where(x => x.AccountId == AccountId);
         }

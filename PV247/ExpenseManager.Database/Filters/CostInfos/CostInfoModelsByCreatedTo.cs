@@ -7,7 +7,7 @@ namespace ExpenseManager.Database.Filters.CostInfos
     /// <summary>
     /// Filters by time of cost info creation
     /// </summary>
-    public class CostInfoModelsByCreatedTo : IFilterModel<CostInfoModel>
+    public class CostInfoModelsByCreatedTo : FilterModel<CostInfoModel>
     {
         /// <summary>
         /// Right edge of created range
@@ -28,7 +28,7 @@ namespace ExpenseManager.Database.Filters.CostInfos
         /// </summary>
         /// <param name="queryable"></param>
         /// <returns></returns>
-        public IQueryable<CostInfoModel> FilterQuery(IQueryable<CostInfoModel> queryable)
+        public override IQueryable<CostInfoModel> FilterQuery(IQueryable<CostInfoModel> queryable)
         {
             return queryable.Where(costInfo => costInfo.Created <= CreatedTo);
         }

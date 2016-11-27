@@ -7,7 +7,7 @@ namespace ExpenseManager.Database.Filters.Users
     /// <summary>
     /// Filters by account id
     /// </summary>
-    public class UserModelsByAccountId : IFilterModel<UserModel>
+    public class UserModelsByAccountId : FilterModel<UserModel>
     {
         /// <summary>
         /// Specifies account id to filter with
@@ -28,7 +28,7 @@ namespace ExpenseManager.Database.Filters.Users
         /// </summary>
         /// <param name="queryable">queryable</param>
         /// <returns></returns>
-        public IQueryable<UserModel> FilterQuery(IQueryable<UserModel> queryable)
+        public override IQueryable<UserModel> FilterQuery(IQueryable<UserModel> queryable)
         {
              return queryable.Where(user => user.Account.Id == AccountId);
         }

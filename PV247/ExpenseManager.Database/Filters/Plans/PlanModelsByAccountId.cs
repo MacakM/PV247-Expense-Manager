@@ -7,7 +7,7 @@ namespace ExpenseManager.Database.Filters.Plans
     /// <summary>
     /// Filters plans by account id
     /// </summary>
-    public class PlanModelsByAccountId : IFilterModel<PlanModel>
+    public class PlanModelsByAccountId : FilterModel<PlanModel>
     {
         /// <summary>
         /// Account id to be used in filter
@@ -28,7 +28,7 @@ namespace ExpenseManager.Database.Filters.Plans
         /// </summary>
         /// <param name="queryable"></param>
         /// <returns></returns>
-        public IQueryable<PlanModel> FilterQuery(IQueryable<PlanModel> queryable)
+        public override IQueryable<PlanModel> FilterQuery(IQueryable<PlanModel> queryable)
         {
               return queryable.Where(plan => plan.AccountId == AccountId);
         }

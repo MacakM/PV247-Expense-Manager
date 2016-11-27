@@ -42,6 +42,6 @@ namespace ExpenseManager.Business.Services.Interfaces
         /// <param name="filters">Filters cost types</param>
         /// <param name="pageAndOrder"></param>
         /// <returns>List of cost typer</returns>
-        List<CostType> ListCostTypes(List<IFilter<CostType>> filters, PageAndOrderFilter pageAndOrder);
+        List<CostType> ListCostTypes(List<Filter<CostType>> filters, PageAndOrderFilter pageAndOrder);
     }
 }

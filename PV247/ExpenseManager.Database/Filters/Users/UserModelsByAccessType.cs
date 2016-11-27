@@ -7,7 +7,7 @@ namespace ExpenseManager.Database.Filters.Users
     /// <summary>
     /// Filter query by access type
     /// </summary>
-    public class UserModelsByAccessType : IFilterModel<UserModel>
+    public class UserModelsByAccessType : FilterModel<UserModel>
     {
         /// <summary>
         /// Specifies users access type to filter with
@@ -27,7 +27,7 @@ namespace ExpenseManager.Database.Filters.Users
         /// </summary>
         /// <param name="queryable"></param>
         /// <returns></returns>
-        public IQueryable<UserModel> FilterQuery(IQueryable<UserModel> queryable)
+        public override IQueryable<UserModel> FilterQuery(IQueryable<UserModel> queryable)
         {
             return queryable.Where(user => user.AccessType == AccessType);
         }

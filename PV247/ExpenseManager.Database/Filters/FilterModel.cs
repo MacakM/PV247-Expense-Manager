@@ -5,13 +5,13 @@ namespace ExpenseManager.Database.Filters
     /// <summary>
     /// General filter interface
     /// </summary>
-    public interface IFilterModel<T>
+    public abstract class FilterModel<T>
     {
         /// <summary>
         /// In this method filter should apply himself on queryable
         /// </summary>
         /// <param name="queryable">Queryable</param>
         /// <returns></returns>
-        IQueryable<T> FilterQuery(IQueryable<T> queryable);
+        public abstract IQueryable<T> FilterQuery(IQueryable<T> queryable);
     }
 }

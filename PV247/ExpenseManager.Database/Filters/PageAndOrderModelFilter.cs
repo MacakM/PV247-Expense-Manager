@@ -7,7 +7,7 @@ namespace ExpenseManager.Database.Filters
     /// <summary>
     /// Filter that handles pages and ordering
     /// </summary>
-    public class PageAndOrderModelFilterModel<T> : IFilterModel<T>
+    public class PageAndOrderModelFilterModel<T> : FilterModel<T>
     {
         private int _pageSize = 10;
 
@@ -39,7 +39,7 @@ namespace ExpenseManager.Database.Filters
         /// </summary>
         /// <param name="queryable">Queryable</param>
         /// <returns></returns>
-        public IQueryable<T> FilterQuery(IQueryable<T> queryable)
+        public override IQueryable<T> FilterQuery(IQueryable<T> queryable)
         {
             if (OrderByDesc == null || string.IsNullOrEmpty(OrderByPropertyName))
             {

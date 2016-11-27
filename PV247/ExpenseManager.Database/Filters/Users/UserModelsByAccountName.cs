@@ -6,7 +6,7 @@ namespace ExpenseManager.Database.Filters.Users
     /// <summary>
     /// Filters by user name
     /// </summary>
-    public class UserModelsByAccountName : IFilterModel<UserModel>
+    public class UserModelsByAccountName : FilterModel<UserModel>
     {
         /// <summary>
         /// Determines if Equals() or Contains() should be use while filtering with strings
@@ -34,7 +34,7 @@ namespace ExpenseManager.Database.Filters.Users
         /// </summary>
         /// <param name="queryable"></param>
         /// <returns></returns>
-        public IQueryable<UserModel> FilterQuery(IQueryable<UserModel> queryable)
+        public override IQueryable<UserModel> FilterQuery(IQueryable<UserModel> queryable)
         {
                 return  DoExactMatch ? queryable.Where(user => user.Account.Name.Equals(AccountName)) : queryable.Where(user => user.Account.Name.Contains(AccountName));
         }

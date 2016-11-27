@@ -89,7 +89,7 @@ namespace ExpenseManager.Business.Facades
         /// <param name="filters"></param>
         /// <param name="pageAndOrder"></param>
         /// <returns></returns>
-        public List<User> ListUsers(List<IFilter<User>> filters, PageAndOrderFilter pageAndOrder)
+        public List<User> ListUsers(List<Filter<User>> filters, PageAndOrderFilter pageAndOrder)
         {
             return _userService.ListUsers(filters, pageAndOrder);
         }
@@ -147,7 +147,7 @@ namespace ExpenseManager.Business.Facades
         /// <param name="filters">Filters accounts</param>
         /// <param name="pageAndOrder"></param>
         /// <returns></returns>
-        public List<Account> ListAccounts(List<IFilter<Account>> filters, PageAndOrderFilter pageAndOrder)
+        public List<Account> ListAccounts(List<Filter<Account>> filters, PageAndOrderFilter pageAndOrder)
         {
             return _accountService.ListAccounts(filters, pageAndOrder);
         }

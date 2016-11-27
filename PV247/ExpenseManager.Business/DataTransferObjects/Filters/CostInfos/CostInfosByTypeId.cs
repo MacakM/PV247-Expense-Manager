@@ -5,7 +5,7 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.CostInfos
     /// <summary>
     /// Filters by planned type id
     /// </summary>
-    public class CostInfosByTypeId : IFilter<CostInfo>
+    public class CostInfosByTypeId : Filter<CostInfo>
     {
         /// <summary>
         /// Type id to be filtered with

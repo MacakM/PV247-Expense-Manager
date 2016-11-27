@@ -6,7 +6,7 @@ namespace ExpenseManager.Database.Filters.Plans
     /// <summary>
     /// Filter plans by its completetions
     /// </summary>
-    public class PlanModelsByCompletition : IFilterModel<PlanModel>
+    public class PlanModelsByCompletition : FilterModel<PlanModel>
     {
         /// <summary>
         /// If plan is completed
@@ -27,7 +27,7 @@ namespace ExpenseManager.Database.Filters.Plans
         /// </summary>
         /// <param name="queryable"></param>
         /// <returns></returns>
-        public IQueryable<PlanModel> FilterQuery(IQueryable<PlanModel> queryable)
+        public override IQueryable<PlanModel> FilterQuery(IQueryable<PlanModel> queryable)
         {
             return queryable.Where(plan => plan.IsCompleted == IsCompleted);
         }

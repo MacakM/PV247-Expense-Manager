@@ -5,7 +5,7 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.CostInfos
     /// <summary>
     /// Filters by time of cost info creation
     /// </summary>
-    public class CostInfosByCreatedTo : IFilter<CostInfo>
+    public class CostInfosByCreatedTo : Filter<CostInfo>
     {
         /// <summary>
         /// Right edge of created range

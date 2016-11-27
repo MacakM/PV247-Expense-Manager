@@ -6,7 +6,7 @@ namespace ExpenseManager.Database.Filters.Users
     /// <summary>
     /// Filters by user name
     /// </summary>
-    public class UserModelsByName : IFilterModel<UserModel>
+    public class UserModelsByName : FilterModel<UserModel>
     {
         /// <summary>
         /// User name
@@ -34,7 +34,7 @@ namespace ExpenseManager.Database.Filters.Users
         /// </summary>
         /// <param name="queryable"></param>
         /// <returns></returns>
-        public IQueryable<UserModel> FilterQuery(IQueryable<UserModel> queryable)
+        public override IQueryable<UserModel> FilterQuery(IQueryable<UserModel> queryable)
         {
             return DoExactMatch ? queryable.Where(user => user.Name.Equals(Name)) : queryable.Where(user => user.Name.Contains(Name));
         }
