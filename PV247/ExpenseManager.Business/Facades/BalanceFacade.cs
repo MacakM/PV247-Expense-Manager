@@ -147,7 +147,7 @@ namespace ExpenseManager.Business.Facades
         /// </summary>
         /// <param name="filter">Filters cost infos</param>
         /// <returns>List of cost infos</returns>
-        public List<CostInfo> ListItem(CostInfoFilter filter)
+        public List<CostInfo> ListItems(CostInfoFilter filter)
         {
             return _costInfoService.ListCostInfos(filter);
         }
@@ -304,7 +304,7 @@ namespace ExpenseManager.Business.Facades
         /// </summary>
         /// <param name="filter">Filters badges</param>
         /// <returns></returns>
-        public List<Badge> ListBages(BadgeFilter filter)
+        public List<Badge> ListBadges(BadgeFilter filter)
         {
             return _badgeService.ListBadges(filter);
         }

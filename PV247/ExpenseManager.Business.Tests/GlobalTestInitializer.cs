@@ -1,4 +1,6 @@
-﻿using Castle.Windsor;
+﻿using System.Data.Entity;
+using Castle.Windsor;
+using ExpenseManager.Database;
 using NUnit.Framework;
 
 namespace ExpenseManager.Business.Tests
@@ -18,6 +20,8 @@ namespace ExpenseManager.Business.Tests
         public void InitializeBusinessLayerTests()
         {
             Effort.Provider.EffortProviderConfiguration.RegisterProvider();
+
+            System.Data.Entity.Database.SetInitializer(new DropCreateDatabaseAlways<ExpenseDbContext>());
 
             Container.Install(new TestInstaller());
         }

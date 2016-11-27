@@ -219,8 +219,8 @@ namespace ExpenseManager.Presentation.Controllers
         #region Helpers
         private List<IndexViewModel> GetFilteredExpenses(CostInfoFilter filter)
         {
-            var expenses = _balanceFacade.ListItem(filter);
-            return Mapper.Map<List<IndexViewModel>>(expenses);
+            var expenses = _balanceFacade.ListItems(filter);
+            return _mapper.Map<List<IndexViewModel>>(expenses);
         }
 
         private List<Models.CostType.IndexViewModel> GetAllCostTypes()

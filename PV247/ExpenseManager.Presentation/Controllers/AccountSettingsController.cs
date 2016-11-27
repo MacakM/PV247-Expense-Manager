@@ -69,7 +69,26 @@ namespace ExpenseManager.Presentation.Controllers
 
             var users = _accountFacade.ListUsers(userFilter);
 
-            return Mapper.Map<List<IndexViewModel>>(users);
+            return _mapper.Map<List<IndexViewModel>>(users);
+        }
+
+        private List<IndexPermanentExpenseViewModel> GetAllPermanentExpenses(Account account)
+        {
+            var filter = new CostInfoFilter()
+            {
+                AccountId = account.Id,
+                Periodicity = Periodicity.Day
+            };
+
+            var expenses = _balanceFacade.ListItems(filter);
+
+            filter.Periodicity = Periodicity.Week;
+            expenses.AddRange(_balanceFacade.ListItems(filter));
+
+            filter.Periodicity = Periodicity.Month;
+            expenses.AddRange(_balanceFacade.ListItems(filter));
+
+            return _mapper.Map<List<IndexPermanentExpenseViewModel>>(expenses);
         }
 
         /// <summary>
