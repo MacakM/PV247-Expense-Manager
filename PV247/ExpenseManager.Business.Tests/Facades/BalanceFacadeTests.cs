@@ -1,17 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Castle.Components.DictionaryAdapter;
 using ExpenseManager.Business.DataTransferObjects;
+using ExpenseManager.Business.DataTransferObjects.Enums;
 using ExpenseManager.Business.DataTransferObjects.Filters;
 using ExpenseManager.Business.Facades;
 using ExpenseManager.Database;
 using ExpenseManager.Database.Entities;
+using ExpenseManager.Database.Enums;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NUnit.Framework;
 using Assert = NUnit.Framework.Assert;
 
 namespace ExpenseManager.Business.Tests.Facades
 {
+    /// <summary>
+    /// Tests for balance facade
+    /// </summary>
     [TestFixture]
     public class BalanceFacadeTests
     {
@@ -28,244 +34,1026 @@ namespace ExpenseManager.Business.Tests.Facades
                 dbContext.Database.Initialize(true);
             }
         }
-
+        
+        /// <summary>
+        /// Test listing closeable plans
+        /// </summary>
         [Test]
         public void ListAllCloseablePlans()
         {
             _balanceFacade.CreateBadge(new Badge() {Accounts = new List<AccountBadge>(), BadgeImgUri = "somePicture", Description = "Expense Manager badge", Name = "Penny Pincher"});
-            var x = _balanceFacade.ListBages(new BadgeFilter());
+            var x = _balanceFacade.ListBadges(new BadgeFilter());
             throw new AssertFailedException();
         }
-
+        
+        /// <summary>
+        /// Check badges requirements test
+        /// </summary>
         [Test]
         public void CheckBadgesRequirements()
         {
             throw new AssertFailedException();
         }
 
+        /// <summary>
+        /// Tests recomputing periodic costs into non periodic
+        /// </summary>
         [Test]
         public void RecomputePeriodicCosts()
         {
             throw new AssertFailedException();
         }
 
+        /// <summary>
+        /// Tests CostInfo creation.
+        /// </summary>
         [Test]
         public void CreateItemTest()
         {
-            throw new AssertFailedException();
-        }
+            // Arrange
+            Guid accountId;
+            Guid typeId;
+            const string accountName = "ExpenseManagerAccount01";
+            const string typeName = "Food";
+            var account = new AccountModel
+            {
+                Badges = new List<AccountBadgeModel>(),
+                Costs = new List<CostInfoModel>(),
+                Name = accountName
+            };
+            var type = new CostTypeModel
+            {
+                Name = typeName,
+                CostInfoList = new EditableList<CostInfoModel>()
+            };
+            using (
+                var db =
+                    new ExpenseDbContext(
+                        Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
+            {
+                db.Accounts.Add(account);
+                db.CostTypes.Add(type);
+                db.SaveChanges();
+                accountId = account.Id;
+                typeId = type.Id;
+            }
 
+            var item = new CostInfo()
+            {
+                Description = "bread",
+                AccountId = accountId,
+                TypeId = typeId,
+                IsIncome = true,
+                Money = 25,
+                Created = DateTime.Now
+            };
+
+            // Act
+            var createdId = _balanceFacade.CreateItem(item);
+
+            // Assert
+            var createdItem = GetItemById(createdId);
+            Assert.That(createdItem != null, "Item was not created.");
+        }
+        /// <summary>
+        /// Test CostInfo deletion.
+        /// </summary>
         [Test]
         public void DeleteItemTest()
         {
-            throw new AssertFailedException();
-        }
+            // Arrange
+            Guid infoId;
+            const string accountName = "ExpenseManagerAccount01";
+            const string typeName = "Food";
+            var account = new AccountModel
+            {
+                Badges = new List<AccountBadgeModel>(),
+                Costs = new List<CostInfoModel>(),
+                Name = accountName
+            };
+            var type = new CostTypeModel
+            {
+                Name = typeName,
+                CostInfoList = new EditableList<CostInfoModel>()
+            };
+            var info = new CostInfoModel
+            {
+                Description = "bread",
+                IsIncome = true,
+                Money = 25,
+                Created = DateTime.Now
+            };
+            using (
+                var db =
+                    new ExpenseDbContext(
+                        Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
+            {
+                db.Accounts.Add(account);
+                db.CostTypes.Add(type);
+                db.SaveChanges();
+                var accountId = account.Id;
+                var typeId = type.Id;
+                info.AccountId = accountId;
+                info.TypeId = typeId;
+                db.CostInfos.Add(info);
+                db.SaveChanges();
+                infoId = info.Id;
+            }
 
+            // Act
+            _balanceFacade.DeleteItem(infoId);
+
+            // Assert
+            var deletedItem = GetItemById(infoId);
+            Assert.That(deletedItem == null, "Item was not deleted.");
+        }
+        /// <summary>
+        /// Tests CostInfo update.
+        /// </summary>
         [Test]
         public void UpdateItemTest()
         {
-            throw new AssertFailedException();
-        }
+            // Arrange
+            const string accountName = "ExpenseManagerAccount01";
+            const string typeName = "Food";
+            Guid accountId;
+            Guid typeId;
+            Guid infoId;
+            var account = new AccountModel
+            {
+                Badges = new List<AccountBadgeModel>(),
+                Costs = new List<CostInfoModel>(),
+                Name = accountName
+            };
+            var type = new CostTypeModel
+            {
+                Name = typeName,
+                CostInfoList = new EditableList<CostInfoModel>()
+            };
+            var info = new CostInfoModel
+            {
+                Description = "bread",
+                IsIncome = true,
+                Money = 25,
+                Created = DateTime.Now
+            };
+            using (
+                var db =
+                    new ExpenseDbContext(
+                        Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
+            {
+                db.Accounts.Add(account);
+                db.CostTypes.Add(type);
+                db.SaveChanges();
+                accountId = account.Id;
+                typeId = type.Id;
+                info.AccountId = accountId;
+                info.TypeId = typeId;
+                db.CostInfos.Add(info);
+                db.SaveChanges();
+                infoId = info.Id;
+            }
 
+            // Act
+            _balanceFacade.UpdateItem(new CostInfo
+            {
+                Id = infoId,
+                Description = "bread",
+                AccountId = accountId,
+                TypeId = typeId,
+                IsIncome = true,
+                Money = 50,
+                Created = DateTime.Now
+            });
+
+            // Assert
+            Assert.That(GetItemById(infoId).Money == 50, "Item was not updated.");
+        }
+        /// <summary>
+        /// Tests get of CostInfo.
+        /// </summary>
         [Test]
         public void GetItemTest()
         {
-            throw new AssertFailedException();
-        }
+            // Arrange
+            Guid infoId;
+            const string accountName = "ExpenseManagerAccount01";
+            const string typeName = "Food";
+            var account = new AccountModel
+            {
+                Badges = new List<AccountBadgeModel>(),
+                Costs = new List<CostInfoModel>(),
+                Name = accountName
+            };
+            var type = new CostTypeModel
+            {
+                Name = typeName,
+                CostInfoList = new EditableList<CostInfoModel>()
+            };
+            var info = new CostInfoModel
+            {
+                Description = "bread",
+                IsIncome = true,
+                Money = 25,
+                Created = DateTime.Now
+            };
+            using (
+                var db =
+                    new ExpenseDbContext(
+                        Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
+            {
+                db.Accounts.Add(account);
+                db.CostTypes.Add(type);
+                db.SaveChanges();
+                var accountId = account.Id;
+                var typeId = type.Id;
+                info.AccountId = accountId;
+                info.TypeId = typeId;
+                db.CostInfos.Add(info);
+                db.SaveChanges();
+                infoId = info.Id;
+            }
 
+            // Act
+            var item = _balanceFacade.GetItem(infoId);
+
+            // Assert
+            Assert.That(item != null, "Item was not got.");
+        }
+        /// <summary>
+        /// Tests basic listing of CostInfo.
+        /// </summary>
         [Test]
-        public void ListItemTest()
+        public void ListItemTest1()
         {
-            throw new AssertFailedException();
+            // Arrange
+            const string accountName = "ExpenseManagerAccount01";
+            const string typeName1 = "Food";
+            const string typeName2 = "PC";
+            var account = new AccountModel
+            {
+                Badges = new List<AccountBadgeModel>(),
+                Costs = new List<CostInfoModel>(),
+                Name = accountName
+            };
+            var type1 = new CostTypeModel
+            {
+                Name = typeName1,
+                CostInfoList = new EditableList<CostInfoModel>()
+            };
+            var type2 = new CostTypeModel
+            {
+                Name = typeName2,
+                CostInfoList = new EditableList<CostInfoModel>()
+            };
+            using (
+                var db =
+                    new ExpenseDbContext(
+                        Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
+            {
+                db.Accounts.Add(account);
+                db.CostTypes.Add(type1);
+                db.CostTypes.Add(type2);
+                db.SaveChanges();
+                var accountId = account.Id;
+                var typeId1 = type1.Id;
+                var typeId2 = type2.Id;
+                db.CostInfos.Add(new CostInfoModel
+                {
+                    Description = "bread",
+                    AccountId = accountId,
+                    TypeId = typeId1,
+                    IsIncome = true,
+                    Money = 25,
+                    Created = DateTime.Now
+                });
+                db.CostInfos.Add(new CostInfoModel
+                {
+                    Description = "WoW",
+                    AccountId = accountId,
+                    TypeId = typeId2,
+                    IsIncome = false,
+                    Money = 1500,
+                    Created = DateTime.Now
+                });
+                db.SaveChanges();
+            }
+
+            // Act
+            var items = _balanceFacade.ListItems(new CostInfoFilter());
+
+            // Assert
+            Assert.That(items.Count == 2, "Items were not listed.");
         }
 
+        /// <summary>
+        /// Tests listing with filter.
+        /// </summary>
+        [Test]
+        public void ListItemTest2()
+        {
+            // Arrange
+            const string accountName = "ExpenseManagerAccount01";
+            const string typeName1 = "Food";
+            const string typeName2 = "PC";
+            Guid typeId2;
+            var account = new AccountModel
+            {
+                Badges = new List<AccountBadgeModel>(),
+                Costs = new List<CostInfoModel>(),
+                Name = accountName
+            };
+            var type1 = new CostTypeModel
+            {
+                Name = typeName1,
+                CostInfoList = new EditableList<CostInfoModel>()
+            };
+            var type2 = new CostTypeModel
+            {
+                Name = typeName2,
+                CostInfoList = new EditableList<CostInfoModel>()
+            };
+            using (
+                var db =
+                    new ExpenseDbContext(
+                        Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
+            {
+                db.Accounts.Add(account);
+                db.CostTypes.Add(type1);
+                db.CostTypes.Add(type2);
+                db.SaveChanges();
+                var accountId = account.Id;
+                var typeId1 = type1.Id;
+                typeId2 = type2.Id;
+                db.CostInfos.Add(new CostInfoModel
+                {
+                    Description = "bread",
+                    AccountId = accountId,
+                    TypeId = typeId1,
+                    IsIncome = true,
+                    Money = 25,
+                    Created = DateTime.Now
+                });
+                db.CostInfos.Add(new CostInfoModel
+                {
+                    Description = "WoW",
+                    AccountId = accountId,
+                    TypeId = typeId2,
+                    IsIncome = false,
+                    Money = 1500,
+                    Created = DateTime.Now
+                });
+                db.SaveChanges();
+            }
+
+            // Act
+            var items = _balanceFacade.ListItems(new CostInfoFilter { TypeId = typeId2 });
+
+            // Assert
+            Assert.That(items.Count == 1, "Item was not listed.");
+        }
+        /// <summary>
+        /// Tests creation of Plan.
+        /// </summary>
         [Test]
         public void CreatePlanTest()
         {
-            throw new AssertFailedException();
-        }
+            // Arrange
+            Guid accountId;
+            Guid typeId;
+            const string accountName = "ExpenseManagerAccount01";
+            const string typeName = "Food";
+            var account = new AccountModel
+            {
+                Badges = new List<AccountBadgeModel>(),
+                Costs = new List<CostInfoModel>(),
+                Name = accountName
+            };
+            var type = new CostTypeModel
+            {
+                Name = typeName,
+                CostInfoList = new EditableList<CostInfoModel>()
+            };
+            using (
+                var db =
+                    new ExpenseDbContext(
+                        Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
+            {
+                db.Accounts.Add(account);
+                db.CostTypes.Add(type);
+                db.SaveChanges();
+                accountId = account.Id;
+                typeId = type.Id;
+            }
 
+            var plan = new Plan()
+            {
+                AccountId = accountId,
+                Description = "I want money for food!",
+                PlanType = PlanType.Save,
+                PlannedMoney = 10000,
+                Deadline = DateTime.Today,
+                IsCompleted = false,
+                PlannedTypeId = typeId
+            };
+
+            // Act
+            var planId = _balanceFacade.CreatePlan(plan);
+
+            // Assert
+            var createdPlan = GetPlanById(planId);
+            Assert.That(createdPlan != null, "Plan was not created.");
+        }
+        /// <summary>
+        /// Tests plan deletion.
+        /// </summary>
         [Test]
         public void DeletePlanTest()
         {
-            throw new AssertFailedException();
-        }
+            // Arrange
+            Guid planId;
+            const string accountName = "ExpenseManagerAccount01";
+            const string typeName = "Food";
+            var account = new AccountModel
+            {
+                Badges = new List<AccountBadgeModel>(),
+                Costs = new List<CostInfoModel>(),
+                Name = accountName
+            };
+            var type = new CostTypeModel
+            {
+                Name = typeName,
+                CostInfoList = new EditableList<CostInfoModel>()
+            };
+            var plan = new PlanModel
+            {
+                Description = "I want money for food!",
+                PlanType = PlanTypeModel.Save,
+                PlannedMoney = 10000,
+                Deadline = DateTime.Today,
+                IsCompleted = false,
+            };
+            using (
+                var db =
+                    new ExpenseDbContext(
+                        Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
+            {
+                db.Accounts.Add(account);
+                db.CostTypes.Add(type);
+                db.SaveChanges();
+                var accountId = account.Id;
+                plan.AccountId = accountId;
+                plan.PlannedType = type;
+                db.Plans.Add(plan);
+                db.SaveChanges();
+                planId = plan.Id;
+            }
 
+            // Act
+            _balanceFacade.DeletePlan(planId);
+
+            // Assert
+            var deletedPlan = GetPlanById(planId);
+            Assert.That(deletedPlan == null, "Plan was not deleted.");
+        }
+        /// <summary>
+        /// Tests Plan update.
+        /// </summary>
         [Test]
         public void UpdatePlanTest()
         {
-            throw new AssertFailedException();
-        }
+            // Arrange
+            Guid accountId;
+            Guid planId;
+            Guid typeId;
+            const string accountName = "ExpenseManagerAccount01";
+            const string typeName = "Food";
+            var account = new AccountModel
+            {
+                Badges = new List<AccountBadgeModel>(),
+                Costs = new List<CostInfoModel>(),
+                Name = accountName
+            };
+            var type = new CostTypeModel
+            {
+                Name = typeName,
+                CostInfoList = new EditableList<CostInfoModel>()
+            };
+            var plan = new PlanModel
+            {
+                Description = "I want money for food!",
+                PlanType = PlanTypeModel.Save,
+                PlannedMoney = 10000,
+                Deadline = DateTime.Today,
+                IsCompleted = false,
+            };
+            using (
+                var db =
+                    new ExpenseDbContext(
+                        Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
+            {
+                db.Accounts.Add(account);
+                db.CostTypes.Add(type);
+                db.SaveChanges();
+                accountId = account.Id;
+                typeId = plan.Id;
+                plan.AccountId = accountId;
+                plan.PlannedType = type;
+                db.Plans.Add(plan);
+                db.SaveChanges();
+                planId = plan.Id;
+            }
 
+            // Act
+            _balanceFacade.UpdatePlan(new Plan
+            {
+                Id = planId,
+                Description = "I want money for games!",
+                PlanType = PlanType.Save,
+                PlannedMoney = 10000,
+                Deadline = DateTime.Today,
+                IsCompleted = false,
+                AccountId = accountId,
+                PlannedTypeId = typeId
+            });
+
+            // Assert
+            var updatedPlan = GetPlanById(planId);
+            Assert.That(updatedPlan.Description == "I want money for games!", "Plan was not updated.");
+        }
+        /// <summary>
+        /// Test Plan get.
+        /// </summary>
         [Test]
         public void GetPlanTest()
         {
-            throw new AssertFailedException();
-        }
+            // Arrange
+            Guid planId;
+            const string accountName = "ExpenseManagerAccount01";
+            const string typeName = "Food";
+            var account = new AccountModel
+            {
+                Badges = new List<AccountBadgeModel>(),
+                Costs = new List<CostInfoModel>(),
+                Name = accountName
+            };
+            var type = new CostTypeModel
+            {
+                Name = typeName,
+                CostInfoList = new EditableList<CostInfoModel>()
+            };
+            var plan = new PlanModel
+            {
+                Description = "I want money for food!",
+                PlanType = PlanTypeModel.Save,
+                PlannedMoney = 10000,
+                Deadline = DateTime.Today,
+                IsCompleted = false,
+            };
+            using (
+                var db =
+                    new ExpenseDbContext(
+                        Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
+            {
+                db.Accounts.Add(account);
+                db.CostTypes.Add(type);
+                db.SaveChanges();
+                var accountId = account.Id;
+                plan.AccountId = accountId;
+                plan.PlannedType = type;
+                db.Plans.Add(plan);
+                db.SaveChanges();
+                planId = plan.Id;
+            }
 
+            // Act
+            var myPlan = _balanceFacade.GetPlan(planId);
+
+            // Assert
+            Assert.That(myPlan != null, "Plan was not got.");
+        }
+        /// <summary>
+        /// Test basic listing of Plans.
+        /// </summary>
         [Test]
-        public void ListPlansTest()
+        public void ListPlansTest1()
         {
             throw new AssertFailedException();
         }
-
+        /// <summary>
+        /// Tests creation of CostType.
+        /// </summary>
         [Test]
         public void CreateItemTypeTest()
         {
-            throw new AssertFailedException();
-        }
+            // Arrange
+            const string typeName = "Food";
 
+            var type = new CostType()
+            {
+                Name = typeName,
+                CostInfoList = new EditableList<CostInfo>()
+            };
+
+            // Act
+            _balanceFacade.CreateItemType(type);
+
+            // Assert
+            var createdType = GetTypeByName(typeName);
+            Assert.That(createdType != null, "Type was not created.");
+        }
+        /// <summary>
+        /// Tests deletion of CostType.
+        /// </summary>
         [Test]
         public void DeleteItemTypeTest()
         {
-            throw new AssertFailedException();
-        }
+            // Arrange
+            Guid typeId;
+            const string typeName = "Food";
+            var type = new CostTypeModel
+            {
+                Name = typeName,
+                CostInfoList = new EditableList<CostInfoModel>()
+            };
+            using (
+                var db =
+                    new ExpenseDbContext(
+                        Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
+            {
+                db.CostTypes.Add(type);
+                db.SaveChanges();
+                typeId = type.Id;
+            }
 
+            // Act
+            _balanceFacade.DeleteItemType(typeId);
+
+            // Assert
+            var deletedType = GetTypeByName(typeName);
+            Assert.That(deletedType == null, "Type was not deleted.");
+        }
+        /// <summary>
+        /// Tests CostType update.
+        /// </summary>
         [Test]
         public void UpdateItemTypeTest()
         {
-            throw new AssertFailedException();
-        }
+            // Arrange
+            const string typeName1 = "Food";
+            const string typeName2 = "PC";
+            Guid typeId;
+            var type = new CostTypeModel
+            {
+                Name = typeName1,
+                CostInfoList = new EditableList<CostInfoModel>()
+            };
+            using (
+                var db =
+                    new ExpenseDbContext(
+                        Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
+            {
+                db.CostTypes.Add(type);
+                db.SaveChanges();
+                typeId = type.Id;
+            }
 
+            // Act
+            _balanceFacade.UpdateItemType(new CostType
+            {
+                Id = typeId,
+                Name = typeName2,
+                CostInfoList = new EditableList<CostInfo>()
+            });
+
+            // Assert
+            var updatedType = GetTypeByName(typeName2);
+            Assert.That(updatedType != null, "Type was not updated.");
+        }
+        /// <summary>
+        /// Tests CostType get.
+        /// </summary>
         [Test]
         public void GetItemTypeTest()
         {
-            throw new AssertFailedException();
-        }
+            // Arrange
+            const string typeName = "Food";
+            Guid typeId;
+            var type = new CostTypeModel
+            {
+                Name = typeName,
+                CostInfoList = new EditableList<CostInfoModel>()
+            };
+            using (
+                var db =
+                    new ExpenseDbContext(
+                        Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
+            {
+                db.CostTypes.Add(type);
+                db.SaveChanges();
+                typeId = type.Id;
+            }
 
+            // Act
+            var myType = _balanceFacade.GetItemType(typeId);
+
+            // Assert
+            Assert.That(myType != null, "Type was not got.");
+        }
+        /// <summary>
+        /// Test basic listing of CostInfos.
+        /// </summary>
         [Test]
-        public void ListItemTypesTest()
+        public void ListItemTypesTest1()
         {
-            throw new AssertFailedException();
+            // Arrange
+            const string typeName1 = "Food";
+            const string typeName2 = "PC";
+            var type1 = new CostTypeModel
+            {
+                Name = typeName1,
+                CostInfoList = new EditableList<CostInfoModel>()
+            };
+            var type2 = new CostTypeModel
+            {
+                Name = typeName2,
+                CostInfoList = new EditableList<CostInfoModel>()
+            };
+            using (
+                var db =
+                    new ExpenseDbContext(
+                        Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
+            {
+                db.CostTypes.Add(type1);
+                db.CostTypes.Add(type2);
+                db.SaveChanges();
+            }
+
+            // Act
+            var types = _balanceFacade.ListItemTypes(new CostTypeFilter());
+
+            // Assert
+            Assert.That(types.Count == 2, "Types were not listed.");
+        }
+        /// <summary>
+        /// Test listing with filter.
+        /// </summary>
+        [Test]
+        public void ListItemTypesTest2()
+        {
+            // Arrange
+            const string typeName1 = "Food";
+            const string typeName2 = "PC";
+            var type1 = new CostTypeModel
+            {
+                Name = typeName1,
+                CostInfoList = new EditableList<CostInfoModel>()
+            };
+            var type2 = new CostTypeModel
+            {
+                Name = typeName2,
+                CostInfoList = new EditableList<CostInfoModel>()
+            };
+            using (
+                var db =
+                    new ExpenseDbContext(
+                        Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
+            {
+                db.CostTypes.Add(type1);
+                db.CostTypes.Add(type2);
+                db.SaveChanges();
+            }
+
+            // Act
+            var types = _balanceFacade.ListItemTypes(new CostTypeFilter { Name = "PC" });
+
+            // Assert
+            Assert.That(types.Count == 1, "Type was not listed.");
         }
 
         /// <summary>
-        /// Test Badge creation.
+        /// Tests Badge creation.
         /// </summary>
         [Test]
         public void CreateBadgeTest()
-        { 
-            _balanceFacade.CreateBadge(new Badge
+        {
+            // Arrange
+            const string badgeName = "Organizer";
+            var badge = new Badge
             {
-                Name = "Organizer",
+                Name = badgeName,
                 Description = "Add your first expense",
-                BadgeImgUri = "lol"
-            });
-            using (var db = new ExpenseDbContext(Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
-            {
-                var myBadge = db.Badges.FirstOrDefault(model => model.Name.Equals("Organizer"));
-                Assert.IsTrue(myBadge != null && myBadge.Description.Equals("Add your first expense") && myBadge.BadgeImgUri.Equals("lol"), "Badge was not created successfuly");
-            }
-        }
+                BadgeImgUri = "picture"
+            };
 
+            // Act
+            _balanceFacade.CreateBadge(badge);
+
+            // Assert
+            var createdBadge = GetBadgeByName(badgeName);
+            Assert.That(createdBadge != null, "Badge was not created.");
+        }
         /// <summary>
-        /// Test Badge deletion.
+        /// Tests Badge deletion.
         /// </summary>
         [Test]
         public void DeleteBadgeTest()
         {
-            Guid id;
-            using (var db = new ExpenseDbContext(Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
-            {
-                id = db.Badges.Max(b => b.Id);
-            }
-            _balanceFacade.DeleteBadge(id);
-            using (var db = new ExpenseDbContext(Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
-            {
-                var myBadge = db.Badges.FirstOrDefault(model => model.Name.Equals("Survivor"));
-                Assert.IsTrue(myBadge == null, "Badge was not deleted successfuly");
-            }
-            //cleanup
+            // Arrange
+            const string badgeName = "Organizer";
+            Guid badgeId;
             var badge = new BadgeModel()
             {
-                Name = "Survivor",
-                BadgeImgUri = "hmm",
-                Description = "I will survive"
+                Name = badgeName,
+                Description = "Add your first expense",
+                BadgeImgUri = "picture"
             };
-            using (var db = new ExpenseDbContext(Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
+            using (var dbContext = new ExpenseDbContext(Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
             {
-                db.Badges.Add(badge);
+                dbContext.Badges.Add(badge);
+                dbContext.SaveChanges();
+                badgeId = badge.Id;
             }
+
+            // Act
+            _balanceFacade.DeleteBadge(badgeId);
+
+            // Assert
+            var deletedBadge = GetBadgeByName(badgeName);
+            Assert.That(deletedBadge == null, "Badge was not deleted.");
         }
 
         /// <summary>
-        /// Test Badge update.
+        /// Tests Badge update.
         /// </summary>
         [Test]
         public void UpdateBadgeTest()
         {
-            Guid id;
-            using (var db = new ExpenseDbContext(Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
+            // Arrange
+            const string badgeName1 = "Organizer";
+            const string badgeName2 = "Survivor";
+            var editedBadge = new Badge
             {
-                id = db.Badges.Min(b => b.Id);
+                Name = badgeName2,
+                BadgeImgUri = "picture",
+                Description = "I will survive"
+            };
+            using (var dbContext = new ExpenseDbContext(Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
+            {
+                dbContext.Badges.Add(new BadgeModel()
+                {
+                    Name = badgeName1,
+                    Description = "Add your first expense",
+                    BadgeImgUri = "picture"
+                });
+                dbContext.SaveChanges();
             }
-            _balanceFacade.UpdateBadge(new Badge
-            {
-                Id = id,
-                Name = "Officer",
-                Description = "Buy 5 donuts",
-                BadgeImgUri = "mmm"
-            });
 
-            using (var db = new ExpenseDbContext(Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
-            {
-                var myBadge = db.Badges.Find(id);
-                Assert.IsTrue(myBadge.Description == "Buy 5 donuts", "Badge was not updated successfuly");
-            }
+            // Act
+            _balanceFacade.UpdateBadge(editedBadge);
+
+            // Assert
+            var updatedBadge = GetBadgeByName(badgeName2);
+            Assert.That(updatedBadge != null, "Badge was not updated.");
         }
-
         /// <summary>
-        /// Test Badge get.
+        /// Tests Badge get.
         /// </summary>
         [Test]
         public void GetBadgeTest()
         {
-            Guid id;
-            using (var db = new ExpenseDbContext(Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
+            // Arrange
+            const string badgeName = "Organizer";
+            var badge = new BadgeModel()
             {
-                id = db.Badges.Min(b => b.Id);
+                Name = badgeName,
+                Description = "Add your first expense",
+                BadgeImgUri = "picture"
+            };
+            Guid badgeId;
+            using (var dbContext = new ExpenseDbContext(Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
+            {
+                dbContext.Badges.Add(badge);
+                dbContext.SaveChanges();
+                badgeId = badge.Id;
             }
-            var badge = _balanceFacade.GetBadge(id);
-            Assert.IsTrue(
-                badge.Name.Equals("Officer") && badge.Description.Equals("Buy donuts") &&
-                badge.BadgeImgUri.Equals("mmm"), "Badge was not get successfuly");
+
+            // Act
+            var myBadge = _balanceFacade.GetBadge(badgeId);
+
+            // Assert
+            Assert.That(myBadge.Name == badgeName, "Badge was not got.");
         }
 
+        /// <summary>
+        /// Tests whether listing badges works.
+        /// </summary>
         [Test]
-        public void ListBadgesTest()
+        public void ListBadgesTest1()
         {
-            throw new AssertFailedException();
+            // Arrange
+            const string badgeName1 = "Organizer";
+            const string badgeName2 = "Survivor";
+            using (var dbContext = new ExpenseDbContext(Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
+            {
+                dbContext.Badges.Add(new BadgeModel()
+                {
+                    Name = badgeName1,
+                    Description = "Add your first expense",
+                    BadgeImgUri = "picture"
+                });
+                dbContext.Badges.Add(new BadgeModel()
+                {
+                    Name = badgeName2,
+                    Description = "I will survive",
+                    BadgeImgUri = "picture"
+                });
+                dbContext.SaveChanges();
+            }
+
+            // Act
+            var badges = _balanceFacade.ListBadges(new BadgeFilter());
+
+            // Assert
+            Assert.That(badges.Count == 2, "Badges were not listed.");
         }
 
+        /// <summary>
+        /// Tests whether BadgeFilter works.
+        /// </summary>
         [Test]
-        public void CreateAccountBadgeTest()
+        public void ListBadgesTest2()
         {
-            throw new AssertFailedException();
+            // Arrange
+            const string badgeName1 = "Organizer";
+            const string badgeName2 = "Survivor";
+            using (var dbContext = new ExpenseDbContext(Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
+            {
+                dbContext.Badges.Add(new BadgeModel()
+                {
+                    Name = badgeName1,
+                    Description = "Add your first expense",
+                    BadgeImgUri = "picture"
+                });
+                dbContext.Badges.Add(new BadgeModel()
+                {
+                    Name = badgeName2,
+                    Description = "I will survive",
+                    BadgeImgUri = "picture"
+                });
+                dbContext.SaveChanges();
+            }
+
+            // Act
+            var badges = _balanceFacade.ListBadges(new BadgeFilter { Name = badgeName1 });
+
+            // Assert
+            Assert.That(badges.Count == 1, "Badge was not listed.");
+        }
+     
+        private static BadgeModel GetBadgeByName(string badgeName)
+        {
+            using (
+                var db =
+                    new ExpenseDbContext(
+                        Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
+            {
+                return db.Badges.FirstOrDefault(model => model.Name.Equals(badgeName));
+            }
         }
 
-        [Test]
-        public void DeleteAccountBadgeTest()
+        private static CostInfoModel GetItemById(Guid id)
         {
-            throw new AssertFailedException();
+            using (
+                var db =
+                    new ExpenseDbContext(
+                        Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
+            {
+                return db.CostInfos.Find(id);
+            }
         }
 
-        [Test]
-        public void UpdateAccountBadgeTest()
+        private static PlanModel GetPlanById(Guid id)
         {
-            throw new AssertFailedException();
-
+            using (
+                var db =
+                    new ExpenseDbContext(
+                        Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
+            {
+                return db.Plans.Find(id);
+            }
         }
 
-        [Test]
-        public void GetAccountBadgeTest()
+        private static CostTypeModel GetTypeByName(string typeName)
         {
-            throw new AssertFailedException();
+            using (
+                var db =
+                    new ExpenseDbContext(
+                        Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
+            {
+                return db.CostTypes.FirstOrDefault(model => model.Name.Equals(typeName)); 
+            }
         }
 
-        [Test]
-        public void ListAccountBadgesTest()
-        {
-           throw new AssertFailedException();
-        }
     }
 }

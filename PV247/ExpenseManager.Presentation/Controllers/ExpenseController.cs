@@ -115,13 +115,13 @@ namespace ExpenseManager.Presentation.Controllers
                 Periodicity = Periodicity.Day
             };
 
-            var expenses = _balanceFacade.ListItem(filter);
+            var expenses = _balanceFacade.ListItems(filter);
 
             filter.Periodicity = Periodicity.Week;
-            expenses.AddRange(_balanceFacade.ListItem(filter));
+            expenses.AddRange(_balanceFacade.ListItems(filter));
 
             filter.Periodicity = Periodicity.Month;
-            expenses.AddRange(_balanceFacade.ListItem(filter));
+            expenses.AddRange(_balanceFacade.ListItems(filter));
 
             return Mapper.Map<List<IndexPermanentExpenseViewModel>>(expenses);
         }
@@ -217,7 +217,7 @@ namespace ExpenseManager.Presentation.Controllers
         #region Helpers
         private List<IndexViewModel> GetFilteredExpenses(CostInfoFilter filter)
         {
-            var expenses = _balanceFacade.ListItem(filter);
+            var expenses = _balanceFacade.ListItems(filter);
             return Mapper.Map<List<IndexViewModel>>(expenses);
         }
 

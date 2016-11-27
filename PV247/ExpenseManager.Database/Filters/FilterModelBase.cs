@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using ExpenseManager.Database.Entities;
 
 namespace ExpenseManager.Database.Filters
@@ -39,6 +40,45 @@ namespace ExpenseManager.Database.Filters
         /// </summary>
         /// <param name="queryable">Query to be filtered</param>
         public abstract IQueryable<T> FilterQuery(IQueryable<T> queryable);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="queryable"></param>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <param name="propertyName"></param>
+        /// <returns></returns>
+        public IQueryable<T> FilterRange(IQueryable<T> queryable, object from, object to, string propertyName)
+        {
+            return queryable;
+        }
+       
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="queryable"></param>
+        /// <param name="doExactMatch"></param>
+        /// <param name="filterValue"></param>
+        /// <param name="propertyName"></param>
+        /// <returns></returns>
+        public IQueryable<T> FilterString(IQueryable<T> queryable, bool doExactMatch, string filterValue, string propertyName)
+        {
+        
+            return queryable;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="queryable"></param>
+        /// <param name="filterValue"></param>
+        /// <param name="propertyName"></param>
+        /// <returns></returns>
+        public IQueryable<T> FilterByExactValue(IQueryable<T> queryable, object filterValue, string propertyName)
+        {
+            return queryable;
+        }
 
     }
 }

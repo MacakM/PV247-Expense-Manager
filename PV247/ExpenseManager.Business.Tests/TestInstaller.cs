@@ -8,6 +8,8 @@ using ExpenseManager.Business.Facades;
 using ExpenseManager.Business.Infrastructure.Mapping.Profiles;
 using ExpenseManager.Business.Services.Interfaces;
 using ExpenseManager.Database;
+using ExpenseManager.Database.DataAccess.Repositories;
+using ExpenseManager.Database.Entities;
 using ExpenseManager.Database.Infrastructure.Query;
 using ExpenseManager.Database.Infrastructure.Repository;
 using ExpenseManager.Database.Infrastructure.UnitOfWork;
@@ -59,8 +61,15 @@ namespace ExpenseManager.Business.Tests
                     .Instance(new HttpContextUnitOfWorkRegistry(new ThreadLocalUnitOfWorkRegistry()))
                     .LifestyleSingleton(),
 
-                Classes.FromAssemblyContaining<ExpenseManagerUnitOfWork>()
+                Classes.FromAssemblyContaining<ExpenseManagerUnitOfWork>()                
                     .BasedOn(typeof(ExpenseManagerRepository<,>))
+                    .Unless(type => type == typeof(ExpenseManagerRepository<UserModel, Guid>))
+                    .LifestyleTransient(),
+
+               Component.For<UserRepository>()
+                    .ImplementedBy<UserRepository>()
+                    .IsDefault()
+                    .Named(Guid.NewGuid().ToString())
                     .LifestyleTransient(),
 
                 Classes.FromAssemblyContaining<ExpenseManagerUnitOfWork>()

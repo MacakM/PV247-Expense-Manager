@@ -166,7 +166,7 @@ namespace ExpenseManager.Business.Facades
         /// </summary>
         /// <param name="filter">Filters cost infos</param>
         /// <returns>List of cost infos</returns>
-        public List<CostInfo> ListItem(CostInfoFilter filter)
+        public List<CostInfo> ListItems(CostInfoFilter filter)
         {
             return _costInfoService.ListCostInfos(filter);
         }
@@ -323,59 +323,11 @@ namespace ExpenseManager.Business.Facades
         /// </summary>
         /// <param name="filter">Filters badges</param>
         /// <returns></returns>
-        public List<Badge> ListBages(BadgeFilter filter)
+        public List<Badge> ListBadges(BadgeFilter filter)
         {
             return _badgeService.ListBadges(filter);
         }
 
-        #endregion
-        #region AccountBadge CRUD
-        /// <summary>
-        /// Add new badge to account by creating new AccountBadge object in database
-        /// </summary>
-        /// <param name="accountBadge"></param>
-        public Guid CreateAccountBadge(AccountBadge accountBadge)
-        {
-            return _accountBadgeService.CreateAccountBadge(accountBadge);
-        }
-
-        /// <summary>
-        /// Deletes specified account badge
-        /// </summary>
-        /// <param name="accountBadgeId"></param>
-        public void DeleteAccountBadge(Guid accountBadgeId)
-        {
-            _accountBadgeService.DeleteAccountBadge(accountBadgeId);
-        }
-
-        /// <summary>
-        /// Updates existing account badge
-        /// </summary>
-        /// <param name="updatedAccountBadge"></param>
-        public void UpdateAccountBadge(AccountBadge updatedAccountBadge)
-        {
-            _accountBadgeService.UpdateAccountBadge(updatedAccountBadge);
-        }
-
-        /// <summary>
-        /// Get account badge specified by id
-        /// </summary>
-        /// <param name="accountBadgeId"></param>
-        /// <returns></returns>
-        public AccountBadge GetAccountBadge(Guid accountBadgeId)
-        {
-            return _accountBadgeService.GetAccountBadge(accountBadgeId);
-        }
-
-        /// <summary>
-        /// List filtered account badges
-        /// </summary>
-        /// <param name="filter">Filters account badgess</param>
-        /// <returns></returns>
-        public List<AccountBadge> ListAccountBadges(AccountBadgeFilter filter)
-        {
-            return _accountBadgeService.ListAccountBadges(filter);
-        } 
         #endregion
     }
 }
