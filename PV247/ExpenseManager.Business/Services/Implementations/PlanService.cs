@@ -190,7 +190,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <returns></returns>
         public List<Plan> ListAllCloseablePlans(Guid accountId, decimal accountBalance)
         {
-            Query.Filter = new PlanModelFilterModel
+            Query.Filter= new PlanModelFilterModel
             {
                 AccountId = accountId,
                 PlannedMoneyTo = accountBalance,

@@ -25,9 +25,7 @@ namespace ExpenseManager.Database.DataAccess.Queries
         /// <returns>IQueryable</returns>
         protected override IQueryable<CostInfoModel> GetQueryable()
         {
-            IQueryable<CostInfoModel> costInfos = Context.CostInfos.Include(nameof(CostInfoModel.Account)).Include(nameof(CostInfoModel.Type));
-
-            return Filter == null ? costInfos : Filter.FilterQuery(costInfos);
+           return ApplyFilters(Context.CostInfos.Include(nameof(CostInfoModel.Account)).Include(nameof(CostInfoModel.Type)));
         }
     }
 }

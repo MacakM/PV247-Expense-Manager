@@ -26,8 +26,7 @@ namespace ExpenseManager.Database.DataAccess.Queries
         /// <returns>IQueryable</returns>
         protected override IQueryable<UserModel> GetQueryable()
         {
-            IQueryable<UserModel> users = Context.Users.Include(x => x.Account);
-            return Filter == null ? users : Filter.FilterQuery(users);
+            return ApplyFilters(Context.Users.Include(x => x.Account));
         }
     }
 }

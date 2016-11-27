@@ -25,9 +25,7 @@ namespace ExpenseManager.Database.DataAccess.Queries
         /// <returns>IQueryable</returns>
         protected override IQueryable<AccountBadgeModel> GetQueryable()
         {
-            IQueryable<AccountBadgeModel> accountBadges = Context.AccountBadges.Include(nameof(AccountBadgeModel.Account)).Include(nameof(AccountBadgeModel.Badge));
-
-            return  Filter == null ? accountBadges : Filter.FilterQuery(accountBadges);
+            return ApplyFilters(Context.AccountBadges.Include(nameof(AccountBadgeModel.Account)).Include(nameof(AccountBadgeModel.Badge)));
         }
     }
 }

@@ -25,9 +25,7 @@ namespace ExpenseManager.Database.DataAccess.Queries
         /// <returns>IQueryable</returns>
         protected override IQueryable<CostTypeModel> GetQueryable()
         {
-            IQueryable<CostTypeModel> costTypes = Context.CostTypes;
-
-            return Filter == null ? costTypes : Filter.FilterQuery(costTypes);
+            return ApplyFilters(Context.CostTypes);
         }
     }
 }

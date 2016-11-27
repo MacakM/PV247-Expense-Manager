@@ -38,6 +38,18 @@ namespace ExpenseManager.Database.Infrastructure.Query
         /// </summary>
         internal ExpenseDbContext Context => (ExpenseDbContext)ExpenseManagerUnitOfWork.TryGetDbContext(_provider);
 
-        
+        /// <summary>
+        /// Return IQueryable.
+        /// </summary>
+        /// <returns>IQueryable</returns>
+        protected IQueryable<TResult> ApplyFilters(IQueryable<TResult> queryable)
+        {
+            if (Filters != null)
+            {
+                queryable = Filters.Aggregate(queryable, (current, filter) => filter.FilterQuery(current));
+            }
+
+            return PageAndOrderModelFilterModel == null ? queryable : PageAndOrderModelFilterModel.FilterQuery(queryable);
+        }
     }
 }

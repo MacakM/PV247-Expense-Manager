@@ -24,9 +24,7 @@ namespace ExpenseManager.Database.DataAccess.Queries
         /// <returns>IQueryable</returns>
         protected override IQueryable<AccountModel> GetQueryable()
         {
-            IQueryable<AccountModel> accounts = Context.Accounts;
-
-            return Filter == null ? accounts : Filter.FilterQuery(accounts);
+            return ApplyFilters(Context.Accounts);
         }
     }
 }

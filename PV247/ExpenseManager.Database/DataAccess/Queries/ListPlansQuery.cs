@@ -23,8 +23,7 @@ namespace ExpenseManager.Database.DataAccess.Queries
         /// <returns>IQueryable</returns>
         protected override IQueryable<PlanModel> GetQueryable()
         {
-            IQueryable<PlanModel> plans = Context.Plans.Include(nameof(PlanModel.Account)).Include(nameof(PlanModel.PlannedType));
-            return Filter == null ? plans : Filter.FilterQuery(plans);
+            return ApplyFilters(Context.Plans.Include(nameof(PlanModel.Account)).Include(nameof(PlanModel.PlannedType)));
         }
     }
 }

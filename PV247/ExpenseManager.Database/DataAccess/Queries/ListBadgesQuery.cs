@@ -25,9 +25,7 @@ namespace ExpenseManager.Database.DataAccess.Queries
         /// <returns>IQueryable</returns>
         protected override IQueryable<BadgeModel> GetQueryable()
         {
-            IQueryable<BadgeModel> badges = Context.Badges;
-
-            return Filter == null ? badges : Filter.FilterQuery(badges);
+            return ApplyFilters(Context.Badges);
         }
     }
 }
