@@ -27,7 +27,7 @@ namespace ExpenseManager.Business.Services.Implementations
 
         private readonly ListAccountsQuery _accountsQuery;
 
-        private readonly ExpenseManagerRepository<AccountModel, Guid> _accountRepository;
+        private readonly ExpenseManagerRepository<AccountBadgeModel, Guid> _accountBadgeRepository;
 
         /// <summary>
         /// Included entities
@@ -44,12 +44,12 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="repository">Repository</param>
         /// <param name="expenseManagerMapper">Mapper</param>
         /// <param name="unitOfWorkProvider">Unit of work provider</param>
-        public BadgeService(ExpenseManagerQuery<BadgeModel> query, ExpenseManagerRepository<BadgeModel, Guid> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider, ListBadgesQuery badgesQuery, ListAccountsQuery accountsQuery, ExpenseManagerRepository<AccountModel, Guid> accountRepository, IBadgeCertifierResolver certifierResolver) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
+        public BadgeService(ExpenseManagerQuery<BadgeModel> query, ExpenseManagerRepository<BadgeModel, Guid> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider, ListBadgesQuery badgesQuery, ListAccountsQuery accountsQuery, IBadgeCertifierResolver certifierResolver, ExpenseManagerRepository<AccountBadgeModel, Guid> accountBadgeRepository) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
         {
             _badgesQuery = badgesQuery;
             _accountsQuery = accountsQuery;
-            _accountRepository = accountRepository;
             _certifierResolver = certifierResolver;
+            _accountBadgeRepository = accountBadgeRepository;
         }
 
         /// <summary>
@@ -110,18 +110,21 @@ namespace ExpenseManager.Business.Services.Implementations
                 var allBadges = _badgesQuery.Execute();
                 foreach (var account in allAccounts)
                 {
-                    var initialBadgesCount = account.Badges.Count;
                     foreach (var badge in allBadges)
                     {
-                        _certifierResolver.ResolveBadgeCertifier(badge.Name)
-                            ?.CanAssignBadge(account);
-                    }
+                        var assignBadge = _certifierResolver.ResolveBadgeCertifier(badge.Name)
+                            ?.CanAssignBadge(account) ?? false;
 
-                    // perform update only if badges were added
-                    if (initialBadgesCount < account.Badges.Count)
-                    {
-                        _accountRepository.Update(account);
-                    }                  
+                        if (assignBadge)
+                        {
+                            _accountBadgeRepository.Insert(new AccountBadgeModel
+                            {
+                                Account = account,
+                                Badge = badge,
+                                Achieved = DateTime.Now
+                            });
+                        }
+                    }
                 }
                 uow.Commit();
             }

@@ -7,6 +7,9 @@ using ExpenseManager.Database.Enums;
 
 namespace ExpenseManager.Database
 {
+    /// <summary>
+    /// Demo data for ExpenseDbContext
+    /// </summary>
     public class ExpenseDbInitializer : IDatabaseInitializer<ExpenseDbContext>
     {
         public void InitializeDatabase(ExpenseDbContext context)
