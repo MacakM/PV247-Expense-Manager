@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Enums;
@@ -188,7 +186,7 @@ namespace ExpenseManager.Presentation.Controllers
 
             _balanceFacade.CreateItem(costInfo);
 
-            return RedirectToAction("Index", "AccountSettings", new { successMessage = ExpenseManagerResource.ExpenseCreated });
+            return RedirectToAction("PermanentExpensesIndex", new { successMessage = ExpenseManagerResource.ExpenseCreated });
         }
 
         #endregion
