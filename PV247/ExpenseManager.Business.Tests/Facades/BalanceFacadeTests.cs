@@ -15,6 +15,9 @@ using Assert = NUnit.Framework.Assert;
 
 namespace ExpenseManager.Business.Tests.Facades
 {
+    /// <summary>
+    /// Tests for balance facade
+    /// </summary>
     [TestFixture]
     public class BalanceFacadeTests
     {
@@ -31,8 +34,10 @@ namespace ExpenseManager.Business.Tests.Facades
                 dbContext.Database.Initialize(true);
             }
         }
-        //TODO: For Ondrej
-        /*
+        
+        /// <summary>
+        /// Test listing closeable plans
+        /// </summary>
         [Test]
         public void ListAllCloseablePlans()
         {
@@ -40,18 +45,25 @@ namespace ExpenseManager.Business.Tests.Facades
             var x = _balanceFacade.ListBadges(new BadgeFilter());
             throw new AssertFailedException();
         }
-
+        
+        /// <summary>
+        /// Check badges requirements test
+        /// </summary>
         [Test]
         public void CheckBadgesRequirements()
         {
             throw new AssertFailedException();
         }
 
+        /// <summary>
+        /// Tests recomputing periodic costs into non periodic
+        /// </summary>
         [Test]
         public void RecomputePeriodicCosts()
         {
             throw new AssertFailedException();
-        }*/
+        }
+
         /// <summary>
         /// Tests CostInfo creation.
         /// </summary>
@@ -110,8 +122,6 @@ namespace ExpenseManager.Business.Tests.Facades
         public void DeleteItemTest()
         {
             // Arrange
-            Guid accountId;
-            Guid typeId;
             Guid infoId;
             const string accountName = "ExpenseManagerAccount01";
             const string typeName = "Food";
@@ -141,8 +151,8 @@ namespace ExpenseManager.Business.Tests.Facades
                 db.Accounts.Add(account);
                 db.CostTypes.Add(type);
                 db.SaveChanges();
-                accountId = account.Id;
-                typeId = type.Id;
+                var accountId = account.Id;
+                var typeId = type.Id;
                 info.AccountId = accountId;
                 info.TypeId = typeId;
                 db.CostInfos.Add(info);
@@ -226,8 +236,6 @@ namespace ExpenseManager.Business.Tests.Facades
         public void GetItemTest()
         {
             // Arrange
-            Guid accountId;
-            Guid typeId;
             Guid infoId;
             const string accountName = "ExpenseManagerAccount01";
             const string typeName = "Food";
@@ -257,8 +265,8 @@ namespace ExpenseManager.Business.Tests.Facades
                 db.Accounts.Add(account);
                 db.CostTypes.Add(type);
                 db.SaveChanges();
-                accountId = account.Id;
-                typeId = type.Id;
+                var accountId = account.Id;
+                var typeId = type.Id;
                 info.AccountId = accountId;
                 info.TypeId = typeId;
                 db.CostInfos.Add(info);
@@ -282,9 +290,6 @@ namespace ExpenseManager.Business.Tests.Facades
             const string accountName = "ExpenseManagerAccount01";
             const string typeName1 = "Food";
             const string typeName2 = "PC";
-            Guid accountId;
-            Guid typeId1;
-            Guid typeId2;
             var account = new AccountModel
             {
                 Badges = new List<AccountBadgeModel>(),
@@ -310,9 +315,9 @@ namespace ExpenseManager.Business.Tests.Facades
                 db.CostTypes.Add(type1);
                 db.CostTypes.Add(type2);
                 db.SaveChanges();
-                accountId = account.Id;
-                typeId1 = type1.Id;
-                typeId2 = type2.Id;
+                var accountId = account.Id;
+                var typeId1 = type1.Id;
+                var typeId2 = type2.Id;
                 db.CostInfos.Add(new CostInfoModel
                 {
                     Description = "bread",
@@ -351,8 +356,6 @@ namespace ExpenseManager.Business.Tests.Facades
             const string accountName = "ExpenseManagerAccount01";
             const string typeName1 = "Food";
             const string typeName2 = "PC";
-            Guid accountId;
-            Guid typeId1;
             Guid typeId2;
             var account = new AccountModel
             {
@@ -379,8 +382,8 @@ namespace ExpenseManager.Business.Tests.Facades
                 db.CostTypes.Add(type1);
                 db.CostTypes.Add(type2);
                 db.SaveChanges();
-                accountId = account.Id;
-                typeId1 = type1.Id;
+                var accountId = account.Id;
+                var typeId1 = type1.Id;
                 typeId2 = type2.Id;
                 db.CostInfos.Add(new CostInfoModel
                 {
@@ -468,7 +471,6 @@ namespace ExpenseManager.Business.Tests.Facades
         public void DeletePlanTest()
         {
             // Arrange
-            Guid accountId;
             Guid planId;
             const string accountName = "ExpenseManagerAccount01";
             const string typeName = "Food";
@@ -499,7 +501,7 @@ namespace ExpenseManager.Business.Tests.Facades
                 db.Accounts.Add(account);
                 db.CostTypes.Add(type);
                 db.SaveChanges();
-                accountId = account.Id;
+                var accountId = account.Id;
                 plan.AccountId = accountId;
                 plan.PlannedType = type;
                 db.Plans.Add(plan);
@@ -586,9 +588,7 @@ namespace ExpenseManager.Business.Tests.Facades
         public void GetPlanTest()
         {
             // Arrange
-            Guid accountId;
             Guid planId;
-            Guid typeId;
             const string accountName = "ExpenseManagerAccount01";
             const string typeName = "Food";
             var account = new AccountModel
@@ -618,8 +618,7 @@ namespace ExpenseManager.Business.Tests.Facades
                 db.Accounts.Add(account);
                 db.CostTypes.Add(type);
                 db.SaveChanges();
-                accountId = account.Id;
-                typeId = plan.Id;
+                var accountId = account.Id;
                 plan.AccountId = accountId;
                 plan.PlannedType = type;
                 db.Plans.Add(plan);
@@ -978,6 +977,7 @@ namespace ExpenseManager.Business.Tests.Facades
             // Assert
             Assert.That(badges.Count == 2, "Badges were not listed.");
         }
+
         /// <summary>
         /// Tests whether BadgeFilter works.
         /// </summary>
@@ -1010,38 +1010,7 @@ namespace ExpenseManager.Business.Tests.Facades
             // Assert
             Assert.That(badges.Count == 1, "Badge was not listed.");
         }
-        //TODO: is it necessary?
-        /*
-        [Test]
-        public void CreateAccountBadgeTest()
-        {
-            throw new AssertFailedException();
-        }
-
-        [Test]
-        public void DeleteAccountBadgeTest()
-        {
-            throw new AssertFailedException();
-        }
-
-        [Test]
-        public void UpdateAccountBadgeTest()
-        {
-            throw new AssertFailedException();
-
-        }
-
-        [Test]
-        public void GetAccountBadgeTest()
-        {
-            throw new AssertFailedException();
-        }
-
-        [Test]
-        public void ListAccountBadgesTest()
-        {
-            throw new AssertFailedException();
-        }*/
+     
         private static BadgeModel GetBadgeByName(string badgeName)
         {
             using (
@@ -1052,6 +1021,7 @@ namespace ExpenseManager.Business.Tests.Facades
                 return db.Badges.FirstOrDefault(model => model.Name.Equals(badgeName));
             }
         }
+
         private static CostInfoModel GetItemById(Guid id)
         {
             using (
@@ -1062,6 +1032,7 @@ namespace ExpenseManager.Business.Tests.Facades
                 return db.CostInfos.Find(id);
             }
         }
+
         private static PlanModel GetPlanById(Guid id)
         {
             using (
@@ -1072,6 +1043,7 @@ namespace ExpenseManager.Business.Tests.Facades
                 return db.Plans.Find(id);
             }
         }
+
         private static CostTypeModel GetTypeByName(string typeName)
         {
             using (
@@ -1079,7 +1051,7 @@ namespace ExpenseManager.Business.Tests.Facades
                     new ExpenseDbContext(
                         Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
             {
-                return db.CostTypes.FirstOrDefault(model => model.Name.Equals(typeName)); ;
+                return db.CostTypes.FirstOrDefault(model => model.Name.Equals(typeName)); 
             }
         }
 

@@ -310,53 +310,5 @@ namespace ExpenseManager.Business.Facades
         }
 
         #endregion
-        #region AccountBadge CRUD
-        /// <summary>
-        /// Add new badge to account by creating new AccountBadge object in database
-        /// </summary>
-        /// <param name="accountBadge"></param>
-        public Guid CreateAccountBadge(AccountBadge accountBadge)
-        {
-            return _accountBadgeService.CreateAccountBadge(accountBadge);
-        }
-
-        /// <summary>
-        /// Deletes specified account badge
-        /// </summary>
-        /// <param name="accountBadgeId"></param>
-        public void DeleteAccountBadge(Guid accountBadgeId)
-        {
-            _accountBadgeService.DeleteAccountBadge(accountBadgeId);
-        }
-
-        /// <summary>
-        /// Updates existing account badge
-        /// </summary>
-        /// <param name="updatedAccountBadge"></param>
-        public void UpdateAccountBadge(AccountBadge updatedAccountBadge)
-        {
-            _accountBadgeService.UpdateAccountBadge(updatedAccountBadge);
-        }
-
-        /// <summary>
-        /// Get account badge specified by id
-        /// </summary>
-        /// <param name="accountBadgeId"></param>
-        /// <returns></returns>
-        public AccountBadge GetAccountBadge(Guid accountBadgeId)
-        {
-            return _accountBadgeService.GetAccountBadge(accountBadgeId);
-        }
-
-        /// <summary>
-        /// List filtered account badges
-        /// </summary>
-        /// <param name="filter">Filters account badgess</param>
-        /// <returns></returns>
-        public List<AccountBadge> ListAccountBadges(AccountBadgeFilter filter)
-        {
-            return _accountBadgeService.ListAccountBadges(filter);
-        } 
-        #endregion
     }
 }
