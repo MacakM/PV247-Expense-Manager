@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using AutoMapper;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Enums;
@@ -10,6 +11,7 @@ using ExpenseManager.Business.Services.Interfaces;
 using ExpenseManager.Database.Entities;
 using ExpenseManager.Database.Enums;
 using ExpenseManager.Database.Filters;
+using ExpenseManager.Database.Filters.CostInfos;
 using ExpenseManager.Database.Infrastructure.Query;
 using ExpenseManager.Database.Infrastructure.Repository;
 using Riganti.Utils.Infrastructure.Core;
@@ -158,9 +160,21 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <returns></returns>
         public decimal GetBalance(Guid accountId)
         {
-            Query.Filters = new CostInfoModelFilter { IsIncome = true, Periodicity = PeriodicityModel.None, CreatedTo = DateTime.Now, AccountId = accountId};
+            Query.Filters = new List<IFilterModel<CostInfoModel>>
+            {
+                new CostInfoModelsByIsIncome(true),
+                new CostInfoModelsByItsPeriodicity(PeriodicityModel.None),
+                new CostInfoModelsByCreatedTo(DateTime.Now),
+                new CostInfoModelsByAccountId(accountId)
+            }; 
             var incomes = GetList();
-            Query.Filters = new CostInfoModelFilter { IsIncome = false, Periodicity = PeriodicityModel.None, CreatedTo = DateTime.Now, AccountId = accountId };
+            Query.Filters = new List<IFilterModel<CostInfoModel>>
+            {
+                new CostInfoModelsByIsIncome(false),
+                new CostInfoModelsByItsPeriodicity(PeriodicityModel.None),
+                new CostInfoModelsByCreatedTo(DateTime.Now),
+                new CostInfoModelsByAccountId(accountId)
+            };
             var outcomes = GetList();
 
             return incomes.Sum(x =>  x.Money) - outcomes.Sum(x => x.Money);
@@ -168,9 +182,10 @@ namespace ExpenseManager.Business.Services.Implementations
 
         private void CheckMonthPeriodicities()
         {
-            CostInfoFilter filter = new CostInfoFilter { Periodicity = Periodicity.Month };
 
-            Query.Filter = ExpenseManagerMapper.Map<CostInfoModelFilter>(filter);
+            CostInfoModelsByItsPeriodicity filter = new CostInfoModelsByItsPeriodicity(PeriodicityModel.Month);
+
+            Query.Filters = new List<IFilterModel<CostInfoModel>> { filter };
             var monthPeriodicityCosts = GetList().ToList();
 
             foreach (var monthPeriodicity in monthPeriodicityCosts)
@@ -190,9 +205,10 @@ namespace ExpenseManager.Business.Services.Implementations
 
         private void CheckWeekPeriodicities()
         {
-            CostInfoFilter filter = new CostInfoFilter { Periodicity = Periodicity.Week };
 
-            Query.Filter = ExpenseManagerMapper.Map<CostInfoModelFilter>(filter);
+            CostInfoModelsByItsPeriodicity filter = new CostInfoModelsByItsPeriodicity(PeriodicityModel.Week);
+
+            Query.Filters = new List<IFilterModel<CostInfoModel>> { filter };
             var dayPeriodicityCosts = GetList().ToList();
 
             foreach (var weekPeriodicityCost in dayPeriodicityCosts)
@@ -212,9 +228,9 @@ namespace ExpenseManager.Business.Services.Implementations
 
         private void CheckDayPeriodicites()
         {
-            CostInfoFilter filter = new CostInfoFilter { Periodicity = Periodicity.Day };
+            CostInfoModelsByItsPeriodicity filter = new CostInfoModelsByItsPeriodicity(PeriodicityModel.Day);
 
-            Query.Filter = ExpenseManagerMapper.Map<CostInfoModelFilter>(filter);
+            Query.Filters = new List<IFilterModel<CostInfoModel>> { filter};
             var dayPeriodicityCosts = GetList().ToList();
 
             foreach (var dayPeriodicityCost in dayPeriodicityCosts)

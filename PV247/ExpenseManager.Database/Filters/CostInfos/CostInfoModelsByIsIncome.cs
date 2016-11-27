@@ -1,26 +1,25 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using ExpenseManager.Database.Entities;
 
 namespace ExpenseManager.Database.Filters.CostInfos
 {
     /// <summary>
-    /// Filters cost info by its creation time
+    /// Filters cost by its income type
     /// </summary>
-    public class CostInfoModelsByCreatedFrom : IFilterModel<CostInfoModel>
+    public class CostInfoModelsByIsIncome : IFilterModel<CostInfoModel>
     {
         /// <summary>
-        /// Left edge of created range
+        /// If cost type is income or ourcome
         /// </summary>
-        public DateTime? CreatedFrom { get; set; }
+        public bool IsIncome { get; set; }
 
         /// <summary>
-        /// Filter constructor
+        /// Filters constructor
         /// </summary>
-        /// <param name="start"></param>
-        public CostInfoModelsByCreatedFrom(DateTime? start)
+        /// <param name="isIncome"></param>
+        public CostInfoModelsByIsIncome(bool isIncome)
         {
-            CreatedFrom = start;
+            IsIncome = isIncome;
         }
 
         /// <summary>
@@ -30,7 +29,7 @@ namespace ExpenseManager.Database.Filters.CostInfos
         /// <returns></returns>
         public IQueryable<CostInfoModel> FilterQuery(IQueryable<CostInfoModel> queryable)
         {
-            return queryable.Where(costInfo => costInfo.Created >= CreatedFrom);
+            return queryable.Where(x => x.IsIncome == IsIncome);
         }
     }
 }

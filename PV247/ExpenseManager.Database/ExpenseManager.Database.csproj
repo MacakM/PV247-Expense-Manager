@@ -110,9 +110,11 @@
     <Compile Include="Filters\AccountBadges\AccountBadgeModelFilter.cs" />
     <Compile Include="Filters\Accounts\AccountModelsByName.cs" />
     <Compile Include="Filters\Badges\BadgeModelFilter.cs" />
-    <Compile Include="Filters\CostInfos\CostInfoModelFilter.cs" />
+    <Compile Include="Filters\CostInfos\CostInfoModelsByAccountId.cs" />
     <Compile Include="Filters\CostInfos\CostInfoModelsByCreatedFrom.cs" />
     <Compile Include="Filters\CostInfos\CostInfoModelsByCreatedTo.cs" />
+    <Compile Include="Filters\CostInfos\CostInfoModelsByIsIncome.cs" />
+    <Compile Include="Filters\CostInfos\CostInfoModelsByItsPeriodicity.cs" />
     <Compile Include="Filters\CostInfos\CostInfoModelsByPlannedTypeId.cs" />
     <Compile Include="Filters\CostTypes\CostTypeModelFilter.cs" />
     <Compile Include="Filters\IFilterModel.cs" />

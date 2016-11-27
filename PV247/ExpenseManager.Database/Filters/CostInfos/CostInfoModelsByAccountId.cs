@@ -5,22 +5,22 @@ using ExpenseManager.Database.Entities;
 namespace ExpenseManager.Database.Filters.CostInfos
 {
     /// <summary>
-    /// Filters cost info by its creation time
+    /// Filters by account id
     /// </summary>
-    public class CostInfoModelsByCreatedFrom : IFilterModel<CostInfoModel>
+    public class CostInfoModelsByAccountId : IFilterModel<CostInfoModel>
     {
         /// <summary>
-        /// Left edge of created range
+        /// Account id
         /// </summary>
-        public DateTime? CreatedFrom { get; set; }
+        public Guid AccountId { get; set; }
 
         /// <summary>
         /// Filter constructor
         /// </summary>
-        /// <param name="start"></param>
-        public CostInfoModelsByCreatedFrom(DateTime? start)
+        /// <param name="accountId"></param>
+        public CostInfoModelsByAccountId(Guid accountId)
         {
-            CreatedFrom = start;
+            AccountId = accountId;
         }
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace ExpenseManager.Database.Filters.CostInfos
         /// <returns></returns>
         public IQueryable<CostInfoModel> FilterQuery(IQueryable<CostInfoModel> queryable)
         {
-            return queryable.Where(costInfo => costInfo.Created >= CreatedFrom);
+            return queryable.Where(x => x.AccountId == AccountId);
         }
     }
 }

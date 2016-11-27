@@ -4,18 +4,33 @@ using ExpenseManager.Database.Entities;
 
 namespace ExpenseManager.Database.Filters.CostInfos
 {
+    /// <summary>
+    /// Filters by time of cost info creation
+    /// </summary>
     public class CostInfoModelsByCreatedTo : IFilterModel<CostInfoModel>
     {
-        private DateTime? deadline;
+        /// <summary>
+        /// Right edge of created range
+        /// </summary>
+        public DateTime CreatedTo { get; set; }
 
-        public CostInfoModelsByCreatedTo(DateTime? deadline)
+        /// <summary>
+        /// Filter constructor
+        /// </summary>
+        /// <param name="createdTo"></param>
+        public CostInfoModelsByCreatedTo(DateTime createdTo)
         {
-            this.deadline = deadline;
+            CreatedTo = createdTo;
         }
 
+        /// <summary>
+        /// Filters query
+        /// </summary>
+        /// <param name="queryable"></param>
+        /// <returns></returns>
         public IQueryable<CostInfoModel> FilterQuery(IQueryable<CostInfoModel> queryable)
         {
-            throw new NotImplementedException();
+            return queryable.Where(costInfo => costInfo.Created <= CreatedTo);
         }
     }
 }
