@@ -143,15 +143,15 @@ namespace ExpenseManager.Database
                 Money = 1000,
                 Type = costType1
             };
-
+            
             var cost6 = new CostInfoModel()
             {
                 Account = account,
-                Created = DateTime.Now,
+                Created = DateTime.UtcNow.AddDays(-50),
                 Description = "Príjem",
                 IsIncome = true,
                 Periodicity = PeriodicityModel.None,
-                Money = 2700,
+                Money = 5000,
                 Type = costType1
             };
 
@@ -162,16 +162,16 @@ namespace ExpenseManager.Database
             context.CostInfos.Add(cost5);
             context.CostInfos.Add(cost6);
 
-            for (int i = 0; i < 30; i++)
+            for (int i = 0; i < 100; i++)
             {
                 var cost = new CostInfoModel()
                 {
                     Account = account,
-                    Created = DateTime.Now,
+                    Created = Convert.ToDateTime(random.Next(1,27) + ".11.2016"),
                     Description = "Seeded expense",
-                    IsIncome = false,
+                    IsIncome = random.Next(0, 2) == 0,
                     Periodicity = PeriodicityModel.None,
-                    Money = (decimal) (random.NextDouble() * 150),
+                    Money = (decimal) (random.NextDouble() * 500),
                     Type = costType1
                 };
                 context.CostInfos.Add(cost);

@@ -23,6 +23,8 @@ namespace ExpenseManager.Business.Facades
 
         private readonly IBadgeManagerService _badgeManagerService;
 
+        private readonly IGraphService _graphService;
+
         /// <summary>
         /// Balance facade construtor
         /// </summary>
@@ -32,7 +34,15 @@ namespace ExpenseManager.Business.Facades
         /// <param name="costTypeService">Cost type service</param>
         /// <param name="planService">Plan service</param>
         /// <param name="badgeManagerService">Badge manager service</param>
-        public BalanceFacade(IAccountBadgeService accountBadgeService, IBadgeService badgeService, ICostInfoService costInfoService, ICostTypeService costTypeService, IPlanService planService, IBadgeManagerService badgeManagerService)
+        /// <param name="graphService"></param>
+        public BalanceFacade(
+            IAccountBadgeService accountBadgeService, 
+            IBadgeService badgeService, 
+            ICostInfoService costInfoService, 
+            ICostTypeService costTypeService, 
+            IPlanService planService, 
+            IBadgeManagerService badgeManagerService,
+            IGraphService graphService)
         {
             _accountBadgeService = accountBadgeService;
             _badgeService = badgeService;
@@ -40,6 +50,7 @@ namespace ExpenseManager.Business.Facades
             _costTypeService = costTypeService;
             _planService = planService;
             _badgeManagerService = badgeManagerService;
+            _graphService = graphService;
         }
 
         #region Business operations
@@ -101,6 +112,14 @@ namespace ExpenseManager.Business.Facades
         public void RecomputePeriodicCosts()
         {
             _costInfoService.RecomputePeriodicCosts();
+        }
+
+        /// <summary>
+        /// Gets data for graph in form of daily balance
+        /// </summary>
+        public List<DayTotalBalance> GetDailyBalanceGraphData(Guid accountId)
+        {
+            return _graphService.GetTotalDailyBalanceGraphData(accountId);
         }
 
         #endregion

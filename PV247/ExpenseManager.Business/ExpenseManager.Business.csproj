@@ -65,6 +65,7 @@
     <Compile Include="DataTransferObjects\CostInfo.cs" />
     <Compile Include="DataTransferObjects\CostType.cs" />
     <Compile Include="DataTransferObjects\BusinessObject.cs" />
+    <Compile Include="DataTransferObjects\DayTotalBalance.cs" />
     <Compile Include="DataTransferObjects\Enums\AccountAccessTye.cs" />
     <Compile Include="DataTransferObjects\Enums\Periodicity.cs" />
     <Compile Include="DataTransferObjects\Enums\PlanType.cs" />
@@ -91,12 +92,14 @@
     <Compile Include="Services\Implementations\CostInfoService.cs" />
     <Compile Include="Services\Implementations\CostTypeService.cs" />
     <Compile Include="Services\Implementations\BadgeManagerService..cs" />
+    <Compile Include="Services\Implementations\GraphService.cs" />
     <Compile Include="Services\Interfaces\IAccountBadgeService.cs" />
     <Compile Include="Services\Interfaces\IAccountService.cs" />
     <Compile Include="Services\Interfaces\IBadgeManagerService.cs" />
     <Compile Include="Services\Interfaces\IBadgeService.cs" />
     <Compile Include="Services\Interfaces\ICostInfoService.cs" />
     <Compile Include="Services\Interfaces\ICostTypeService.cs" />
+    <Compile Include="Services\Interfaces\IGraphService.cs" />
     <Compile Include="Services\Interfaces\IPlanService.cs" />
     <Compile Include="Services\Interfaces\IService.cs" />
     <Compile Include="Services\Interfaces\IUserService.cs" />
