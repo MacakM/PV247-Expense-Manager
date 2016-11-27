@@ -34,6 +34,9 @@ namespace ExpenseManager.Business.Tests.Facades
             }
         }
 
+        /// <summary>
+        /// Test creating new account
+        /// </summary>
         [Test]
         public void CreateAccount_NewAccount_CreatesAccount()
         {
@@ -53,6 +56,9 @@ namespace ExpenseManager.Business.Tests.Facades
             Assert.That(createdAccount != null, "Account was not created.");
         }
 
+        /// <summary>
+        /// Tests updating existing account
+        /// </summary>
         [Test]
         public void UpdateAccount_ExistingAccount_UpdatesAccountName()
         {
@@ -82,6 +88,9 @@ namespace ExpenseManager.Business.Tests.Facades
             Assert.That(updatedAccount.Name.Equals(accountName2), "Account name was not updated.");
         }
       
+        /// <summary>
+        /// Tests getting currently signer existing user
+        /// </summary>
         [Test]
         public void GetCurrentlySignedUser_ExistingUser_ReturnCorrectUser()
         {
@@ -108,6 +117,9 @@ namespace ExpenseManager.Business.Tests.Facades
             Assert.AreEqual(currentlySignedUser, user, "GetCurrentlySignedUser failed - users do not match.");
         }
  
+        /// <summary>
+        /// Test deleting an existing user
+        /// </summary>
         [Test]
         public void DeleteUser_ExistingUser_UserIsNotPresentInTheDB()
         {
@@ -140,6 +152,9 @@ namespace ExpenseManager.Business.Tests.Facades
             Assert.AreEqual(userExistsInDb, false, "DeleteUser failed - users still exists in the db.");
         }
         
+        /// <summary>
+        /// Tests getting existing user
+        /// </summary>
         [Test]
         public void GetUser_ExistingUser_ReturnCorrectUser()
         {
@@ -165,7 +180,10 @@ namespace ExpenseManager.Business.Tests.Facades
             // Assert
             Assert.AreEqual(obtainedUser, user, "GetUser failed - users do not match.");
         }
-                      
+
+        /// <summary>
+        /// Tests listing some existing users
+        /// </summary>
         [Test]
         public void ListUsers_CoupleOfExistingUsers_FiltersUser()
         {
@@ -197,6 +215,9 @@ namespace ExpenseManager.Business.Tests.Facades
             Assert.That(obtainedUsers.Count == 1 && obtainedUsers.First().AccessType == AccountAccessType.Read, "ListUsers failed - actual result does not match the expected one.");
         }
 
+        /// <summary>
+        /// Tests deleting an existing account 
+        /// </summary>
         [Test]
         public void DeleteAccount_ExistingAccount_AccountIsNotPresentInTheDB()
         {
@@ -228,6 +249,9 @@ namespace ExpenseManager.Business.Tests.Facades
             Assert.That(!accountExistsInDb, "Account was not removed.");
         }
     
+        /// <summary>
+        /// Test GetAccount method getting an existing account
+        /// </summary>
         [Test]
         public void GetAccount_ExistingAccount_ReturnCorrectAccount()
         {
@@ -252,6 +276,9 @@ namespace ExpenseManager.Business.Tests.Facades
             Assert.AreEqual(obtainedAccount, account, "GetAccount failed - accounts do not match.");
         }
 
+        /// <summary>
+        /// Tests list accounts method getting some existing ones
+        /// </summary>
         [Test]
         public void ListAccounts_CoupleOfExistingAccounts_FiltersAccount()
         {
