@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Core;
 using System.Linq;
 using ExpenseManager.Database.Filters;
@@ -15,10 +16,15 @@ namespace ExpenseManager.Database.Infrastructure.Query
         private readonly IUnitOfWorkProvider _provider;
 
         /// <summary>
-        /// Filter used to determine parameters of query
+        /// Filters used to determine parameters of query
         /// </summary>
-        protected FilterModelBase<TResult> Filter;
-        
+        public List<FilterModelBase<TResult>> Filters;
+
+        /// <summary>
+        /// Filter used for paging and filtering
+        /// </summary>
+        public PageAndOrderFilter<TResult> PageAndOrderFilter;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ExpenseManagerQuery{TResult}"/> class.
         /// </summary>

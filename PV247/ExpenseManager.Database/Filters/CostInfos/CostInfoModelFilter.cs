@@ -4,12 +4,12 @@ using ExpenseManager.Database.DataAccess.Queries;
 using ExpenseManager.Database.Entities;
 using ExpenseManager.Database.Enums;
 
-namespace ExpenseManager.Database.Filters
+namespace ExpenseManager.Database.Filters.CostInfos
 {
     /// <summary>
     /// Filter userd in queries in order to get cost infos with specifies parameters
     /// </summary>
-    public class CostInfoModelFilter : FilterModelBase<CostInfoModel>
+    public class CostInfoModelFilter : IFilter<CostInfoModel>
     {
         /// <summary>
         /// Filter of income if false, do not filter if is null
@@ -80,7 +80,7 @@ namespace ExpenseManager.Database.Filters
         /// Filters given query
         /// </summary>
         /// <param name="queryable">Query to be filtered</param>
-        public override IQueryable<CostInfoModel> FilterQuery(IQueryable<CostInfoModel> queryable)
+        public IQueryable<CostInfoModel> FilterQuery(IQueryable<CostInfoModel> queryable)
         {
             if (!string.IsNullOrEmpty(AccountName))
             {
@@ -134,21 +134,7 @@ namespace ExpenseManager.Database.Filters
             {
                 queryable = queryable.Where(costInfo => costInfo.Money <= MoneyTo.Value);
             }
-            if (OrderByDesc == null || string.IsNullOrEmpty(OrderByPropertyName))
-            {
-                return queryable;
-            }
-            System.Reflection.PropertyInfo prop = typeof(CostInfoModel).GetProperty(OrderByPropertyName);
-            if (prop == null)
-            {
-                return queryable;
-            }
-            queryable = OrderByDesc.Value ? QueryOrderByHelper.OrderByDesc(queryable, OrderByPropertyName) : QueryOrderByHelper.OrderBy(queryable, OrderByPropertyName);
-            if (PageNumber != null)
-            {
-                queryable = queryable.Skip(Math.Max(0, PageNumber.Value - 1) * PageSize);
-            }
-            return queryable.Take(PageSize);
+            return queryable;
         }
     }
 }

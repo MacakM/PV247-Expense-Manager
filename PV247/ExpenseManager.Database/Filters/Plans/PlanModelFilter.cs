@@ -4,12 +4,12 @@ using ExpenseManager.Database.DataAccess.Queries;
 using ExpenseManager.Database.Entities;
 using ExpenseManager.Database.Enums;
 
-namespace ExpenseManager.Database.Filters
+namespace ExpenseManager.Database.Filters.Plans
 {
     /// <summary>
     /// Filter userd in queries in order to get plans with specifies parameters
     /// </summary>
-    public class PlanModelFilter : FilterModelBase<PlanModel>
+    public class PlanModelFilter : IFilter<PlanModel>
     {
         /// <summary>
         /// Account id to be used in filter
@@ -85,7 +85,7 @@ namespace ExpenseManager.Database.Filters
         /// Filters given query
         /// </summary>
         /// <param name="queryable">Query to be filtered</param>
-        public override IQueryable<PlanModel> FilterQuery(IQueryable<PlanModel> queryable)
+        public IQueryable<PlanModel> FilterQuery(IQueryable<PlanModel> queryable)
         {
             if (!string.IsNullOrEmpty(AccountName))
             {
@@ -139,21 +139,7 @@ namespace ExpenseManager.Database.Filters
             {
                 queryable = queryable.Where(plan => plan.PlannedMoney <= PlannedMoneyTo.Value);
             }
-            if (OrderByDesc == null || string.IsNullOrEmpty(OrderByPropertyName))
-            {
-                return queryable;
-            }
-            System.Reflection.PropertyInfo prop = typeof(PlanModel).GetProperty(OrderByPropertyName);
-            if (prop == null)
-            {
-                return queryable;
-            }
-            queryable = OrderByDesc.Value ? QueryOrderByHelper.OrderByDesc(queryable, OrderByPropertyName) : QueryOrderByHelper.OrderBy(queryable, OrderByPropertyName);
-            if (PageNumber != null)
-            {
-                queryable = queryable.Skip(Math.Max(0, PageNumber.Value - 1) * PageSize);
-            }
-            return queryable.Take(PageSize);
+            return queryable;
         }
     }
 }

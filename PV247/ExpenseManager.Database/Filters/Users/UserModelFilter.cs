@@ -4,12 +4,12 @@ using ExpenseManager.Database.DataAccess.Queries;
 using ExpenseManager.Database.Entities;
 using ExpenseManager.Database.Enums;
 
-namespace ExpenseManager.Database.Filters
+namespace ExpenseManager.Database.Filters.Users
 {
     /// <summary>
     /// Filter userd in queries in order to get users with specifies parameters
     /// </summary>
-    public class UserModelFilter : FilterModelBase<UserModel>
+    public class UserModelFilter : IFilter<UserModel>
     {
         /// <summary>
         /// Specifies users name to filter with
@@ -45,7 +45,7 @@ namespace ExpenseManager.Database.Filters
         /// Filters given query
         /// </summary>
         /// <param name="queryable">Query to be filtered</param>
-        public override IQueryable<UserModel> FilterQuery(IQueryable<UserModel> queryable)
+        public IQueryable<UserModel> FilterQuery(IQueryable<UserModel> queryable)
         {
             if (AccountId != null)
             {
@@ -67,21 +67,7 @@ namespace ExpenseManager.Database.Filters
             {
                 queryable = queryable.Where(user => user.AccessType == AccessType.Value);
             }
-            if (OrderByDesc == null || string.IsNullOrEmpty(OrderByPropertyName))
-            {
-                return queryable;
-            }
-            System.Reflection.PropertyInfo prop = typeof(UserModel).GetProperty(OrderByPropertyName);
-            if (prop == null)
-            {
-                return queryable;
-            }
-            queryable = OrderByDesc.Value ? QueryOrderByHelper.OrderByDesc(queryable, OrderByPropertyName) : QueryOrderByHelper.OrderBy(queryable, OrderByPropertyName);
-            if (PageNumber != null)
-            {
-                queryable = queryable.Skip(Math.Max(0, PageNumber.Value - 1) * PageSize);
-            }
-            return queryable.Take(PageSize);
+            return queryable;
         }
     }
 }

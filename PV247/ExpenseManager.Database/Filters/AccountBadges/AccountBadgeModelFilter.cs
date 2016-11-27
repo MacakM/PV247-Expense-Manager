@@ -3,12 +3,12 @@ using System.Linq;
 using ExpenseManager.Database.DataAccess.Queries;
 using ExpenseManager.Database.Entities;
 
-namespace ExpenseManager.Database.Filters
+namespace ExpenseManager.Database.Filters.AccountBadges
 {
     /// <summary>
     /// Filter userd in queries in order to get account badges with specifies parameters
     /// </summary>
-    public class AccountBadgeModelFilter : FilterModelBase<AccountBadgeModel>
+    public class AccountBadgeModelFilter : IFilter<AccountBadgeModel>
     {
         /// <summary>
         /// Account id to be filtered with
@@ -49,7 +49,7 @@ namespace ExpenseManager.Database.Filters
         /// Filters given query
         /// </summary>
         /// <param name="queryable">Query to be filtered</param>
-        public override IQueryable<AccountBadgeModel> FilterQuery(IQueryable<AccountBadgeModel> queryable)
+        public IQueryable<AccountBadgeModel> FilterQuery(IQueryable<AccountBadgeModel> queryable)
         {
             if (AccountId != null)
             {
@@ -75,22 +75,7 @@ namespace ExpenseManager.Database.Filters
             {
                 queryable = queryable.Where(plan => plan.Achieved <= AchievedTo.Value);
             }
-            if (OrderByDesc == null || string.IsNullOrEmpty(OrderByPropertyName))
-            {
-                return queryable;
-            }
-
-            System.Reflection.PropertyInfo prop = typeof(AccountBadgeModel).GetProperty(OrderByPropertyName);
-            if (prop == null)
-            {
-                return queryable;
-            }
-            queryable = OrderByDesc.Value ? QueryOrderByHelper.OrderByDesc(queryable, OrderByPropertyName) : QueryOrderByHelper.OrderBy(queryable, OrderByPropertyName);
-            if (PageNumber != null)
-            {
-                queryable = queryable.Skip(Math.Max(0, PageNumber.Value - 1) * PageSize);
-            }
-            return queryable.Take(PageSize);
+            return queryable;
         }
     }
 }
