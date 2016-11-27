@@ -2,12 +2,18 @@
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Filters;
 using ExpenseManager.Business.DataTransferObjects.Filters.Accounts;
+using ExpenseManager.Business.DataTransferObjects.Filters.Badges;
 using ExpenseManager.Business.DataTransferObjects.Filters.CostInfos;
+using ExpenseManager.Business.DataTransferObjects.Filters.CostTypes;
+using ExpenseManager.Business.DataTransferObjects.Filters.Plans;
 using ExpenseManager.Business.DataTransferObjects.Filters.Users;
 using ExpenseManager.Database.Entities;
 using ExpenseManager.Database.Filters;
 using ExpenseManager.Database.Filters.Accounts;
+using ExpenseManager.Database.Filters.Badges;
 using ExpenseManager.Database.Filters.CostInfos;
+using ExpenseManager.Database.Filters.CostTypes;
+using ExpenseManager.Database.Filters.Plans;
 using ExpenseManager.Database.Filters.Users;
 
 namespace ExpenseManager.Business.Infrastructure.Mapping.Profiles
@@ -64,6 +70,24 @@ namespace ExpenseManager.Business.Infrastructure.Mapping.Profiles
             CreateMap<CostInfosByItsPeriodicity, CostInfoModelsByItsPeriodicity>()
              .ReverseMap();
 
+            CreateMap<CostInfosByAccountId, CostInfoModelsByAccountId>()
+            .ReverseMap();
+
+            CreateMap<CostInfosByCreatedFrom, CostInfoModelsByCreatedFrom>()
+             .ReverseMap();
+
+            CreateMap<CostInfosByCreatedTo, CostInfoModelsByCreatedTo>()
+             .ReverseMap();
+
+            CreateMap<CostInfosByMoneyFrom, CostInfoModelsByMoneyFrom>()
+             .ReverseMap();
+
+            CreateMap<CostInfosByMoneyTo, CostInfoModelsByMoneyTo>()
+            .ReverseMap();
+
+            CreateMap<CostInfosByTypeId, CostInfoModelsByPlannedTypeId>()
+           .ReverseMap();
+
             CreateMap<AccountsByName, AccountModelsByName>()
              .ReverseMap();
 
@@ -82,7 +106,19 @@ namespace ExpenseManager.Business.Infrastructure.Mapping.Profiles
             CreateMap<UsersByAccessType, UserModelsByAccessType>()
              .ReverseMap();
 
-            CreateMap<CostInfosByTypeId, CostInfoModelsByPlannedTypeId>()
+            CreateMap<AccountsByName, AccountModelsByName>()
+            .ReverseMap();
+
+            CreateMap<BadgesByName, BadgeModelsByName>()
+             .ReverseMap();
+            
+            CreateMap<CostTypesByName, CostTypeModelsByName>()
+            .ReverseMap();
+
+            CreateMap<PlansByAccountId, PlanModelsByAccountId>()
+             .ReverseMap();
+
+            CreateMap<IFilter<User>, IFilterModel<UserModel>>()
              .ReverseMap();
         }
     }
