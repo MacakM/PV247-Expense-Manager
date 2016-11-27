@@ -5,7 +5,7 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.Users
     /// <summary>
     /// Filter query by access type
     /// </summary>
-    public class UserByAccessType : IFilter<User>
+    public class UsersByAccessType : IFilter<User>
     {
         /// <summary>
         /// Specifies users access type to filter with
@@ -16,7 +16,7 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.Users
         /// Filter constructor
         /// </summary>
         /// <param name="accessType">Access type to be used in filter</param>
-        public UserByAccessType(AccountAccessType accessType)
+        public UsersByAccessType(AccountAccessType accessType)
         {
             AccessType = accessType;
         }

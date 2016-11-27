@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using AutoMapper;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Filters;
+using ExpenseManager.Business.DataTransferObjects.Filters.Plans;
 using ExpenseManager.Business.Facades;
+using ExpenseManager.Database.Filters.Plans;
 using ExpenseManager.Presentation.Authentication;
 using ExpenseManager.Presentation.Models.Plan;
 using Microsoft.AspNetCore.Authorization;
@@ -57,12 +59,12 @@ namespace ExpenseManager.Presentation.Controllers
 
         private List<PlanViewModel> GetAllPlans(Account account)
         {
-            var allPlansFilter = new PlanFilter()
+            var allPlansFilters = new List<IFilter<Plan>>
             {
-                AccountId = account.Id
+                new PlansByAccountId(account.Id)
             };
 
-            var allPlans = _balanceFacade.ListPlans(allPlansFilter);
+            var allPlans = _balanceFacade.ListPlans(allPlansFilters, null);
             return Mapper.Map<List<PlanViewModel>>(allPlans);
         }
 
@@ -135,7 +137,7 @@ namespace ExpenseManager.Presentation.Controllers
 
         private List<Models.CostType.IndexViewModel> GetAllCostTypes()
         {
-            var costTypes = _balanceFacade.ListItemTypes(null);
+            var costTypes = _balanceFacade.ListItemTypes(null,null);
             var costTypeViewModels = Mapper.Map<List<Models.CostType.IndexViewModel>>(costTypes);
             return costTypeViewModels;
         }

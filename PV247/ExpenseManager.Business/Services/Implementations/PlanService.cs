@@ -237,12 +237,13 @@ namespace ExpenseManager.Business.Services.Implementations
                 var maxSpendPlans = GetList();
                 foreach (var plan in maxSpendPlans) // CHECK EVERY MAX SPEND PLAN THAT IS NO COMPLETED YET, REACHED ITS DEADLINE
                 {
-                    _costInfosQuery.Filters = new List<IFilterModel<CostInfoModel>> // USES EVERY COST OF PLANNED TYPE FROM START TO DEADLINE
-                    {
-                        new CostInfoModelsByPlannedTypeId(plan.PlannedTypeId),
-                        new CostInfoModelsByCreatedFrom(plan.Start),
-                        new CostInfoModelsByCreatedTo(plan.Deadline)
-                    };
+                    if (plan.Deadline != null)
+                        _costInfosQuery.Filters = new List<IFilterModel<CostInfoModel>> // USES EVERY COST OF PLANNED TYPE FROM START TO DEADLINE
+                        {
+                            new CostInfoModelsByPlannedTypeId(plan.PlannedTypeId),
+                            new CostInfoModelsByCreatedFrom(plan.Start),
+                            new CostInfoModelsByCreatedTo(plan.Deadline.Value)
+                        };
                     var costInfos = _costInfosQuery.Execute();
                     if (costInfos.Sum(x => x.Money) <= plan.PlannedMoney)
                     {
