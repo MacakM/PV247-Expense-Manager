@@ -5,6 +5,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpenseManager.Database", "ExpenseManager.Database\ExpenseManager.Database.csproj", "{DC7D8469-E72E-46B6-9D12-F5102EFD49B1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{C6D43C3E-DEE1-4842-9B97-37A3ADB0E030}"
+	ProjectSection(SolutionItems) = preProject
+		ExpenseManager.Presentation\web.config = ExpenseManager.Presentation\web.config
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpenseManager.Business.Tests", "ExpenseManager.Business.Tests\ExpenseManager.Business.Tests.csproj", "{6D1E497F-9091-421A-B79E-AA49896AED32}"
 EndProject
