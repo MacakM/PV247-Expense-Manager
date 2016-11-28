@@ -13,6 +13,13 @@
         "../packages/System.Reflection.4.1.0/lib/net462/System.Reflection.dll": {},
         "../packages/System.Runtime.Extensions.4.1.0/lib/net462/System.Runtime.Extensions.dll": {},
         "bin/Debug/ExpenseManager.Business.dll": {}
+      },
+      "contentFiles": {
+        "bin/Debug/ExpenseManager.Business.pdb": {
+          "buildAction": "None",
+          "codeLanguage": "any",
+          "copyToOutput": true
+        }
       }
     },
     "ExpenseManager.Database/1.0.0": {
