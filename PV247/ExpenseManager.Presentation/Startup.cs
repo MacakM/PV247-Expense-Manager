@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using AutoMapper;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Enums;
@@ -7,6 +8,8 @@ using ExpenseManager.Business.Infrastructure;
 using ExpenseManager.Business.Infrastructure.Mapping.Profiles;
 using ExpenseManager.Business.Services.Implementations;
 using ExpenseManager.Business.Services.Interfaces;
+using ExpenseManager.Business.Utilities.BadgeCertification;
+using ExpenseManager.Business.Utilities.BadgeCertification.BadgeCertifiers;
 using ExpenseManager.Database.DataAccess.Queries;
 using ExpenseManager.Database.DataAccess.Repositories;
 using ExpenseManager.Database.Entities;
@@ -24,6 +27,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using NuGet.Packaging;
 using Riganti.Utils.Infrastructure.Core;
 
 namespace ExpenseManager.Presentation
@@ -157,6 +161,8 @@ namespace ExpenseManager.Presentation
                     return config.CreateMapper();
             });
 
+            services.AddSingleton<IBadgeCertifierResolver, BadgeCertifierResolver>();
+
             // Register all repositories
             services.AddTransient<ExpenseManagerRepository<BadgeModel, Guid>, BadgeRepository>();
             services.AddTransient<BadgeRepository>();
@@ -226,6 +232,8 @@ namespace ExpenseManager.Presentation
 
             // Presentation layer
             services.AddTransient<ICurrentAccountProvider, CurrentAccountProvider>();
+
+
         }
     }
 }

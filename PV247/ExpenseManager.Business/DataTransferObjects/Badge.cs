@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ExpenseManager.Business.DataTransferObjects
 {
@@ -17,10 +18,12 @@ namespace ExpenseManager.Business.DataTransferObjects
         /// Badge image uri.
         /// </summary>
         public string BadgeImgUri { get; set; }
-       
+
         /// <summary>
-        /// Name of Badge
+        /// Name of Badge should be in PascalCase 
+        /// with alpha characters only
         /// </summary>
+        [RegularExpression("^[a-zA-Z]*$")]
         public string Name { get; set; }
         
         /// <summary>

@@ -6,11 +6,17 @@ using ExpenseManager.Database.Entities;
 [assembly: InternalsVisibleTo("ExpenseManager.Business.Tests")]
 namespace ExpenseManager.Database
 {
-    internal class ExpenseDbContext : DbContext
+    public class ExpenseDbContext : DbContext
     {
-        public ExpenseDbContext(DbConnection connection) : base(connection, true) { }
+        public ExpenseDbContext(DbConnection connection) : base(connection, true)
+        {
+            System.Data.Entity.Database.SetInitializer(new ExpenseDbInitializer());
+        }
 
-        public ExpenseDbContext(string nameOrConnectionString) : base(nameOrConnectionString) { }
+        public ExpenseDbContext(string nameOrConnectionString) : base(nameOrConnectionString)
+        {
+            System.Data.Entity.Database.SetInitializer(new ExpenseDbInitializer());
+        }
 
         public DbSet<BadgeModel> Badges { get; set; }
 

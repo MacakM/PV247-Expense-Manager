@@ -1,49 +1,38 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using ExpenseManager.Database.Entities;
 using ExpenseManager.Database.Enums;
 
 namespace ExpenseManager.Database
 {
     /// <summary>
-    /// Initializer
+    /// Demo data for ExpenseDbContext
     /// </summary>
-    internal class TestSeedingInitializer : IDatabaseInitializer<ExpenseDbContext>
+    public class ExpenseDbInitializer : IDatabaseInitializer<ExpenseDbContext>
     {
-        /// <summary>
-        /// Initialize database
-        /// </summary>
-        /// <param name="context">context</param>
         public void InitializeDatabase(ExpenseDbContext context)
         {
-            Seed(context);
-        }
-
-        /// <summary>
-        /// Seed
-        /// </summary>
-        /// <param name="context">context</param>
-        protected void Seed(ExpenseDbContext context)
-        {
             TruncateDB(context);
-            
-            var badge2 = new BadgeModel()
+
+            context.Users.AddOrUpdate(new UserModel { Name = "Demo user", Email = "demo@demo.com" });
+
+            context.Badges.AddOrUpdate(new BadgeModel
             {
-                Name = "Officer",
-                BadgeImgUri = "mmm",
-                Description = "Buy donuts"
-            };
+                Accounts = new List<AccountBadgeModel>(),
+                BadgeImgUri = "badge.png",
+                Name = "PassionatePennyPincher",
+                Description = "Save >=20k CZK within all completed plans"
+            });
 
-            context.Badges.Add(badge2);
-
-            var badge = new BadgeModel()
+            context.Badges.AddOrUpdate(new BadgeModel
             {
-                Name = "Survivor",
-                BadgeImgUri = "hmm",
-                Description = "I will survive"
-            };
-
-            context.Badges.Add(badge);
+                Accounts = new List<AccountBadgeModel>(),
+                BadgeImgUri = "badge.png",
+                Name = "PlanCompleter",
+                Description = "Complete at least 5 plans"
+            });
 
             Random random = new Random();
 
@@ -52,7 +41,7 @@ namespace ExpenseManager.Database
                 Name = "testerAccount"
             };
 
-            context.Accounts.Add(account);
+            context.Accounts.AddOrUpdate(account);
 
             var user = new UserModel()
             {
@@ -62,7 +51,7 @@ namespace ExpenseManager.Database
                 Account = account
             };
 
-            context.Users.Add(user);
+            context.Users.AddOrUpdate(user);
 
             var user2 = new UserModel()
             {
@@ -70,7 +59,7 @@ namespace ExpenseManager.Database
                 Email = "tester2@email.com",
             };
 
-            context.Users.Add(user2);
+            context.Users.AddOrUpdate(user2);
 
             var costType1 = new CostTypeModel()
             {
@@ -82,8 +71,8 @@ namespace ExpenseManager.Database
                 Name = "Zábava"
             };
 
-            context.CostTypes.Add(costType1);
-            context.CostTypes.Add(costType2);
+            context.CostTypes.AddOrUpdate(costType1);
+            context.CostTypes.AddOrUpdate(costType2);
 
             var cost1 = new CostInfoModel()
             {
@@ -139,35 +128,35 @@ namespace ExpenseManager.Database
                 Money = 1000,
                 Type = costType1
             };
-            
+
             var cost6 = new CostInfoModel()
             {
                 Account = account,
-                Created = DateTime.UtcNow.AddDays(-50),
+                Created = DateTime.Now,
                 Description = "Príjem",
                 IsIncome = true,
                 Periodicity = PeriodicityModel.None,
-                Money = 5000,
+                Money = 2700,
                 Type = costType1
             };
 
-            context.CostInfos.Add(cost1);
-            context.CostInfos.Add(cost2);
-            context.CostInfos.Add(cost3);
-            context.CostInfos.Add(cost4);
-            context.CostInfos.Add(cost5);
-            context.CostInfos.Add(cost6);
+            context.CostInfos.AddOrUpdate(cost1);
+            context.CostInfos.AddOrUpdate(cost2);
+            context.CostInfos.AddOrUpdate(cost3);
+            context.CostInfos.AddOrUpdate(cost4);
+            context.CostInfos.AddOrUpdate(cost5);
+            context.CostInfos.AddOrUpdate(cost6);
 
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 30; i++)
             {
                 var cost = new CostInfoModel()
                 {
                     Account = account,
-                    Created = Convert.ToDateTime(random.Next(1,27) + ".11.2016"),
+                    Created = DateTime.Now,
                     Description = "Seeded expense",
-                    IsIncome = random.Next(0, 2) == 0,
+                    IsIncome = false,
                     Periodicity = PeriodicityModel.None,
-                    Money = (decimal) (random.NextDouble() * 500),
+                    Money = (decimal)(random.NextDouble() * 150),
                     Type = costType1
                 };
                 context.CostInfos.Add(cost);
@@ -176,8 +165,8 @@ namespace ExpenseManager.Database
             var plan1 = new PlanModel()
             {
                 Account = account,
-                Start = Convert.ToDateTime("22.11.2016"),
-                Deadline = Convert.ToDateTime("24.12.2016"),
+                Start = DateTime.ParseExact("22/11/2016", "dd/MM/yyyy", null),
+                Deadline = DateTime.ParseExact("24/12/2016", "dd/MM/yyyy", null),
                 Description = "Ušetriť na rohlík",
                 IsCompleted = false,
                 PlannedMoney = 100,
@@ -188,8 +177,8 @@ namespace ExpenseManager.Database
             var plan2 = new PlanModel()
             {
                 Account = account,
-                Start = Convert.ToDateTime("15.11.2016"),
-                Deadline = Convert.ToDateTime("20.11.2016"),
+                Start = DateTime.ParseExact("15/11/2016", "dd/MM/yyyy", null),
+                Deadline = DateTime.ParseExact("20/11/2016", "dd/MM/yyyy", null),
                 Description = "Ušetriť na Škodovku",
                 IsCompleted = false,
                 PlannedMoney = 5200,
@@ -200,8 +189,8 @@ namespace ExpenseManager.Database
             var plan3 = new PlanModel()
             {
                 Account = account,
-                Start = Convert.ToDateTime("22.11.2016"),
-                Deadline = Convert.ToDateTime("24.12.2016"),
+                Start = DateTime.ParseExact("22/11/2016", "dd/MM/yyyy", null),
+                Deadline = DateTime.ParseExact("24/12/2016", "dd/MM/yyyy", null),
                 Description = "Nemíňať na jedlo",
                 IsCompleted = false,
                 PlannedMoney = 2000,
@@ -212,8 +201,8 @@ namespace ExpenseManager.Database
             var plan4 = new PlanModel()
             {
                 Account = account,
-                Start = Convert.ToDateTime("11.10.2016"),
-                Deadline = Convert.ToDateTime("15.10.2016"),
+                Start = DateTime.ParseExact("11/10/2016", "dd/MM/yyyy", null),
+                Deadline = DateTime.ParseExact("15/10/2016", "dd/MM/yyyy", null),
                 Description = "Ušetrené na niečo",
                 IsCompleted = true,
                 PlannedMoney = 2000,
@@ -224,8 +213,8 @@ namespace ExpenseManager.Database
             var plan5 = new PlanModel()
             {
                 Account = account,
-                Start = Convert.ToDateTime("15.11.2016"),
-                Deadline = Convert.ToDateTime("24.12.2016"),
+                Start = DateTime.ParseExact("15/11/2016", "dd/MM/yyyy", null),
+                Deadline = DateTime.ParseExact("24/12/2016", "dd/MM/yyyy", null),
                 Description = "Ušetriť na Škodovku",
                 IsCompleted = false,
                 PlannedMoney = 3200,
@@ -233,11 +222,13 @@ namespace ExpenseManager.Database
                 PlanType = PlanTypeModel.Save
             };
 
-            context.Plans.Add(plan1);
-            context.Plans.Add(plan2);
-            context.Plans.Add(plan3);
-            context.Plans.Add(plan4);
-            context.Plans.Add(plan5);
+            context.Plans.AddOrUpdate(plan1);
+            context.Plans.AddOrUpdate(plan2);
+            context.Plans.AddOrUpdate(plan3);
+            context.Plans.AddOrUpdate(plan4);
+            context.Plans.AddOrUpdate(plan5);
+
+            context.CostTypes.AddOrUpdate(new CostTypeModel {CostInfoList = new List<CostInfoModel>(), Name = "Food"});
 
             context.SaveChanges();
         }
@@ -247,8 +238,8 @@ namespace ExpenseManager.Database
             DeleteAll<PlanModel>(context);
             DeleteAll<CostInfoModel>(context);
             DeleteAll<CostTypeModel>(context);
-            DeleteAll<UserModel>(context);
-            DeleteAll<AccountModel>(context);
+            //DeleteAll<UserModel>(context);
+            //DeleteAll<AccountModel>(context);
             DeleteAll<BadgeModel>(context);
         }
 
