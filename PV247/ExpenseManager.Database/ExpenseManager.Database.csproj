@@ -108,14 +108,6 @@
     <Compile Include="Enums\PlanTypeModel.cs" />
     <Compile Include="ExpenseDbContext.cs" />
     <Compile Include="ExpenseDbInitializer.cs" />
-    <Compile Include="Filters\AccountBadgeModelFilter.cs" />
-    <Compile Include="Filters\AccountModelFilter.cs" />
-    <Compile Include="Filters\BadgeModelFilter.cs" />
-    <Compile Include="Filters\CostInfoModelFilter.cs" />
-    <Compile Include="Filters\CostTypeModelFilter.cs" />
-    <Compile Include="Filters\FilterModelBase.cs" />
-    <Compile Include="Filters\PlanModelFilter.cs" />
-    <Compile Include="Filters\UserModelFilter.cs" />
     <Compile Include="Infrastructure\ConnectionConfiguration\ConnectionOptions.cs" />
     <Compile Include="Infrastructure\Query\ExpenseManagerQuery.cs" />
     <Compile Include="Infrastructure\Repository\ExpenseManagerRepository.cs" />
@@ -135,6 +127,9 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Filters\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

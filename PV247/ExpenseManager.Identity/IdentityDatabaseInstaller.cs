@@ -16,8 +16,12 @@ namespace ExpenseManager.Identity
         /// <param name="connectionString">Connection string</param>
         public static void Install(IServiceCollection services, string connectionString)
         {
-            services.AddDbContext<IdentityDbContext>(builder => builder.UseSqlServer(connectionString)).BuildServiceProvider();
-
+            services.AddDbContext<IdentityDbContext>(builder => 
+            builder.UseSqlServer(
+                connectionString, 
+                sqlServerOptionsAction => 
+                sqlServerOptionsAction.MigrationsAssembly("ExpenseManager.DataInitialization")))
+                .BuildServiceProvider();
             services.AddIdentity<Entities.ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<IdentityDbContext>()
                 .AddDefaultTokenProviders();
