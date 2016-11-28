@@ -37,7 +37,8 @@ namespace ExpenseManager.Business.Services.Implementations
         /// </summary>
         public void CheckBadgesRequirements()
         {
-            _accountsQuery.Filter = null; 
+            _accountsQuery.Filters = null;
+            _accountsQuery.PageAndOrderModelFilterModel = null;
             foreach (var account in _accountsQuery.Execute())
             {
                 var badges = GetBadgesForAccount(account);
@@ -64,7 +65,8 @@ namespace ExpenseManager.Business.Services.Implementations
         private List<BadgeModel> GetBadgesForAccount(AccountModel account)
         {
             List<BadgeModel> badges = new List<BadgeModel>();
-            _badgesQuery.Filter = null;
+            _badgesQuery.Filters = null;
+            _badgesQuery.PageAndOrderModelFilterModel = null;
             foreach (var badge in _badgesQuery.Execute())
             {
                 if (AccountDeservesBadge(account, badge))

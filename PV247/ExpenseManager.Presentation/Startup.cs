@@ -194,6 +194,8 @@ namespace ExpenseManager.Presentation
             services.AddTransient<ListPlansQuery>();
             services.AddTransient<ExpenseManagerQuery<UserModel>, ListUsersQuery>();
             services.AddTransient<ListUsersQuery>();
+
+            services.AddTransient<BalancesGroupedByDayQuery>();
             //TODO add more query objects
 
             // Register all services
@@ -219,6 +221,8 @@ namespace ExpenseManager.Presentation
             services.AddTransient<IUserService, UserService>();
             
             services.AddTransient<IBadgeManagerService, BadgeManagerService>();
+
+            services.AddTransient<IGraphService, GraphService>();
             //TODO add more services
 
             // Register all facades

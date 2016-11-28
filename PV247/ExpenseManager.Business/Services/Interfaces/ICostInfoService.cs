@@ -38,9 +38,10 @@ namespace ExpenseManager.Business.Services.Interfaces
         /// <summary>
         /// List cost types based on filter
         /// </summary>
-        /// <param name="filter">Filters cost infos</param>
+        /// <param name="filters">Filters cost infos</param>
+        /// <param name="pageAndOrder"></param>
         /// <returns>List of cost infos</returns>
-        List<CostInfo> ListCostInfos(CostInfoFilter filter);
+        List<CostInfo> ListCostInfos(List<Filter<CostInfo>> filters, PageAndOrderFilter pageAndOrder);
 
         /// <summary>
         /// Recompute periodic costs and make them as new cost infos
@@ -51,7 +52,7 @@ namespace ExpenseManager.Business.Services.Interfaces
         /// Gets the count of rows in database filtered by filter
         /// Used for pagination
         /// </summary>
-        int GetCostInfosCount(CostInfoFilter filter);
+        int GetCostInfosCount(List<Filter<CostInfo>> filters, PageAndOrderFilter pageAndOrder);
 
         ///<summary>
         /// Returns balance of aacount

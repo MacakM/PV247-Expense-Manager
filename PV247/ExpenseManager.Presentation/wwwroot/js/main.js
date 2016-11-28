@@ -33,6 +33,8 @@
     $(".success-message").delay(3000).fadeOut();
 
 
+    $(".income-switch").bootstrapSwitch();
+
     // AccountSettings/Index
     $(".change-income")
         .click(function() {

@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using ExpenseManager.Database.Entities;
+using ExpenseManager.Database.Filters;
 using ExpenseManager.Database.Infrastructure.Query;
 using Riganti.Utils.Infrastructure.Core;
 
@@ -24,9 +25,7 @@ namespace ExpenseManager.Database.DataAccess.Queries
         /// <returns>IQueryable</returns>
         protected override IQueryable<BadgeModel> GetQueryable()
         {
-            IQueryable<BadgeModel> badges = Context.Badges;
-
-            return Filter == null ? badges : Filter.FilterQuery(badges);
+            return ApplyFilters(Context.Badges);
         }
     }
 }

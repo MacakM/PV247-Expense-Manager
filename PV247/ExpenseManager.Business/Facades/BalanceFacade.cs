@@ -23,6 +23,8 @@ namespace ExpenseManager.Business.Facades
 
         private readonly IBadgeManagerService _badgeManagerService;
 
+        private readonly IGraphService _graphService;
+
         /// <summary>
         /// Balance facade construtor
         /// </summary>
@@ -32,7 +34,15 @@ namespace ExpenseManager.Business.Facades
         /// <param name="costTypeService">Cost type service</param>
         /// <param name="planService">Plan service</param>
         /// <param name="badgeManagerService">Badge manager service</param>
-        public BalanceFacade(IAccountBadgeService accountBadgeService, IBadgeService badgeService, ICostInfoService costInfoService, ICostTypeService costTypeService, IPlanService planService, IBadgeManagerService badgeManagerService)
+        /// <param name="graphService"></param>
+        public BalanceFacade(
+            IAccountBadgeService accountBadgeService, 
+            IBadgeService badgeService, 
+            ICostInfoService costInfoService, 
+            ICostTypeService costTypeService, 
+            IPlanService planService, 
+            IBadgeManagerService badgeManagerService,
+            IGraphService graphService)
         {
             _accountBadgeService = accountBadgeService;
             _badgeService = badgeService;
@@ -40,6 +50,7 @@ namespace ExpenseManager.Business.Facades
             _costTypeService = costTypeService;
             _planService = planService;
             _badgeManagerService = badgeManagerService;
+            _graphService = graphService;
         }
 
         #region Business operations
@@ -103,6 +114,14 @@ namespace ExpenseManager.Business.Facades
             _costInfoService.RecomputePeriodicCosts();
         }
 
+        /// <summary>
+        /// Gets data for graph in form of daily balance
+        /// </summary>
+        public List<DayTotalBalance> GetDailyBalanceGraphData(Guid accountId)
+        {
+            return _graphService.GetTotalDailyBalanceGraphData(accountId);
+        }
+
         #endregion
         #region CostInfo CRUD
         /// <summary>
@@ -145,22 +164,24 @@ namespace ExpenseManager.Business.Facades
         /// <summary>
         /// List cost types based on filter
         /// </summary>
-        /// <param name="filter">Filters cost infos</param>
+        /// <param name="filters">Filters cost infos</param>
+        /// <param name="pageAndOrder"></param>
         /// <returns>List of cost infos</returns>
-        public List<CostInfo> ListItems(CostInfoFilter filter)
+        public List<CostInfo> ListItems(List<Filter<CostInfo>> filters, PageAndOrderFilter pageAndOrder)
         {
-            return _costInfoService.ListCostInfos(filter);
+            return _costInfoService.ListCostInfos(filters, pageAndOrder);
         }
 
         /// <summary>
         /// Gets the count of rows in database filtered by filter
         /// Used for pagination
         /// </summary>
-        /// <param name="filter"></param>
+        /// <param name="filters"></param>
+        /// <param name="pageAndOrder"></param>
         /// <returns></returns>
-        public int GetCostInfosCount(CostInfoFilter filter)
+        public int GetCostInfosCount(List<Filter<CostInfo>> filters, PageAndOrderFilter pageAndOrder)
         {
-            return _costInfoService.GetCostInfosCount(filter);
+            return _costInfoService.GetCostInfosCount(filters, pageAndOrder);
         }
 
         #endregion
@@ -204,11 +225,12 @@ namespace ExpenseManager.Business.Facades
         /// <summary>
         /// Lists all plans that match filters criterias
         /// </summary>
-        /// <param name="filter">Filters plans</param>
+        /// <param name="filters">Filters plans</param>
+        /// <param name="pageAndOrder"></param>
         /// <returns></returns>
-        public List<Plan> ListPlans(PlanFilter filter)
+        public List<Plan> ListPlans(List<Filter<Plan>> filters, PageAndOrderFilter pageAndOrder)
         {
-            return _planService.ListPlans(filter);
+            return _planService.ListPlans(filters, pageAndOrder);
         }
 
         #endregion
@@ -253,11 +275,12 @@ namespace ExpenseManager.Business.Facades
         /// <summary>
         /// List cost types specified by filter
         /// </summary>
-        /// <param name="filter">Filters cost types</param>
+        /// <param name="filters">Filters cost types</param>
+        /// <param name="pageAndOrder"></param>
         /// <returns>List of cost typer</returns>
-        public List<CostType> ListItemTypes(CostTypeFilter filter)
+        public List<CostType> ListItemTypes(List<Filter<CostType>> filters, PageAndOrderFilter pageAndOrder)
         {
-            return _costTypeService.ListCostTypes(filter);
+            return _costTypeService.ListCostTypes(filters, pageAndOrder);
         }
 
         #endregion
@@ -302,11 +325,12 @@ namespace ExpenseManager.Business.Facades
         /// <summary>
         /// Lists filtered badges
         /// </summary>
-        /// <param name="filter">Filters badges</param>
+        /// <param name="filters">Filters badges</param>
+        /// <param name="pageAndOrder"></param>
         /// <returns></returns>
-        public List<Badge> ListBadges(BadgeFilter filter)
+        public List<Badge> ListBadges(List<Filter<Badge>> filters, PageAndOrderFilter pageAndOrder)
         {
-            return _badgeService.ListBadges(filter);
+            return _badgeService.ListBadges(filters, pageAndOrder);
         }
 
         #endregion

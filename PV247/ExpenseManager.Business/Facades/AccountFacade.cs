@@ -86,11 +86,12 @@ namespace ExpenseManager.Business.Facades
         /// <summary>
         /// List users that match parameters given in filter 
         /// </summary>
-        /// <param name="filter"></param>
+        /// <param name="filters"></param>
+        /// <param name="pageAndOrder"></param>
         /// <returns></returns>
-        public List<User> ListUsers(UserFilter filter)
+        public List<User> ListUsers(List<Filter<User>> filters, PageAndOrderFilter pageAndOrder)
         {
-            return _userService.ListUsers(filter);
+            return _userService.ListUsers(filters, pageAndOrder);
         }
 
         #endregion
@@ -143,11 +144,12 @@ namespace ExpenseManager.Business.Facades
         /// <summary>
         /// List filtered accounts
         /// </summary>
-        /// <param name="filter">Filters accounts</param>
+        /// <param name="filters">Filters accounts</param>
+        /// <param name="pageAndOrder"></param>
         /// <returns></returns>
-        public List<Account> ListAccounts(AccountFilter filter)
+        public List<Account> ListAccounts(List<Filter<Account>> filters, PageAndOrderFilter pageAndOrder)
         {
-            return _accountService.ListAccounts(filter);
+            return _accountService.ListAccounts(filters, pageAndOrder);
         }
 
         /// <summary>

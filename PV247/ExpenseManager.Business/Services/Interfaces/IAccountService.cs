@@ -39,9 +39,10 @@ namespace ExpenseManager.Business.Services.Interfaces
         /// <summary>
         /// List filtered accounts
         /// </summary>
-        /// <param name="filter">Filters accounts</param>
+        /// <param name="filters">Filters accounts</param>
+        /// <param name="pageAndOrder"></param>
         /// <returns></returns>
-        List<Account> ListAccounts(AccountFilter filter);
+        List<Account> ListAccounts(List<Filter<Account>> filters, PageAndOrderFilter pageAndOrder);
 
         /// <summary>
         /// Creates account for user with given id

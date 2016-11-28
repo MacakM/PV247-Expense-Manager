@@ -42,9 +42,10 @@ namespace ExpenseManager.Business.Services.Interfaces
         /// <summary>
         /// List users that match parameters given in filter 
         /// </summary>
-        /// <param name="filter"></param>
+        /// <param name="filters"></param>
+        /// <param name="pageAndOrder"></param>
         /// <returns></returns>
-        List<User> ListUsers(UserFilter filter);
+        List<User> ListUsers(List<Filter<User>> filters, PageAndOrderFilter pageAndOrder);
 
         /// <summary>
         /// Get specific user that had id == userId

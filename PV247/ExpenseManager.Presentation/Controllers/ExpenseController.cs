@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Enums;
 using ExpenseManager.Business.DataTransferObjects.Filters;
+using ExpenseManager.Business.DataTransferObjects.Filters.CostInfos;
 using ExpenseManager.Business.Facades;
 using ExpenseManager.Presentation.Authentication;
 using ExpenseManager.Presentation.Models.Expense;
@@ -45,21 +44,35 @@ namespace ExpenseManager.Presentation.Controllers
         public IActionResult Index(IndexFilterViewModel filterModel)
         {
             var account = CurrentAccountProvider.GetCurrentAccount(HttpContext.User);
-            var filter = new CostInfoFilter()
+            if (filterModel.DateTo != null)
             {
-                AccountId = account.Id,
-                Periodicity = Periodicity.None,
-                CreatedFrom = filterModel.DateFrom,
-                CreatedTo = filterModel.DateTo,
-                MoneyFrom = filterModel.MoneyFrom,
-                MoneyTo = filterModel.MoneyTo,
-                TypeId = filterModel.CostTypeId,
-                PageNumber = filterModel.PageNumber ?? 1,
-                PageSize = NumberOfExpensesPerPage
-            };
-            
-            filterModel.Expenses = GetFilteredExpenses(filter);
-            filterModel.PageCount = (int)Math.Ceiling(_balanceFacade.GetCostInfosCount(filter) / (double)NumberOfExpensesPerPage);
+                if (filterModel.MoneyFrom != null)
+                {
+                    if (filterModel.MoneyTo != null)
+                    {
+                        if (filterModel.CostTypeId != null)
+                        {
+                            var filters = new List<Filter<CostInfo>>
+                            {
+                                new CostInfosByAccountId(account.Id),
+                                new CostInfosByItsPeriodicity(Periodicity.None),
+                                new CostInfosByCreatedFrom(filterModel.DateFrom),
+                                new CostInfosByCreatedTo(filterModel.DateTo.Value),
+                                new CostInfosByMoneyFrom(filterModel.MoneyFrom.Value),
+                                new CostInfosByMoneyTo(filterModel.MoneyTo.Value),
+                                new CostInfosByTypeId(filterModel.CostTypeId.Value)
+                            };
+                            PageAndOrderFilter pageAndOrder = new PageAndOrderFilter();
+
+                            pageAndOrder.PageNumber = filterModel.PageNumber ?? 1;
+                            pageAndOrder.PageSize = NumberOfExpensesPerPage;
+
+                            filterModel.Expenses = GetFilteredExpenses(filters, pageAndOrder);
+                            filterModel.PageCount = (int)Math.Ceiling(_balanceFacade.GetCostInfosCount(filters, null) / (double)NumberOfExpensesPerPage);
+                        }
+                    }
+                }
+            }
             filterModel.CostTypes = GetAllCostTypes();
             filterModel.CurrentUser = Mapper.Map<Models.User.IndexViewModel>(CurrentAccountProvider.GetCurrentUser(HttpContext.User));
             return View(filterModel);
@@ -111,19 +124,29 @@ namespace ExpenseManager.Presentation.Controllers
 
         private List<IndexPermanentExpenseViewModel> GetAllPermanentExpenses(Account account)
         {
-            var filter = new CostInfoFilter()
+            var filters = new List<Filter<CostInfo>>
             {
-                AccountId = account.Id,
-                Periodicity = Periodicity.Day
+                new CostInfosByAccountId(account.Id),
+                new CostInfosByItsPeriodicity(Periodicity.Day)
             };
 
-            var expenses = _balanceFacade.ListItems(filter);
+            var expenses = _balanceFacade.ListItems(filters, null);
 
-            filter.Periodicity = Periodicity.Week;
-            expenses.AddRange(_balanceFacade.ListItems(filter));
+            filters.Clear();
+            filters = new List<Filter<CostInfo>>
+            {
+                new CostInfosByAccountId(account.Id),
+                new CostInfosByItsPeriodicity(Periodicity.Week)
+            };
+            expenses.AddRange(_balanceFacade.ListItems(filters, null));
 
-            filter.Periodicity = Periodicity.Month;
-            expenses.AddRange(_balanceFacade.ListItems(filter));
+            filters.Clear();
+            filters = new List<Filter<CostInfo>>
+            {
+                new CostInfosByAccountId(account.Id),
+                new CostInfosByItsPeriodicity(Periodicity.Month)
+            };
+            expenses.AddRange(_balanceFacade.ListItems(filters, null));
 
             return Mapper.Map<List<IndexPermanentExpenseViewModel>>(expenses);
         }
@@ -188,7 +211,7 @@ namespace ExpenseManager.Presentation.Controllers
 
             _balanceFacade.CreateItem(costInfo);
 
-            return RedirectToAction("Index", "AccountSettings", new { successMessage = ExpenseManagerResource.ExpenseCreated });
+            return RedirectToAction("PermanentExpensesIndex", new { successMessage = ExpenseManagerResource.ExpenseCreated });
         }
 
         #endregion
@@ -217,15 +240,15 @@ namespace ExpenseManager.Presentation.Controllers
         }
 
         #region Helpers
-        private List<IndexViewModel> GetFilteredExpenses(CostInfoFilter filter)
+        private List<IndexViewModel> GetFilteredExpenses(List<Filter<CostInfo>> filters, PageAndOrderFilter pageAndOrder)
         {
-            var expenses = _balanceFacade.ListItems(filter);
+            var expenses = _balanceFacade.ListItems(filters, pageAndOrder);
             return Mapper.Map<List<IndexViewModel>>(expenses);
         }
 
         private List<Models.CostType.IndexViewModel> GetAllCostTypes()
         {
-            var costTypes = _balanceFacade.ListItemTypes(null);
+            var costTypes = _balanceFacade.ListItemTypes(null, null);
             var costTypeViewModels = Mapper.Map<List<Models.CostType.IndexViewModel>>(costTypes);
             return costTypeViewModels;
         }

@@ -38,9 +38,10 @@ namespace ExpenseManager.Business.Services.Interfaces
         /// <summary>
         /// Lists all plans that match filters criterias
         /// </summary>
-        /// <param name="filter">Filters plans</param>
+        /// <param name="filters">Filters plans</param>
+        /// <param name="pageAndOrder">Orders</param>
         /// <returns></returns>
-        List<Plan> ListPlans(PlanFilter filter);
+        List<Plan> ListPlans(List<Filter<Plan>> filters, PageAndOrderFilter pageAndOrder);
 
         /// <summary>
         /// List closeable plans of account

@@ -1,8 +1,20 @@
 ﻿using AutoMapper;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Filters;
+using ExpenseManager.Business.DataTransferObjects.Filters.Accounts;
+using ExpenseManager.Business.DataTransferObjects.Filters.Badges;
+using ExpenseManager.Business.DataTransferObjects.Filters.CostInfos;
+using ExpenseManager.Business.DataTransferObjects.Filters.CostTypes;
+using ExpenseManager.Business.DataTransferObjects.Filters.Plans;
+using ExpenseManager.Business.DataTransferObjects.Filters.Users;
 using ExpenseManager.Database.Entities;
 using ExpenseManager.Database.Filters;
+using ExpenseManager.Database.Filters.Accounts;
+using ExpenseManager.Database.Filters.Badges;
+using ExpenseManager.Database.Filters.CostInfos;
+using ExpenseManager.Database.Filters.CostTypes;
+using ExpenseManager.Database.Filters.Plans;
+using ExpenseManager.Database.Filters.Users;
 
 namespace ExpenseManager.Business.Infrastructure.Mapping.Profiles
 {
@@ -52,25 +64,64 @@ namespace ExpenseManager.Business.Infrastructure.Mapping.Profiles
             CreateMap<AccountModel, Account>()
                .ReverseMap();
 
-            CreateMap<AccountBadgeFilter, AccountBadgeModelFilter>()
+            CreateMap<CostInfosByAccountId, CostInfoModelsByAccountId>()
              .ReverseMap();
 
-            CreateMap<AccountFilter, AccountModelFilter>()
+            CreateMap<CostInfosByItsPeriodicity, CostInfoModelsByItsPeriodicity>()
              .ReverseMap();
 
-            CreateMap<BadgeFilter, BadgeModelFilter>()
+            CreateMap<CostInfosByAccountId, CostInfoModelsByAccountId>()
+            .ReverseMap();
+
+            CreateMap<CostInfosByCreatedFrom, CostInfoModelsByCreatedFrom>()
              .ReverseMap();
 
-            CreateMap<CostInfoFilter, CostInfoModelFilter>()
+            CreateMap<CostInfosByCreatedTo, CostInfoModelsByCreatedTo>()
              .ReverseMap();
 
-            CreateMap<CostTypeFilter, CostTypeModelFilter>()
+            CreateMap<CostInfosByMoneyFrom, CostInfoModelsByMoneyFrom>()
              .ReverseMap();
 
-            CreateMap<PlanFilter, PlanModelFilter>()
+            CreateMap<CostInfosByMoneyTo, CostInfoModelsByMoneyTo>()
+            .ReverseMap();
+
+            CreateMap<CostInfosByTypeId, CostInfoModelsByPlannedTypeId>()
+           .ReverseMap();
+
+            CreateMap<AccountsByName, AccountModelsByName>()
              .ReverseMap();
 
-            CreateMap<UserFilter, UserModelFilter>()
+            CreateMap<UsersByAccountId, UserModelsByAccountId>()
+             .ReverseMap();
+
+            CreateMap<UsersByAccountName, UserModelsByAccountName>()
+             .ReverseMap();
+
+            CreateMap<UsersByEmail, UserModelsByEmail>()
+             .ReverseMap();
+
+            CreateMap<UsersByAccountName, UserModelsByAccountName>()
+             .ReverseMap();
+
+            CreateMap<UsersByAccessType, UserModelsByAccessType>()
+             .ReverseMap();
+
+            CreateMap<AccountsByName, AccountModelsByName>()
+            .ReverseMap();
+
+            CreateMap<BadgesByName, BadgeModelsByName>()
+             .ReverseMap();
+            
+            CreateMap<CostTypesByName, CostTypeModelsByName>()
+            .ReverseMap();
+
+            CreateMap<PlansByAccountId, PlanModelsByAccountId>()
+             .ReverseMap();
+
+            CreateMap(typeof(Filter<>), typeof(FilterModel<>))
+             .ReverseMap();
+
+            CreateMap(typeof(PageAndOrderFilter), typeof(PageAndOrderModelFilterModel<>))
              .ReverseMap();
         }
     }

@@ -91,11 +91,13 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <summary>
         /// Lists filtered badges
         /// </summary>
-        /// <param name="filter">Filters badges</param>
+        /// <param name="filters">Filters badges</param>
+        /// <param name="pageAndOrder"></param>
         /// <returns></returns>
-        public List<Badge> ListBadges(BadgeFilter filter)
+        public List<Badge> ListBadges(List<Filter<Badge>> filters, PageAndOrderFilter pageAndOrder)
         {
-            Query.Filter = ExpenseManagerMapper.Map<BadgeModelFilter>(filter);
+            Query.Filters = ExpenseManagerMapper.Map<List<FilterModel<BadgeModel>>>(filters);
+            Query.PageAndOrderModelFilterModel = ExpenseManagerMapper.Map<PageAndOrderModelFilterModel<BadgeModel>>(pageAndOrder);
             return GetList().ToList();
         }
 

@@ -5,7 +5,10 @@ using AutoMapper;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Enums;
 using ExpenseManager.Business.DataTransferObjects.Filters;
+using ExpenseManager.Business.DataTransferObjects.Filters.CostInfos;
+using ExpenseManager.Business.DataTransferObjects.Filters.Users;
 using ExpenseManager.Business.Facades;
+using ExpenseManager.Database.Filters.CostInfos;
 using ExpenseManager.Presentation.Authentication;
 using ExpenseManager.Presentation.Models.AccountSettingsViewModel;
 using ExpenseManager.Presentation.Models.Expense;
@@ -62,31 +65,35 @@ namespace ExpenseManager.Presentation.Controllers
 
         private List<IndexViewModel> GetAllUsersWithAccess(Account account)
         {
-            var userFilter = new UserFilter()
+            var userFilters = new List<Filter<User>>
             {
-                AccountId = account.Id
+                new UsersByAccountId(account.Id)
             };
 
-            var users = _accountFacade.ListUsers(userFilter);
+            var users = _accountFacade.ListUsers(userFilters, null);
 
             return Mapper.Map<List<IndexViewModel>>(users);
         }
 
         private List<IndexPermanentExpenseViewModel> GetAllPermanentExpenses(Account account)
         {
-            var filter = new CostInfoFilter()
+            var filters = new List<Filter<CostInfo>>
             {
-                AccountId = account.Id,
-                Periodicity = Periodicity.Day
+                new CostInfosByAccountId(account.Id),
+                new CostInfosByItsPeriodicity(Periodicity.Day)
             };
 
-            var expenses = _balanceFacade.ListItems(filter);
+            var expenses = _balanceFacade.ListItems(filters,null);
 
-            filter.Periodicity = Periodicity.Week;
-            expenses.AddRange(_balanceFacade.ListItems(filter));
+            filters.Clear();
+            filters.Add(new CostInfosByAccountId(account.Id));
+            filters.Add(new CostInfosByItsPeriodicity(Periodicity.Week));
+            expenses.AddRange(_balanceFacade.ListItems(filters,null));
 
-            filter.Periodicity = Periodicity.Month;
-            expenses.AddRange(_balanceFacade.ListItems(filter));
+            filters.Clear();
+            filters.Add(new CostInfosByAccountId(account.Id));
+            filters.Add(new CostInfosByItsPeriodicity(Periodicity.Month));
+            expenses.AddRange(_balanceFacade.ListItems(filters,null));
 
             return Mapper.Map<List<IndexPermanentExpenseViewModel>>(expenses);
         }
@@ -122,12 +129,12 @@ namespace ExpenseManager.Presentation.Controllers
 
         private User GetUserFromEmail(string email)
         {
-            var userFilter = new UserFilter()
+            var userFilters = new List<Filter<User>>();
             {
-                Email = email
+                new UsersByEmail(email);
             };
 
-            var users = _accountFacade.ListUsers(userFilter);
+            var users = _accountFacade.ListUsers(userFilters,null);
             return users.FirstOrDefault();
         }
 
