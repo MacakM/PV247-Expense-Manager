@@ -4,7 +4,6 @@ using System.Runtime.CompilerServices;
 using ExpenseManager.Database.Entities;
 
 [assembly: InternalsVisibleTo("ExpenseManager.Business.Tests")]
-[assembly: InternalsVisibleTo("ExpenseManager.DataInitialization")]
 namespace ExpenseManager.Database
 {
     public class ExpenseDbContext : DbContext
@@ -26,5 +25,18 @@ namespace ExpenseManager.Database
         public DbSet<AccountModel> Accounts { get; set; }
 
         public DbSet<AccountBadgeModel> AccountBadges { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<BadgeModel>().ToTable("Badges");
+            modelBuilder.Entity<CostInfoModel>().ToTable("CostInfos");
+            modelBuilder.Entity<CostTypeModel>().ToTable("CostTypes");
+            modelBuilder.Entity<PlanModel>().ToTable("Plans");
+            modelBuilder.Entity<UserModel>().ToTable("Users");
+            modelBuilder.Entity<AccountModel>().ToTable("Accounts");
+            modelBuilder.Entity<AccountBadgeModel>().ToTable("AccountBadges");
+        }
     }
 }
