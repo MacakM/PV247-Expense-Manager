@@ -1,17 +1,17 @@
 ﻿using System.Linq;
 
-namespace ExpenseManager.Database.Filters
+namespace ExpenseManager.Database.DataAccess.FilterInterfaces
 {
     /// <summary>
-    /// General filter base class
+    /// Interface for filters
     /// </summary>
-    public abstract class FilterModel<T>
+    public interface IFilter<T>
     {
         /// <summary>
         /// In this method filter should apply himself on queryable
         /// </summary>
         /// <param name="queryable">Queryable</param>
         /// <returns></returns>
-        public abstract IQueryable<T> FilterQuery(IQueryable<T> queryable);
+        IQueryable<T> FilterQuery(IQueryable<T> queryable);
     }
 }

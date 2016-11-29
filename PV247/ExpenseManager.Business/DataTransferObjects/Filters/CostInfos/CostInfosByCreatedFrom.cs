@@ -1,15 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ExpenseManager.Database.DataAccess.FilterInterfaces;
+using ExpenseManager.Database.Entities;
 
 namespace ExpenseManager.Business.DataTransferObjects.Filters.CostInfos
 {
     /// <summary>
     /// Filters cost info by its creation time
     /// </summary>
-    public class CostInfosByCreatedFrom : Filter<CostInfo>
+    public class CostInfosByCreatedFrom : IFilter<CostInfoModel>
     {
         /// <summary>
         /// Left edge of created range
@@ -23,6 +22,16 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.CostInfos
         public CostInfosByCreatedFrom(DateTime? start)
         {
             CreatedFrom = start;
+        }
+
+        /// <summary>
+        /// Filters query
+        /// </summary>
+        /// <param name="queryable"></param>
+        /// <returns></returns>
+        public IQueryable<CostInfoModel> FilterQuery(IQueryable<CostInfoModel> queryable)
+        {
+            return queryable.Where(costInfo => costInfo.Created >= CreatedFrom);
         }
     }
 }

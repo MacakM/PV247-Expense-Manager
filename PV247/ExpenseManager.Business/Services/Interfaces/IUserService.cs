@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Filters;
+using ExpenseManager.Database.DataAccess.FilterInterfaces;
+using ExpenseManager.Database.Entities;
 
 namespace ExpenseManager.Business.Services.Interfaces
 {
@@ -45,7 +47,7 @@ namespace ExpenseManager.Business.Services.Interfaces
         /// <param name="filters"></param>
         /// <param name="pageAndOrder"></param>
         /// <returns></returns>
-        List<User> ListUsers(List<Filter<User>> filters, PageAndOrderFilter pageAndOrder);
+        List<User> ListUsers(List<IFilter<UserModel>> filters, IPageAndOrderable<UserModel> pageAndOrder);
 
         /// <summary>
         /// Get specific user that had id == userId

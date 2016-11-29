@@ -6,8 +6,8 @@ using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Filters;
 using ExpenseManager.Business.Infrastructure;
 using ExpenseManager.Business.Services.Interfaces;
+using ExpenseManager.Database.DataAccess.FilterInterfaces;
 using ExpenseManager.Database.Entities;
-using ExpenseManager.Database.Filters;
 using ExpenseManager.Database.Infrastructure.Query;
 using ExpenseManager.Database.Infrastructure.Repository;
 using Riganti.Utils.Infrastructure.Core;
@@ -78,9 +78,10 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="filters">Filters cost types</param>
         /// <param name="pageAndOrder"></param>
         /// <returns>List of cost typer</returns>
-        public List<CostType> ListCostTypes(List<Filter<CostType>> filters, PageAndOrderFilter pageAndOrder)
+        public List<CostType> ListCostTypes(List<IFilter<CostTypeModel>> filters, IPageAndOrderable<CostTypeModel> pageAndOrder)
         {
-            Query.Filters = ExpenseManagerMapper.Map<List<FilterModel<CostTypeModel>>>(filters);
+            Query.Filters = filters;
+            Query.PageAndOrderModelFilterModel = pageAndOrder;
             return GetList().ToList();
         }
     }

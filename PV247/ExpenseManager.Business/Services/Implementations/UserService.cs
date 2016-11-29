@@ -12,7 +12,7 @@ using ExpenseManager.Database.Entities;
 using ExpenseManager.Database.Infrastructure.Utils;
 using Riganti.Utils.Infrastructure.Core;
 using ExpenseManager.Business.Services.Interfaces;
-using ExpenseManager.Database.Filters;
+using ExpenseManager.Database.DataAccess.FilterInterfaces;
 using ExpenseManager.Database.Infrastructure.Query;
 
 namespace ExpenseManager.Business.Services.Implementations
@@ -111,11 +111,10 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="filters"></param>
         /// <param name="pageAndOrder"></param>
         /// <returns></returns>
-        public List<User> ListUsers(List<Filter<User>> filters, PageAndOrderFilter pageAndOrder)
+        public List<User> ListUsers(List<IFilter<UserModel>> filters, IPageAndOrderable<UserModel> pageAndOrder)
         {
-            Query.Filters = ExpenseManagerMapper.Map<List<FilterModel<UserModel>>>(filters);
-            Query.PageAndOrderModelFilterModel =
-                ExpenseManagerMapper.Map<PageAndOrderModelFilterModel<UserModel>>(pageAndOrder);
+            Query.Filters = filters;
+            Query.PageAndOrderModelFilterModel = pageAndOrder;
             return GetList().ToList();
         }
 

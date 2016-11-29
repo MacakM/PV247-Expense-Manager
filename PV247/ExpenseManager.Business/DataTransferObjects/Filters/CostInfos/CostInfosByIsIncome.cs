@@ -1,12 +1,13 @@
 ﻿using System.Linq;
+using ExpenseManager.Database.DataAccess.FilterInterfaces;
 using ExpenseManager.Database.Entities;
 
-namespace ExpenseManager.Database.Filters.CostInfos
+namespace ExpenseManager.Business.DataTransferObjects.Filters.CostInfos
 {
     /// <summary>
     /// Filters cost by its income type
     /// </summary>
-    public class CostInfoModelsByIsIncome : FilterModel<CostInfoModel>
+    public class CostInfosByIsIncome : IFilter<CostInfoModel>
     {
         /// <summary>
         /// If cost type is income or ourcome
@@ -17,7 +18,7 @@ namespace ExpenseManager.Database.Filters.CostInfos
         /// Filters constructor
         /// </summary>
         /// <param name="isIncome"></param>
-        public CostInfoModelsByIsIncome(bool isIncome)
+        public CostInfosByIsIncome(bool isIncome)
         {
             IsIncome = isIncome;
         }
@@ -27,7 +28,7 @@ namespace ExpenseManager.Database.Filters.CostInfos
         /// </summary>
         /// <param name="queryable"></param>
         /// <returns></returns>
-        public override IQueryable<CostInfoModel> FilterQuery(IQueryable<CostInfoModel> queryable)
+        public IQueryable<CostInfoModel> FilterQuery(IQueryable<CostInfoModel> queryable)
         {
             return queryable.Where(x => x.IsIncome == IsIncome);
         }

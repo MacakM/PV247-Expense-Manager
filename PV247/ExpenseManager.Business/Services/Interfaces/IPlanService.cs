@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Filters;
+using ExpenseManager.Database.DataAccess.FilterInterfaces;
+using ExpenseManager.Database.Entities;
 
 namespace ExpenseManager.Business.Services.Interfaces
 {
@@ -41,7 +43,7 @@ namespace ExpenseManager.Business.Services.Interfaces
         /// <param name="filters">Filters plans</param>
         /// <param name="pageAndOrder">Orders</param>
         /// <returns></returns>
-        List<Plan> ListPlans(List<Filter<Plan>> filters, PageAndOrderFilter pageAndOrder);
+        List<Plan> ListPlans(List<IFilter<PlanModel>> filters, IPageAndOrderable<PlanModel> pageAndOrder);
 
         /// <summary>
         /// List closeable plans of account

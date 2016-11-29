@@ -36,12 +36,21 @@
       <HintPath>..\packages\AutoMapper.5.1.1\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.TransientFaultHandling, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\EnterpriseLibrary.TransientFaultHandling.6.0.1304.0\lib\portable-net45+win+wp8\Microsoft.Practices.EnterpriseLibrary.TransientFaultHandling.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.TransientFaultHandling.Data, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\EnterpriseLibrary.TransientFaultHandling.Data.6.0.1304.1\lib\NET45\Microsoft.Practices.EnterpriseLibrary.TransientFaultHandling.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Riganti.Utils.Infrastructure.Core, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Riganti.Utils.Infrastructure.Core.1.0.3\lib\net45\Riganti.Utils.Infrastructure.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Reflection, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Reflection.4.1.0\lib\net462\System.Reflection.dll</HintPath>
@@ -71,6 +80,7 @@
     <Compile Include="DataTransferObjects\Enums\PlanType.cs" />
     <Compile Include="DataTransferObjects\Filters\Accounts\AccountsByName.cs" />
     <Compile Include="DataTransferObjects\Filters\Badges\BadgesByName.cs" />
+    <Compile Include="DataTransferObjects\Filters\CostInfos\CostInfosByIsIncome.cs" />
     <Compile Include="DataTransferObjects\Filters\CostInfos\CostInfosByAccountId.cs" />
     <Compile Include="DataTransferObjects\Filters\CostInfos\CostInfosByCreatedFrom.cs" />
     <Compile Include="DataTransferObjects\Filters\CostInfos\CostInfosByCreatedTo.cs" />
@@ -79,9 +89,12 @@
     <Compile Include="DataTransferObjects\Filters\CostInfos\CostInfosByPeriodicity.cs" />
     <Compile Include="DataTransferObjects\Filters\CostInfos\CostInfosByTypeId.cs" />
     <Compile Include="DataTransferObjects\Filters\CostTypes\CostTypesByName.cs" />
-    <Compile Include="DataTransferObjects\Filters\Filter.cs" />
     <Compile Include="DataTransferObjects\Filters\PageAndOrderFilter.cs" />
     <Compile Include="DataTransferObjects\Filters\Plans\PlansByAccountId.cs" />
+    <Compile Include="DataTransferObjects\Filters\Plans\PlansByCompletition.cs" />
+    <Compile Include="DataTransferObjects\Filters\Plans\PlansByDeadlineFrom.cs" />
+    <Compile Include="DataTransferObjects\Filters\Plans\PlansByMoneyTo.cs" />
+    <Compile Include="DataTransferObjects\Filters\Plans\PlansByType.cs" />
     <Compile Include="DataTransferObjects\Filters\Users\UsersByAccessType.cs" />
     <Compile Include="DataTransferObjects\Filters\Users\UsersByAccountId.cs" />
     <Compile Include="DataTransferObjects\Filters\Users\UsersByAccountName.cs" />
@@ -127,6 +140,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DataTransferObjects\Filters\AccountBadges\" />
+    <Folder Include="Facades\Enums\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ExpenseManager.Database\ExpenseManager.Database.csproj">

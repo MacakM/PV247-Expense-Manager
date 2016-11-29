@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Linq;
+using ExpenseManager.Database.DataAccess.FilterInterfaces;
+using ExpenseManager.Database.Entities;
 
 namespace ExpenseManager.Business.DataTransferObjects.Filters.Plans
 {
     /// <summary>
     /// Filters plans by account id
     /// </summary>
-    public class PlansByAccountId : Filter<Plan>
+    public class PlansByAccountId : IFilter<PlanModel>
     {
         /// <summary>
         /// Account id to be used in filter
@@ -20,5 +23,16 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.Plans
         {
             AccountId = accountId;
         }
+
+        /// <summary>
+        /// Filters query
+        /// </summary>
+        /// <param name="queryable"></param>
+        /// <returns></returns>
+        public IQueryable<PlanModel> FilterQuery(IQueryable<PlanModel> queryable)
+        {
+            return queryable.Where(plan => plan.AccountId == AccountId);
+        }
     }
 }
+

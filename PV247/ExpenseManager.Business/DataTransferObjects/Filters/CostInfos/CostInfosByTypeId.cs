@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Linq;
+using ExpenseManager.Database.DataAccess.FilterInterfaces;
+using ExpenseManager.Database.Entities;
 
 namespace ExpenseManager.Business.DataTransferObjects.Filters.CostInfos
 {
     /// <summary>
     /// Filters by planned type id
     /// </summary>
-    public class CostInfosByTypeId : Filter<CostInfo>
+    public class CostInfosByTypeId : IFilter<CostInfoModel>
     {
         /// <summary>
         /// Type id to be filtered with
@@ -19,6 +22,16 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.CostInfos
         public CostInfosByTypeId(Guid plannedTypeId)
         {
             TypeId = plannedTypeId;
+        }
+
+        /// <summary>
+        /// Filters query
+        /// </summary>
+        /// <param name="queryable"></param>
+        /// <returns></returns>
+        public IQueryable<CostInfoModel> FilterQuery(IQueryable<CostInfoModel> queryable)
+        {
+            return queryable.Where(costInfo => costInfo.TypeId == TypeId);
         }
     }
 }

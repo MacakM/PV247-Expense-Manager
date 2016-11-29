@@ -1,12 +1,13 @@
 ﻿using System.Linq;
+using ExpenseManager.Database.DataAccess.FilterInterfaces;
 using ExpenseManager.Database.Entities;
 
-namespace ExpenseManager.Database.Filters.Plans
+namespace ExpenseManager.Business.DataTransferObjects.Filters.Plans
 {
     /// <summary>
     /// Filters plans by planned money
     /// </summary>
-    public class PlanModelsByPlannedMoneyTo : FilterModel<PlanModel>
+    public class PlansByMoneyTo : IFilter<PlanModel>
     {
         /// <summary>
         /// Right edge of planned money range
@@ -17,7 +18,7 @@ namespace ExpenseManager.Database.Filters.Plans
         /// Filter constructor
         /// </summary>
         /// <param name="plannedMoneyTo"></param>
-        public PlanModelsByPlannedMoneyTo(decimal plannedMoneyTo)
+        public PlansByMoneyTo(decimal plannedMoneyTo)
         {
             PlannedMoneyTo = plannedMoneyTo;
         }
@@ -27,9 +28,9 @@ namespace ExpenseManager.Database.Filters.Plans
         /// </summary>
         /// <param name="queryable"></param>
         /// <returns></returns>
-        public override IQueryable<PlanModel> FilterQuery(IQueryable<PlanModel> queryable)
+        public IQueryable<PlanModel> FilterQuery(IQueryable<PlanModel> queryable)
         {
-             return queryable.Where(plan => plan.PlannedMoney <= PlannedMoneyTo);
+            return queryable.Where(plan => plan.PlannedMoney <= PlannedMoneyTo);
         }
     }
 }

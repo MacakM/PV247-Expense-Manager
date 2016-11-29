@@ -4,6 +4,8 @@ using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Enums;
 using ExpenseManager.Business.DataTransferObjects.Filters;
 using ExpenseManager.Business.Services.Interfaces;
+using ExpenseManager.Database.DataAccess.FilterInterfaces;
+using ExpenseManager.Database.Entities;
 
 namespace ExpenseManager.Business.Facades
 {
@@ -89,7 +91,7 @@ namespace ExpenseManager.Business.Facades
         /// <param name="filters"></param>
         /// <param name="pageAndOrder"></param>
         /// <returns></returns>
-        public List<User> ListUsers(List<Filter<User>> filters, PageAndOrderFilter pageAndOrder)
+        public List<User> ListUsers(List<IFilter<UserModel>> filters, IPageAndOrderable<UserModel> pageAndOrder)
         {
             return _userService.ListUsers(filters, pageAndOrder);
         }
@@ -147,7 +149,7 @@ namespace ExpenseManager.Business.Facades
         /// <param name="filters">Filters accounts</param>
         /// <param name="pageAndOrder"></param>
         /// <returns></returns>
-        public List<Account> ListAccounts(List<Filter<Account>> filters, PageAndOrderFilter pageAndOrder)
+        public List<Account> ListAccounts(List<IFilter<AccountModel>> filters, IPageAndOrderable<AccountModel> pageAndOrder)
         {
             return _accountService.ListAccounts(filters, pageAndOrder);
         }

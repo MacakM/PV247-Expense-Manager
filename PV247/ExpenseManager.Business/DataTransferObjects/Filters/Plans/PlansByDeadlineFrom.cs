@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Linq;
+using ExpenseManager.Database.DataAccess.FilterInterfaces;
 using ExpenseManager.Database.Entities;
 
-namespace ExpenseManager.Database.Filters.Plans
+namespace ExpenseManager.Business.DataTransferObjects.Filters.Plans
 {
     /// <summary>
     /// Filters plans based on deadline 
     /// </summary>
-    public class PlanModelsByDeadlineFrom : FilterModel<PlanModel>
+    public class PlansByDeadlineFrom : IFilter<PlanModel>
     {
         /// <summary>
         /// Left edge of deadline range
@@ -18,7 +19,7 @@ namespace ExpenseManager.Database.Filters.Plans
         /// Filter constructor
         /// </summary>
         /// <param name="deadlineFrom"></param>
-        public PlanModelsByDeadlineFrom(DateTime deadlineFrom)
+        public PlansByDeadlineFrom(DateTime deadlineFrom)
         {
             DeadlineFrom = deadlineFrom;
         }
@@ -28,7 +29,7 @@ namespace ExpenseManager.Database.Filters.Plans
         /// </summary>
         /// <param name="queryable"></param>
         /// <returns></returns>
-        public override IQueryable<PlanModel> FilterQuery(IQueryable<PlanModel> queryable)
+        public IQueryable<PlanModel> FilterQuery(IQueryable<PlanModel> queryable)
         {
             return queryable.Where(plan => plan.Deadline >= DeadlineFrom);
         }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Enums;
 using ExpenseManager.Business.DataTransferObjects.Filters;
+using ExpenseManager.Database.DataAccess.FilterInterfaces;
+using ExpenseManager.Database.Entities;
 
 namespace ExpenseManager.Business.Services.Interfaces
 {
@@ -42,7 +44,7 @@ namespace ExpenseManager.Business.Services.Interfaces
         /// <param name="filters">Filters accounts</param>
         /// <param name="pageAndOrder"></param>
         /// <returns></returns>
-        List<Account> ListAccounts(List<Filter<Account>> filters, PageAndOrderFilter pageAndOrder);
+        List<Account> ListAccounts(List<IFilter<AccountModel>> filters, IPageAndOrderable<AccountModel> pageAndOrder);
 
         /// <summary>
         /// Creates account for user with given id

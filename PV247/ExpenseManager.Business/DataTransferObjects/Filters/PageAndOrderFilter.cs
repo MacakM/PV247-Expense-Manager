@@ -1,9 +1,14 @@
-﻿namespace ExpenseManager.Business.DataTransferObjects.Filters
+﻿using System;
+using System.Linq;
+using ExpenseManager.Database.DataAccess.FilterInterfaces;
+using ExpenseManager.Database.DataAccess.Queries;
+
+namespace ExpenseManager.Business.DataTransferObjects.Filters
 {
     /// <summary>
     /// Filter that handles pages and ordering
     /// </summary>
-    public class PageAndOrderFilter
+    public class PageAndOrderFilter<T> : IPageAndOrderable<T>
     {
         private int _pageSize = 10;
 
@@ -29,5 +34,26 @@
         /// Determines property to order by
         /// </summary>
         public string OrderByPropertyName { get; set; }
+
+        /// <summary>
+        /// Filters query
+        /// </summary>
+        /// <param name="queryable">Queryable</param>
+        /// <returns></returns>
+        public IQueryable<T> FilterQuery(IQueryable<T> queryable)
+        {
+            if (OrderByDesc == null || string.IsNullOrEmpty(OrderByPropertyName))
+            {
+                return queryable;
+            }
+            queryable = OrderByDesc.Value
+                ? QueryOrderByHelper.OrderByDesc(queryable, OrderByPropertyName)
+                : QueryOrderByHelper.OrderBy(queryable, OrderByPropertyName);
+            if (PageNumber != null)
+            {
+                queryable = queryable.Skip(Math.Max(0, PageNumber.Value - 1) * PageSize);
+            }
+            return queryable.Take(PageSize);
+        }
     }
 }

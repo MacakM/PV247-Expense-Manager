@@ -6,6 +6,9 @@ using ExpenseManager.Business.DataTransferObjects.Enums;
 using ExpenseManager.Business.DataTransferObjects.Filters;
 using ExpenseManager.Business.DataTransferObjects.Filters.CostInfos;
 using ExpenseManager.Business.Facades;
+using ExpenseManager.Database.DataAccess.FilterInterfaces;
+using ExpenseManager.Database.Entities;
+using ExpenseManager.Database.Enums;
 using ExpenseManager.Presentation.Authentication;
 using ExpenseManager.Presentation.Models.Expense;
 using Microsoft.AspNetCore.Authorization;
@@ -52,17 +55,17 @@ namespace ExpenseManager.Presentation.Controllers
                     {
                         if (filterModel.CostTypeId != null)
                         {
-                            var filters = new List<Filter<CostInfo>>
+                            var filters = new List<IFilter<CostInfoModel>>
                             {
                                 new CostInfosByAccountId(account.Id),
-                                new CostInfosByItsPeriodicity(Periodicity.None),
+                                new CostInfosByPeriodicity(PeriodicityModel.None),
                                 new CostInfosByCreatedFrom(filterModel.DateFrom),
                                 new CostInfosByCreatedTo(filterModel.DateTo.Value),
                                 new CostInfosByMoneyFrom(filterModel.MoneyFrom.Value),
                                 new CostInfosByMoneyTo(filterModel.MoneyTo.Value),
                                 new CostInfosByTypeId(filterModel.CostTypeId.Value)
                             };
-                            PageAndOrderFilter pageAndOrder = new PageAndOrderFilter();
+                            IPageAndOrderable<CostInfoModel> pageAndOrder = new PageAndOrderFilter<CostInfoModel>();
 
                             pageAndOrder.PageNumber = filterModel.PageNumber ?? 1;
                             pageAndOrder.PageSize = NumberOfExpensesPerPage;
@@ -124,27 +127,27 @@ namespace ExpenseManager.Presentation.Controllers
 
         private List<IndexPermanentExpenseViewModel> GetAllPermanentExpenses(Account account)
         {
-            var filters = new List<Filter<CostInfo>>
+            var filters = new List<IFilter<CostInfoModel>>
             {
                 new CostInfosByAccountId(account.Id),
-                new CostInfosByItsPeriodicity(Periodicity.Day)
+                new CostInfosByPeriodicity(PeriodicityModel.Day)
             };
 
             var expenses = _balanceFacade.ListItems(filters, null);
 
             filters.Clear();
-            filters = new List<Filter<CostInfo>>
+            filters = new List<IFilter<CostInfoModel>>
             {
                 new CostInfosByAccountId(account.Id),
-                new CostInfosByItsPeriodicity(Periodicity.Week)
+                new CostInfosByPeriodicity(PeriodicityModel.Week)
             };
             expenses.AddRange(_balanceFacade.ListItems(filters, null));
 
             filters.Clear();
-            filters = new List<Filter<CostInfo>>
+            filters = new List<IFilter<CostInfoModel>>
             {
                 new CostInfosByAccountId(account.Id),
-                new CostInfosByItsPeriodicity(Periodicity.Month)
+                new CostInfosByPeriodicity(PeriodicityModel.Month)
             };
             expenses.AddRange(_balanceFacade.ListItems(filters, null));
 
@@ -240,7 +243,7 @@ namespace ExpenseManager.Presentation.Controllers
         }
 
         #region Helpers
-        private List<IndexViewModel> GetFilteredExpenses(List<Filter<CostInfo>> filters, PageAndOrderFilter pageAndOrder)
+        private List<IndexViewModel> GetFilteredExpenses(List<IFilter<CostInfoModel>> filters, IPageAndOrderable<CostInfoModel> pageAndOrder)
         {
             var expenses = _balanceFacade.ListItems(filters, pageAndOrder);
             return Mapper.Map<List<IndexViewModel>>(expenses);

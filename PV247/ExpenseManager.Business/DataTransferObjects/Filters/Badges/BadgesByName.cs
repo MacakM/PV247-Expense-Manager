@@ -1,9 +1,13 @@
-﻿namespace ExpenseManager.Business.DataTransferObjects.Filters.Badges
+﻿using System.Linq;
+using ExpenseManager.Database.DataAccess.FilterInterfaces;
+using ExpenseManager.Database.Entities;
+
+namespace ExpenseManager.Business.DataTransferObjects.Filters.Badges
 {
     /// <summary>
     /// Filters by badge name
     /// </summary>
-    public class BadgesByName : Filter<Badge>
+    public class BadgesByName : IFilter<BadgeModel>
     {
         /// <summary>
         /// Name of Badge
@@ -24,6 +28,15 @@
         {
             Name = name;
             DoExactMatch = doExactMatch;
+        }
+
+        /// <summary>
+        /// Filters given query
+        /// </summary>
+        /// <param name="queryable">Query to be filtered</param>
+        public IQueryable<BadgeModel> FilterQuery(IQueryable<BadgeModel> queryable)
+        {
+            return DoExactMatch ? queryable.Where(badge => badge.Name.Equals(Name)) : queryable.Where(badge => badge.Name.Contains(Name));
         }
     }
 }

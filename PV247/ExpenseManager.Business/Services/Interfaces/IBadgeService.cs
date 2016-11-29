@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using ExpenseManager.Business.DataTransferObjects;
-using ExpenseManager.Business.DataTransferObjects.Filters;
+using ExpenseManager.Database.DataAccess.FilterInterfaces;
+using ExpenseManager.Database.Entities;
 
 namespace ExpenseManager.Business.Services.Interfaces
 {
@@ -41,7 +42,7 @@ namespace ExpenseManager.Business.Services.Interfaces
         /// <param name="filters">Filters badges</param>
         /// <param name="pageAndOrder"></param>
         /// <returns></returns>s
-        List<Badge> ListBadges(List<Filter<Badge>> filters, PageAndOrderFilter pageAndOrder);
+        List<Badge> ListBadges(List<IFilter<BadgeModel>> filters, IPageAndOrderable<BadgeModel> pageAndOrder);
 
         /// <summary>
         /// Check all accounts if they dont deserve some badges

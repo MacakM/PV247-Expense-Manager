@@ -6,8 +6,8 @@ using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Filters;
 using ExpenseManager.Business.Infrastructure;
 using ExpenseManager.Business.Services.Interfaces;
+using ExpenseManager.Database.DataAccess.FilterInterfaces;
 using ExpenseManager.Database.Entities;
-using ExpenseManager.Database.Filters;
 using ExpenseManager.Database.Infrastructure.Query;
 using ExpenseManager.Database.Infrastructure.Repository;
 using Riganti.Utils.Infrastructure.Core;
@@ -78,10 +78,10 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="filters">Filters account badges</param>
         /// <param name="pageAndOrder"></param>
         /// <returns></returns>
-        public List<AccountBadge> ListAccountBadges(List<Filter<AccountBadge>> filters, PageAndOrderFilter pageAndOrder)
+        public List<AccountBadge> ListAccountBadges(List<IFilter<AccountBadgeModel>> filters, IPageAndOrderable<AccountBadgeModel> pageAndOrder)
         {
-            Query.Filters = ExpenseManagerMapper.Map<List<FilterModel<AccountBadgeModel>>>(filters);
-            Query.PageAndOrderModelFilterModel = ExpenseManagerMapper.Map<PageAndOrderModelFilterModel<AccountBadgeModel>>(pageAndOrder);
+            Query.Filters = filters;
+            Query.PageAndOrderModelFilterModel = pageAndOrder;
             return GetList().ToList();
         }
     }

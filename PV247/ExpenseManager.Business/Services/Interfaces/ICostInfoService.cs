@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Filters;
+using ExpenseManager.Database.DataAccess.FilterInterfaces;
+using ExpenseManager.Database.Entities;
 
 namespace ExpenseManager.Business.Services.Interfaces
 {
@@ -41,7 +43,7 @@ namespace ExpenseManager.Business.Services.Interfaces
         /// <param name="filters">Filters cost infos</param>
         /// <param name="pageAndOrder"></param>
         /// <returns>List of cost infos</returns>
-        List<CostInfo> ListCostInfos(List<Filter<CostInfo>> filters, PageAndOrderFilter pageAndOrder);
+        List<CostInfo> ListCostInfos(List<IFilter<CostInfoModel>> filters, IPageAndOrderable<CostInfoModel> pageAndOrder);
 
         /// <summary>
         /// Recompute periodic costs and make them as new cost infos
@@ -52,7 +54,7 @@ namespace ExpenseManager.Business.Services.Interfaces
         /// Gets the count of rows in database filtered by filter
         /// Used for pagination
         /// </summary>
-        int GetCostInfosCount(List<Filter<CostInfo>> filters, PageAndOrderFilter pageAndOrder);
+        int GetCostInfosCount(List<IFilter<CostInfoModel>> filters, IPageAndOrderable<CostInfoModel> pageAndOrder);
 
         ///<summary>
         /// Returns balance of aacount

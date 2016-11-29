@@ -10,8 +10,8 @@ using ExpenseManager.Database.Infrastructure.Repository;
 using Riganti.Utils.Infrastructure.Core;
 using ExpenseManager.Business.Services.Interfaces;
 using ExpenseManager.Business.Utilities.BadgeCertification;
+using ExpenseManager.Database.DataAccess.FilterInterfaces;
 using ExpenseManager.Database.DataAccess.Queries;
-using ExpenseManager.Database.Filters;
 using ExpenseManager.Database.Infrastructure.Query;
 
 namespace ExpenseManager.Business.Services.Implementations
@@ -44,6 +44,10 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="repository">Repository</param>
         /// <param name="expenseManagerMapper">Mapper</param>
         /// <param name="unitOfWorkProvider">Unit of work provider</param>
+        /// <param name="certifierResolver"></param>
+        /// <param name="accountBadgeRepository"></param>
+        /// <param name="badgesQuery"></param>
+        /// <param name="accountsQuery"></param>
         public BadgeService(ExpenseManagerQuery<BadgeModel> query, ExpenseManagerRepository<BadgeModel, Guid> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider, ListBadgesQuery badgesQuery, ListAccountsQuery accountsQuery, IBadgeCertifierResolver certifierResolver, ExpenseManagerRepository<AccountBadgeModel, Guid> accountBadgeRepository) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
         {
             _badgesQuery = badgesQuery;
@@ -94,10 +98,10 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="filters">Filters badges</param>
         /// <param name="pageAndOrder"></param>
         /// <returns></returns>
-        public List<Badge> ListBadges(List<Filter<Badge>> filters, PageAndOrderFilter pageAndOrder)
+        public List<Badge> ListBadges(List<IFilter<BadgeModel>> filters, IPageAndOrderable<BadgeModel> pageAndOrder)
         {
-            Query.Filters = ExpenseManagerMapper.Map<List<FilterModel<BadgeModel>>>(filters);
-            Query.PageAndOrderModelFilterModel = ExpenseManagerMapper.Map<PageAndOrderModelFilterModel<BadgeModel>>(pageAndOrder);
+            Query.Filters = filters;
+            Query.PageAndOrderModelFilterModel = pageAndOrder;
             return GetList().ToList();
         }
 

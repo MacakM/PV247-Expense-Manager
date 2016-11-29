@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using ExpenseManager.Database.Entities;
-using ExpenseManager.Database.Filters;
 using ExpenseManager.Database.Infrastructure.Query;
 using Riganti.Utils.Infrastructure.Core;
 

@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
+using ExpenseManager.Database.DataAccess.FilterInterfaces;
+using ExpenseManager.Database.Entities;
 
 namespace ExpenseManager.Business.DataTransferObjects.Filters.Accounts
 {
     /// <summary>
     /// Filter userd in queries in order to get accounts with specifies parameters
     /// </summary>
-    public class AccountsByName : Filter<Account>
+    public class AccountsByName : IFilter<AccountModel>
     { 
         /// <summary>
         /// Name that has to match in filtered accounts
@@ -30,6 +28,15 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.Accounts
         {
             Name = name;
             DoExactMatch = doExactMatch;
+        }
+
+        /// <summary>
+        /// Filters given query
+        /// </summary>
+        /// <param name="queryable">Query to be filtered</param>
+        public IQueryable<AccountModel> FilterQuery(IQueryable<AccountModel> queryable)
+        {
+            return DoExactMatch ? queryable.Where(account => account.Name.Equals(Name)) : queryable.Where(account => account.Name.Contains(Name));
         }
     }
 }

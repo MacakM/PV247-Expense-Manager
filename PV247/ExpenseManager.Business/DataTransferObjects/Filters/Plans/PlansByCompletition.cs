@@ -1,12 +1,13 @@
 ﻿using System.Linq;
+using ExpenseManager.Database.DataAccess.FilterInterfaces;
 using ExpenseManager.Database.Entities;
 
-namespace ExpenseManager.Database.Filters.Plans
+namespace ExpenseManager.Business.DataTransferObjects.Filters.Plans
 {
     /// <summary>
     /// Filter plans by its completetions
     /// </summary>
-    public class PlanModelsByCompletition : FilterModel<PlanModel>
+    public class PlansByCompletition : IFilter<PlanModel>
     {
         /// <summary>
         /// If plan is completed
@@ -17,7 +18,7 @@ namespace ExpenseManager.Database.Filters.Plans
         /// Filter constructor
         /// </summary>
         /// <param name="completed"></param>
-        public PlanModelsByCompletition(bool completed)
+        public PlansByCompletition(bool completed)
         {
             IsCompleted = completed;
         }
@@ -27,7 +28,7 @@ namespace ExpenseManager.Database.Filters.Plans
         /// </summary>
         /// <param name="queryable"></param>
         /// <returns></returns>
-        public override IQueryable<PlanModel> FilterQuery(IQueryable<PlanModel> queryable)
+        public IQueryable<PlanModel> FilterQuery(IQueryable<PlanModel> queryable)
         {
             return queryable.Where(plan => plan.IsCompleted == IsCompleted);
         }

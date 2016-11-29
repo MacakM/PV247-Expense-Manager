@@ -4,16 +4,15 @@ using System.Linq;
 using AutoMapper;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Enums;
-using ExpenseManager.Business.DataTransferObjects.Filters;
+using ExpenseManager.Business.DataTransferObjects.Filters.CostInfos;
+using ExpenseManager.Business.DataTransferObjects.Filters.Plans;
 using ExpenseManager.Business.Infrastructure;
 using ExpenseManager.Business.Services.Interfaces;
+using ExpenseManager.Database.DataAccess.FilterInterfaces;
 using ExpenseManager.Database.DataAccess.Queries;
 using ExpenseManager.Database.DataAccess.Repositories;
 using ExpenseManager.Database.Entities;
 using ExpenseManager.Database.Enums;
-using ExpenseManager.Database.Filters;
-using ExpenseManager.Database.Filters.CostInfos;
-using ExpenseManager.Database.Filters.Plans;
 using ExpenseManager.Database.Infrastructure.Query;
 using ExpenseManager.Database.Infrastructure.Repository;
 using Riganti.Utils.Infrastructure.Core;
@@ -136,11 +135,10 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="filters">Filters plans</param>
         /// <param name="pageAndOrder">Orders</param>
         /// <returns></returns>
-        public List<Plan> ListPlans(List<Filter<Plan>> filters, PageAndOrderFilter pageAndOrder)
+        public List<Plan> ListPlans(List<IFilter<PlanModel>> filters, IPageAndOrderable<PlanModel> pageAndOrder)
         {
-            Query.Filters = ExpenseManagerMapper.Map<List<FilterModel<PlanModel>>>(filters);
-            Query.PageAndOrderModelFilterModel =
-                ExpenseManagerMapper.Map<PageAndOrderModelFilterModel<PlanModel>>(pageAndOrder);
+            Query.Filters = filters;
+            Query.PageAndOrderModelFilterModel = pageAndOrder;
             Query.AddSortCriteria(x => x.Start, SortDirection.Descending);
             return GetList().ToList();
         }
@@ -196,13 +194,13 @@ namespace ExpenseManager.Business.Services.Implementations
         public List<Plan> ListAllCloseablePlans(Guid accountId, decimal accountBalance)
         {
 
-            Query.Filters = new List<FilterModel<PlanModel>>
+            Query.Filters = new List<IFilter<PlanModel>>
             {
-                new PlanModelsByAccountId(accountId),
-                new PlanModelsByPlannedMoneyTo(accountBalance),
-                new PlanModelsByPlanType(PlanTypeModel.Save),
-                new PlanModelsByCompletition(false),
-                new PlanModelsByDeadlineFrom(DateTime.Now)
+                new PlansByAccountId(accountId),
+                new PlansByMoneyTo(accountBalance),
+                new PlansByType(PlanTypeModel.Save),
+                new PlansByCompletition(false),
+                new PlansByDeadlineFrom(DateTime.Now)
             };
             return GetList().ToList();
         }
@@ -210,11 +208,11 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <inheritdoc />
         public List<Plan> ListPlansInProgress(Guid accountId)
         {
-            Query.Filters = new List<FilterModel<PlanModel>>
+            Query.Filters = new List<IFilter<PlanModel>>
             {
-                new PlanModelsByAccountId(accountId),
-                new PlanModelsByCompletition(false),
-                new PlanModelsByDeadlineFrom(DateTime.Now)
+                new PlansByAccountId(accountId),
+                new PlansByCompletition(false),
+                new PlansByDeadlineFrom(DateTime.Now)
             };
             return GetList().ToList();
         }
@@ -227,22 +225,22 @@ namespace ExpenseManager.Business.Services.Implementations
             var accounts = _accountsQuery.Execute();
             foreach (var account in accounts) // FOR EACH ACCOUNT 
             {
-                Query.Filters = new  List<FilterModel<PlanModel>>
+                Query.Filters = new  List<IFilter<PlanModel>>
                 {
-                       new PlanModelsByAccountId(account.Id),
-                        new PlanModelsByPlanType(PlanTypeModel.MaxSpend),
-                     new PlanModelsByCompletition(false),
-                        new PlanModelsByDeadlineFrom(DateTime.Now)
+                       new PlansByAccountId(account.Id),
+                        new PlansByType(PlanTypeModel.MaxSpend),
+                     new PlansByCompletition(false),
+                        new PlansByDeadlineFrom(DateTime.Now)
                 };
                 var maxSpendPlans = GetList();
                 foreach (var plan in maxSpendPlans) // CHECK EVERY MAX SPEND PLAN THAT IS NO COMPLETED YET, REACHED ITS DEADLINE
                 {
                     if (plan.Deadline != null)
-                        _costInfosQuery.Filters = new List<FilterModel<CostInfoModel>> // USES EVERY COST OF PLANNED TYPE FROM START TO DEADLINE
+                        _costInfosQuery.Filters = new List<IFilter<CostInfoModel>> // USES EVERY COST OF PLANNED TYPE FROM START TO DEADLINE
                         {
-                            new CostInfoModelsByPlannedTypeId(plan.PlannedTypeId),
-                            new CostInfoModelsByCreatedFrom(plan.Start),
-                            new CostInfoModelsByCreatedTo(plan.Deadline.Value)
+                            new CostInfosByTypeId(plan.PlannedTypeId),
+                            new CostInfosByCreatedFrom(plan.Start),
+                            new CostInfosByCreatedTo(plan.Deadline.Value)
                         };
                     var costInfos = _costInfosQuery.Execute();
                     if (costInfos.Sum(x => x.Money) <= plan.PlannedMoney)

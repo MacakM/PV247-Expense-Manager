@@ -1,9 +1,13 @@
-﻿namespace ExpenseManager.Business.DataTransferObjects.Filters.CostTypes
+﻿using System.Linq;
+using ExpenseManager.Database.DataAccess.FilterInterfaces;
+using ExpenseManager.Database.Entities;
+
+namespace ExpenseManager.Business.DataTransferObjects.Filters.CostTypes
 {
     /// <summary>
     /// Filters by name
     /// </summary>
-    public class CostTypesByName : Filter<CostType>
+    public class CostTypesByName : IFilter<CostTypeModel>
     {
         /// <summary>
         /// Used for filtering based on cost type name
@@ -24,6 +28,16 @@
         {
             Name = name;
             DoExactMatch = doExactMatch;
+        }
+
+        /// <summary>
+        /// Filters query
+        /// </summary>
+        /// <param name="queryable"></param>
+        /// <returns></returns>
+        public IQueryable<CostTypeModel> FilterQuery(IQueryable<CostTypeModel> queryable)
+        {
+            return DoExactMatch ? queryable.Where(costType => costType.Name.Equals(Name)) : queryable.Where(costType => costType.Name.Contains(Name));
         }
     }
 }

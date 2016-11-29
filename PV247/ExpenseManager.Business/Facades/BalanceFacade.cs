@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Filters;
 using ExpenseManager.Business.Services.Interfaces;
+using ExpenseManager.Database.DataAccess.FilterInterfaces;
+using ExpenseManager.Database.Entities;
 
 namespace ExpenseManager.Business.Facades
 {
@@ -167,7 +169,7 @@ namespace ExpenseManager.Business.Facades
         /// <param name="filters">Filters cost infos</param>
         /// <param name="pageAndOrder"></param>
         /// <returns>List of cost infos</returns>
-        public List<CostInfo> ListItems(List<Filter<CostInfo>> filters, PageAndOrderFilter pageAndOrder)
+        public List<CostInfo> ListItems(List<IFilter<CostInfoModel>> filters, IPageAndOrderable<CostInfoModel> pageAndOrder)
         {
             return _costInfoService.ListCostInfos(filters, pageAndOrder);
         }
@@ -179,7 +181,7 @@ namespace ExpenseManager.Business.Facades
         /// <param name="filters"></param>
         /// <param name="pageAndOrder"></param>
         /// <returns></returns>
-        public int GetCostInfosCount(List<Filter<CostInfo>> filters, PageAndOrderFilter pageAndOrder)
+        public int GetCostInfosCount(List<IFilter<CostInfoModel>> filters, IPageAndOrderable<CostInfoModel> pageAndOrder)
         {
             return _costInfoService.GetCostInfosCount(filters, pageAndOrder);
         }
@@ -228,7 +230,7 @@ namespace ExpenseManager.Business.Facades
         /// <param name="filters">Filters plans</param>
         /// <param name="pageAndOrder"></param>
         /// <returns></returns>
-        public List<Plan> ListPlans(List<Filter<Plan>> filters, PageAndOrderFilter pageAndOrder)
+        public List<Plan> ListPlans(List<IFilter<PlanModel>> filters, IPageAndOrderable<PlanModel> pageAndOrder)
         {
             return _planService.ListPlans(filters, pageAndOrder);
         }
@@ -278,7 +280,7 @@ namespace ExpenseManager.Business.Facades
         /// <param name="filters">Filters cost types</param>
         /// <param name="pageAndOrder"></param>
         /// <returns>List of cost typer</returns>
-        public List<CostType> ListItemTypes(List<Filter<CostType>> filters, PageAndOrderFilter pageAndOrder)
+        public List<CostType> ListItemTypes(List<IFilter<CostTypeModel>> filters, IPageAndOrderable<CostTypeModel> pageAndOrder)
         {
             return _costTypeService.ListCostTypes(filters, pageAndOrder);
         }
@@ -328,7 +330,7 @@ namespace ExpenseManager.Business.Facades
         /// <param name="filters">Filters badges</param>
         /// <param name="pageAndOrder"></param>
         /// <returns></returns>
-        public List<Badge> ListBadges(List<Filter<Badge>> filters, PageAndOrderFilter pageAndOrder)
+        public List<Badge> ListBadges(List<IFilter<BadgeModel>> filters, IPageAndOrderable<BadgeModel> pageAndOrder)
         {
             return _badgeService.ListBadges(filters, pageAndOrder);
         }

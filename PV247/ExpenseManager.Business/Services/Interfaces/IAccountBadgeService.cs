@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Filters;
+using ExpenseManager.Database.DataAccess.FilterInterfaces;
+using ExpenseManager.Database.Entities;
 
 namespace ExpenseManager.Business.Services.Interfaces
 { 
@@ -41,6 +43,6 @@ namespace ExpenseManager.Business.Services.Interfaces
         /// <param name="filters">Filters account badgess</param>
         /// <param name="pageAndOrder"></param>
         /// <returns></returns>
-        List<AccountBadge> ListAccountBadges(List<Filter<AccountBadge>> filters, PageAndOrderFilter pageAndOrder);
+        List<AccountBadge> ListAccountBadges(List<IFilter<AccountBadgeModel>> filters, IPageAndOrderable<AccountBadgeModel> pageAndOrder);
     }
 }

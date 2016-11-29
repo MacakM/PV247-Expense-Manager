@@ -108,29 +108,8 @@
     <Compile Include="Enums\PeriodicityModel.cs" />
     <Compile Include="Enums\PlanTypeModel.cs" />
     <Compile Include="ExpenseDbContext.cs" />
-    <Compile Include="Filters\Accounts\AccountModelsByName.cs" />
-    <Compile Include="Filters\Badges\BadgeModelsByName.cs" />
-    <Compile Include="Filters\CostInfos\CostInfoModelsByAccountId.cs" />
-    <Compile Include="Filters\CostInfos\CostInfoModelsByCreatedFrom.cs" />
-    <Compile Include="Filters\CostInfos\CostInfoModelsByCreatedTo.cs" />
-    <Compile Include="Filters\CostInfos\CostInfoModelsByIsIncome.cs" />
-    <Compile Include="Filters\CostInfos\CostInfoModelsByItsPeriodicity.cs" />
-    <Compile Include="Filters\CostInfos\CostInfoModelsByMoneyFrom.cs" />
-    <Compile Include="Filters\CostInfos\CostInfoModelsByMoneyTo.cs" />
-    <Compile Include="Filters\CostInfos\CostInfoModelsByPlannedTypeId.cs" />
-    <Compile Include="Filters\CostTypes\CostTypeModelsByName.cs" />
-    <Compile Include="Filters\FilterModel.cs" />
-    <Compile Include="Filters\PageAndOrderModelFilter.cs" />
-    <Compile Include="Filters\Plans\PlanModelsByAccountId.cs" />
-    <Compile Include="Filters\Plans\PlanModelsByCompletition.cs" />
-    <Compile Include="Filters\Plans\PlanModelsByDeadlineFrom.cs" />
-    <Compile Include="Filters\Plans\PlanModelsByPlannedMoneyTo.cs" />
-    <Compile Include="Filters\Plans\PlanModelsByPlanType.cs" />
-    <Compile Include="Filters\Users\UserModelsByAccessType.cs" />
-    <Compile Include="Filters\Users\UserModelsByAccountId.cs" />
-    <Compile Include="Filters\Users\UserModelsByAccountName.cs" />
-    <Compile Include="Filters\Users\UserModelsByEmail.cs" />
-    <Compile Include="Filters\Users\UserModelsByName.cs" />
+    <Compile Include="DataAccess\FilterInterfaces\IFilter.cs" />
+    <Compile Include="DataAccess\FilterInterfaces\IPageAndOrderable.cs" />
     <Compile Include="Infrastructure\ConnectionConfiguration\ConnectionOptions.cs" />
     <Compile Include="Infrastructure\Query\ExpenseManagerQuery.cs" />
     <Compile Include="Infrastructure\Repository\ExpenseManagerRepository.cs" />
@@ -151,9 +130,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Filters\AccountBadges\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
