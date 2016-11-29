@@ -13,7 +13,7 @@ namespace ExpenseManager.Database.DataAccess.Repositories
         /// <summary>
         /// Create repository.
         /// </summary>
-        /// <param name="provider">UoW provider</param>
+        /// <param name="provider">unitOfWork provider</param>
         public AccountRepository(IUnitOfWorkProvider provider) : base(provider) { }
     }
 }

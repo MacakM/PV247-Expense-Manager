@@ -61,7 +61,7 @@ namespace ExpenseManager.Business.Services.Implementations
         public Guid CreateAccount(Guid userId)
         {
             Guid accountId;
-            using (var uow = UnitOfWorkProvider.Create())
+            using (var unitOfWork = UnitOfWorkProvider.Create())
             {
                 var user = _userRepository.GetById(userId);
 
@@ -77,7 +77,7 @@ namespace ExpenseManager.Business.Services.Implementations
                 };
 
                 Repository.Insert(account);
-                uow.Commit();
+                unitOfWork.Commit();
                 accountId = account.Id;
             }
             return accountId;
@@ -132,13 +132,13 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="accessType"></param>
         public void AttachAccountToUser(Guid userId, Guid accountId, AccountAccessType accessType)
         {
-            using (var uow = UnitOfWorkProvider.Create())
+            using (var unitOfWork = UnitOfWorkProvider.Create())
             {
                 var user = _userRepository.GetById(userId);
                 var account = Repository.GetById(accountId);
                 user.Account = account;
                 user.AccessType = (AccountAccessTypeModel)accessType;
-                uow.Commit();
+                unitOfWork.Commit();
             }
         }
     }

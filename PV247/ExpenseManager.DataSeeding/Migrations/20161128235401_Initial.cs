@@ -4,8 +4,15 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ExpenseManager.DataSeeding.Migrations
 {
+    /// <summary>
+    /// Initial migration
+    /// </summary>
     public partial class Initial : Migration
     {
+        /// <summary>
+        /// Migrate to Initial
+        /// </summary>
+        /// <param name="migrationBuilder">The model builder</param>
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -189,6 +196,10 @@ namespace ExpenseManager.DataSeeding.Migrations
                 column: "UserId");
         }
 
+        /// <summary>
+        /// Migrate from Initial
+        /// </summary>
+        /// <param name="migrationBuilder">The model builder</param>
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(

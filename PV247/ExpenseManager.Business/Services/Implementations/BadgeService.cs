@@ -105,7 +105,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// </summary>
         public void CheckBadgesRequirements()
         {
-            using (var uow = UnitOfWorkProvider.Create())
+            using (var unitOfWork = UnitOfWorkProvider.Create())
             {
                 var allAccounts = _accountsQuery.Execute();
                 var allBadges = Query.Execute();
@@ -127,7 +127,7 @@ namespace ExpenseManager.Business.Services.Implementations
                         }
                     }
                 }
-                uow.Commit();
+                unitOfWork.Commit();
             }
         }
     }

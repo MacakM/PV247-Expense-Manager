@@ -63,7 +63,7 @@ namespace ExpenseManager.Business.Services.Implementations
         public Guid CreateCostInfo(CostInfo costInfo)
         {
             var costInfoModel = ExpenseManagerMapper.Map<CostInfoModel>(costInfo);
-            using (var uow = UnitOfWorkProvider.Create())
+            using (var unitOfWork = UnitOfWorkProvider.Create())
             {
                 var account = _accountRepository.GetById(costInfo.AccountId);
                 var type = _costTypeRepository.GetById(costInfo.TypeId);
@@ -77,7 +77,7 @@ namespace ExpenseManager.Business.Services.Implementations
                 costInfoModel.Type = type;
 
                 Repository.Insert(costInfoModel);
-                uow.Commit();
+                unitOfWork.Commit();
             }
             return costInfoModel.Id;
         }

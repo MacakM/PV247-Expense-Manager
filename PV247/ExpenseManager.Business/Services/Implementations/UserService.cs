@@ -60,16 +60,16 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="modifiedUser">Updated user information</param>
         public void UpdateUser(User modifiedUser)
         {
-            using (var uow = UnitOfWorkProvider.Create())
+            using (var unitOfWork = UnitOfWorkProvider.Create())
             {
-                uow.RegisterAfterCommitAction(() => Debug.WriteLine($"Successfully modified user with email: {modifiedUser.Email}"));
+                unitOfWork.RegisterAfterCommitAction(() => Debug.WriteLine($"Successfully modified user with email: {modifiedUser.Email}"));
                 var user = _userRepository.GetUserByEmail(modifiedUser.Email, EntityIncludes);
                 if (user == null)
                 {
                     throw new InvalidOperationException($"Cannot update user with email: { modifiedUser.Email }, the user is not persisted yet!");
                 }
                 _userRepository.Update(user);
-                uow.Commit();
+                unitOfWork.Commit();
             }
         }
 

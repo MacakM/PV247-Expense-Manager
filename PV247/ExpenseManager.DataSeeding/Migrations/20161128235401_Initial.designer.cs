@@ -10,6 +10,10 @@ namespace ExpenseManager.DataSeeding.Migrations
     [Migration("20161128235401_Initial")]
     partial class Initial
     {
+        /// <summary>
+        /// Builds target model
+        /// </summary>
+        /// <param name="modelBuilder">model builder</param>
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder

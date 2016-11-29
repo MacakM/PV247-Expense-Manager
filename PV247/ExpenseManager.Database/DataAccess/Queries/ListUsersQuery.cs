@@ -14,7 +14,7 @@ namespace ExpenseManager.Database.DataAccess.Queries
         /// <summary>
         /// Create query.
         /// </summary>
-        /// <param name="provider">UoW provider</param>
+        /// <param name="provider">unitOfWork provider</param>
         public ListUsersQuery(IUnitOfWorkProvider provider) : base(provider)
         {
         }
