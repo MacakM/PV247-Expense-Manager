@@ -44,19 +44,21 @@ namespace ExpenseManager.Business.Tests.Facades
         [Test]
         public void CreateAccount_NewAccount_CreatesAccount()
         {
+            const string accountName = "ExpenseManagerAccount01";
+
             // Arrange
             var account = new Account
             {
                 Badges = new List<AccountBadge>(),
                 Costs = new List<CostInfo>(),
-                Name = "ExpenseManagerAccount01"
+                Name = accountName
             };
 
             // Act
-            var createdAccountId = _accountFacade.CreateAccount(account);
+            _accountFacade.CreateAccount(account);
 
             // Assert
-            var createdAccount = GetAccountById(createdAccountId);
+            var createdAccount = GetAccountByName(accountName);
             Assert.That(createdAccount != null, "Account was not created.");
         }
 
@@ -315,6 +317,14 @@ namespace ExpenseManager.Business.Tests.Facades
             Assert.That(obtainedAccounts.Count == 1 && obtainedAccounts.First().Name.Equals(account2Name), "ListAccounts failed - actual result does not match with expected one");
         }
         
+        private static AccountModel GetAccountByName(string accountName)
+        {
+            using (var dbContext = new ExpenseDbContext(Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
+            {
+                return dbContext.Accounts.FirstOrDefault(account => account.Name.Equals(accountName));
+            }
+        }
+
         private static AccountModel GetAccountById(Guid accountId)
         {
             using (var dbContext = new ExpenseDbContext(Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
