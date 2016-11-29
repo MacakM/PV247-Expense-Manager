@@ -3,7 +3,7 @@
 namespace ExpenseManager.Database.Filters
 {
     /// <summary>
-    /// General filter interface
+    /// General filter base class
     /// </summary>
     public abstract class FilterModel<T>
     {

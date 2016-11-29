@@ -643,6 +643,7 @@ namespace ExpenseManager.Business.Tests.Facades
         {
             throw new AssertFailedException();
         }
+
         /// <summary>
         /// Tests creation of CostType.
         /// </summary>
@@ -665,6 +666,7 @@ namespace ExpenseManager.Business.Tests.Facades
             var createdType = GetTypeByName(typeName);
             Assert.That(createdType != null, "Type was not created.");
         }
+
         /// <summary>
         /// Tests deletion of CostType.
         /// </summary>
@@ -696,6 +698,7 @@ namespace ExpenseManager.Business.Tests.Facades
             var deletedType = GetTypeByName(typeName);
             Assert.That(deletedType == null, "Type was not deleted.");
         }
+
         /// <summary>
         /// Tests CostType update.
         /// </summary>
@@ -733,6 +736,7 @@ namespace ExpenseManager.Business.Tests.Facades
             var updatedType = GetTypeByName(typeName2);
             Assert.That(updatedType != null, "Type was not updated.");
         }
+
         /// <summary>
         /// Tests CostType get.
         /// </summary>
@@ -763,6 +767,7 @@ namespace ExpenseManager.Business.Tests.Facades
             // Assert
             Assert.That(myType != null, "Type was not got.");
         }
+
         /// <summary>
         /// Test basic listing of CostInfos.
         /// </summary>
@@ -798,6 +803,7 @@ namespace ExpenseManager.Business.Tests.Facades
             // Assert
             Assert.That(types.Count == 2, "Types were not listed.");
         }
+
         /// <summary>
         /// Test listing with filter.
         /// </summary>
@@ -856,6 +862,7 @@ namespace ExpenseManager.Business.Tests.Facades
             var createdBadge = GetBadgeByName(badgeName);
             Assert.That(createdBadge != null, "Badge was not created.");
         }
+
         /// <summary>
         /// Tests Badge deletion.
         /// </summary>
@@ -919,6 +926,7 @@ namespace ExpenseManager.Business.Tests.Facades
             var updatedBadge = GetBadgeByName(badgeName2);
             Assert.That(updatedBadge != null, "Badge was not updated.");
         }
+
         /// <summary>
         /// Tests Badge get.
         /// </summary>
