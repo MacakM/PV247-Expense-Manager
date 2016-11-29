@@ -27,6 +27,10 @@ School project for PV247 (FI MUNI Brno)
 * Don't use very short names that does not clearly imply meaning (exceptions: using (var sb = new StringBuilder()) or LINQ lambdas)
 * Don't use very long names, they should not contain prepositions, conjunctions and similar words (instead of numberOfPlayersThatAreOnline use onlinePlayersCount)
 
+## Important ##
+### Startup ###
+* Before starting the ExpenseManager.Presentation project, make sure you have launched the ExpenseManager.DataSeeding project in order to ensure both Databases are created and initialized.
+
 ## Tools ##
 ### Productivity ###
 * Resharper Ultimate 2016.2.2
