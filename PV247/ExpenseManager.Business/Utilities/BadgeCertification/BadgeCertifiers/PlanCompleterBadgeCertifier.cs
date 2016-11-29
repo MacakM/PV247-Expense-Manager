@@ -24,10 +24,6 @@ namespace ExpenseManager.Business.Utilities.BadgeCertification.BadgeCertifiers
         /// <returns>True if badge can be assigned</returns>
         protected override bool CanAssignBadgeCore(AccountModel userAccount)
         {
-            if (userAccount.Badges.Any(badge => badge.Badge.Name.Equals(GetBadgeName())))
-            {
-                return false;
-            }
             return userAccount.Plans.Count(plan => plan.IsCompleted) >= RequiredPlansToAssignBadge;
         }
     }

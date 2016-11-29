@@ -75,6 +75,7 @@ namespace ExpenseManager.Business.Infrastructure
             else
             {
                 var entity = Repository.GetById(item.Id, EntityIncludes);
+                ExpenseManagerMapper.Map(item, entity);
                 Repository.Update(entity);
             }
         }

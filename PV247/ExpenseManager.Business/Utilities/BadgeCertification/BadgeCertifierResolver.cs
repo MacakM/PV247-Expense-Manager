@@ -21,7 +21,7 @@ namespace ExpenseManager.Business.Utilities.BadgeCertification
         {
             // TODO: this is far from optimal solution, the best way will be to integrate proper DI framework within PL to do the job and solve several issues at once
             foreach (var type in Assembly.GetExecutingAssembly().GetTypes()
-                .Where(type => type.GetInterfaces().Contains(typeof(BadgeCertifier))))
+                .Where(type => type.IsSubclassOf(typeof(BadgeCertifier))))
             {
                 _badgeCertifiers.Add(Activator.CreateInstance(type) as BadgeCertifier);
             }

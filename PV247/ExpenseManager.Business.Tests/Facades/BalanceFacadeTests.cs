@@ -268,6 +268,11 @@ namespace ExpenseManager.Business.Tests.Facades
                 plan5.PlannedType = type;
 
                 db.Plans.Add(plan);
+                db.Plans.Add(plan1);
+                db.Plans.Add(plan2);
+                db.Plans.Add(plan3);
+                db.Plans.Add(plan4);
+                db.Plans.Add(plan5);
                 db.SaveChanges();
                 var item = new CostInfoModel()
                 {
@@ -283,6 +288,15 @@ namespace ExpenseManager.Business.Tests.Facades
                     PeriodicMultiplicity = 3
                 };
                 db.CostInfos.Add(item);
+
+                db.Badges.Add(new BadgeModel
+                {
+                    Accounts = new List<AccountBadgeModel>(),
+                    BadgeImgUri = "badge.png",
+                    Name = "PlanCompleter",
+                    Description = "Complete at least 5 plans"
+                });
+
                 db.SaveChanges();
             }
             _balanceFacade.CheckBadgesRequirements();
@@ -317,7 +331,7 @@ namespace ExpenseManager.Business.Tests.Facades
                 PlannedType = type,
                 IsCompleted = false,
                 Start = DateTime.Now.Subtract(new TimeSpan(100, 0, 0, 0)),
-                Deadline = DateTime.Now.Subtract(new TimeSpan(0,0,1,0))
+                Deadline = DateTime.Now.Add(new TimeSpan(0,0,1,0))
             };
             using (
                 var db =
@@ -338,7 +352,7 @@ namespace ExpenseManager.Business.Tests.Facades
                     AccountId = accountId,
                     TypeId = type.Id,
                     IsIncome = true,
-                    Money = 10001,
+                    Money = 999,
                     Created = DateTime.Now.Subtract(new TimeSpan(100, 0, 0, 0)),
                     Account = db.Accounts.Find(accountId),
                     Type = db.CostTypes.Find(type.Id),
