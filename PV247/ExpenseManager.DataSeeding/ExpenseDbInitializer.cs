@@ -13,6 +13,10 @@ namespace ExpenseManager.DataSeeding
     /// </summary>
     public class ExpenseDbInitializer : IDatabaseInitializer<ExpenseDbContext>
     {
+        /// <summary>
+        /// Performs ExpenseDB initialization
+        /// </summary>
+        /// <param name="context">ExpenseDbContext to initialize the db</param>
         public void InitializeDatabase(ExpenseDbContext context)
         {
             TruncateDB(context);
@@ -244,7 +248,8 @@ namespace ExpenseManager.DataSeeding
             DeleteAll<BadgeModel>(context);
         }
 
-        public static void DeleteAll<T>(DbContext context) where T : class
+
+        private static void DeleteAll<T>(DbContext context) where T : class
         {
             foreach (var p in context.Set<T>())
             {
