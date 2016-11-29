@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using ExpenseManager.Business.DataTransferObjects;
-using ExpenseManager.Business.DataTransferObjects.Filters;
 using ExpenseManager.Business.Infrastructure;
 using ExpenseManager.Database.Entities;
 using ExpenseManager.Database.Infrastructure.Repository;
@@ -44,10 +43,10 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="repository">Repository</param>
         /// <param name="expenseManagerMapper">Mapper</param>
         /// <param name="unitOfWorkProvider">Unit of work provider</param>
-        /// <param name="certifierResolver"></param>
-        /// <param name="accountBadgeRepository"></param>
-        /// <param name="badgesQuery"></param>
-        /// <param name="accountsQuery"></param>
+        /// <param name="certifierResolver">Resolves badge certifiers according to badge name</param>
+        /// <param name="accountBadgeRepository">Repository for accountBadges</param>
+        /// <param name="badgesQuery">Query object for retrieving badges</param>
+        /// <param name="accountsQuery">Query object for retrieving accounts</param>
         public BadgeService(ExpenseManagerQuery<BadgeModel> query, ExpenseManagerRepository<BadgeModel, Guid> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider, ListBadgesQuery badgesQuery, ListAccountsQuery accountsQuery, IBadgeCertifierResolver certifierResolver, ExpenseManagerRepository<AccountBadgeModel, Guid> accountBadgeRepository) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
         {
             _badgesQuery = badgesQuery;
