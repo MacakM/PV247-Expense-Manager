@@ -7,6 +7,7 @@ using Castle.Windsor;
 using ExpenseManager.Business.Facades;
 using ExpenseManager.Business.Infrastructure.Mapping.Profiles;
 using ExpenseManager.Business.Services.Interfaces;
+using ExpenseManager.Business.Utilities.BadgeCertification;
 using ExpenseManager.Database;
 using ExpenseManager.Database.DataAccess.Repositories;
 using ExpenseManager.Database.Entities;
@@ -40,7 +41,10 @@ namespace ExpenseManager.Business.Tests
             container.Register(
 
                 Component.For<Func<DbContext>>()
-                    .Instance(() => new ExpenseDbContext(Effort.DbConnectionFactory.CreatePersistent(ExpenseManagerTestDbConnection)))
+                    .Instance(
+                        () =>
+                            new ExpenseDbContext(
+                                Effort.DbConnectionFactory.CreatePersistent(ExpenseManagerTestDbConnection)))
                     .LifestyleTransient(),
 
                 Component.For<AccountFacade>()
@@ -49,7 +53,7 @@ namespace ExpenseManager.Business.Tests
                 Component.For<Mapper>()
                     .Instance(mapper as Mapper)
                     .LifestyleSingleton(),
-                
+
                 Component.For<BalanceFacade>()
                     .LifestyleTransient(),
 
@@ -61,16 +65,20 @@ namespace ExpenseManager.Business.Tests
                     .Instance(new HttpContextUnitOfWorkRegistry(new ThreadLocalUnitOfWorkRegistry()))
                     .LifestyleSingleton(),
 
-                Classes.FromAssemblyContaining<ExpenseManagerUnitOfWork>()                
-                    .BasedOn(typeof(ExpenseManagerRepository<,>))
-                    .Unless(type => type == typeof(ExpenseManagerRepository<UserModel, Guid>))
+                Classes.FromAssemblyContaining<ExpenseManagerUnitOfWork>()
+                    .BasedOn(typeof (ExpenseManagerRepository<,>))
+                    .Unless(type => type == typeof (ExpenseManagerRepository<UserModel, Guid>))
                     .LifestyleTransient(),
 
-               Component.For<UserRepository>()
+                Component.For<UserRepository>()
                     .ImplementedBy<UserRepository>()
                     .IsDefault()
                     .Named(Guid.NewGuid().ToString())
                     .LifestyleTransient(),
+
+                Component.For<IBadgeCertifierResolver>()
+                    .ImplementedBy<BadgeCertifierResolver>()
+                    .LifestyleSingleton(),
 
                 Classes.FromAssemblyContaining<ExpenseManagerUnitOfWork>()
                     .BasedOn(typeof(ExpenseManagerQuery<>)).WithService.Base()

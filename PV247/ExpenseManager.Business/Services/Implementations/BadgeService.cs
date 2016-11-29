@@ -22,9 +22,7 @@ namespace ExpenseManager.Business.Services.Implementations
     {
         private readonly IBadgeCertifierResolver _certifierResolver;
 
-        private readonly ListBadgesQuery _badgesQuery;
-
-        private readonly ListAccountsQuery _accountsQuery;
+        private readonly ExpenseManagerQuery<AccountModel> _accountsQuery;
 
         private readonly ExpenseManagerRepository<AccountBadgeModel, Guid> _accountBadgeRepository;
 
@@ -45,11 +43,9 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="unitOfWorkProvider">Unit of work provider</param>
         /// <param name="certifierResolver">Resolves badge certifiers according to badge name</param>
         /// <param name="accountBadgeRepository">Repository for accountBadges</param>
-        /// <param name="badgesQuery">Query object for retrieving badges</param>
         /// <param name="accountsQuery">Query object for retrieving accounts</param>
-        public BadgeService(ExpenseManagerQuery<BadgeModel> query, ExpenseManagerRepository<BadgeModel, Guid> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider, ListBadgesQuery badgesQuery, ListAccountsQuery accountsQuery, IBadgeCertifierResolver certifierResolver, ExpenseManagerRepository<AccountBadgeModel, Guid> accountBadgeRepository) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
+        public BadgeService(ExpenseManagerQuery<BadgeModel> query, ExpenseManagerRepository<BadgeModel, Guid> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider, ExpenseManagerQuery<AccountModel> accountsQuery, IBadgeCertifierResolver certifierResolver, ExpenseManagerRepository<AccountBadgeModel, Guid> accountBadgeRepository) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
         {
-            _badgesQuery = badgesQuery;
             _accountsQuery = accountsQuery;
             _certifierResolver = certifierResolver;
             _accountBadgeRepository = accountBadgeRepository;
@@ -112,7 +108,7 @@ namespace ExpenseManager.Business.Services.Implementations
             using (var uow = UnitOfWorkProvider.Create())
             {
                 var allAccounts = _accountsQuery.Execute();
-                var allBadges = _badgesQuery.Execute();
+                var allBadges = Query.Execute();
                 foreach (var account in allAccounts)
                 {
                     foreach (var badge in allBadges)

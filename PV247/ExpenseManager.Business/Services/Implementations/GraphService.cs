@@ -4,6 +4,7 @@ using System.Linq;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.Services.Interfaces;
 using ExpenseManager.Database.DataAccess.Queries;
+using ExpenseManager.Database.Infrastructure.Query;
 using Riganti.Utils.Infrastructure.Core;
 
 namespace ExpenseManager.Business.Services.Implementations
@@ -23,11 +24,11 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="balancesGroupedByDayQuery"></param>
         /// <param name="unitOfWorkProvider"></param>
         /// <param name="costInfoService"></param>
-        public GraphService(BalancesGroupedByDayQuery balancesGroupedByDayQuery,
+        public GraphService(ExpenseManagerQuery<DayBalance> balancesGroupedByDayQuery,
             IUnitOfWorkProvider unitOfWorkProvider,
             ICostInfoService costInfoService)
         {
-            _balancesGroupedByDayQuery = balancesGroupedByDayQuery;
+            _balancesGroupedByDayQuery = balancesGroupedByDayQuery as BalancesGroupedByDayQuery;
             _unitOfWorkProvider = unitOfWorkProvider;
             _costInfoService = costInfoService;
         }
