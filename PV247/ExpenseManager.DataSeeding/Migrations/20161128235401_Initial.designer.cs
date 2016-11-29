@@ -3,11 +3,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using ExpenseManager.Identity;
 
-namespace ExpenseManager.DataInitialization.Migrations
+namespace ExpenseManager.DataSeeding.Migrations
 {
-    [DbContext(typeof(ExpenseManager.Identity.IdentityDbContext))]
+    [DbContext(typeof(Identity.IdentityDbContext))]
     [Migration("20161128235401_Initial")]
     partial class Initial
     {

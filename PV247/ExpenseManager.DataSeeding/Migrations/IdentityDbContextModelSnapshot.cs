@@ -1,10 +1,10 @@
 ﻿using System;
+using ExpenseManager.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using ExpenseManager.Identity;
 
-namespace ExpenseManager.DataInitialization.Migrations
+namespace ExpenseManager.DataSeeding.Migrations
 {
     [DbContext(typeof(IdentityDbContext))]
     partial class IdentityDbContextModelSnapshot : ModelSnapshot

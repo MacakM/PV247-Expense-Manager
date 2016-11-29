@@ -1,8 +1,8 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace ExpenseManager.DataInitialization.Migrations
+namespace ExpenseManager.DataSeeding.Migrations
 {
     public partial class Initial : Migration
     {
