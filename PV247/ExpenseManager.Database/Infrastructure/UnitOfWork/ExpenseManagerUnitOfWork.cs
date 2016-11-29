@@ -24,20 +24,20 @@ namespace ExpenseManager.Database.Infrastructure.UnitOfWork
         {
             if (reuseParentContext)
             {
-                var parentUow = provider.GetCurrent() as ExpenseManagerUnitOfWork;
-                if (parentUow != null)
+                var parentunitOfWork = provider.GetCurrent() as ExpenseManagerUnitOfWork;
+                if (parentunitOfWork != null)
                 {
-                    this.Context = parentUow.Context;
+                    this.Context = parentunitOfWork.Context;
                     return;
                 }
             }
 
-            var uowProvider = (ExpenseManagerUnitOfWorkProvider) provider;
+            var unitOfWorkProvider = (ExpenseManagerUnitOfWorkProvider) provider;
            
-            Context = uowProvider.ConnectionOptions == null
-                ? uowProvider.DbContextFactory?.Invoke() as ExpenseDbContext 
+            Context = unitOfWorkProvider.ConnectionOptions == null
+                ? unitOfWorkProvider.DbContextFactory?.Invoke() as ExpenseDbContext 
                 // internal DbContext shall not be injected in some scenarios in order to increase persistence separation
-                : new ExpenseDbContext(uowProvider.ConnectionOptions.Value.ConnectionString);
+                : new ExpenseDbContext(unitOfWorkProvider.ConnectionOptions.Value.ConnectionString);
 
             _hasOwnContext = true;
         }
@@ -86,12 +86,12 @@ namespace ExpenseManager.Database.Infrastructure.UnitOfWork
         /// </summary>
         public static DbContext TryGetDbContext(IUnitOfWorkProvider provider)
         {
-            var uow = provider.GetCurrent() as ExpenseManagerUnitOfWork;
-            if (uow == null)
+            var unitOfWork = provider.GetCurrent() as ExpenseManagerUnitOfWork;
+            if (unitOfWork == null)
             {
                 throw new InvalidOperationException("The EntityFrameworkRepository must be used in a unit of work of type EntityFrameworkUnitOfWork!");
             }
-            return uow.Context;
+            return unitOfWork.Context;
         }
     }
 }

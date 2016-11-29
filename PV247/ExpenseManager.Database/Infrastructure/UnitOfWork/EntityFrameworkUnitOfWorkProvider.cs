@@ -19,7 +19,7 @@ namespace ExpenseManager.Database.Infrastructure.UnitOfWork
         /// Constructor.
         /// </summary>
         /// <param name="connectionOptions">connection options</param>
-        /// <param name="registry">Storage for UoW instances</param>
+        /// <param name="registry">Storage for unitOfWork instances</param>
         public ExpenseManagerUnitOfWorkProvider(IOptions<ConnectionOptions> connectionOptions,
             IUnitOfWorkRegistry registry)
             : base(registry)
@@ -31,7 +31,7 @@ namespace ExpenseManager.Database.Infrastructure.UnitOfWork
         /// Alternative variant with db context factory for injecting custom Db Context (currently used for testing)
         /// </summary>
         /// <param name="dbContextFactory">db context factory</param>
-        /// <param name="registry">Storage for UoW instances</param>
+        /// <param name="registry">Storage for unitOfWork instances</param>
         public ExpenseManagerUnitOfWorkProvider(Func<DbContext> dbContextFactory, IUnitOfWorkRegistry registry)            
             : base(registry)
         {

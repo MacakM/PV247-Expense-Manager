@@ -79,7 +79,7 @@ namespace ExpenseManager.Business.Services.Implementations
         public Guid CreatePlan(Plan plan)
         {
             var planModel = ExpenseManagerMapper.Map<PlanModel>(plan);
-            using (var uow = UnitOfWorkProvider.Create())
+            using (var unitOfWork = UnitOfWorkProvider.Create())
             {
                 if (plan.AccountId != null)
                 {
@@ -96,7 +96,7 @@ namespace ExpenseManager.Business.Services.Implementations
                 }
 
                 Repository.Insert(planModel);
-                uow.Commit();
+                unitOfWork.Commit();
             }
             return planModel.Id;
         }
@@ -154,7 +154,7 @@ namespace ExpenseManager.Business.Services.Implementations
                throw new ArgumentException("PlanType.Save is the right one.");
             }
 
-            using (var uow = UnitOfWorkProvider.Create())
+            using (var unitOfWork = UnitOfWorkProvider.Create())
             {
                 var planModel = Repository.GetById(plan.Id, EntityIncludes);
                 if (planModel == null)
@@ -164,7 +164,7 @@ namespace ExpenseManager.Business.Services.Implementations
 
                 planModel.IsCompleted = true;
                 CloneToCost(planModel);
-                uow.Commit();
+                unitOfWork.Commit();
             }
         }
 

@@ -35,7 +35,7 @@ namespace ExpenseManager.Business.Infrastructure
         /// </summary>
         /// <param name="repository">repository used by this service</param>
         /// <param name="expenseManagerMapper">mapper</param>
-        /// <param name="unitOfWorkProvider">uow provider</param>
+        /// <param name="unitOfWorkProvider">unitOfWork provider</param>
         protected ExpenseManagerCrudServiceBase(ExpenseManagerRepository<TEntity, TKey> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider)
         {
             UnitOfWorkProvider = unitOfWorkProvider;
@@ -60,10 +60,10 @@ namespace ExpenseManager.Business.Infrastructure
         /// </summary>
         public virtual void Delete(TKey id)
         {
-            using (var uow = UnitOfWorkProvider.Create())
+            using (var unitOfWork = UnitOfWorkProvider.Create())
             {
                 Repository.Delete(id);
-                uow.Commit();
+                unitOfWork.Commit();
             }
         }
 
@@ -74,7 +74,7 @@ namespace ExpenseManager.Business.Infrastructure
         {
             var entity = ExpenseManagerMapper.Map<T, TEntity>(item);
             var isNew = item.Id.Equals(default(TKey));
-            using (var uow = UnitOfWorkProvider.Create())
+            using (var unitOfWork = UnitOfWorkProvider.Create())
             {
                 if (isNew)
                 {
@@ -84,7 +84,7 @@ namespace ExpenseManager.Business.Infrastructure
                 {
                     Repository.Update(entity);
                 }
-                uow.Commit();
+                unitOfWork.Commit();
             }
 
             if (isNew)
