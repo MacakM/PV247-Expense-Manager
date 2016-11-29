@@ -217,7 +217,6 @@ namespace ExpenseManager.Business.Services.Implementations
                 new PlansByMoneyTo(accountBalance),
                 new PlansByType(PlanTypeModel.Save),
                 new PlansByCompletition(false),
-                new PlansByDeadlineFrom(DateTime.Now)
             };
             using (UnitOfWorkProvider.Create())
             {
