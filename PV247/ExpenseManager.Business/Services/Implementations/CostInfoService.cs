@@ -88,7 +88,11 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="updatedCostInfo">updated cost info</param>
         public void UpdateCostInfo(CostInfo updatedCostInfo)
         {
-            Save(updatedCostInfo);
+            using (var unitOfWork = UnitOfWorkProvider.Create())
+            {
+                Save(updatedCostInfo);
+                unitOfWork.Commit();
+            }
         }
 
         /// <summary>
@@ -97,7 +101,11 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="costInfoId"></param>
         public void DeleteCostInfo(Guid costInfoId)
         {
-            Delete(costInfoId);
+            using (var unitOfWork = UnitOfWorkProvider.Create())
+            {
+                Delete(costInfoId);
+                unitOfWork.Commit();
+            }           
         }
 
         /// <summary>
@@ -107,10 +115,11 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <returns>Cost info</returns>
         public CostInfo GetCostInfo(Guid costInfoId)
         {
-            return GetDetail(costInfoId);
-        }
-
-      
+            using (UnitOfWorkProvider.Create())
+            {
+                return GetDetail(costInfoId);
+            }           
+        }     
 
         /// <summary>
         /// List cost types based on filter
@@ -122,7 +131,10 @@ namespace ExpenseManager.Business.Services.Implementations
         {
             Query.Filters = filters;
             Query.PageAndOrderModelFilterModel = pageAndOrder;
-            return GetList().ToList();
+            using (UnitOfWorkProvider.Create())
+            {
+                return GetList().ToList();
+            }          
         }
      
 
@@ -163,22 +175,29 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <returns></returns>
         public decimal GetBalance(Guid accountId)
         {
-            Query.Filters = new List<IFilter<CostInfoModel>>
+            IList<CostInfo> incomes;
+            IList<CostInfo> outcomes;
+            using (UnitOfWorkProvider.Create())
             {
-                new CostInfosByIsIncome(true),
-                new CostInfosByPeriodicity(PeriodicityModel.None),
-                new CostInfosByCreatedTo(DateTime.Now),
-                new CostInfosByAccountId(accountId)
-            }; 
-            var incomes = GetList();
-            Query.Filters = new List<IFilter<CostInfoModel>>
-            {
-                new CostInfosByIsIncome(false),
-                new CostInfosByPeriodicity(PeriodicityModel.None),
-                new CostInfosByCreatedTo(DateTime.Now),
-                new CostInfosByAccountId(accountId)
-            };
-            var outcomes = GetList();
+                Query.Filters = new List<IFilter<CostInfoModel>>
+                {
+                    new CostInfosByIsIncome(true),
+                    new CostInfosByPeriodicity(PeriodicityModel.None),
+                    new CostInfosByCreatedTo(DateTime.Now),
+                    new CostInfosByAccountId(accountId)
+                }; 
+                
+                incomes = GetList();
+                Query.Filters = new List<IFilter<CostInfoModel>>
+                {
+                    new CostInfosByIsIncome(false),
+                    new CostInfosByPeriodicity(PeriodicityModel.None),
+                    new CostInfosByCreatedTo(DateTime.Now),
+                    new CostInfosByAccountId(accountId)
+                };
+                
+                outcomes = GetList();
+            }
 
             return incomes.Sum(x =>  x.Money) - outcomes.Sum(x => x.Money);
         }
@@ -189,21 +208,27 @@ namespace ExpenseManager.Business.Services.Implementations
             CostInfosByPeriodicity filter = new CostInfosByPeriodicity(PeriodicityModel.Month);
 
             Query.Filters = new List<IFilter<CostInfoModel>> { filter };
-            var monthPeriodicityCosts = GetList().ToList();
 
-            foreach (var monthPeriodicity in monthPeriodicityCosts)
+            using (var unitOfWork = UnitOfWorkProvider.Create())
             {
-                if (monthPeriodicity.Created != null)
+                var monthPeriodicityCosts = GetList().ToList();
+
+                foreach (var monthPeriodicity in monthPeriodicityCosts)
                 {
-                    var created = monthPeriodicity.Created.Value;
-                    if (created <= DateTime.Today) // I look if today is later then next creating time
+                    if (monthPeriodicity.Created != null)
                     {
-                        Save(CloneAsNonPeriodic(monthPeriodicity));
-                        monthPeriodicity.Created = DateTime.Now.AddMonths(monthPeriodicity.PeriodicMultiplicity);
-                        Save(monthPeriodicity);
+                        var created = monthPeriodicity.Created.Value;
+                        if (created <= DateTime.Today) // I look if today is later then next creating time
+                        {
+                            Save(CloneAsNonPeriodic(monthPeriodicity));
+                            monthPeriodicity.Created = DateTime.Now.AddMonths(monthPeriodicity.PeriodicMultiplicity);
+                            Save(monthPeriodicity);
+                        }
                     }
                 }
+                unitOfWork.Commit();
             }
+            
         }
 
         private void CheckWeekPeriodicities()
@@ -212,20 +237,24 @@ namespace ExpenseManager.Business.Services.Implementations
             CostInfosByPeriodicity filter = new CostInfosByPeriodicity(PeriodicityModel.Week);
 
             Query.Filters = new List<IFilter<CostInfoModel>> { filter };
-            var dayPeriodicityCosts = GetList().ToList();
-
-            foreach (var weekPeriodicityCost in dayPeriodicityCosts)
+            using (var unitOfWork = UnitOfWorkProvider.Create())
             {
-                if (weekPeriodicityCost.Created != null)
+                var dayPeriodicityCosts = GetList().ToList();
+
+                foreach (var weekPeriodicityCost in dayPeriodicityCosts)
                 {
-                    var created = weekPeriodicityCost.Created.Value;
-                    if (created <= DateTime.Today) // Week usually has 7 days  // I look if today is later then next creating time
+                    if (weekPeriodicityCost.Created != null)
                     {
-                        Save(CloneAsNonPeriodic(weekPeriodicityCost));
-                        weekPeriodicityCost.Created = DateTime.Now.AddDays(7 * weekPeriodicityCost.PeriodicMultiplicity);
-                        Save(weekPeriodicityCost);
+                        var created = weekPeriodicityCost.Created.Value;
+                        if (created <= DateTime.Today) // Week usually has 7 days  // I look if today is later then next creating time
+                        {
+                            Save(CloneAsNonPeriodic(weekPeriodicityCost));
+                            weekPeriodicityCost.Created = DateTime.Now.AddDays(7 * weekPeriodicityCost.PeriodicMultiplicity);
+                            Save(weekPeriodicityCost);
+                        }
                     }
                 }
+                unitOfWork.Commit();
             }
         }
 
@@ -234,20 +263,24 @@ namespace ExpenseManager.Business.Services.Implementations
             CostInfosByPeriodicity filter = new CostInfosByPeriodicity(PeriodicityModel.Day);
 
             Query.Filters = new List<IFilter<CostInfoModel>> { filter};
-            var dayPeriodicityCosts = GetList().ToList();
-
-            foreach (var dayPeriodicityCost in dayPeriodicityCosts)
+            using (var unitOfWork = UnitOfWorkProvider.Create())
             {
-                if (dayPeriodicityCost.Created != null)
+                var dayPeriodicityCosts = GetList().ToList();
+
+                foreach (var dayPeriodicityCost in dayPeriodicityCosts)
                 {
-                    var created = dayPeriodicityCost.Created.Value;
-                    if (created <= DateTime.Today)  // I look if today is later then next creating time
+                    if (dayPeriodicityCost.Created != null)
                     {
-                        Save(CloneAsNonPeriodic(dayPeriodicityCost));
-                        dayPeriodicityCost.Created = DateTime.Now.AddDays(dayPeriodicityCost.PeriodicMultiplicity);
-                        Save(dayPeriodicityCost);
+                        var created = dayPeriodicityCost.Created.Value;
+                        if (created <= DateTime.Today)  // I look if today is later then next creating time
+                        {
+                            Save(CloneAsNonPeriodic(dayPeriodicityCost));
+                            dayPeriodicityCost.Created = DateTime.Now.AddDays(dayPeriodicityCost.PeriodicMultiplicity);
+                            Save(dayPeriodicityCost);
+                        }
                     }
                 }
+                unitOfWork.Commit();
             }
         }
 

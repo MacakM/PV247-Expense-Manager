@@ -39,10 +39,7 @@ namespace ExpenseManager.Business.Infrastructure
         /// </summary>
         public virtual IList<T> GetList()
         {
-            using (UnitOfWorkProvider.Create())
-            {
-                return ExpenseManagerMapper.Map<IList<TEntity>, IList<T>>(Query.Execute());
-            }
+            return ExpenseManagerMapper.Map<IList<TEntity>, IList<T>>(Query.Execute());
         }
     }
 }

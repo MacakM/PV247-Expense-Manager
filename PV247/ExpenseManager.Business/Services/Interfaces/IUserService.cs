@@ -17,7 +17,7 @@ namespace ExpenseManager.Business.Services.Interfaces
         /// Registers user according to provided information
         /// </summary>
         /// <param name="userRegistration">User registration information</param>
-        Guid RegisterNewUser(User userRegistration);
+        void RegisterNewUser(User userRegistration);
 
         /// <summary>
         /// Updates existing user according to provided information

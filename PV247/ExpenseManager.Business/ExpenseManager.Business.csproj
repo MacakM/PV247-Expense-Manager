@@ -114,11 +114,9 @@
     <Compile Include="Services\Implementations\BadgeService.cs" />
     <Compile Include="Services\Implementations\CostInfoService.cs" />
     <Compile Include="Services\Implementations\CostTypeService.cs" />
-    <Compile Include="Services\Implementations\BadgeManagerService..cs" />
     <Compile Include="Services\Implementations\GraphService.cs" />
     <Compile Include="Services\Interfaces\IAccountBadgeService.cs" />
     <Compile Include="Services\Interfaces\IAccountService.cs" />
-    <Compile Include="Services\Interfaces\IBadgeManagerService.cs" />
     <Compile Include="Services\Interfaces\IBadgeService.cs" />
     <Compile Include="Services\Interfaces\ICostInfoService.cs" />
     <Compile Include="Services\Interfaces\ICostTypeService.cs" />

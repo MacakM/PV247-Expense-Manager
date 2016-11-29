@@ -16,7 +16,7 @@ namespace ExpenseManager.Business.Services.Interfaces
         /// Add new badge to account by creating new AccountBadge object in database
         /// </summary>
         /// <param name="accountBadge"></param>
-        Guid CreateAccountBadge(AccountBadge accountBadge);
+        void CreateAccountBadge(AccountBadge accountBadge);
 
         /// <summary>
         /// Updates existing account badge

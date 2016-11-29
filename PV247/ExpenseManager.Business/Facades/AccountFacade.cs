@@ -35,15 +35,13 @@ namespace ExpenseManager.Business.Facades
         /// </summary>
         /// <param name="userRegistration">User registration information</param>
         /// <param name="createAccount">If account should be created</param>
-        public Guid RegisterNewUser(User userRegistration, bool createAccount = true)
+        public void RegisterNewUser(User userRegistration, bool createAccount = true)
         {
-            var id = _userService.RegisterNewUser(userRegistration);
-
+            _userService.RegisterNewUser(userRegistration);
             if (createAccount)
             {
                 CreateAccount(userRegistration.Id);
             }
-            return id;
         }
 
         /// <summary>
@@ -102,9 +100,9 @@ namespace ExpenseManager.Business.Facades
         /// Creates new account
         /// </summary>
         /// <param name="account"></param>
-        public Guid CreateAccount(Account account)
+        public void CreateAccount(Account account)
         {
-            return _accountService.CreateAccount(account);
+            _accountService.CreateAccount(account);
         }
 
         /// <summary>

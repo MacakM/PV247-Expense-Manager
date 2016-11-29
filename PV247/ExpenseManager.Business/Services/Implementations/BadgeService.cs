@@ -54,9 +54,13 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <summary>
         /// Creates new Badge object in database
         /// </summary>
-        public Guid CreateBadge(Badge badge)
+        public void CreateBadge(Badge badge)
         {
-            return Save(badge);
+            using (var unitOfWork = UnitOfWorkProvider.Create())
+            {
+                Save(badge);
+                unitOfWork.Commit();
+            }
         }
 
         /// <summary>
@@ -65,7 +69,11 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="badgeEdited"></param>
         public void UpdateBadge(Badge badgeEdited)
         {
-            Save(badgeEdited);
+            using (var unitOfWork = UnitOfWorkProvider.Create())
+            {
+                Save(badgeEdited);
+                unitOfWork.Commit();
+            }
         }
 
         /// <summary>
@@ -74,7 +82,11 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="badgeId"></param>
         public void DeleteBadge(Guid badgeId)
         {
-            Delete(badgeId);
+            using (var unitOfWork = UnitOfWorkProvider.Create())
+            {
+                Delete(badgeId);
+                unitOfWork.Commit();
+            }           
         }
 
         /// <summary>
@@ -84,7 +96,10 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <returns></returns>
         public Badge GetBadge(Guid badgeId)
         {
-            return GetDetail(badgeId);
+            using (UnitOfWorkProvider.Create())
+            {
+                return GetDetail(badgeId);
+            }           
         }
 
         /// <summary>
@@ -97,7 +112,10 @@ namespace ExpenseManager.Business.Services.Implementations
         {
             Query.Filters = filters;
             Query.PageAndOrderModelFilterModel = pageAndOrder;
-            return GetList().ToList();
+            using (UnitOfWorkProvider.Create())
+            {
+                return GetList().ToList();
+            }           
         }
 
         /// <summary>

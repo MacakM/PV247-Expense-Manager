@@ -17,7 +17,7 @@ namespace ExpenseManager.Business.Services.Interfaces
         /// Creates new account
         /// </summary>
         /// <param name="account"></param>
-        Guid CreateAccount(Account account);
+        void CreateAccount(Account account);
 
         /// <summary>
         /// Updates existing account

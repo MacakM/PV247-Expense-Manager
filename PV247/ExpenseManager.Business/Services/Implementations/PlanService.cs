@@ -107,7 +107,11 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="planUpdated">Plan object with id of existing plan</param>
         public void UpdatePlan(Plan planUpdated)
         {
-           Save(planUpdated);
+            using (var unitOfWork = UnitOfWorkProvider.Create())
+            {
+                Save(planUpdated);
+                unitOfWork.Commit();
+            }
         }
 
         /// <summary>
@@ -116,7 +120,11 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="planId">Unique id of deleted plan</param>
         public void DeletePlan(Guid planId)
         {
-            Delete(planId);
+            using (var unitOfWork = UnitOfWorkProvider.Create())
+            {
+                Delete(planId);
+                unitOfWork.Commit();
+            }           
         }
 
         /// <summary>
@@ -126,7 +134,10 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <returns></returns>
         public Plan GetPlan(Guid planId)
         {
-            return GetDetail(planId);
+            using (UnitOfWorkProvider.Create())
+            {
+                return GetDetail(planId);
+            }           
         }
 
         /// <summary>
@@ -140,7 +151,10 @@ namespace ExpenseManager.Business.Services.Implementations
             Query.Filters = filters;
             Query.PageAndOrderModelFilterModel = pageAndOrder;
             Query.AddSortCriteria(x => x.Start, SortDirection.Descending);
-            return GetList().ToList();
+            using (UnitOfWorkProvider.Create())
+            {
+                return GetList().ToList();
+            }            
         }
    
         /// <summary>
@@ -181,8 +195,11 @@ namespace ExpenseManager.Business.Services.Implementations
                 PeriodicMultiplicity = 0,
                 Periodicity = PeriodicityModel.None
             };
-
-            _costInfoRepository.Insert(costInfo);
+            using (var unitOfWork = UnitOfWorkProvider.Create())
+            {
+                _costInfoRepository.Insert(costInfo);
+                unitOfWork.Commit();
+            }
         }
 
         /// <summary>
@@ -202,7 +219,10 @@ namespace ExpenseManager.Business.Services.Implementations
                 new PlansByCompletition(false),
                 new PlansByDeadlineFrom(DateTime.Now)
             };
-            return GetList().ToList();
+            using (UnitOfWorkProvider.Create())
+            {
+                return GetList().ToList();
+            }            
         }
 
         /// <inheritdoc />
@@ -214,7 +234,11 @@ namespace ExpenseManager.Business.Services.Implementations
                 new PlansByCompletition(false),
                 new PlansByDeadlineFrom(DateTime.Now)
             };
-            return GetList().ToList();
+            using (UnitOfWorkProvider.Create())
+            {
+                return GetList().ToList();
+            }
+            
         }
 
         /// <summary>
@@ -222,34 +246,38 @@ namespace ExpenseManager.Business.Services.Implementations
         /// </summary>
         public void CheckAllMaxSpendDeadlines()
         {
-            var accounts = _accountsQuery.Execute();
-            foreach (var account in accounts) // FOR EACH ACCOUNT 
+            using (var unitOfWork = UnitOfWorkProvider.Create())
             {
-                Query.Filters = new  List<IFilter<PlanModel>>
+                var accounts = _accountsQuery.Execute();
+                foreach (var account in accounts) // FOR EACH ACCOUNT 
                 {
-                       new PlansByAccountId(account.Id),
-                        new PlansByType(PlanTypeModel.MaxSpend),
-                     new PlansByCompletition(false),
-                        new PlansByDeadlineFrom(DateTime.Now)
-                };
-                var maxSpendPlans = GetList();
-                foreach (var plan in maxSpendPlans) // CHECK EVERY MAX SPEND PLAN THAT IS NO COMPLETED YET, REACHED ITS DEADLINE
-                {
-                    if (plan.Deadline != null)
-                        _costInfosQuery.Filters = new List<IFilter<CostInfoModel>> // USES EVERY COST OF PLANNED TYPE FROM START TO DEADLINE
-                        {
-                            new CostInfosByTypeId(plan.PlannedTypeId),
-                            new CostInfosByCreatedFrom(plan.Start),
-                            new CostInfosByCreatedTo(plan.Deadline.Value)
-                        };
-                    var costInfos = _costInfosQuery.Execute();
-                    if (costInfos.Sum(x => x.Money) <= plan.PlannedMoney)
+                    Query.Filters = new  List<IFilter<PlanModel>>
                     {
-                        plan.IsCompleted = true;
-                        Save(plan);
+                           new PlansByAccountId(account.Id),
+                            new PlansByType(PlanTypeModel.MaxSpend),
+                         new PlansByCompletition(false),
+                            new PlansByDeadlineFrom(DateTime.Now)
+                    };
+                    var maxSpendPlans = GetList();
+                    foreach (var plan in maxSpendPlans) // CHECK EVERY MAX SPEND PLAN THAT IS NO COMPLETED YET, REACHED ITS DEADLINE
+                    {
+                        if (plan.Deadline != null)
+                            _costInfosQuery.Filters = new List<IFilter<CostInfoModel>> // USES EVERY COST OF PLANNED TYPE FROM START TO DEADLINE
+                            {
+                                new CostInfosByTypeId(plan.PlannedTypeId),
+                                new CostInfosByCreatedFrom(plan.Start),
+                                new CostInfosByCreatedTo(plan.Deadline.Value)
+                            };
+                        var costInfos = _costInfosQuery.Execute();
+                        if (costInfos.Sum(x => x.Money) <= plan.PlannedMoney)
+                        {
+                            plan.IsCompleted = true;
+                            Save(plan);
+                        }
                     }
                 }
-            }
+                unitOfWork.Commit();
+            }           
         }
     }
 }

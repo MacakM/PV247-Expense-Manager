@@ -194,7 +194,7 @@ namespace ExpenseManager.Presentation
             services.AddTransient<ListPlansQuery>();
             services.AddTransient<ExpenseManagerQuery<UserModel>, ListUsersQuery>();
             services.AddTransient<ListUsersQuery>();
-
+            services.AddTransient<ExpenseManagerQuery<DayBalance>, BalancesGroupedByDayQuery>();
             services.AddTransient<BalancesGroupedByDayQuery>();
             //TODO add more query objects
 
@@ -219,8 +219,6 @@ namespace ExpenseManager.Presentation
 
             services.AddTransient(typeof(ExpenseManagerQueryAndCrudServiceBase<UserModel, Guid, User>), typeof(UserService));
             services.AddTransient<IUserService, UserService>();
-            
-            services.AddTransient<IBadgeManagerService, BadgeManagerService>();
 
             services.AddTransient<IGraphService, GraphService>();
             //TODO add more services

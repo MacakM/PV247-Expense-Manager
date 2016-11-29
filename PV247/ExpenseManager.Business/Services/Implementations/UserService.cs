@@ -48,10 +48,13 @@ namespace ExpenseManager.Business.Services.Implementations
         /// Registers user according to provided information
         /// </summary>
         /// <param name="userRegistration">User registration information</param>
-        public Guid RegisterNewUser(User userRegistration)
+        public void RegisterNewUser(User userRegistration)
         {
-            // create account too or join to another?
-            return Save(userRegistration);
+            using (var unitOfWork = UnitOfWorkProvider.Create())
+            {
+                Save(userRegistration);
+                unitOfWork.Commit();
+            }
         }
 
         /// <summary>
@@ -115,7 +118,10 @@ namespace ExpenseManager.Business.Services.Implementations
         {
             Query.Filters = filters;
             Query.PageAndOrderModelFilterModel = pageAndOrder;
-            return GetList().ToList();
+            using (UnitOfWorkProvider.Create())
+            {
+                return GetList().ToList();
+            }            
         }
 
         /// <summary>
@@ -125,7 +131,10 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <returns>One user with id == userId</returns>
         public User GetUser(Guid userId)
         {
-            return GetDetail(userId);
+            using (UnitOfWorkProvider.Create())
+            {
+                return GetDetail(userId);
+            }           
         }
 
         /// <summary>
@@ -134,7 +143,11 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="userId">Unique user identifier</param>
         public void DeleteUser(Guid userId)
         {
-            Delete(userId);
+            using (var unitOfWork = UnitOfWorkProvider.Create())
+            {
+                Delete(userId);
+                unitOfWork.Commit();
+            }           
         }
     }
 }

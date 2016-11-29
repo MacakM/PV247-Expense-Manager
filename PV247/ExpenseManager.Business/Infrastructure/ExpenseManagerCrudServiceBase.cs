@@ -48,11 +48,8 @@ namespace ExpenseManager.Business.Infrastructure
         /// </summary>
         public virtual T GetDetail(TKey id)
         {
-            using (UnitOfWorkProvider.Create())
-            {
-                var entity = Repository.GetById(id, EntityIncludes);
-                return ExpenseManagerMapper.Map<TEntity, T>(entity);
-            }
+            var entity = Repository.GetById(id, EntityIncludes);
+            return ExpenseManagerMapper.Map<TEntity, T>(entity);
         }
 
         /// <summary>
@@ -60,38 +57,26 @@ namespace ExpenseManager.Business.Infrastructure
         /// </summary>
         public virtual void Delete(TKey id)
         {
-            using (var unitOfWork = UnitOfWorkProvider.Create())
-            {
-                Repository.Delete(id);
-                unitOfWork.Commit();
-            }
+            Repository.Delete(id);
         }
 
         /// <summary>
         /// Saves the changes on the specified  to the database.
         /// </summary>
-        public virtual TKey Save(T item)
-        {
-            var entity = ExpenseManagerMapper.Map<T, TEntity>(item);
+        public virtual void Save(T item)
+        {        
             var isNew = item.Id.Equals(default(TKey));
-            using (var unitOfWork = UnitOfWorkProvider.Create())
-            {
-                if (isNew)
-                {
-                    Repository.Insert(entity);
-                }
-                else
-                {
-                    Repository.Update(entity);
-                }
-                unitOfWork.Commit();
-            }
-
             if (isNew)
             {
+                var entity = ExpenseManagerMapper.Map<T, TEntity>(item);
                 item.Id = entity.Id;
+                Repository.Insert(entity);
             }
-            return item.Id;
+            else
+            {
+                var entity = Repository.GetById(item.Id, EntityIncludes);
+                Repository.Update(entity);
+            }
         }
 
         /// <summary>

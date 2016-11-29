@@ -33,15 +33,23 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <summary>
         /// Included entities
         /// </summary>
-        protected override string[] EntityIncludes { get; } = new string[0];
+        protected override string[] EntityIncludes { get; } = 
+        {
+            nameof(AccountBadgeModel.Account), 
+            nameof(AccountBadgeModel.Badge)
+        };
 
         /// <summary>
         /// Add new badge to account by creating new AccountBadge object in database
         /// </summary>
         /// <param name="accountBadge">Account badge</param>
-        public Guid CreateAccountBadge(AccountBadge accountBadge)
+        public void CreateAccountBadge(AccountBadge accountBadge)
         {
-            return Save(accountBadge);
+            using (var unitOfWork = UnitOfWorkProvider.Create())
+            {
+                Save(accountBadge);
+                unitOfWork.Commit();
+            }
         }
 
         /// <summary>
@@ -50,7 +58,11 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="updatedAccountBadge"></param>
         public void UpdateAccountBadge(AccountBadge updatedAccountBadge)
         {
-            Save(updatedAccountBadge);
+            using (var unitOfWork = UnitOfWorkProvider.Create())
+            {
+                Save(updatedAccountBadge);
+                unitOfWork.Commit();
+            }
         }
 
         /// <summary>
@@ -59,7 +71,11 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="accountBadgeId"></param>
         public void DeleteAccountBadge(Guid accountBadgeId)
         {
-            Delete(accountBadgeId);
+            using (var unitOfWork = UnitOfWorkProvider.Create())
+            {
+                Delete(accountBadgeId);
+                unitOfWork.Commit();
+            }        
         }
 
         /// <summary>
@@ -69,7 +85,10 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <returns></returns>
         public AccountBadge GetAccountBadge(Guid accountBadgeId)
         {
-            return GetDetail(accountBadgeId);
+            using (UnitOfWorkProvider.Create())
+            {
+                return GetDetail(accountBadgeId);
+            }            
         }
 
         /// <summary>
@@ -82,7 +101,10 @@ namespace ExpenseManager.Business.Services.Implementations
         {
             Query.Filters = filters;
             Query.PageAndOrderModelFilterModel = pageAndOrder;
-            return GetList().ToList();
+            using (UnitOfWorkProvider.Create())
+            {
+                return GetList().ToList();
+            }           
         }
     }
 }

@@ -44,15 +44,25 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <summary>
         /// Included entities
         /// </summary>
-        protected override string[] EntityIncludes { get; } = new string[0];
+        protected override string[] EntityIncludes { get; } = 
+        {
+            nameof(AccountModel.Badges),
+            nameof(AccountModel.Costs),
+            nameof(AccountModel.Plans),
+            nameof(AccountModel.Users)
+        };
 
         /// <summary>
         /// Creates new account
         /// </summary>
         /// <param name="account"></param>
-        public Guid CreateAccount(Account account)
+        public void CreateAccount(Account account)
         {
-            return Save(account);
+            using (var unitOfWork = UnitOfWorkProvider.Create())
+            {
+                Save(account);
+                unitOfWork.Commit();
+            }
         }
 
         /// <summary>
@@ -89,7 +99,11 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="updatedAccount"></param>
         public void UpdateAccount(Account updatedAccount)
         {
-            Save(updatedAccount);
+            using (var unitOfWork = UnitOfWorkProvider.Create())
+            {
+                Save(updatedAccount);
+                unitOfWork.Commit();
+            }
         }
 
         /// <summary>
@@ -98,7 +112,11 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="accountId"></param>
         public void DeleteAccount(Guid accountId)
         {
-            Delete(accountId);
+            using (var unitOfWork = UnitOfWorkProvider.Create())
+            {
+                Delete(accountId);
+                unitOfWork.Commit();
+            }           
         }
 
         /// <summary>
@@ -108,7 +126,10 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <returns></returns>
         public Account GetAccount(Guid accountId)
         {
-           return GetDetail(accountId);
+            using (UnitOfWorkProvider.Create())
+            {
+                return GetDetail(accountId);
+            }           
         }
 
         /// <summary>
@@ -121,7 +142,10 @@ namespace ExpenseManager.Business.Services.Implementations
         {
             Query.Filters = filters;
             Query.PageAndOrderModelFilterModel = pageAndOrder;
-            return GetList().ToList();
+            using (UnitOfWorkProvider.Create())
+            {
+                return GetList().ToList();
+            }         
         }
 
         /// <summary>

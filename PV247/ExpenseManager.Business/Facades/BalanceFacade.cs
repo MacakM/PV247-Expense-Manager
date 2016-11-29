@@ -23,8 +23,6 @@ namespace ExpenseManager.Business.Facades
 
         private readonly IPlanService _planService;
 
-        private readonly IBadgeManagerService _badgeManagerService;
-
         private readonly IGraphService _graphService;
 
         /// <summary>
@@ -35,7 +33,6 @@ namespace ExpenseManager.Business.Facades
         /// <param name="costInfoService">Cost info service</param>
         /// <param name="costTypeService">Cost type service</param>
         /// <param name="planService">Plan service</param>
-        /// <param name="badgeManagerService">Badge manager service</param>
         /// <param name="graphService"></param>
         public BalanceFacade(
             IAccountBadgeService accountBadgeService, 
@@ -43,7 +40,6 @@ namespace ExpenseManager.Business.Facades
             ICostInfoService costInfoService, 
             ICostTypeService costTypeService, 
             IPlanService planService, 
-            IBadgeManagerService badgeManagerService,
             IGraphService graphService)
         {
             _accountBadgeService = accountBadgeService;
@@ -51,7 +47,6 @@ namespace ExpenseManager.Business.Facades
             _costInfoService = costInfoService;
             _costTypeService = costTypeService;
             _planService = planService;
-            _badgeManagerService = badgeManagerService;
             _graphService = graphService;
         }
 
@@ -105,7 +100,7 @@ namespace ExpenseManager.Business.Facades
         /// </summary>
         public void CheckBadgesRequirements()
         {
-            _badgeManagerService.CheckBadgesRequirements();
+            _badgeService.CheckBadgesRequirements();
         }
 
         /// <summary>
@@ -241,9 +236,9 @@ namespace ExpenseManager.Business.Facades
         /// Creaates new cost type
         /// </summary>
         /// <param name="costType">Object to be added to database</param>
-        public Guid CreateItemType(CostType costType)
+        public void CreateItemType(CostType costType)
         {
-            return _costTypeService.CreateCostType(costType);
+            _costTypeService.CreateCostType(costType);
         }
 
         /// <summary>
@@ -291,9 +286,9 @@ namespace ExpenseManager.Business.Facades
         /// Creates new Badge object in database
         /// </summary>
         /// <param name="badge">new Badge</param>
-        public Guid CreateBadge(Badge badge)
+        public void CreateBadge(Badge badge)
         {
-            return _badgeService.CreateBadge(badge);
+            _badgeService.CreateBadge(badge);
         }
 
         /// <summary>

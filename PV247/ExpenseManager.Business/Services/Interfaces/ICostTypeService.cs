@@ -17,7 +17,7 @@ namespace ExpenseManager.Business.Services.Interfaces
         /// Creaates new cost type
         /// </summary>
         /// <param name="costType">Object to be added to database</param>
-        Guid CreateCostType(CostType costType);
+        void CreateCostType(CostType costType);
 
         /// <summary>
         /// Updates existing cost type

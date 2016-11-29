@@ -22,7 +22,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <summary>
         /// Entity includes
         /// </summary>
-        protected override string[] EntityIncludes { get; } = new string[0];
+        protected override string[] EntityIncludes { get; } = {nameof(CostType.CostInfoList) };
 
         /// <summary>
         /// Cost type service constructor
@@ -39,9 +39,13 @@ namespace ExpenseManager.Business.Services.Implementations
         /// Creaates new cost type
         /// </summary>
         /// <param name="costType">Object to be added to database</param>
-        public Guid CreateCostType(CostType costType)
+        public void CreateCostType(CostType costType)
         {
-            return Save(costType);
+            using (var unitOfWork = UnitOfWorkProvider.Create())
+            {
+                Save(costType);
+                unitOfWork.Commit();
+            }
         }
 
         /// <summary>
@@ -50,7 +54,11 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="costType">Modified existing cost type</param>
         public void UpdateCostType(CostType costType)
         {
-           Save(costType);
+            using (var unitOfWork = UnitOfWorkProvider.Create())
+            {
+                Save(costType);
+                unitOfWork.Commit();
+            }
         }
 
         /// <summary>
@@ -59,7 +67,11 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="costTypeId">Unique cost type id</param>
         public void DeleteCostType(Guid costTypeId)
         {
-           Delete(costTypeId);
+            using (var unitOfWork = UnitOfWorkProvider.Create())
+            {
+                Delete(costTypeId);
+                unitOfWork.Commit();
+            }           
         }
 
         /// <summary>
@@ -69,7 +81,10 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <returns></returns>
         public CostType GetCostType(Guid costTypeId)
         {
-            return GetDetail(costTypeId);
+            using (UnitOfWorkProvider.Create())
+            {
+                return GetDetail(costTypeId);
+            }          
         }
 
         /// <summary>
@@ -82,7 +97,10 @@ namespace ExpenseManager.Business.Services.Implementations
         {
             Query.Filters = filters;
             Query.PageAndOrderModelFilterModel = pageAndOrder;
-            return GetList().ToList();
+            using (UnitOfWorkProvider.Create())
+            {
+                return GetList().ToList();
+            }           
         }
     }
 }
