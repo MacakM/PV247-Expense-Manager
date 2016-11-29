@@ -4,7 +4,6 @@ using System.Linq;
 using Castle.Components.DictionaryAdapter;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Enums;
-using ExpenseManager.Business.DataTransferObjects.Filters;
 using ExpenseManager.Business.DataTransferObjects.Filters.Badges;
 using ExpenseManager.Business.DataTransferObjects.Filters.CostInfos;
 using ExpenseManager.Business.DataTransferObjects.Filters.CostTypes;
@@ -26,6 +25,7 @@ namespace ExpenseManager.Business.Tests.Facades
     public class BalanceFacadeTests
     {
         private readonly BalanceFacade _balanceFacade = GlobalTestInitializer.Container.Resolve<BalanceFacade>();
+        private readonly AccountFacade _accountFacade = GlobalTestInitializer.Container.Resolve<AccountFacade>();
 
         /// <summary>
         /// Performs db cleanup after every test
@@ -45,18 +45,312 @@ namespace ExpenseManager.Business.Tests.Facades
         [Test]
         public void ListAllCloseablePlans()
         {
-            _balanceFacade.CreateBadge(new Badge() {Accounts = new List<AccountBadge>(), BadgeImgUri = "somePicture", Description = "Expense Manager badge", Name = "Penny Pincher"});
-            var x = _balanceFacade.ListBadges(null, null);
-            throw new AssertFailedException();
+            const string accountName = "ExpenseManagerAccount01";
+            const string typeName = "Food";
+            var account = new AccountModel
+            {
+                Badges = new List<AccountBadgeModel>(),
+                Costs = new List<CostInfoModel>(),
+                Name = accountName
+            };
+            var type = new CostTypeModel
+            {
+                Name = typeName,
+                CostInfoList = new EditableList<CostInfoModel>()
+            };
+            var plan = new PlanModel
+            {
+                Description = "I want money for food!",
+                PlanType = PlanTypeModel.Save,
+                PlannedMoney = 10000,
+                IsCompleted = false,
+            };
+            using (
+                var db =
+                    new ExpenseDbContext(
+                        Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
+            {
+                db.Accounts.Add(account);
+                db.CostTypes.Add(type);
+                db.SaveChanges();
+                var accountId = account.Id;
+                plan.AccountId = accountId;
+                plan.PlannedType = type;
+                db.Plans.Add(plan);
+                db.SaveChanges();
+                var item = new CostInfoModel()
+                {
+                    Description = "bread",
+                    AccountId = accountId,
+                    TypeId = type.Id,
+                    IsIncome = true,
+                    Money = 10001,
+                    Created = DateTime.Now.Subtract(new TimeSpan(100, 0, 0, 0)),
+                    Account = db.Accounts.Find(accountId),
+                    Type = db.CostTypes.Find(type.Id),
+                    Periodicity = PeriodicityModel.None,
+                    PeriodicMultiplicity = 3
+                };
+                db.CostInfos.Add(item);
+                db.SaveChanges();
+            }
+            Assert.IsTrue(_balanceFacade.ListPlans(null, null).Count == 1, "Plan not present");
+            Assert.IsTrue(_balanceFacade.ListAllCloseablePlans(account.Id).Count == 1, "Plan not found as closeable");
         }
-        
+
+        /// <summary>
+        /// Tests closing plan by user
+        /// </summary>
+        [Test]
+        public void ClosePlanTest()
+        {
+            const string accountName = "ExpenseManagerAccount01";
+            const string typeName = "Food";
+            var account = new AccountModel
+            {
+                Badges = new List<AccountBadgeModel>(),
+                Costs = new List<CostInfoModel>(),
+                Name = accountName
+            };
+            var type = new CostTypeModel
+            {
+                Name = typeName,
+                CostInfoList = new EditableList<CostInfoModel>()
+            };
+            var plan = new PlanModel
+            {
+                Description = "I want money for food!",
+                PlanType = PlanTypeModel.Save,
+                PlannedMoney = 10000,
+                IsCompleted = false,
+            };
+            using (
+                var db =
+                    new ExpenseDbContext(
+                        Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
+            {
+                db.Accounts.Add(account);
+                db.CostTypes.Add(type);
+                db.SaveChanges();
+                var accountId = account.Id;
+                plan.AccountId = accountId;
+                plan.PlannedType = type;
+                db.Plans.Add(plan);
+                db.SaveChanges();
+                var item = new CostInfoModel()
+                {
+                    Description = "bread",
+                    AccountId = accountId,
+                    TypeId = type.Id,
+                    IsIncome = true,
+                    Money = 10001,
+                    Created = DateTime.Now.Subtract(new TimeSpan(100, 0, 0, 0)),
+                    Account = db.Accounts.Find(accountId),
+                    Type = db.CostTypes.Find(type.Id),
+                    Periodicity = PeriodicityModel.None,
+                    PeriodicMultiplicity = 3
+                };
+                db.CostInfos.Add(item);
+                db.SaveChanges();
+            }
+            var closeable = _balanceFacade.ListAllCloseablePlans(account.Id);
+            var balance = _balanceFacade.GetBalance(account.Id);
+            Assert.IsTrue(closeable.Count == 1, "Plan not found as closeable");
+            _balanceFacade.ClosePlan(closeable.Single());
+            Assert.IsTrue(balance == _balanceFacade.ListItems(new List<IFilter<CostInfoModel>> { new CostInfosByIsIncome(false)}, null).Single().Money+ _balanceFacade.GetBalance(account.Id));
+        }
+
         /// <summary>
         /// Check badges requirements test
         /// </summary>
         [Test]
         public void CheckBadgesRequirements()
         {
-            throw new AssertFailedException();
+            const string accountName = "ExpenseManagerAccount01";
+            const string typeName = "Food";
+            var account = new AccountModel
+            {
+                Badges = new List<AccountBadgeModel>(),
+                Costs = new List<CostInfoModel>(),
+                Name = accountName
+            };
+            var type = new CostTypeModel
+            {
+                Name = typeName,
+                CostInfoList = new EditableList<CostInfoModel>()
+            };
+            var plan = new PlanModel
+            {
+                Description = "I want money for food!",
+                PlanType = PlanTypeModel.Save,
+                PlannedMoney = 1000,
+                PlannedType = type,
+                IsCompleted = true,
+                Start = DateTime.Now.Subtract(new TimeSpan(100, 0, 0, 0)),
+                Deadline = DateTime.Now.Subtract(new TimeSpan(0, 0, 1, 0))
+            };
+
+            var plan1 = new PlanModel
+            {
+                Description = "I want money for food!",
+                PlanType = PlanTypeModel.Save,
+                PlannedMoney = 100000,
+                PlannedType = type,
+                IsCompleted = true,
+                Start = DateTime.Now.Subtract(new TimeSpan(100, 0, 0, 0)),
+                Deadline = DateTime.Now.Subtract(new TimeSpan(0, 0, 1, 0))
+            };
+
+            var plan2 = new PlanModel
+            {
+                Description = "I want money for food!",
+                PlanType = PlanTypeModel.Save,
+                PlannedMoney = 1001,
+                PlannedType = type,
+                IsCompleted = true,
+                Start = DateTime.Now.Subtract(new TimeSpan(100, 0, 0, 0)),
+                Deadline = DateTime.Now.Subtract(new TimeSpan(0, 0, 1, 0))
+            };
+
+            var plan3 = new PlanModel
+            {
+                Description = "I want money for food!",
+                PlanType = PlanTypeModel.Save,
+                PlannedMoney = 22221,
+                PlannedType = type,
+                IsCompleted = true,
+                Start = DateTime.Now.Subtract(new TimeSpan(100, 0, 0, 0)),
+                Deadline = DateTime.Now.Subtract(new TimeSpan(0, 0, 1, 0))
+            };
+
+            var plan4 = new PlanModel
+            {
+                Description = "I want money for food!",
+                PlanType = PlanTypeModel.Save,
+                PlannedMoney = 22221,
+                PlannedType = type,
+                IsCompleted = true,
+                Start = DateTime.Now.Subtract(new TimeSpan(100, 0, 0, 0)),
+                Deadline = DateTime.Now.Subtract(new TimeSpan(0, 0, 1, 0))
+            };
+
+            var plan5 = new PlanModel
+            {
+                Description = "I want money for food!",
+                PlanType = PlanTypeModel.Save,
+                PlannedMoney = 22221,
+                PlannedType = type,
+                IsCompleted = true,
+                Start = DateTime.Now.Subtract(new TimeSpan(100, 0, 0, 0)),
+                Deadline = DateTime.Now.Subtract(new TimeSpan(0, 0, 1, 0))
+            };
+
+            using (
+                var db =
+                    new ExpenseDbContext(
+                        Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
+            {
+                db.Accounts.Add(account);
+                db.CostTypes.Add(type);
+                db.SaveChanges();
+                var accountId = account.Id;
+                plan.AccountId = accountId;
+                plan.PlannedType = type;
+                plan1.AccountId = accountId;
+                plan1.PlannedType = type;
+                plan2.AccountId = accountId;
+                plan2.PlannedType = type;
+                plan3.AccountId = accountId;
+                plan3.PlannedType = type;
+                plan4.AccountId = accountId;
+                plan4.PlannedType = type;
+                plan5.AccountId = accountId;
+                plan5.PlannedType = type;
+
+                db.Plans.Add(plan);
+                db.SaveChanges();
+                var item = new CostInfoModel()
+                {
+                    Description = "bread",
+                    AccountId = accountId,
+                    TypeId = type.Id,
+                    IsIncome = true,
+                    Money = 10001,
+                    Created = DateTime.Now.Subtract(new TimeSpan(100, 0, 0, 0)),
+                    Account = db.Accounts.Find(accountId),
+                    Type = db.CostTypes.Find(type.Id),
+                    Periodicity = PeriodicityModel.None,
+                    PeriodicMultiplicity = 3
+                };
+                db.CostInfos.Add(item);
+                db.SaveChanges();
+            }
+            _balanceFacade.CheckBadgesRequirements();
+            var badgedAccount = _accountFacade.GetAccount(account.Id);
+            Assert.IsTrue(badgedAccount.Badges.Count>0);
+        }
+
+        /// <summary>
+        /// Check max spend deadlines test
+        /// </summary>
+        [Test]
+        public void CheckAllMaxSpendDeadlinesTest()
+        {
+            const string accountName = "ExpenseManagerAccount01";
+            const string typeName = "Food";
+            var account = new AccountModel
+            {
+                Badges = new List<AccountBadgeModel>(),
+                Costs = new List<CostInfoModel>(),
+                Name = accountName
+            };
+            var type = new CostTypeModel
+            {
+                Name = typeName,
+                CostInfoList = new EditableList<CostInfoModel>()
+            };
+            var plan = new PlanModel
+            {
+                Description = "I want money for food!",
+                PlanType = PlanTypeModel.MaxSpend,
+                PlannedMoney = 10000,
+                PlannedType = type,
+                IsCompleted = false,
+                Start = DateTime.Now.Subtract(new TimeSpan(100, 0, 0, 0)),
+                Deadline = DateTime.Now.Subtract(new TimeSpan(0,0,1,0))
+            };
+            using (
+                var db =
+                    new ExpenseDbContext(
+                        Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
+            {
+                db.Accounts.Add(account);
+                db.CostTypes.Add(type);
+                db.SaveChanges();
+                var accountId = account.Id;
+                plan.AccountId = accountId;
+                plan.PlannedType = type;
+                db.Plans.Add(plan);
+                db.SaveChanges();
+                var item = new CostInfoModel()
+                {
+                    Description = "bread",
+                    AccountId = accountId,
+                    TypeId = type.Id,
+                    IsIncome = true,
+                    Money = 10001,
+                    Created = DateTime.Now.Subtract(new TimeSpan(100, 0, 0, 0)),
+                    Account = db.Accounts.Find(accountId),
+                    Type = db.CostTypes.Find(type.Id),
+                    Periodicity = PeriodicityModel.None,
+                    PeriodicMultiplicity = 3
+                };
+                db.CostInfos.Add(item);
+                db.SaveChanges();
+            }
+            _balanceFacade.CheckAllMaxSpendDeadlines();
+            Assert.IsTrue(_balanceFacade.ListPlans(null, null).Count == 1);
+            Assert.IsTrue(_balanceFacade.ListPlans(null, null).Single().IsCompleted);
         }
 
         /// <summary>
@@ -65,7 +359,55 @@ namespace ExpenseManager.Business.Tests.Facades
         [Test]
         public void RecomputePeriodicCosts()
         {
-            throw new AssertFailedException();
+            // Arrange
+            const string accountName = "ExpenseManagerAccount01";
+            const string typeName = "Food";
+            var account = new AccountModel
+            {
+                Badges = new List<AccountBadgeModel>(),
+                Costs = new List<CostInfoModel>(),
+                Name = accountName
+            };
+            var type = new CostTypeModel
+            {
+                Name = typeName,
+                CostInfoList = new EditableList<CostInfoModel>()
+            };
+            using (
+                var db =
+                    new ExpenseDbContext(
+                        Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
+            {
+                db.Accounts.Add(account);
+                db.CostTypes.Add(type);
+                db.SaveChanges();
+                var accountId = account.Id;
+                var typeId = type.Id;
+                var item = new CostInfoModel()
+                {
+                    Description = "bread",
+                    AccountId = accountId,
+                    TypeId = typeId,
+                    IsIncome = true,
+                    Money = 25,
+                    Created = DateTime.Now.Subtract(new TimeSpan(100,0,0,0)),
+                    Account = db.Accounts.Find(accountId),
+                    Type = db.CostTypes.Find(typeId),
+                    Periodicity = PeriodicityModel.Month,
+                    PeriodicMultiplicity = 3
+                };
+                db.CostInfos.Add(item);
+                db.SaveChanges();
+            }
+          
+           
+            _balanceFacade.RecomputePeriodicCosts();
+            var result = _balanceFacade.ListItems(
+                new List<IFilter<CostInfoModel>> {new CostInfosByPeriodicity(PeriodicityModel.None)}, null);
+            Assert.IsTrue(result.Count == 1);
+            Assert.IsTrue(result.Single().Description.Equals("bread"));
+
+
         }
 
         /// <summary>
@@ -548,7 +890,8 @@ namespace ExpenseManager.Business.Tests.Facades
                 Description = "I want money for food!",
                 PlanType = PlanTypeModel.Save,
                 PlannedMoney = 10000,
-                Deadline = DateTime.Today,
+                Deadline = DateTime.Today.AddDays(5),
+                Start = DateTime.Today,
                 IsCompleted = false,
             };
             using (
@@ -583,7 +926,7 @@ namespace ExpenseManager.Business.Tests.Facades
 
             // Assert
             var updatedPlan = GetPlanById(planId);
-            Assert.That(updatedPlan.Description == "I want money for games!", "Plan was not updated.");
+            Assert.That(updatedPlan.Description.Equals("I want money for games!"), "Plan was not updated.");
         }
         /// <summary>
         /// Test Plan get.
@@ -642,7 +985,43 @@ namespace ExpenseManager.Business.Tests.Facades
         [Test]
         public void ListPlansTest1()
         {
-            throw new AssertFailedException();
+            // Arrange
+            const string accountName = "ExpenseManagerAccount01";
+            const string typeName = "Food";
+            var account = new AccountModel
+            {
+                Badges = new List<AccountBadgeModel>(),
+                Costs = new List<CostInfoModel>(),
+                Name = accountName
+            };
+            var type = new CostTypeModel
+            {
+                Name = typeName,
+                CostInfoList = new EditableList<CostInfoModel>()
+            };
+            var plan = new PlanModel
+            {
+                Description = "I want money for food!",
+                PlanType = PlanTypeModel.Save,
+                PlannedMoney = 10000,
+                Deadline = DateTime.Today,
+                IsCompleted = false,
+            };
+            using (
+                var db =
+                    new ExpenseDbContext(
+                        Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
+            {
+                db.Accounts.Add(account);
+                db.CostTypes.Add(type);
+                db.SaveChanges();
+                var accountId = account.Id;
+                plan.AccountId = accountId;
+                plan.PlannedType = type;
+                db.Plans.Add(plan);
+                db.SaveChanges();
+            }
+            Assert.IsTrue(_balanceFacade.ListPlans(null, null).Count > 0);
         }
 
         /// <summary>
