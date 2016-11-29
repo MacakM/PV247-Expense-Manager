@@ -4,19 +4,14 @@ using System.Runtime.CompilerServices;
 using ExpenseManager.Database.Entities;
 
 [assembly: InternalsVisibleTo("ExpenseManager.Business.Tests")]
+[assembly: InternalsVisibleTo("ExpenseManager.DataInitialization")]
 namespace ExpenseManager.Database
 {
     public class ExpenseDbContext : DbContext
     {
-        public ExpenseDbContext(DbConnection connection) : base(connection, true)
-        {
-            System.Data.Entity.Database.SetInitializer(new ExpenseDbInitializer());
-        }
+        public ExpenseDbContext(DbConnection connection) : base(connection, true) { }
 
-        public ExpenseDbContext(string nameOrConnectionString) : base(nameOrConnectionString)
-        {
-            System.Data.Entity.Database.SetInitializer(new ExpenseDbInitializer());
-        }
+        public ExpenseDbContext(string nameOrConnectionString) : base(nameOrConnectionString) { }
 
         public DbSet<BadgeModel> Badges { get; set; }
 

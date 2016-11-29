@@ -20,7 +20,7 @@ namespace ExpenseManager.Identity
         /// <param name="options">Options</param>
         public IdentityDbContext(DbContextOptions<IdentityDbContext> options) : base(options) { }
 
-        /*
+        
         /// <summary>
         /// On configuring method
         /// </summary>
@@ -32,7 +32,8 @@ namespace ExpenseManager.Identity
             // Connection string is required by SQL server
             //optionsBuilder
 
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=IdentityStoreDB;Integrated Security=True;MultipleActiveResultSets=true");
-        }*/
+            optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=IdentityStoreDB;Integrated Security=True;MultipleActiveResultSets=true", sqlServerOptionsAction =>
+                sqlServerOptionsAction.MigrationsAssembly("ExpenseManager.DataSeeding"));
+        }
     }
 }

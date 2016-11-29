@@ -20,7 +20,7 @@ namespace ExpenseManager.Identity
             builder.UseSqlServer(
                 connectionString, 
                 sqlServerOptionsAction => 
-                sqlServerOptionsAction.MigrationsAssembly("ExpenseManager.DataInitialization")))
+                sqlServerOptionsAction.MigrationsAssembly("ExpenseManager.DataSeeding")))
                 .BuildServiceProvider();
             services.AddIdentity<Entities.ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<IdentityDbContext>()

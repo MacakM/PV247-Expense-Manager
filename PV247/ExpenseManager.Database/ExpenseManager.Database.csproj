@@ -108,7 +108,6 @@
     <Compile Include="Enums\PeriodicityModel.cs" />
     <Compile Include="Enums\PlanTypeModel.cs" />
     <Compile Include="ExpenseDbContext.cs" />
-    <Compile Include="ExpenseDbInitializer.cs" />
     <Compile Include="Filters\Accounts\AccountModelsByName.cs" />
     <Compile Include="Filters\Badges\BadgeModelsByName.cs" />
     <Compile Include="Filters\CostInfos\CostInfoModelsByAccountId.cs" />
@@ -152,9 +151,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Filters\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

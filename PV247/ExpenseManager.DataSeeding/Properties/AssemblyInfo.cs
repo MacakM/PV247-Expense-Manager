@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ExpenseManager.DataInitialization")]
+[assembly: AssemblyTitle("ExpenseManager.DataSeeding")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ExpenseManager.DataInitialization")]
+[assembly: AssemblyProduct("ExpenseManager.DataSeeding")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("72f645da-dcda-447d-a0e2-4acc192e7435")]
+[assembly: Guid("a06b4296-026f-415b-a90e-0121b1ccd270")]
 
 // Version information for an assembly consists of the following four values:
 //

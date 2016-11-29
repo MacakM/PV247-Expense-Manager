@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
+using ExpenseManager.Database;
 using ExpenseManager.Database.Entities;
 using ExpenseManager.Database.Enums;
 
-namespace ExpenseManager.Database
+namespace ExpenseManager.DataSeeding
 {
     /// <summary>
     /// Demo data for ExpenseDbContext
@@ -238,8 +239,8 @@ namespace ExpenseManager.Database
             DeleteAll<PlanModel>(context);
             DeleteAll<CostInfoModel>(context);
             DeleteAll<CostTypeModel>(context);
-            //DeleteAll<UserModel>(context);
-            //DeleteAll<AccountModel>(context);
+            DeleteAll<UserModel>(context);
+            DeleteAll<AccountModel>(context);
             DeleteAll<BadgeModel>(context);
         }
 
