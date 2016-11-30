@@ -78,6 +78,7 @@
     <Compile Include="DataTransferObjects\Enums\AccountAccessTye.cs" />
     <Compile Include="DataTransferObjects\Enums\Periodicity.cs" />
     <Compile Include="DataTransferObjects\Enums\PlanType.cs" />
+    <Compile Include="DataTransferObjects\Factories\FilterFactory.cs" />
     <Compile Include="DataTransferObjects\Filters\Accounts\AccountsByName.cs" />
     <Compile Include="DataTransferObjects\Filters\Badges\BadgesByName.cs" />
     <Compile Include="DataTransferObjects\Filters\CostInfos\CostInfosByIsIncome.cs" />
@@ -138,7 +139,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DataTransferObjects\Filters\AccountBadges\" />
-    <Folder Include="Facades\Enums\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ExpenseManager.Database\ExpenseManager.Database.csproj">

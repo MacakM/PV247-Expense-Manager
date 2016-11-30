@@ -16,15 +16,6 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.Plans
         public PlanTypeModel PlanType { get; set; }
 
         /// <summary>
-        /// Filter constructor
-        /// </summary>
-        /// <param name="planType"></param>
-        public PlansByType(PlanTypeModel planType)
-        {
-            PlanType = planType;
-        }
-
-        /// <summary>
         /// Filters query
         /// </summary>
         /// <param name="queryable"></param>

@@ -16,15 +16,6 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.Users
         public Guid AccountId { get; set; }
 
         /// <summary>
-        /// Filters by account id
-        /// </summary>
-        /// <param name="accountId"></param>
-        public UsersByAccountId(Guid accountId)
-        {
-            AccountId = accountId;
-        }
-
-        /// <summary>
         ///  Filters by account id
         /// </summary>
         /// <param name="queryable">queryable</param>

@@ -59,12 +59,7 @@ namespace ExpenseManager.Presentation.Controllers
 
         private List<PlanViewModel> GetAllPlans(Account account)
         {
-            var allPlansFilters = new List<IFilter<PlanModel>>
-            {
-                new PlansByAccountId(account.Id)
-            };
-
-            var allPlans = _balanceFacade.ListPlans(allPlansFilters, null);
+            var allPlans = _balanceFacade.ListPlans(account.Id, null);
             return Mapper.Map<List<PlanViewModel>>(allPlans);
         }
 

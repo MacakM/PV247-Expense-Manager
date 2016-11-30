@@ -15,15 +15,6 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.Plans
         public decimal PlannedMoneyTo { get; set; }
 
         /// <summary>
-        /// Filter constructor
-        /// </summary>
-        /// <param name="plannedMoneyTo"></param>
-        public PlansByMoneyTo(decimal plannedMoneyTo)
-        {
-            PlannedMoneyTo = plannedMoneyTo;
-        }
-
-        /// <summary>
         /// Filters query
         /// </summary>
         /// <param name="queryable"></param>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using ExpenseManager.Business.DataTransferObjects;
+using ExpenseManager.Business.DataTransferObjects.Enums;
 using ExpenseManager.Business.DataTransferObjects.Filters.CostInfos;
 using ExpenseManager.Business.DataTransferObjects.Filters.Users;
 using ExpenseManager.Business.Facades;
@@ -65,35 +66,19 @@ namespace ExpenseManager.Presentation.Controllers
 
         private List<IndexViewModel> GetAllUsersWithAccess(Account account)
         {
-            var userFilters = new List<IFilter<UserModel>>
-            {
-                new UsersByAccountId(account.Id)
-            };
-
-            var users = _accountFacade.ListUsers(userFilters, null);
+          
+            var users = _accountFacade.ListUsers(account.Id, null, null, null);
 
             return Mapper.Map<List<IndexViewModel>>(users);
         }
 
         private List<IndexPermanentExpenseViewModel> GetAllPermanentExpenses(Account account)
         {
-            var filters = new List<IFilter<CostInfoModel>>
-            {
-                new CostInfosByAccountId(account.Id),
-                new CostInfosByPeriodicity(PeriodicityModel.Day)
-            };
-
-            var expenses = _balanceFacade.ListItems(filters,null);
-
-            filters.Clear();
-            filters.Add(new CostInfosByAccountId(account.Id));
-            filters.Add(new CostInfosByPeriodicity(PeriodicityModel.Week));
-            expenses.AddRange(_balanceFacade.ListItems(filters,null));
-
-            filters.Clear();
-            filters.Add(new CostInfosByAccountId(account.Id));
-            filters.Add(new CostInfosByPeriodicity(PeriodicityModel.Month));
-            expenses.AddRange(_balanceFacade.ListItems(filters,null));
+            var expenses = _balanceFacade.ListItems(account.Id, Periodicity.Day, null);
+          
+            expenses.AddRange(_balanceFacade.ListItems(account.Id, Periodicity.Week, null));
+            
+            expenses.AddRange(_balanceFacade.ListItems(account.Id, Periodicity.Month, null));
 
             return Mapper.Map<List<IndexPermanentExpenseViewModel>>(expenses);
         }
@@ -134,7 +119,7 @@ namespace ExpenseManager.Presentation.Controllers
                 new UsersByEmail(email);
             };
 
-            var users = _accountFacade.ListUsers(userFilters,null);
+            var users = _accountFacade.ListUsers(null, null, email,null);
             return users.FirstOrDefault();
         }
 

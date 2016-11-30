@@ -215,7 +215,7 @@ namespace ExpenseManager.Business.Tests.Facades
             }
 
             // Act
-            var obtainedUsers = _accountFacade.ListUsers(new List<IFilter<UserModel>> { new UsersByAccessType(AccountAccessTypeModel.Read)}, null);
+            var obtainedUsers = _accountFacade.ListUsers(null, AccountAccessType.Read, null , null);
 
             // Assert
             Assert.That(obtainedUsers.Count == 1 && obtainedUsers.First().AccessType == AccountAccessType.Read, "ListUsers failed - actual result does not match the expected one.");
@@ -311,7 +311,7 @@ namespace ExpenseManager.Business.Tests.Facades
             }
 
             // Act
-            var obtainedAccounts = _accountFacade.ListAccounts(new List<IFilter<AccountModel>> {new AccountsByName(account2Name)},null);
+            var obtainedAccounts = _accountFacade.ListAccounts(account2Name,null);
 
             // Assert
             Assert.That(obtainedAccounts.Count == 1 && obtainedAccounts.First().Name.Equals(account2Name), "ListAccounts failed - actual result does not match with expected one");

@@ -213,10 +213,10 @@ namespace ExpenseManager.Business.Services.Implementations
 
             Query.Filters = new List<IFilter<PlanModel>>
             {
-                new PlansByAccountId(accountId),
-                new PlansByMoneyTo(accountBalance),
-                new PlansByType(PlanTypeModel.Save),
-                new PlansByCompletition(false),
+                new PlansByAccountId { AccountId = accountId },
+                new PlansByMoneyTo {PlannedMoneyTo = accountBalance },
+                new PlansByType { PlanType = PlanTypeModel.Save },
+                new PlansByCompletition { IsCompleted = false}
             };
             using (UnitOfWorkProvider.Create())
             {
@@ -229,9 +229,9 @@ namespace ExpenseManager.Business.Services.Implementations
         {
             Query.Filters = new List<IFilter<PlanModel>>
             {
-                new PlansByAccountId(accountId),
-                new PlansByCompletition(false),
-                new PlansByDeadlineFrom(DateTime.Now)
+                new PlansByAccountId{ AccountId = accountId },
+                new PlansByCompletition { IsCompleted = false},
+                new PlansByDeadlineFrom {DeadlineFrom = DateTime.Now }
             };
             using (UnitOfWorkProvider.Create())
             {
@@ -252,10 +252,10 @@ namespace ExpenseManager.Business.Services.Implementations
                 {
                     Query.Filters = new  List<IFilter<PlanModel>>
                     {
-                           new PlansByAccountId(account.Id),
-                            new PlansByType(PlanTypeModel.MaxSpend),
-                         new PlansByCompletition(false),
-                            new PlansByDeadlineFrom(DateTime.Now)
+                           new PlansByAccountId {AccountId = account.Id },
+                            new PlansByType { PlanType = PlanTypeModel.MaxSpend },
+                         new PlansByCompletition {IsCompleted = false },
+                            new PlansByDeadlineFrom { DeadlineFrom = DateTime.Now }
                     };
                     var maxSpendPlans = GetList();
                     foreach (var plan in maxSpendPlans) // CHECK EVERY MAX SPEND PLAN THAT IS NO COMPLETED YET, REACHED ITS DEADLINE
@@ -263,9 +263,9 @@ namespace ExpenseManager.Business.Services.Implementations
                         if (plan.Deadline != null)
                             _costInfosQuery.Filters = new List<IFilter<CostInfoModel>> // USES EVERY COST OF PLANNED TYPE FROM START TO DEADLINE
                             {
-                                new CostInfosByTypeId(plan.PlannedTypeId),
-                                new CostInfosByCreatedFrom(plan.Start),
-                                new CostInfosByCreatedTo(plan.Deadline.Value)
+                                new CostInfosByTypeId { TypeId = plan.PlannedTypeId },
+                                new CostInfosByCreatedFrom {CreatedFrom = plan.Start },
+                                new CostInfosByCreatedTo { CreatedTo = plan.Deadline.Value }
                             };
                         var costInfos = _costInfosQuery.Execute();
                         if (costInfos.Sum(x => x.Money) <= plan.PlannedMoney)

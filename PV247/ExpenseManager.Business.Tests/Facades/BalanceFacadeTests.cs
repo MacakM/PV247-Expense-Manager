@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Castle.Components.DictionaryAdapter;
+using Castle.Core.Logging;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Enums;
 using ExpenseManager.Business.DataTransferObjects.Filters.Badges;
@@ -157,7 +158,7 @@ namespace ExpenseManager.Business.Tests.Facades
             var balance = _balanceFacade.GetBalance(account.Id);
             Assert.IsTrue(closeable.Count == 1, "Plan not found as closeable");
             _balanceFacade.ClosePlan(closeable.Single());
-            Assert.IsTrue(balance == _balanceFacade.ListItems(new List<IFilter<CostInfoModel>> { new CostInfosByIsIncome(false)}, null).Single().Money+ _balanceFacade.GetBalance(account.Id));
+            Assert.IsTrue(balance == _balanceFacade.ListItems(null, null, null, null, null,null, null, false, null).Single().Money+ _balanceFacade.GetBalance(account.Id));
         }
 
         /// <summary>
@@ -416,8 +417,7 @@ namespace ExpenseManager.Business.Tests.Facades
           
            
             _balanceFacade.RecomputePeriodicCosts();
-            var result = _balanceFacade.ListItems(
-                new List<IFilter<CostInfoModel>> {new CostInfosByPeriodicity(PeriodicityModel.None)}, null);
+            var result = _balanceFacade.ListItems(null, Periodicity.None, null);
             Assert.IsTrue(result.Count == 1);
             Assert.IsTrue(result.Single().Description.Equals("bread"));
 
@@ -700,7 +700,7 @@ namespace ExpenseManager.Business.Tests.Facades
             }
 
             // Act
-            var items = _balanceFacade.ListItems(null, null);
+            var items = _balanceFacade.ListItems(null, null, null);
 
             // Assert
             Assert.That(items.Count == 2, "Items were not listed.");
@@ -767,7 +767,7 @@ namespace ExpenseManager.Business.Tests.Facades
             }
 
             // Act
-            var items = _balanceFacade.ListItems(new List<IFilter<CostInfoModel>>{ new CostInfosByTypeId(typeId2) }, null);
+            var items = _balanceFacade.ListItems(typeId2, null);
 
             // Assert
             Assert.That(items.Count == 1, "Item was not listed.");
@@ -1228,7 +1228,7 @@ namespace ExpenseManager.Business.Tests.Facades
             }
 
             // Act
-            var types = _balanceFacade.ListItemTypes(new List<IFilter<CostTypeModel>> {new CostTypesByName("PC", true)}, null);
+            var types = _balanceFacade.ListItemTypes("PC", null);
 
             // Assert
             Assert.That(types.Count == 1, "Type was not listed.");
@@ -1410,7 +1410,7 @@ namespace ExpenseManager.Business.Tests.Facades
             }
 
             // Act
-            var badges = _balanceFacade.ListBadges(new List<IFilter<BadgeModel>>{ new BadgesByName(badgeName1,true)}, null);
+            var badges = _balanceFacade.ListBadges(badgeName1, null);
 
             // Assert
             Assert.That(badges.Count == 1, "Badge was not listed.");

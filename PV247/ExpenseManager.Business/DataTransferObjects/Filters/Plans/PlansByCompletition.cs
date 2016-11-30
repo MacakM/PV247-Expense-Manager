@@ -15,15 +15,6 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.Plans
         public bool IsCompleted { get; set; }
 
         /// <summary>
-        /// Filter constructor
-        /// </summary>
-        /// <param name="completed"></param>
-        public PlansByCompletition(bool completed)
-        {
-            IsCompleted = completed;
-        }
-
-        /// <summary>
         /// Filters query
         /// </summary>
         /// <param name="queryable"></param>

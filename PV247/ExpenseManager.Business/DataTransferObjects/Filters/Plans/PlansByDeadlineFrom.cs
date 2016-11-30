@@ -16,15 +16,6 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.Plans
         public DateTime? DeadlineFrom { get; set; }
 
         /// <summary>
-        /// Filter constructor
-        /// </summary>
-        /// <param name="deadlineFrom"></param>
-        public PlansByDeadlineFrom(DateTime deadlineFrom)
-        {
-            DeadlineFrom = deadlineFrom;
-        }
-
-        /// <summary>
         /// Filters query
         /// </summary>
         /// <param name="queryable"></param>
