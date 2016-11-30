@@ -4,7 +4,6 @@ using System.Linq;
 using AutoMapper;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Enums;
-using ExpenseManager.Business.DataTransferObjects.Filters;
 using ExpenseManager.Business.DataTransferObjects.Filters.CostInfos;
 using ExpenseManager.Business.Infrastructure;
 using ExpenseManager.Business.Services.Interfaces;

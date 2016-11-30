@@ -8,11 +8,10 @@
         /// <summary>
         /// Save some ammount of money
         /// </summary>
-        Save,
-
+        Save = 1,
         /// <summary>
         /// Not to spend more then limit
         /// </summary>
-        MaxSpend
+        MaxSpend = 2
     }
 }

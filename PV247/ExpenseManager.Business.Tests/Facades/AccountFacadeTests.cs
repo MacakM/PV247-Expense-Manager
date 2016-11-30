@@ -4,14 +4,9 @@ using System.Linq;
 using AutoMapper;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Enums;
-using ExpenseManager.Business.DataTransferObjects.Filters;
-using ExpenseManager.Business.DataTransferObjects.Filters.Accounts;
-using ExpenseManager.Business.DataTransferObjects.Filters.Users;
 using ExpenseManager.Business.Facades;
 using ExpenseManager.Database;
-using ExpenseManager.Database.DataAccess.FilterInterfaces;
 using ExpenseManager.Database.Entities;
-using ExpenseManager.Database.Enums;
 using NUnit.Framework;
 using Assert = NUnit.Framework.Assert;
 

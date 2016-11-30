@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Enums;
-using ExpenseManager.Business.DataTransferObjects.Filters;
 using ExpenseManager.Database.DataAccess.FilterInterfaces;
 using ExpenseManager.Database.Entities;
 

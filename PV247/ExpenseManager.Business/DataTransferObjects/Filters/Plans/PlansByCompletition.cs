@@ -7,7 +7,7 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.Plans
     /// <summary>
     /// Filter plans by its completetions
     /// </summary>
-    public class PlansByCompletition : IFilter<PlanModel>
+    internal class PlansByCompletition : IFilter<PlanModel>
     {
         /// <summary>
         /// If plan is completed

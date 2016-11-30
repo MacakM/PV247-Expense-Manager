@@ -3,12 +3,8 @@ using System.Collections.Generic;
 using AutoMapper;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Enums;
-using ExpenseManager.Business.DataTransferObjects.Filters;
-using ExpenseManager.Business.DataTransferObjects.Filters.CostInfos;
+using ExpenseManager.Business.DataTransferObjects.Factories;
 using ExpenseManager.Business.Facades;
-using ExpenseManager.Database.DataAccess.FilterInterfaces;
-using ExpenseManager.Database.Entities;
-using ExpenseManager.Database.Enums;
 using ExpenseManager.Presentation.Authentication;
 using ExpenseManager.Presentation.Models.Expense;
 using Microsoft.AspNetCore.Authorization;
@@ -49,12 +45,14 @@ namespace ExpenseManager.Presentation.Controllers
             var account = CurrentAccountProvider.GetCurrentAccount(HttpContext.User);
 
 
-            IPageAndOrderable<CostInfoModel> pageAndOrder = new PageAndOrderFilter<CostInfoModel>();
+            PageInfo pageInfo = new PageInfo
+            {
+                PageNumber = filterModel.PageNumber ?? 1,
+                PageSize = NumberOfExpensesPerPage
+            };
 
-            pageAndOrder.PageNumber = filterModel.PageNumber ?? 1;
-            pageAndOrder.PageSize = NumberOfExpensesPerPage;
 
-            filterModel.Expenses = GetFilteredExpenses(account.Id, Periodicity.None, filterModel.DateFrom, filterModel.DateTo, filterModel.MoneyFrom, filterModel.MoneyTo, filterModel.CostTypeId, null, pageAndOrder);
+            filterModel.Expenses = GetFilteredExpenses(account.Id, Periodicity.None, filterModel.DateFrom, filterModel.DateTo, filterModel.MoneyFrom, filterModel.MoneyTo, filterModel.CostTypeId, null, pageInfo);
             filterModel.PageCount = (int)Math.Ceiling(_balanceFacade.GetCostInfosCount(account.Id, Periodicity.None, filterModel.DateFrom, filterModel.DateTo, filterModel.MoneyFrom, filterModel.MoneyTo, filterModel.CostTypeId, null) / (double)NumberOfExpensesPerPage);
 
 
@@ -208,9 +206,9 @@ namespace ExpenseManager.Presentation.Controllers
         }
 
         #region Helpers
-        private List<IndexViewModel> GetFilteredExpenses(Guid accountId, Periodicity periodicity, DateTime? dateFrom, DateTime? dateTo, decimal? moneyFrom, decimal? moneyTo, Guid? costTypeId, bool? isIncome, IPageAndOrderable<CostInfoModel> pageAndOrder)
+        private List<IndexViewModel> GetFilteredExpenses(Guid accountId, Periodicity periodicity, DateTime? dateFrom, DateTime? dateTo, decimal? moneyFrom, decimal? moneyTo, Guid? costTypeId, bool? isIncome, PageInfo pageInfo)
         {
-            var expenses = _balanceFacade.ListItems(accountId, periodicity, dateFrom, dateTo,  moneyFrom, moneyTo, costTypeId,isIncome, pageAndOrder);
+            var expenses = _balanceFacade.ListItems(accountId, periodicity, dateFrom, dateTo,  moneyFrom, moneyTo, costTypeId,isIncome, pageInfo);
             return Mapper.Map<List<IndexViewModel>>(expenses);
         }
 

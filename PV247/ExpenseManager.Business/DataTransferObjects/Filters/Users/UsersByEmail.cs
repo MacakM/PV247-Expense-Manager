@@ -7,7 +7,7 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.Users
     /// <summary>
     /// Filter used to filter users by their email
     /// </summary>
-    public class UsersByEmail : IFilter<UserModel>
+    internal class UsersByEmail : IFilter<UserModel>
     {
         /// <summary>
         /// Specifies users email to filter with

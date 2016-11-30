@@ -5,7 +5,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using AutoMapper;
 using ExpenseManager.Business.DataTransferObjects;
-using ExpenseManager.Business.DataTransferObjects.Filters;
 using ExpenseManager.Business.Infrastructure;
 using ExpenseManager.Database.DataAccess.Repositories;
 using ExpenseManager.Database.Entities;

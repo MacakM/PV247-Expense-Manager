@@ -7,7 +7,7 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.CostTypes
     /// <summary>
     /// Filters by name
     /// </summary>
-    public class CostTypesByName : IFilter<CostTypeModel>
+    internal class CostTypesByName : IFilter<CostTypeModel>
     {
         /// <summary>
         /// Used for filtering based on cost type name

@@ -8,7 +8,7 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.Users
     /// <summary>
     /// Filter query by access type
     /// </summary>
-    public class UsersByAccessType : IFilter<UserModel>
+    internal class UsersByAccessType : IFilter<UserModel>
     {
         /// <summary>
         /// Specifies users access type to filter with

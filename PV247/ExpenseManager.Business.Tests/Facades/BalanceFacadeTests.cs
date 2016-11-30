@@ -2,18 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using Castle.Components.DictionaryAdapter;
-using Castle.Core.Logging;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Enums;
-using ExpenseManager.Business.DataTransferObjects.Filters.Badges;
-using ExpenseManager.Business.DataTransferObjects.Filters.CostInfos;
-using ExpenseManager.Business.DataTransferObjects.Filters.CostTypes;
 using ExpenseManager.Business.Facades;
 using ExpenseManager.Database;
-using ExpenseManager.Database.DataAccess.FilterInterfaces;
 using ExpenseManager.Database.Entities;
 using ExpenseManager.Database.Enums;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NUnit.Framework;
 using Assert = NUnit.Framework.Assert;
 

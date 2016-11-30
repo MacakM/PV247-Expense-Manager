@@ -3,11 +3,7 @@ using System.Collections.Generic;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Enums;
 using ExpenseManager.Business.DataTransferObjects.Factories;
-using ExpenseManager.Business.DataTransferObjects.Filters;
-using ExpenseManager.Business.DataTransferObjects.Filters.Accounts;
-using ExpenseManager.Business.DataTransferObjects.Filters.Users;
 using ExpenseManager.Business.Services.Interfaces;
-using ExpenseManager.Database.DataAccess.FilterInterfaces;
 using ExpenseManager.Database.Entities;
 
 namespace ExpenseManager.Business.Facades
@@ -91,13 +87,13 @@ namespace ExpenseManager.Business.Facades
         /// </summary>
         /// <param name="accessType"></param>
         /// <param name="email"></param>
-        /// <param name="pageAndOrder"></param>
         /// <param name="accountId"></param>
+        /// <param name="pageInfo"></param>
         /// <returns></returns>
-        public List<User> ListUsers(Guid? accountId, AccountAccessType? accessType, string email, IPageAndOrderable<UserModel> pageAndOrder)
+        public List<User> ListUsers(Guid? accountId, AccountAccessType? accessType, string email, PageInfo pageInfo)
         {
-            var filters = FilterFactory.GetFilters<UserModel>(new Tuple<string, object>(nameof(UsersByAccountId.AccountId), accountId), new Tuple<string, object>(nameof(UsersByAccessType.AccessType), accessType), new Tuple<string, object>(nameof(UsersByEmail.Email), email));
-            return _userService.ListUsers(filters, pageAndOrder);
+            var filters = FilterFactory.GetUserFilters(accountId,accessType, email);
+            return _userService.ListUsers(filters, FilterFactory.GetPageAndOrderable<UserModel>(pageInfo));
         }
 
         #endregion
@@ -151,13 +147,12 @@ namespace ExpenseManager.Business.Facades
         /// List filtered accounts
         /// </summary>
         /// <param name="accountName"></param>
-        /// <param name="pageAndOrder"></param>
+        /// <param name="pageInfo"></param>
         /// <returns></returns>
-        public List<Account> ListAccounts(string accountName, IPageAndOrderable<AccountModel> pageAndOrder)
+        public List<Account> ListAccounts(string accountName, PageInfo pageInfo)
         {
-            var filters = FilterFactory.GetFilters<AccountModel>(new Tuple<string, object>(nameof(AccountsByName.Name), accountName));
-
-            return _accountService.ListAccounts(filters, pageAndOrder);
+            var filters = FilterFactory.GetAccountFilters(accountName);
+            return _accountService.ListAccounts(filters, FilterFactory.GetPageAndOrderable<AccountModel>(pageInfo));
         }
 
         /// <summary>

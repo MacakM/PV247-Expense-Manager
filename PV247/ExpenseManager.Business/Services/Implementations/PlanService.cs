@@ -9,8 +9,6 @@ using ExpenseManager.Business.DataTransferObjects.Filters.Plans;
 using ExpenseManager.Business.Infrastructure;
 using ExpenseManager.Business.Services.Interfaces;
 using ExpenseManager.Database.DataAccess.FilterInterfaces;
-using ExpenseManager.Database.DataAccess.Queries;
-using ExpenseManager.Database.DataAccess.Repositories;
 using ExpenseManager.Database.Entities;
 using ExpenseManager.Database.Enums;
 using ExpenseManager.Database.Infrastructure.Query;

@@ -8,7 +8,7 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.Plans
     /// <summary>
     /// Filter plans based on planned type
     /// </summary>
-    public class PlansByType : IFilter<PlanModel>
+    internal class PlansByType : IFilter<PlanModel>
     {
         /// <summary>
         /// Plan type to be used in filter

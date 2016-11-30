@@ -3,13 +3,7 @@ using System.Collections.Generic;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Enums;
 using ExpenseManager.Business.DataTransferObjects.Factories;
-using ExpenseManager.Business.DataTransferObjects.Filters;
-using ExpenseManager.Business.DataTransferObjects.Filters.Badges;
-using ExpenseManager.Business.DataTransferObjects.Filters.CostInfos;
-using ExpenseManager.Business.DataTransferObjects.Filters.CostTypes;
-using ExpenseManager.Business.DataTransferObjects.Filters.Plans;
 using ExpenseManager.Business.Services.Interfaces;
-using ExpenseManager.Database.DataAccess.FilterInterfaces;
 using ExpenseManager.Database.Entities;
 
 namespace ExpenseManager.Business.Facades
@@ -19,8 +13,6 @@ namespace ExpenseManager.Business.Facades
     /// </summary>
     public class BalanceFacade
     {
-        private readonly IAccountBadgeService _accountBadgeService;
-
         private readonly IBadgeService _badgeService;
 
         private readonly ICostInfoService _costInfoService;
@@ -34,21 +26,17 @@ namespace ExpenseManager.Business.Facades
         /// <summary>
         /// Balance facade construtor
         /// </summary>
-        /// <param name="accountBadgeService">Account Badge service</param>
         /// <param name="badgeService">Badge service</param>
         /// <param name="costInfoService">Cost info service</param>
         /// <param name="costTypeService">Cost type service</param>
         /// <param name="planService">Plan service</param>
         /// <param name="graphService"></param>
-        public BalanceFacade(
-            IAccountBadgeService accountBadgeService, 
-            IBadgeService badgeService, 
+        public BalanceFacade(IBadgeService badgeService, 
             ICostInfoService costInfoService, 
             ICostTypeService costTypeService, 
             IPlanService planService, 
             IGraphService graphService)
         {
-            _accountBadgeService = accountBadgeService;
             _badgeService = badgeService;
             _costInfoService = costInfoService;
             _costTypeService = costTypeService;
@@ -168,11 +156,11 @@ namespace ExpenseManager.Business.Facades
         /// List cost infos
         /// </summary>
         /// <param name="typeId"></param>
-        /// <param name="pageAndOrder"></param>
+        /// <param name="pageInfo"></param>
         /// <returns></returns>
-        public List<CostInfo> ListItems(Guid typeId, IPageAndOrderable<CostInfoModel> pageAndOrder)
+        public List<CostInfo> ListItems(Guid typeId, PageInfo pageInfo)
         {
-            return ListItems(null, null, null, null, null, null, typeId, null, pageAndOrder);
+            return ListItems(null, null, null, null, null, null, typeId, null, pageInfo);
         }
 
         /// <summary>
@@ -180,11 +168,11 @@ namespace ExpenseManager.Business.Facades
         /// </summary>
         /// <param name="accountId"></param>
         /// <param name="periodicity"></param>
-        /// <param name="pageAndOrder"></param>
+        /// <param name="pageInfo"></param>
         /// <returns></returns>
-        public List<CostInfo> ListItems(Guid? accountId, Periodicity? periodicity,  IPageAndOrderable<CostInfoModel> pageAndOrder)
+        public List<CostInfo> ListItems(Guid? accountId, Periodicity? periodicity,  PageInfo pageInfo)
         {
-            return ListItems(accountId, periodicity, null, null, null, null, null, null, pageAndOrder);
+            return ListItems(accountId, periodicity, null, null, null, null, null, null, pageInfo);
         }
 
         /// <summary>
@@ -192,21 +180,18 @@ namespace ExpenseManager.Business.Facades
         /// </summary>
         /// <param name="periodicity"></param>
         /// <param name="isIncome"></param>
-        /// <param name="pageAndOrder"></param>
         /// <param name="accountId"></param>
         /// <param name="dateFrom"></param>
         /// <param name="dateTo"></param>
         /// <param name="moneyFrom"></param>
         /// <param name="moneyTo"></param>
         /// <param name="costTypeId"></param>
+        /// <param name="pageInfo"></param>
         /// <returns>List of cost infos</returns>
-        public List<CostInfo> ListItems(Guid? accountId, Periodicity? periodicity, DateTime? dateFrom, DateTime? dateTo, decimal? moneyFrom, decimal? moneyTo, Guid? costTypeId, bool? isIncome, IPageAndOrderable<CostInfoModel> pageAndOrder)
+        public List<CostInfo> ListItems(Guid? accountId, Periodicity? periodicity, DateTime? dateFrom, DateTime? dateTo, decimal? moneyFrom, decimal? moneyTo, Guid? costTypeId, bool? isIncome, PageInfo pageInfo)
         {
-            var filters =
-                FilterFactory.GetFilters<CostInfoModel>(
-                    new Tuple<string, object>(nameof(CostInfosByAccountId.AccountId), accountId),
-                    new Tuple<string, object>(nameof(CostInfosByPeriodicity.Periodicity), periodicity));
-            return _costInfoService.ListCostInfos(filters, pageAndOrder);
+            var filters = FilterFactory.GetCostItemsFilters(accountId, periodicity, dateFrom, dateTo, moneyFrom, moneyTo, costTypeId,isIncome);
+            return _costInfoService.ListCostInfos(filters, FilterFactory.GetPageAndOrderable<CostInfoModel>(pageInfo));
         }
 
         /// <summary>
@@ -224,17 +209,7 @@ namespace ExpenseManager.Business.Facades
         /// <returns></returns>
         public int GetCostInfosCount(Guid? accountId, Periodicity? periodicity, DateTime? dateFrom, DateTime? dateTo, decimal? moneyFrom, decimal? moneyTo, Guid? costTypeId, bool? isIncome)
         {
-            var filters =
-                FilterFactory.GetFilters<CostInfoModel>(
-                    new Tuple<string, object>(nameof(CostInfosByAccountId.AccountId), accountId),
-                    new Tuple<string, object>(nameof(CostInfosByPeriodicity.Periodicity), periodicity),
-                    new Tuple<string, object>(nameof(CostInfosByCreatedFrom.CreatedFrom), dateFrom),
-                    new Tuple<string, object>(nameof(CostInfosByCreatedTo.CreatedTo), dateTo),
-                    new Tuple<string, object>(nameof(CostInfosByMoneyFrom.MoneyFrom), moneyFrom),
-                    new Tuple<string, object>(nameof(CostInfosByMoneyTo.MoneyTo), moneyTo),
-                    new Tuple<string, object>(nameof(CostInfosByTypeId.TypeId), costTypeId),
-                    new Tuple<string, object>(nameof(CostInfosByIsIncome.IsIncome), isIncome)
-            );
+            var filters = FilterFactory.GetCostItemsFilters(accountId, periodicity, dateFrom, dateTo, moneyFrom, moneyTo, costTypeId, isIncome);
             return _costInfoService.GetCostInfosCount(filters, null);
         }
 
@@ -280,14 +255,12 @@ namespace ExpenseManager.Business.Facades
         /// Lists all plans that match filters criterias
         /// </summary>
         /// <param name="accountId"></param>
-        /// <param name="pageAndOrder"></param>
+        /// <param name="pageInfo"></param>
         /// <returns></returns>
-        public List<Plan> ListPlans(Guid? accountId, IPageAndOrderable<PlanModel> pageAndOrder)
+        public List<Plan> ListPlans(Guid? accountId, PageInfo pageInfo)
         {
-            var filters =
-                FilterFactory.GetFilters<PlanModel>(new Tuple<string, object>(nameof(PlansByAccountId.AccountId),
-                    accountId));
-            return _planService.ListPlans(filters, pageAndOrder);
+            var filters = FilterFactory.GetPlanFilters(accountId);
+            return _planService.ListPlans(filters, FilterFactory.GetPageAndOrderable<PlanModel>(pageInfo));
         }
 
         #endregion
@@ -333,14 +306,12 @@ namespace ExpenseManager.Business.Facades
         /// List cost types specified by filter
         /// </summary>
         /// <param name="costTypeName"></param>
-        /// <param name="pageAndOrder"></param>
+        /// <param name="pageInfo"></param>
         /// <returns>List of cost typer</returns>
-        public List<CostType> ListItemTypes(string costTypeName, IPageAndOrderable<CostTypeModel> pageAndOrder)
+        public List<CostType> ListItemTypes(string costTypeName, PageInfo pageInfo)
         {
-            var filters =
-                FilterFactory.GetFilters<CostTypeModel>(new Tuple<string, object>(nameof(CostTypesByName.Name),
-                    costTypeName));
-            return _costTypeService.ListCostTypes(filters, pageAndOrder);
+            var filters = FilterFactory.GetCostTypeFilters(costTypeName);
+            return _costTypeService.ListCostTypes(filters, FilterFactory.GetPageAndOrderable<CostTypeModel>(pageInfo));
         }
 
         #endregion
@@ -386,13 +357,12 @@ namespace ExpenseManager.Business.Facades
         /// Lists filtered badges
         /// </summary>
         /// <param name="badgeName"></param>
-        /// <param name="pageAndOrder"></param>
+        /// <param name="pageInfo"></param>
         /// <returns></returns>
-        public List<Badge> ListBadges(string badgeName, IPageAndOrderable<BadgeModel> pageAndOrder)
+        public List<Badge> ListBadges(string badgeName,PageInfo pageInfo)
         {
-            var filters =
-                FilterFactory.GetFilters<BadgeModel>(new Tuple<string, object>(nameof(BadgesByName.Name), badgeName));
-            return _badgeService.ListBadges(filters, pageAndOrder);
+            var filters = FilterFactory.GetBadgeFilters(badgeName);
+            return _badgeService.ListBadges(filters, FilterFactory.GetPageAndOrderable<BadgeModel>(pageInfo));
         }
 
        

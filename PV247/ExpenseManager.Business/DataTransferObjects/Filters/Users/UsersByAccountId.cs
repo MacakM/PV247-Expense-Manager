@@ -8,7 +8,7 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.Users
     /// <summary>
     /// Filters by account id
     /// </summary>
-    public class UsersByAccountId : IFilter<UserModel>
+    internal class UsersByAccountId : IFilter<UserModel>
     {
         /// <summary>
         /// Specifies account id to filter with

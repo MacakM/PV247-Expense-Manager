@@ -10,7 +10,6 @@ using Riganti.Utils.Infrastructure.Core;
 using ExpenseManager.Business.Services.Interfaces;
 using ExpenseManager.Business.Utilities.BadgeCertification;
 using ExpenseManager.Database.DataAccess.FilterInterfaces;
-using ExpenseManager.Database.DataAccess.Queries;
 using ExpenseManager.Database.Infrastructure.Query;
 
 namespace ExpenseManager.Business.Services.Implementations

@@ -8,21 +8,21 @@
         /// <summary>
         /// Cost is NOT periodic
         /// </summary>
-        None,
+        None = 1,
 
         /// <summary>
         /// Day period
         /// </summary>
-        Day,
+        Day = 2,
 
         /// <summary>
         /// Week period
         /// </summary>
-        Week,
+        Week = 4,
 
         /// <summary>
         /// Month period
         /// </summary>
-        Month
+        Month = 8
     }
 }

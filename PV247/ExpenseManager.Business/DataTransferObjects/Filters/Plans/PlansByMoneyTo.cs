@@ -7,7 +7,7 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.Plans
     /// <summary>
     /// Filters plans by planned money
     /// </summary>
-    public class PlansByMoneyTo : IFilter<PlanModel>
+    internal class PlansByMoneyTo : IFilter<PlanModel>
     {
         /// <summary>
         /// Right edge of planned money range

@@ -4,12 +4,7 @@ using System.Linq;
 using AutoMapper;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Enums;
-using ExpenseManager.Business.DataTransferObjects.Filters.CostInfos;
-using ExpenseManager.Business.DataTransferObjects.Filters.Users;
 using ExpenseManager.Business.Facades;
-using ExpenseManager.Database.DataAccess.FilterInterfaces;
-using ExpenseManager.Database.Entities;
-using ExpenseManager.Database.Enums;
 using ExpenseManager.Presentation.Authentication;
 using ExpenseManager.Presentation.Models.AccountSettingsViewModel;
 using ExpenseManager.Presentation.Models.Expense;
@@ -114,11 +109,6 @@ namespace ExpenseManager.Presentation.Controllers
 
         private User GetUserFromEmail(string email)
         {
-            var userFilters = new List<IFilter<UserModel>>();
-            {
-                new UsersByEmail(email);
-            };
-
             var users = _accountFacade.ListUsers(null, null, email,null);
             return users.FirstOrDefault();
         }

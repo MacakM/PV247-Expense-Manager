@@ -79,6 +79,7 @@
     <Compile Include="DataTransferObjects\Enums\Periodicity.cs" />
     <Compile Include="DataTransferObjects\Enums\PlanType.cs" />
     <Compile Include="DataTransferObjects\Factories\FilterFactory.cs" />
+    <Compile Include="DataTransferObjects\Factories\PageInfo.cs" />
     <Compile Include="DataTransferObjects\Filters\Accounts\AccountsByName.cs" />
     <Compile Include="DataTransferObjects\Filters\Badges\BadgesByName.cs" />
     <Compile Include="DataTransferObjects\Filters\CostInfos\CostInfosByIsIncome.cs" />

@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using ExpenseManager.Business.DataTransferObjects;
-using ExpenseManager.Business.DataTransferObjects.Filters;
 using ExpenseManager.Database.DataAccess.FilterInterfaces;
 using ExpenseManager.Database.Entities;
 

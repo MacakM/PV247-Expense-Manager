@@ -7,7 +7,7 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.Users
     /// <summary>
     /// Filters by user name
     /// </summary>
-    public class UsersByAccountName : IFilter<UserModel>
+    internal class UsersByAccountName : IFilter<UserModel>
     {
         /// <summary>
         /// Specifies account name to filter with
