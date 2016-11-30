@@ -47,35 +47,43 @@ namespace ExpenseManager.Presentation.Controllers
         public IActionResult Index(IndexFilterViewModel filterModel)
         {
             var account = CurrentAccountProvider.GetCurrentAccount(HttpContext.User);
+            var filters = new List<IFilter<CostInfoModel>>();
+            filters.Add(new CostInfosByAccountId(account.Id));
+            filters.Add(new CostInfosByPeriodicity(PeriodicityModel.None));
+            if (filterModel.DateFrom != null)
+            {
+                filters.Add(new CostInfosByCreatedFrom(filterModel.DateFrom));
+            }
             if (filterModel.DateTo != null)
             {
-                if (filterModel.MoneyFrom != null)
-                {
-                    if (filterModel.MoneyTo != null)
-                    {
-                        if (filterModel.CostTypeId != null)
-                        {
-                            var filters = new List<IFilter<CostInfoModel>>
-                            {
-                                new CostInfosByAccountId(account.Id),
-                                new CostInfosByPeriodicity(PeriodicityModel.None),
-                                new CostInfosByCreatedFrom(filterModel.DateFrom),
-                                new CostInfosByCreatedTo(filterModel.DateTo.Value),
-                                new CostInfosByMoneyFrom(filterModel.MoneyFrom.Value),
-                                new CostInfosByMoneyTo(filterModel.MoneyTo.Value),
-                                new CostInfosByTypeId(filterModel.CostTypeId.Value)
-                            };
-                            IPageAndOrderable<CostInfoModel> pageAndOrder = new PageAndOrderFilter<CostInfoModel>();
-
-                            pageAndOrder.PageNumber = filterModel.PageNumber ?? 1;
-                            pageAndOrder.PageSize = NumberOfExpensesPerPage;
-
-                            filterModel.Expenses = GetFilteredExpenses(filters, pageAndOrder);
-                            filterModel.PageCount = (int)Math.Ceiling(_balanceFacade.GetCostInfosCount(filters, null) / (double)NumberOfExpensesPerPage);
-                        }
-                    }
-                }
+                filters.Add(new CostInfosByCreatedTo(filterModel.DateTo.Value));
             }
+            if (filterModel.MoneyFrom != null)
+            {
+                filters.Add(new CostInfosByMoneyFrom(filterModel.MoneyFrom.Value));
+            }
+            if (filterModel.MoneyTo != null)
+            {
+                filters.Add(new CostInfosByMoneyTo(filterModel.MoneyTo.Value));
+            }
+            if (filterModel.CostTypeId != null)
+            {
+                filters.Add(new CostInfosByTypeId(filterModel.CostTypeId.Value));
+            }
+
+
+            IPageAndOrderable<CostInfoModel> pageAndOrder = new PageAndOrderFilter<CostInfoModel>();
+
+            pageAndOrder.PageNumber = filterModel.PageNumber ?? 1;
+            pageAndOrder.PageSize = NumberOfExpensesPerPage;
+
+            filterModel.Expenses = GetFilteredExpenses(filters, pageAndOrder);
+            filterModel.PageCount = (int)Math.Ceiling(_balanceFacade.GetCostInfosCount(filters, null) / (double)NumberOfExpensesPerPage);
+
+
+
+
+
             filterModel.CostTypes = GetAllCostTypes();
             filterModel.CurrentUser = Mapper.Map<Models.User.IndexViewModel>(CurrentAccountProvider.GetCurrentUser(HttpContext.User));
             return View(filterModel);
