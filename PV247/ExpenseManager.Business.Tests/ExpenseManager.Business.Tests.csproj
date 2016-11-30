@@ -102,6 +102,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="GlobalTestInitializer.cs" />
+    <Compile Include="Services\BadgeServiceTests.cs" />
     <Compile Include="TestInstaller.cs" />
     <Compile Include="Facades\AccountFacadeTests.cs" />
     <Compile Include="Facades\BalanceFacadeTests.cs" />
