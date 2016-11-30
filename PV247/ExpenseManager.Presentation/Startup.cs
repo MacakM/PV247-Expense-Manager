@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Diagnostics;
 using AutoMapper;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Enums;
@@ -9,7 +11,6 @@ using ExpenseManager.Business.Infrastructure.Mapping.Profiles;
 using ExpenseManager.Business.Services.Implementations;
 using ExpenseManager.Business.Services.Interfaces;
 using ExpenseManager.Business.Utilities.BadgeCertification;
-using ExpenseManager.Business.Utilities.BadgeCertification.BadgeCertifiers;
 using ExpenseManager.Database.DataAccess.Queries;
 using ExpenseManager.Database.DataAccess.Repositories;
 using ExpenseManager.Database.Entities;
@@ -27,8 +28,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using NuGet.Packaging;
 using Riganti.Utils.Infrastructure.Core;
+using Hangfire;
+using Hangfire.SqlServer;
 
 namespace ExpenseManager.Presentation
 {
@@ -89,6 +91,13 @@ namespace ExpenseManager.Presentation
                 options.AddPolicy("HasFullRights",
                                   policy => policy.Requirements.Add(new HasAccessRightsRequirement(AccountAccessType.Full)));
             });
+
+            var connectionString = Configuration.GetConnectionString("HangfireConnection");
+            //Used for periodic events management
+            services.AddHangfire(cfg => 
+                cfg.UseSqlServerStorage(connectionString, 
+                    new SqlServerStorageOptions {QueuePollInterval = TimeSpan.FromSeconds(60)}));
+
             services.AddMvc(options =>
             {
                 options.Filters.Add(new RequireHttpsAttribute());
@@ -123,7 +132,18 @@ namespace ExpenseManager.Presentation
 
             app.UseIdentity();
 
-            var x = Configuration.GetSection("FacebookAuthentication")["ClientId"];
+            app.UseHangfireDashboard();
+            app.UseHangfireServer();
+            
+            // Periodic launching of CheckAllMaxSpendDeadlines
+            RecurringJob.AddOrUpdate(
+                () => app.ApplicationServices.GetService<BalanceFacade>().CheckAllMaxSpendDeadlines(), 
+                Cron.Hourly);
+
+            // Periodic launching of CheckBadgesRequirements
+            RecurringJob.AddOrUpdate(
+                () => app.ApplicationServices.GetService<BalanceFacade>().CheckBadgesRequirements(),
+                Cron.Hourly);
 
             app.UseFacebookAuthentication(new FacebookOptions
             {
