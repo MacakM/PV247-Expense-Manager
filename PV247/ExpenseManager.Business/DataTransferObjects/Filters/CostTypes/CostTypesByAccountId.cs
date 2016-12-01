@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ExpenseManager.Database.DataAccess.FilterInterfaces;
+using ExpenseManager.Database.Entities;
 
 namespace ExpenseManager.Business.DataTransferObjects.Filters.CostTypes
 {
-    internal class CostTypesByAccountId : IFilter<CostType>
+    internal class CostTypesByAccountId : IFilter<CostTypeModel>
     {
         /// <summary>
         /// Account id to be used in filter
@@ -19,7 +20,7 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.CostTypes
         /// </summary>
         /// <param name="queryable"></param>
         /// <returns></returns>
-        public IQueryable<CostType> FilterQuery(IQueryable<CostType> queryable)
+        public IQueryable<CostTypeModel> FilterQuery(IQueryable<CostTypeModel> queryable)
         {
             return queryable.Where(costType => costType.AccountId == AccountId);
         }

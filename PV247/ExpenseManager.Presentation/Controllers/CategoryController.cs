@@ -63,6 +63,8 @@ namespace ExpenseManager.Presentation.Controllers
         /// </summary>
         /// <returns></returns>
         [Authorize(Policy = "HasFullRights")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Store(CreateViewModel model)
         {
             if (!ModelState.IsValid)

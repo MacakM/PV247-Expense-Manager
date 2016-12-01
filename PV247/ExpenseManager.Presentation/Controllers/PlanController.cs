@@ -85,8 +85,9 @@ namespace ExpenseManager.Presentation.Controllers
         public IActionResult Store(CreateViewModel model)
         {
             var costType = _balanceFacade.GetItemType(model.PlannedTypeId);
+            var account = CurrentAccountProvider.GetCurrentAccount(HttpContext.User);
 
-            if (!ModelState.IsValid || costType == null)
+            if (!ModelState.IsValid || costType == null || costType.AccountId != account.Id)
             {
                 ModelState.AddModelError(string.Empty, ExpenseManagerResource.InvalidInputData);
                 model.CostTypes = GetAllCostTypes();
@@ -95,7 +96,6 @@ namespace ExpenseManager.Presentation.Controllers
 
             var plan = Mapper.Map<Plan>(model);
 
-            var account = CurrentAccountProvider.GetCurrentAccount(HttpContext.User);
 
             plan.AccountId = account.Id;
             plan.Start = DateTime.Now;
@@ -129,7 +129,8 @@ namespace ExpenseManager.Presentation.Controllers
 
         private List<Models.CostType.CategoryViewModel> GetAllCostTypes()
         {
-            var costTypes = _balanceFacade.ListItemTypes(null,null);
+            var accountId = CurrentAccountProvider.GetCurrentAccount(HttpContext.User).Id;
+            var costTypes = _balanceFacade.ListItemTypes(accountId);
             var costTypeViewModels = Mapper.Map<List<Models.CostType.CategoryViewModel>>(costTypes);
             return costTypeViewModels;
         }
