@@ -6,6 +6,7 @@ using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.Infrastructure;
 using ExpenseManager.Business.Services.Interfaces;
 using ExpenseManager.Database.DataAccess.FilterInterfaces;
+using ExpenseManager.Database.DataAccess.Repositories;
 using ExpenseManager.Database.Entities;
 using ExpenseManager.Database.Infrastructure.Query;
 using ExpenseManager.Database.Infrastructure.Repository;
@@ -18,6 +19,8 @@ namespace ExpenseManager.Business.Services.Implementations
     /// </summary>
     public class CostTypeService : ExpenseManagerQueryAndCrudServiceBase<CostTypeModel, Guid, CostType>, ICostTypeService
     {
+        private readonly AccountRepository _accountRepository;
+
         /// <summary>
         /// Entity includes
         /// </summary>
@@ -30,8 +33,14 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="repository">Repository</param>
         /// <param name="expenseManagerMapper">Mapper</param>
         /// <param name="unitOfWorkProvider">Unit of work provider</param>
-        public CostTypeService(ExpenseManagerQuery<CostTypeModel> query, ExpenseManagerRepository<CostTypeModel, Guid> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
+        /// <param name="accountRepository"></param>
+        public CostTypeService(ExpenseManagerQuery<CostTypeModel> query, 
+            ExpenseManagerRepository<CostTypeModel, Guid> repository, 
+            Mapper expenseManagerMapper, 
+            IUnitOfWorkProvider unitOfWorkProvider,
+            AccountRepository accountRepository) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
         {
+            _accountRepository = accountRepository;
         }
 
         /// <summary>
@@ -42,7 +51,16 @@ namespace ExpenseManager.Business.Services.Implementations
         {
             using (var unitOfWork = UnitOfWorkProvider.Create())
             {
-                Save(costType);
+                var account = _accountRepository.GetById(costType.AccountId);
+                if (account == null)
+                {
+                    throw new InvalidOperationException("Account with given id doesn't exist");
+                }
+
+                var costTypeModel = ExpenseManagerMapper.Map<CostTypeModel>(costType);
+                costTypeModel.Account = account;
+
+                Repository.Insert(costTypeModel);
                 unitOfWork.Commit();
             }
         }

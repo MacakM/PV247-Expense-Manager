@@ -29,6 +29,9 @@ namespace ExpenseManager.Presentation.Infrastructure.Mapping
             CreateMap<CostType, Models.CostType.CategoryViewModel>()
                 .ReverseMap();
 
+            CreateMap<CostType, Models.CostType.CreateViewModel>()
+                .ReverseMap();
+
             CreateMap<User, Models.User.IndexViewModel>()
                 .ReverseMap();
 

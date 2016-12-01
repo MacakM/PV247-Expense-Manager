@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.Facades;
 using ExpenseManager.Presentation.Authentication;
 using ExpenseManager.Presentation.Models.CostType;
+using ExpenseManager.Presentation.ViewComponents;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -46,9 +48,42 @@ namespace ExpenseManager.Presentation.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// For creating category
+        /// </summary>
+        /// <returns></returns>
+        [Authorize(Policy = "HasFullRights")]
         public IActionResult Create()
         {
-            throw new NotImplementedException();
+            return View();
+        }
+
+        /// <summary>
+        /// Stores category
+        /// </summary>
+        /// <returns></returns>
+        [Authorize(Policy = "HasFullRights")]
+        public IActionResult Store(CreateViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("Index", "Error", new {errorMessage = ExpenseManagerResource.InvalidInputData});
+            }
+
+            var existingCategories = _balanceFacade.ListItemTypes(model.Name, null);
+
+            if (existingCategories.Count != 0)
+            {
+                return RedirectToAction("Index", "Error", new {errorMessage = ExpenseManagerResource.CategoryExists});
+            }
+
+            var account = CurrentAccountProvider.GetCurrentAccount(HttpContext.User);
+            var costType = Mapper.Map<CostType>(model);
+            costType.AccountId = account.Id;
+
+            _balanceFacade.CreateItemType(costType);
+
+            return RedirectToAction("Index", new {successMessage = ExpenseManagerResource.CategoryCreated});
         }
 
         private Models.User.IndexViewModel GetCurrentUser()

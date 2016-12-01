@@ -192,6 +192,12 @@
   <data name="PlanClosed" xml:space="preserve">
     <value>Plan was successfully marked as finished</value>
   </data>
+  <data name="CategoryExists" xml:space="preserve">
+    <value>Category with given name already exists</value>
+  </data>
+  <data name="CategoryCreated" xml:space="preserve">
+    <value>Category was successfully created</value>
+  </data>
   <data name="InvalidInputData" xml:space="preserve">
     <value>Invalid input data</value>
   </data>
