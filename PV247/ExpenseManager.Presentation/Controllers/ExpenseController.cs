@@ -48,7 +48,9 @@ namespace ExpenseManager.Presentation.Controllers
             PageInfo pageInfo = new PageInfo
             {
                 PageNumber = filterModel.PageNumber ?? 1,
-                PageSize = NumberOfExpensesPerPage
+                PageSize = NumberOfExpensesPerPage,
+                OrderByPropertyName = nameof(CostInfo.Created),
+                OrderByDesc = true
             };
 
 

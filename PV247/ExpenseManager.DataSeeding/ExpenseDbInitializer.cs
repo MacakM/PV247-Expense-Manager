@@ -157,7 +157,7 @@ namespace ExpenseManager.DataSeeding
                 var cost = new CostInfoModel()
                 {
                     Account = account,
-                    Created = DateTime.Now,
+                    Created = DateTime.UtcNow.AddDays(- random.Next(0,14)),
                     Description = "Seeded expense",
                     IsIncome = false,
                     Periodicity = PeriodicityModel.None,

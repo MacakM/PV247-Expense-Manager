@@ -15,15 +15,6 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.Users
         public string Email { get; set; }
 
         /// <summary>
-        /// Filter constructor
-        /// </summary>
-        /// <param name="email"></param>
-        public UsersByEmail(string email)
-        {
-            Email = email;
-        }
-
-        /// <summary>
         /// Filters users by their email
         /// </summary>
         /// <param name="queryable"></param>
