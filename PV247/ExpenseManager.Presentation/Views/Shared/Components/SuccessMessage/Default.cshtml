@@ -1,9 +1,9 @@
-@model ExpenseManager.Presentation.Models.ViewComponent.SuccessMessageViewModel
+﻿@model string
 
-@if (@Model.Message != null)
+@if (Model != null)
 {
     <div class="alert alert-success success-message">
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-        @Model.Message
+        @Model
     </div>
 }

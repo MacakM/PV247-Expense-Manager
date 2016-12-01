@@ -43,7 +43,7 @@ namespace ExpenseManager.Presentation.ViewComponents
             var account = _currentAccountProvider.GetCurrentAccount(HttpContext.User);
             var balances = _balanceFacade.GetDailyBalanceGraphData(account.Id);
             var model = _mapper.Map<List<DayTotalBalanceViewModel>>(balances);
-            return View("~/Views/Partial/_RightMenuGraph.cshtml", model);
+            return View(model);
         }
     }
 }

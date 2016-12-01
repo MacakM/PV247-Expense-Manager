@@ -55,12 +55,11 @@ namespace ExpenseManager.Presentation.Controllers
         /// Displays form for creating permanent expenses
         /// </summary>
         [Authorize(Policy = "HasFullRights")]
-        public IActionResult Create([FromQuery] string errorMessage = null)
+        public IActionResult Create()
         {
             var model = new CreatePermanentExpenseViewModel
             {
                 CostTypes = GetAllCostTypes(),
-                ErrorMessage = errorMessage
             };
             return View(model);
         }

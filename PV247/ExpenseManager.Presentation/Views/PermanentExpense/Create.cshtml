@@ -7,13 +7,7 @@
 
 <div class="col-sm-9 content-holder">
     <h2>New permanent expense</h2>
-    @if (Model.ErrorMessage != null)
-    {
-        <div class="alert alert-danger">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            @Model.ErrorMessage
-        </div>
-    }
+    @await Component.InvokeAsync("InlineErrorMessage")
     <form asp-action="Store">
         <div class="form-horizontal">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>

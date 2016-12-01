@@ -42,7 +42,6 @@ namespace ExpenseManager.Presentation.Controllers
         {
             var account = CurrentAccountProvider.GetCurrentAccount(HttpContext.User);
 
-
             PageInfo pageInfo = new PageInfo
             {
                 PageNumber = filterModel.PageNumber ?? 1,
@@ -51,14 +50,8 @@ namespace ExpenseManager.Presentation.Controllers
                 OrderByDesc = true
             };
 
-
             filterModel.Expenses = GetFilteredExpenses(account.Id, Periodicity.None, filterModel.DateFrom, filterModel.DateTo, filterModel.MoneyFrom, filterModel.MoneyTo, filterModel.CostTypeId, null, pageInfo);
             filterModel.PageCount = (int)Math.Ceiling(_balanceFacade.GetCostInfosCount(account.Id, Periodicity.None, filterModel.DateFrom, filterModel.DateTo, filterModel.MoneyFrom, filterModel.MoneyTo, filterModel.CostTypeId, null) / (double)NumberOfExpensesPerPage);
-
-
-
-            
-
             filterModel.CostTypes = GetAllCostTypes();
             filterModel.CurrentUser = Mapper.Map<Models.User.IndexViewModel>(CurrentAccountProvider.GetCurrentUser(HttpContext.User));
             return View(filterModel);
@@ -70,12 +63,11 @@ namespace ExpenseManager.Presentation.Controllers
         /// Displays form for creating new expense
         /// </summary>
         [Authorize(Policy = "HasFullRights")]
-        public IActionResult Create([FromQuery] string errorMessage = null)
+        public IActionResult Create()
         {
             var model = new CreateViewModel
             {
                 CostTypes = GetAllCostTypes(),
-                ErrorMessage = errorMessage
             };
             return View(model);
         }

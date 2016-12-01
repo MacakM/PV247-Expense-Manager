@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -36,9 +36,9 @@
     </div>
     <a href="@Url.Action("Index", "Expense")" class="project-name">Expense Manager</a>
     <span class="right-part">
-            @await Component.InvokeAsync("UserEmail")
-            <a href="@Url.Action("LogOff", "Account")" class="logout"><i class="fa fa-power-off" aria-hidden="true"></i></a>
-        </span>
+        <span class="username">@User.Identity.Name</span>
+        <a href="@Url.Action("LogOff", "Account")" class="logout"><i class="fa fa-power-off" aria-hidden="true"></i></a>
+    </span>
 </header>
 <div id="left-menu">
     <ul>

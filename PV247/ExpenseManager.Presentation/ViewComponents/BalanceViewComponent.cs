@@ -32,7 +32,7 @@ namespace ExpenseManager.Presentation.ViewComponents
         {
             var account = _currentAccountProvider.GetCurrentAccount(HttpContext.User);
             var balance = _balanceFacade.GetBalance(account.Id);
-            return View("~/Views/Partial/_Balance.cshtml", balance);
+            return View(balance);
         }
     }
 }
