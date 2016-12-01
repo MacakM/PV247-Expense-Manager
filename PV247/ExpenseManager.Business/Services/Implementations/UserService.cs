@@ -49,11 +49,13 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="userRegistration">User registration information</param>
         public void RegisterNewUser(User userRegistration)
         {
+            var userEntity = ExpenseManagerMapper.Map<UserModel>(userRegistration);
             using (var unitOfWork = UnitOfWorkProvider.Create())
             {
-                Save(userRegistration);
+                Repository.Insert(userEntity);
                 unitOfWork.Commit();
             }
+            userRegistration.Id = userEntity.Id;
         }
 
         /// <summary>
