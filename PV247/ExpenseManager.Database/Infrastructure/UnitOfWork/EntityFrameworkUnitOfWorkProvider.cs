@@ -11,16 +11,16 @@ namespace ExpenseManager.Database.Infrastructure.UnitOfWork
     /// </summary>
     public class ExpenseManagerUnitOfWorkProvider : UnitOfWorkProviderBase
     {
-        internal Func<DbContext> DbContextFactory { get; }
+        internal Func<DbContext> DbContextFactory { get; private set; }
 
-        internal IOptions<ConnectionOptions> ConnectionOptions { get; }
+        internal ConnectionOptions ConnectionOptions { get; }
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="connectionOptions">connection options</param>
         /// <param name="registry">Storage for unitOfWork instances</param>
-        public ExpenseManagerUnitOfWorkProvider(IOptions<ConnectionOptions> connectionOptions,
+        public ExpenseManagerUnitOfWorkProvider(ConnectionOptions connectionOptions,
             IUnitOfWorkRegistry registry)
             : base(registry)
         {

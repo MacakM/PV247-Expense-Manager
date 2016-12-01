@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Enums;
 using ExpenseManager.Business.DataTransferObjects.Factories;
+using ExpenseManager.Business.Infrastructure.CastleWindsor;
 using ExpenseManager.Business.Services.Interfaces;
 using ExpenseManager.Database.Entities;
 
@@ -13,36 +14,15 @@ namespace ExpenseManager.Business.Facades
     /// </summary>
     public class BalanceFacade
     {
-        private readonly IBadgeService _badgeService;
+        private readonly IBadgeService _badgeService = BusinessLayerDIManager.Resolve<IBadgeService>();
 
-        private readonly ICostInfoService _costInfoService;
+        private readonly ICostInfoService _costInfoService = BusinessLayerDIManager.Resolve<ICostInfoService>();
 
-        private readonly ICostTypeService _costTypeService;
+        private readonly ICostTypeService _costTypeService = BusinessLayerDIManager.Resolve<ICostTypeService>();
 
-        private readonly IPlanService _planService;
+        private readonly IPlanService _planService = BusinessLayerDIManager.Resolve<IPlanService>();
 
-        private readonly IGraphService _graphService;
-
-        /// <summary>
-        /// Balance facade construtor
-        /// </summary>
-        /// <param name="badgeService">Badge service</param>
-        /// <param name="costInfoService">Cost info service</param>
-        /// <param name="costTypeService">Cost type service</param>
-        /// <param name="planService">Plan service</param>
-        /// <param name="graphService"></param>
-        public BalanceFacade(IBadgeService badgeService, 
-            ICostInfoService costInfoService, 
-            ICostTypeService costTypeService, 
-            IPlanService planService, 
-            IGraphService graphService)
-        {
-            _badgeService = badgeService;
-            _costInfoService = costInfoService;
-            _costTypeService = costTypeService;
-            _planService = planService;
-            _graphService = graphService;
-        }
+        private readonly IGraphService _graphService = BusinessLayerDIManager.Resolve<IGraphService>();
 
         #region Business operations
         /// <summary>

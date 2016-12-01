@@ -12,6 +12,6 @@ namespace ExpenseManager.Business.Utilities.BadgeCertification
         /// </summary>
         /// <param name="badgeName">The name of the badge to find certifier for</param>
         /// <returns>Badge certifier with corresponding name or null, if not found</returns>
-        BadgeCertifier ResolveBadgeCertifier(string badgeName);
+        IBadgeCertifier ResolveBadgeCertifier(string badgeName);
     }
 }

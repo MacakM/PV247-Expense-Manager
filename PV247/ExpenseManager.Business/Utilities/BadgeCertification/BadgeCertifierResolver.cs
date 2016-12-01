@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using ExpenseManager.Business.Utilities.BadgeCertification.BadgeCertifiers;
 
 namespace ExpenseManager.Business.Utilities.BadgeCertification
@@ -11,20 +9,15 @@ namespace ExpenseManager.Business.Utilities.BadgeCertification
     /// </summary>
     public class BadgeCertifierResolver : IBadgeCertifierResolver
     {
-        private readonly IList<BadgeCertifier> _badgeCertifiers = new List<BadgeCertifier>(); 
+        private readonly IEnumerable<IBadgeCertifier> _badgeCertifiers;
 
         /// <summary>
         /// For now the badge certifier resolver, instantiates all its dependencies (classes implementing IBadgeCertifier),
         /// however this should be done by some proper DI framwork as mentioned in comment inside the ctor.
         /// </summary>
-        public BadgeCertifierResolver()
+        public BadgeCertifierResolver(IEnumerable<IBadgeCertifier> badgeCertifiers)
         {
-            // TODO: this is far from optimal solution, the best way will be to integrate proper DI framework within PL to do the job and solve several issues at once
-            foreach (var type in Assembly.GetExecutingAssembly().GetTypes()
-                .Where(type => type.IsSubclassOf(typeof(BadgeCertifier))))
-            {
-                _badgeCertifiers.Add(Activator.CreateInstance(type) as BadgeCertifier);
-            }
+            _badgeCertifiers = badgeCertifiers;
         }
 
         /// <summary>
@@ -32,7 +25,7 @@ namespace ExpenseManager.Business.Utilities.BadgeCertification
         /// </summary>
         /// <param name="badgeName">The name of the badge to find certifier for</param>
         /// <returns>Badge certifier with corresponding name or null, if not found</returns>
-        public BadgeCertifier ResolveBadgeCertifier(string badgeName)
+        public IBadgeCertifier ResolveBadgeCertifier(string badgeName)
         {
             return string.IsNullOrEmpty(badgeName) ? null :
                 _badgeCertifiers.FirstOrDefault(certifier => certifier.GetBadgeName().Equals(badgeName));

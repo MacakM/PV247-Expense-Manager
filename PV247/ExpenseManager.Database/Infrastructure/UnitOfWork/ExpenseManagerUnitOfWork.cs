@@ -37,7 +37,7 @@ namespace ExpenseManager.Database.Infrastructure.UnitOfWork
             Context = unitOfWorkProvider.ConnectionOptions == null
                 ? unitOfWorkProvider.DbContextFactory?.Invoke() as ExpenseDbContext 
                 // internal DbContext shall not be injected in some scenarios in order to increase persistence separation
-                : new ExpenseDbContext(unitOfWorkProvider.ConnectionOptions.Value.ConnectionString);
+                : new ExpenseDbContext(unitOfWorkProvider.ConnectionOptions.ConnectionString);
 
             _hasOwnContext = true;
         }
