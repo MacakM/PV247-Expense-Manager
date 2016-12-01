@@ -1,50 +1,42 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using ExpenseManager.Business.DataTransferObjects.Enums;
 
-namespace ExpenseManager.Presentation.Models.Expense
+namespace ExpenseManager.Presentation.Models.PermanentExpense
 {
     /// <summary>
-    /// Model for creating expenses
+    /// Presentation layer representation of permanent CostInfoModel object
     /// </summary>
-    public class CreatePermanentExpenseViewModel
+    public class IndexPermanentExpenseViewModel : ViewModelId
     {
         /// <summary>
         /// How much money has changed.
         /// </summary>
-        [Required]
         public decimal Money { get; set; }
 
         /// <summary>
         /// More concrete description of the cost
         /// </summary>
-        [Required]
         public string Description { get; set; }
 
         /// <summary>
         /// Type of the cost.
         /// </summary>
-        [Required]
-        public Guid TypeId { get; set; }
+        public string TypeName { get; set; }
 
         /// <summary>
-        /// Periodicty of expense
+        /// Periodicity of cost
         /// </summary>
-        [Required]
         public Periodicity Periodicity { get; set; }
 
         /// <summary>
         /// Mulptiplies periodicity
         /// </summary>
-        [Required]
-        [Range(0, int.MaxValue)]
         public int PeriodicMultiplicity { get; set; }
 
         /// <summary>
-        /// Date when the cost will be first applied
+        /// Date when the cost will be applied next time
         /// </summary>
-        [Required]
         public DateTime Created { get; set; }
 
         /// <summary>
@@ -52,15 +44,5 @@ namespace ExpenseManager.Presentation.Models.Expense
         /// </summary>
         [Required]
         public bool IsIncome { get; set; }
-
-        /// <summary>
-        /// Cost types to choose
-        /// </summary>
-        public List<CostType.IndexViewModel> CostTypes { get; set; }
-
-        /// <summary>
-        /// Error message to display
-        /// </summary>
-        public string ErrorMessage { get; set; }
     }
 }

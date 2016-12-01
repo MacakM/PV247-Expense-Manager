@@ -17,13 +17,13 @@ namespace ExpenseManager.Presentation.Infrastructure.Mapping
             CreateMap<CostInfo, Models.Expense.IndexViewModel>()
                 .ReverseMap();
 
-            CreateMap<CostInfo, Models.Expense.IndexPermanentExpenseViewModel>()
+            CreateMap<CostInfo, Models.PermanentExpense.IndexPermanentExpenseViewModel>()
                 .ReverseMap();
 
             CreateMap<CostInfo, Models.Expense.CreateViewModel>()
                 .ReverseMap();
 
-            CreateMap<CostInfo, Models.Expense.CreatePermanentExpenseViewModel>()
+            CreateMap<CostInfo, Models.PermanentExpense.CreatePermanentExpenseViewModel>()
                 .ReverseMap();
 
             CreateMap<CostType, Models.CostType.IndexViewModel>()

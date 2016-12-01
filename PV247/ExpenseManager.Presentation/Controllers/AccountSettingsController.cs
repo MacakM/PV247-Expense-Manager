@@ -67,17 +67,6 @@ namespace ExpenseManager.Presentation.Controllers
             return Mapper.Map<List<IndexViewModel>>(users);
         }
 
-        private List<IndexPermanentExpenseViewModel> GetAllPermanentExpenses(Account account)
-        {
-            var expenses = _balanceFacade.ListItems(account.Id, Periodicity.Day, null);
-          
-            expenses.AddRange(_balanceFacade.ListItems(account.Id, Periodicity.Week, null));
-            
-            expenses.AddRange(_balanceFacade.ListItems(account.Id, Periodicity.Month, null));
-
-            return Mapper.Map<List<IndexPermanentExpenseViewModel>>(expenses);
-        }
-
         /// <summary>
         /// Adds access to new user for this account
         /// </summary>

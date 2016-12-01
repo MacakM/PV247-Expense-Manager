@@ -419,7 +419,6 @@ namespace ExpenseManager.Presentation.Controllers
             }
         }
 
-        #region Helpers
         private void AddErrors(IdentityResult result)
         {
             foreach (var error in result.Errors)
@@ -441,6 +440,5 @@ namespace ExpenseManager.Presentation.Controllers
             }
             return RedirectToAction("Index", "Expense");
         }
-        #endregion
     }
 }

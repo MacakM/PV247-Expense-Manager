@@ -1,0 +1,87 @@
+@using System.Threading.Tasks
+@using ExpenseManager.Business.DataTransferObjects.Enums
+@using ExpenseManager.Presentation
+
+@model ExpenseManager.Presentation.Models.PermanentExpense.PermanentExpensesIndexViewModel
+
+@section title
+{
+    Permanent expenses
+}
+
+
+<div class="col-sm-9 content-holder account-settings">
+    @if (Model.CurrentUser.HasFullRights)
+    {
+        <a class="add-new" href="@Url.Action("Create", "PermanentExpense" )">+</a>
+    }
+    <h1>Permanent expenses</h1>
+    <br />
+    @if (Model.Expenses.Count == 0)
+    {
+        <div>No expenses</div>
+    }
+    else
+    {
+        <table class="table">
+            <tr>
+                <th>Category</th>
+                <th>Description</th>
+                <th>Next time to apply</th>
+                <th class="text-center">Ammount</th>
+                <th class="text-center">Periodicity</th>
+                <th class="text-center">Periodicity multiplicity</th>
+                @if (Model.CurrentUser.HasFullRights)
+                {
+                    <th class="text-center">Delete</th>
+                }
+            </tr>
+            @foreach (var expense in Model.Expenses)
+            {
+                <tr>
+                    <td>@expense.TypeName</td>
+                    <td>@expense.Description</td>
+                    <td>@expense.Created.ToShortDateString()</td>
+                    @if (expense.IsIncome)
+                    {
+                        <td class="positive text-center">+@expense.Money&nbsp;$</td>
+                    }
+                    else
+                    {
+                        <td class="negative text-center">-@expense.Money&nbsp;$</td>
+                    }
+                    <td class="text-center">
+                        @if (expense.Periodicity == Periodicity.Day)
+                        {
+                            <span>Daily</span>
+                        }
+                        @if (expense.Periodicity == Periodicity.Week)
+                        {
+                            <span>Weekly</span>
+                        }
+                        @if (expense.Periodicity == Periodicity.Month)
+                        {
+                            <span>Monthly</span>
+                        }
+                    </td>
+                    <td class="text-center">@expense.PeriodicMultiplicity</td>
+                    @if (Model.CurrentUser.HasFullRights)
+                    {
+                        <td class="text-center">
+                            <form method="post" action="@Url.Action("Delete", "Expense")">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="returnRedirect" value="@Url.Action("Index", "PermanentExpense", new {successMessage = ExpenseManagerResource.ExpenseDeleted})"/>
+                                <input type="hidden" name="id" value="@expense.Id"/>
+                                <button class="link-button negative"><i class="fa fa-times" aria-hidden="true"></i></button>
+                            </form>
+                        </td>
+                    }
+                </tr>
+            }
+        </table>
+    }
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
