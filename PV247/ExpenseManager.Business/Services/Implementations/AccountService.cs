@@ -86,6 +86,7 @@ namespace ExpenseManager.Business.Services.Implementations
                 };
 
                 Repository.Insert(account);
+                user.AccessType = AccountAccessTypeModel.Full;
                 unitOfWork.Commit();
                 accountId = account.Id;
             }

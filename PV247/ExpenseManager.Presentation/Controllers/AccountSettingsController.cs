@@ -116,7 +116,7 @@ namespace ExpenseManager.Presentation.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateAccount()
+        public IActionResult StoreAccount()
         {
             var account = CurrentAccountProvider.GetCurrentAccount(HttpContext.User);
 
