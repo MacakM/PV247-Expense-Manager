@@ -68,12 +68,14 @@ namespace ExpenseManager.DataSeeding
 
             var costType1 = new CostTypeModel()
             {
-                Name = "Strava"
+                Name = "Strava",
+                Account = account
             };
 
             var costType2 = new CostTypeModel()
             {
-                Name = "Zábava"
+                Name = "Zábava",
+                Account = account
             };
 
             context.CostTypes.AddOrUpdate(costType1);
@@ -233,7 +235,7 @@ namespace ExpenseManager.DataSeeding
             context.Plans.AddOrUpdate(plan4);
             context.Plans.AddOrUpdate(plan5);
 
-            context.CostTypes.AddOrUpdate(new CostTypeModel {CostInfoList = new List<CostInfoModel>(), Name = "Food"});
+            context.CostTypes.AddOrUpdate(new CostTypeModel {CostInfoList = new List<CostInfoModel>(), Name = "Food", Account = account});
 
             context.SaveChanges();
         }

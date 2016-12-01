@@ -84,6 +84,12 @@ namespace ExpenseManager.Business.DataTransferObjects.Factories
                     costTypeName));
         }
 
+        public static List<IFilter<CostTypeModel>> GetCostTypeFilters(Guid accountId)
+        {
+            return GetFilters<CostTypeModel>(new Tuple<string, object>(nameof(CostTypesByAccountId.AccountId),
+                 accountId));
+        }
+
 
         public static List<IFilter<BadgeModel>> GetBadgeFilters(string badgeName)
         {

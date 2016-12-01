@@ -56,6 +56,6 @@ namespace ExpenseManager.Presentation.Models.PermanentExpense
         /// <summary>
         /// Cost types to choose
         /// </summary>
-        public List<CostType.IndexViewModel> CostTypes { get; set; }
+        public List<CostType.CategoryViewModel> CostTypes { get; set; }
     }
 }

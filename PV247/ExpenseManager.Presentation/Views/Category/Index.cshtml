@@ -1,0 +1,26 @@
+﻿@model ExpenseManager.Presentation.Models.CostType.IndexViewModel
+
+@section title
+{
+    Categories
+}
+
+<div class="col-sm-9 content-holder">
+    @if (Model.CurrentUser.HasFullRights)
+    {
+        <a href="@Url.Action("Create", "Category")" class="add-new">+</a>
+    }
+    <h1>Categories</h1>
+    <br />
+    <table class="table">
+        <tr>
+            <th>Name</th>
+        </tr>
+        @foreach (var category in Model.Categories)
+        {
+            <tr>
+                <td>@category.Name</td>
+            </tr>
+        }
+    </table>
+</div>

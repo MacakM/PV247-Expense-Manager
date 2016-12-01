@@ -303,6 +303,17 @@ namespace ExpenseManager.Business.Facades
         }
 
         /// <summary>
+        /// Lists all cost types for given account id
+        /// </summary>
+        /// <param name="accountId"></param>
+        /// <returns></returns>
+        public List<CostType> ListItemTypes(Guid accountId)
+        {
+            var filters = FilterFactory.GetCostTypeFilters(accountId);
+            return _costTypeService.ListCostTypes(filters, null);
+        }
+
+        /// <summary>
         /// List cost types specified by filter
         /// </summary>
         /// <param name="costTypeName"></param>

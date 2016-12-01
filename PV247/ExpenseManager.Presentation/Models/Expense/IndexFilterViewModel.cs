@@ -51,7 +51,7 @@ namespace ExpenseManager.Presentation.Models.Expense
         /// <summary>
         /// Cost types to filter by
         /// </summary>
-        public List<CostType.IndexViewModel> CostTypes { get; set; }
+        public List<CostType.CategoryViewModel> CostTypes { get; set; }
 
         /// <summary>
         /// Currently logged in user

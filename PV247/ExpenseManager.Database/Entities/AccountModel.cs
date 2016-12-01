@@ -42,5 +42,10 @@ namespace ExpenseManager.Database.Entities
         /// All badges of the user.
         /// </summary>
         public virtual List<AccountBadgeModel> Badges { get; set; }
+
+        /// <summary>
+        /// Cost types of the user.
+        /// </summary>
+        public virtual List<CostTypeModel> CostTypes { get; set; }
     }
 }

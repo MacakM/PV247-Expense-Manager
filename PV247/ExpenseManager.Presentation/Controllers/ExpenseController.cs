@@ -130,10 +130,10 @@ namespace ExpenseManager.Presentation.Controllers
             return Mapper.Map<List<IndexViewModel>>(expenses);
         }
 
-        private List<Models.CostType.IndexViewModel> GetAllCostTypes()
+        private List<Models.CostType.CategoryViewModel> GetAllCostTypes()
         {
             var costTypes = _balanceFacade.ListItemTypes(null, null);
-            var costTypeViewModels = Mapper.Map<List<Models.CostType.IndexViewModel>>(costTypes);
+            var costTypeViewModels = Mapper.Map<List<Models.CostType.CategoryViewModel>>(costTypes);
             return costTypeViewModels;
         }
     }
