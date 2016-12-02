@@ -19,7 +19,7 @@ namespace ExpenseManager.Business.Services.Implementations
     /// </summary>
     internal class CostTypeService : ExpenseManagerQueryAndCrudServiceBase<CostTypeModel, Guid, CostType>, ICostTypeService
     {
-        private readonly AccountRepository _accountRepository;
+        private readonly ExpenseManagerRepository<AccountModel, Guid> _accountRepository;
 
         /// <summary>
         /// Entity includes
@@ -32,8 +32,9 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="query">Query</param>
         /// <param name="repository">Repository</param>
         /// <param name="expenseManagerMapper">Mapper</param>
+        /// <param name="accountRepository">Account repository</param>
         /// <param name="unitOfWorkProvider">Unit of work provider</param>
-        internal CostTypeService(ExpenseManagerQuery<CostTypeModel> query, ExpenseManagerRepository<CostTypeModel, Guid> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
+        internal CostTypeService(ExpenseManagerQuery<CostTypeModel> query, ExpenseManagerRepository<CostTypeModel, Guid> repository, Mapper expenseManagerMapper, ExpenseManagerRepository<AccountModel, Guid> accountRepository, IUnitOfWorkProvider unitOfWorkProvider) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
         {
             _accountRepository = accountRepository;
         }

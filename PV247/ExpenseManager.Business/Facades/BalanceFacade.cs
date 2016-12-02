@@ -23,32 +23,9 @@ namespace ExpenseManager.Business.Facades
 
         private readonly IPlanService _planService = BusinessLayerDIManager.Resolve<IPlanService>();
 
-        private readonly IGraphService _graphService;
-        private readonly IAccountBadgeService _accountBadgeService;
+        private readonly IGraphService _graphService = BusinessLayerDIManager.Resolve<IGraphService>();
 
-        /// <summary>
-        /// Balance facade construtor
-        /// </summary>
-        /// <param name="badgeService">Badge service</param>
-        /// <param name="costInfoService">Cost info service</param>
-        /// <param name="costTypeService">Cost type service</param>
-        /// <param name="planService">Plan service</param>
-        /// <param name="graphService"></param>
-        /// <param name="accountBadgeService"></param>
-        public BalanceFacade(IBadgeService badgeService, 
-            ICostInfoService costInfoService, 
-            ICostTypeService costTypeService, 
-            IPlanService planService, 
-            IGraphService graphService,
-            IAccountBadgeService accountBadgeService)
-        {
-            _badgeService = badgeService;
-            _costInfoService = costInfoService;
-            _costTypeService = costTypeService;
-            _planService = planService;
-            _graphService = graphService;
-            _accountBadgeService = accountBadgeService;
-        }
+        private readonly IAccountBadgeService _accountBadgeService = BusinessLayerDIManager.Resolve<IAccountBadgeService>();
 
         #region Business operations
         /// <summary>

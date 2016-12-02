@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ExpenseManager.Database.Entities;
 using ExpenseManager.Database.Infrastructure.Query;
 using Riganti.Utils.Infrastructure.Core;
@@ -24,7 +21,7 @@ namespace ExpenseManager.Database.DataAccess.Queries
         /// Create query.
         /// </summary>
         /// <param name="provider">unitOfWork provider</param>
-        public NotAchievedBadgesQuery(IUnitOfWorkProvider provider) : base(provider)
+        internal NotAchievedBadgesQuery(IUnitOfWorkProvider provider) : base(provider)
         {
         }
 
