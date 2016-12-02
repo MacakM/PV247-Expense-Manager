@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ExpenseManager.Business.DataTransferObjects;
+using ExpenseManager.Presentation.Models.Achievement;
 using ExpenseManager.Presentation.Models.ViewComponent;
 
 namespace ExpenseManager.Presentation.Infrastructure.Mapping
@@ -39,6 +40,12 @@ namespace ExpenseManager.Presentation.Infrastructure.Mapping
                 .ReverseMap();
 
             CreateMap<Plan, Models.Plan.CreateViewModel>()
+                .ReverseMap();
+
+            CreateMap<Badge, BadgeViewModel>()
+                .ReverseMap();
+
+            CreateMap<AccountBadge, AccountBadgeViewModel>()
                 .ReverseMap();
 
             CreateMap<DayTotalBalance, DayTotalBalanceViewModel>()

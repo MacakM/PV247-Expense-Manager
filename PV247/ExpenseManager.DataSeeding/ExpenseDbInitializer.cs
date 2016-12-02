@@ -23,13 +23,23 @@ namespace ExpenseManager.DataSeeding
 
             context.Users.AddOrUpdate(new UserModel { Name = "Demo user", Email = "demo@demo.com" });
 
-            context.Badges.AddOrUpdate(new BadgeModel
+            Random random = new Random();
+
+            var account = new AccountModel()
+            {
+                Name = "testerAccount"
+            };
+
+            context.Accounts.AddOrUpdate(account);
+
+            var badge1 = new BadgeModel
             {
                 Accounts = new List<AccountBadgeModel>(),
                 BadgeImgUri = "badge.png",
                 Name = "PassionatePennyPincher",
                 Description = "Save >=20k CZK within all completed plans"
-            });
+            };
+            context.Badges.AddOrUpdate(badge1);
 
             context.Badges.AddOrUpdate(new BadgeModel
             {
@@ -39,14 +49,14 @@ namespace ExpenseManager.DataSeeding
                 Description = "Complete at least 5 plans"
             });
 
-            Random random = new Random();
-
-            var account = new AccountModel()
+            var accountBadge = new AccountBadgeModel()
             {
-                Name = "testerAccount"
+                Account = account,
+                Badge = badge1,
+                Achieved = DateTime.Now
             };
 
-            context.Accounts.AddOrUpdate(account);
+            context.AccountBadges.AddOrUpdate(accountBadge);
 
             var user = new UserModel()
             {

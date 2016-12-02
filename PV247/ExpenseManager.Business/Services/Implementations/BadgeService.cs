@@ -10,6 +10,7 @@ using Riganti.Utils.Infrastructure.Core;
 using ExpenseManager.Business.Services.Interfaces;
 using ExpenseManager.Business.Utilities.BadgeCertification;
 using ExpenseManager.Database.DataAccess.FilterInterfaces;
+using ExpenseManager.Database.DataAccess.Queries;
 using ExpenseManager.Database.Infrastructure.Query;
 
 namespace ExpenseManager.Business.Services.Implementations
@@ -24,6 +25,7 @@ namespace ExpenseManager.Business.Services.Implementations
         private readonly ExpenseManagerQuery<AccountModel> _accountsQuery;
 
         private readonly ExpenseManagerRepository<AccountBadgeModel, Guid> _accountBadgeRepository;
+        private readonly NotAchievedBadgesQuery _notAchievedBadgesQuery;
 
         /// <summary>
         /// Included entities
@@ -43,11 +45,20 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="certifierResolver">Resolves badge certifiers according to badge name</param>
         /// <param name="accountBadgeRepository">Repository for accountBadges</param>
         /// <param name="accountsQuery">Query object for retrieving accounts</param>
-        public BadgeService(ExpenseManagerQuery<BadgeModel> query, ExpenseManagerRepository<BadgeModel, Guid> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider, ExpenseManagerQuery<AccountModel> accountsQuery, IBadgeCertifierResolver certifierResolver, ExpenseManagerRepository<AccountBadgeModel, Guid> accountBadgeRepository) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
+        /// <param name="notAchievedBadgesQuery"></param>
+        public BadgeService(ExpenseManagerQuery<BadgeModel> query, 
+            ExpenseManagerRepository<BadgeModel, Guid> repository, 
+            Mapper expenseManagerMapper, 
+            IUnitOfWorkProvider unitOfWorkProvider, 
+            ExpenseManagerQuery<AccountModel> accountsQuery, 
+            IBadgeCertifierResolver certifierResolver, 
+            ExpenseManagerRepository<AccountBadgeModel, Guid> accountBadgeRepository,
+            NotAchievedBadgesQuery notAchievedBadgesQuery) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
         {
             _accountsQuery = accountsQuery;
             _certifierResolver = certifierResolver;
             _accountBadgeRepository = accountBadgeRepository;
+            _notAchievedBadgesQuery = notAchievedBadgesQuery;
         }
 
         /// <summary>
@@ -115,6 +126,20 @@ namespace ExpenseManager.Business.Services.Implementations
             {
                 return GetList().ToList();
             }           
+        }
+
+        /// <summary>
+        /// Lists all not achieved badges for given accountId
+        /// </summary>
+        /// <param name="accountId"></param>
+        /// <returns></returns>
+        public List<Badge> ListNotAchievedBadges(Guid accountId)
+        {
+            using (UnitOfWorkProvider.Create())
+            {
+                _notAchievedBadgesQuery.AccountId = accountId;
+                return ExpenseManagerMapper.Map<List<Badge>>(_notAchievedBadgesQuery.Execute());
+            }
         }
 
         /// <summary>

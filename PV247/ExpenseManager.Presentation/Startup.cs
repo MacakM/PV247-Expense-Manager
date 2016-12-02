@@ -216,6 +216,7 @@ namespace ExpenseManager.Presentation
             services.AddTransient<ListUsersQuery>();
             services.AddTransient<ExpenseManagerQuery<DayBalance>, BalancesGroupedByDayQuery>();
             services.AddTransient<BalancesGroupedByDayQuery>();
+            services.AddTransient<NotAchievedBadgesQuery>();
             //TODO add more query objects
 
             // Register all services

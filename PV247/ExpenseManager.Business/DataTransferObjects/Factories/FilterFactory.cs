@@ -95,7 +95,12 @@ namespace ExpenseManager.Business.DataTransferObjects.Factories
         {
             return GetFilters<BadgeModel>(new Tuple<string, object>(nameof(BadgesByName.Name), badgeName));
         }
-        
+
+        public static List<IFilter<AccountBadgeModel>> GetAccountBadgeFilters(Guid accountId)
+        {
+            return GetFilters<AccountBadgeModel>(new Tuple<string, object>(nameof(AccountBadgesByAccountId.AccountId), accountId));
+        }
+
         public static List<IFilter<UserModel>> GetUserFilters(Guid? accountId, AccountAccessType? accessType, string email)
         {
             return GetFilters<UserModel>(new Tuple<string, object>(nameof(UsersByAccountId.AccountId), accountId), new Tuple<string, object>(nameof(UsersByAccessType.AccessType), accessType), new Tuple<string, object>(nameof(UsersByEmail.Email), email));

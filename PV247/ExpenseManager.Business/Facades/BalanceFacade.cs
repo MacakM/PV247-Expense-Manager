@@ -4,6 +4,7 @@ using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Enums;
 using ExpenseManager.Business.DataTransferObjects.Factories;
 using ExpenseManager.Business.Services.Interfaces;
+using ExpenseManager.Database.DataAccess.FilterInterfaces;
 using ExpenseManager.Database.Entities;
 
 namespace ExpenseManager.Business.Facades
@@ -22,6 +23,7 @@ namespace ExpenseManager.Business.Facades
         private readonly IPlanService _planService;
 
         private readonly IGraphService _graphService;
+        private readonly IAccountBadgeService _accountBadgeService;
 
         /// <summary>
         /// Balance facade construtor
@@ -31,17 +33,20 @@ namespace ExpenseManager.Business.Facades
         /// <param name="costTypeService">Cost type service</param>
         /// <param name="planService">Plan service</param>
         /// <param name="graphService"></param>
+        /// <param name="accountBadgeService"></param>
         public BalanceFacade(IBadgeService badgeService, 
             ICostInfoService costInfoService, 
             ICostTypeService costTypeService, 
             IPlanService planService, 
-            IGraphService graphService)
+            IGraphService graphService,
+            IAccountBadgeService accountBadgeService)
         {
             _badgeService = badgeService;
             _costInfoService = costInfoService;
             _costTypeService = costTypeService;
             _planService = planService;
             _graphService = graphService;
+            _accountBadgeService = accountBadgeService;
         }
 
         #region Business operations
@@ -370,10 +375,45 @@ namespace ExpenseManager.Business.Facades
         /// <param name="badgeName"></param>
         /// <param name="pageInfo"></param>
         /// <returns></returns>
-        public List<Badge> ListBadges(string badgeName,PageInfo pageInfo)
+        public List<Badge> ListBadges(string badgeName, PageInfo pageInfo)
         {
             var filters = FilterFactory.GetBadgeFilters(badgeName);
             return _badgeService.ListBadges(filters, FilterFactory.GetPageAndOrderable<BadgeModel>(pageInfo));
+        }
+
+        /// <summary>
+        /// Lists all achieved badges for given accountId
+        /// </summary>
+        /// <param name="accountId"></param>
+        /// <param name="ammount"></param>
+        /// <returns></returns>
+        public List<AccountBadge> ListAchievedAccountBadges(Guid accountId, int? ammount = null)
+        {
+            var filters = FilterFactory.GetAccountBadgeFilters(accountId);
+            IPageAndOrderable<AccountBadgeModel> pageFilter = null;
+            if (ammount != null)
+            {
+                var pageInfo = new PageInfo()
+                {
+                    OrderByDesc = true,
+                    OrderByPropertyName = nameof(AccountBadgeModel.Achieved),
+                    PageNumber = 1,
+                    PageSize = ammount.Value
+                };
+                pageFilter = FilterFactory.GetPageAndOrderable<AccountBadgeModel>(pageInfo);
+            }
+            
+            return _accountBadgeService.ListAccountBadges(filters, pageFilter);
+        }
+
+        /// <summary>
+        /// Lists all yet not achieved badges for given accountId
+        /// </summary>
+        /// <param name="accountId"></param>
+        /// <returns></returns>
+        public List<Badge> ListNotAchievedBadges(Guid accountId)
+        {
+            return _badgeService.ListNotAchievedBadges(accountId);
         }
 
        
