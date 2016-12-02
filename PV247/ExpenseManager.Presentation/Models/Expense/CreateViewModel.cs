@@ -35,11 +35,6 @@ namespace ExpenseManager.Presentation.Models.Expense
         /// <summary>
         /// Cost types to choose
         /// </summary>
-        public List<CostType.IndexViewModel> CostTypes { get; set; }
-
-        /// <summary>
-        /// Error message to display
-        /// </summary>
-        public string ErrorMessage { get; set; }
+        public List<CostType.CategoryViewModel> CostTypes { get; set; }
     }
 }

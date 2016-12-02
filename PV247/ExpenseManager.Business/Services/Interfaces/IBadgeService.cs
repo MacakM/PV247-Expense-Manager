@@ -45,6 +45,13 @@ namespace ExpenseManager.Business.Services.Interfaces
         List<Badge> ListBadges(List<IFilter<BadgeModel>> filters, IPageAndOrderable<BadgeModel> pageAndOrder);
 
         /// <summary>
+        /// Lists all not achieved badges for given accountId
+        /// </summary>
+        /// <param name="accountId"></param>
+        /// <returns></returns>
+        List<Badge> ListNotAchievedBadges(Guid accountId);
+
+        /// <summary>
         /// Check all accounts if they dont deserve some badges
         /// </summary>
         void CheckBadgesRequirements();

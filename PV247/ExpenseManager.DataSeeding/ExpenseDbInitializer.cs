@@ -23,13 +23,23 @@ namespace ExpenseManager.DataSeeding
 
             context.Users.AddOrUpdate(new UserModel { Name = "Demo user", Email = "demo@demo.com" });
 
-            context.Badges.AddOrUpdate(new BadgeModel
+            Random random = new Random();
+
+            var account = new AccountModel()
+            {
+                Name = "testerAccount"
+            };
+
+            context.Accounts.AddOrUpdate(account);
+
+            var badge1 = new BadgeModel
             {
                 Accounts = new List<AccountBadgeModel>(),
                 BadgeImgUri = "badge.png",
                 Name = "PassionatePennyPincher",
                 Description = "Save >=20k CZK within all completed plans"
-            });
+            };
+            context.Badges.AddOrUpdate(badge1);
 
             context.Badges.AddOrUpdate(new BadgeModel
             {
@@ -39,14 +49,14 @@ namespace ExpenseManager.DataSeeding
                 Description = "Complete at least 5 plans"
             });
 
-            Random random = new Random();
-
-            var account = new AccountModel()
+            var accountBadge = new AccountBadgeModel()
             {
-                Name = "testerAccount"
+                Account = account,
+                Badge = badge1,
+                Achieved = DateTime.Now
             };
 
-            context.Accounts.AddOrUpdate(account);
+            context.AccountBadges.AddOrUpdate(accountBadge);
 
             var user = new UserModel()
             {
@@ -68,12 +78,14 @@ namespace ExpenseManager.DataSeeding
 
             var costType1 = new CostTypeModel()
             {
-                Name = "Strava"
+                Name = "Strava",
+                Account = account
             };
 
             var costType2 = new CostTypeModel()
             {
-                Name = "Zábava"
+                Name = "Zábava",
+                Account = account
             };
 
             context.CostTypes.AddOrUpdate(costType1);
@@ -157,7 +169,7 @@ namespace ExpenseManager.DataSeeding
                 var cost = new CostInfoModel()
                 {
                     Account = account,
-                    Created = DateTime.Now,
+                    Created = DateTime.UtcNow.AddDays(- random.Next(0,14)),
                     Description = "Seeded expense",
                     IsIncome = false,
                     Periodicity = PeriodicityModel.None,
@@ -233,7 +245,7 @@ namespace ExpenseManager.DataSeeding
             context.Plans.AddOrUpdate(plan4);
             context.Plans.AddOrUpdate(plan5);
 
-            context.CostTypes.AddOrUpdate(new CostTypeModel {CostInfoList = new List<CostInfoModel>(), Name = "Food"});
+            context.CostTypes.AddOrUpdate(new CostTypeModel {CostInfoList = new List<CostInfoModel>(), Name = "Food", Account = account});
 
             context.SaveChanges();
         }

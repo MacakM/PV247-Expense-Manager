@@ -22,7 +22,10 @@ namespace ExpenseManager.Database
         /// Context constructor
         /// </summary>
         /// <param name="nameOrConnectionString"></param>
-        public ExpenseDbContext(string nameOrConnectionString) : base(nameOrConnectionString) { }
+        public ExpenseDbContext(string nameOrConnectionString) : base(nameOrConnectionString)
+        {
+            System.Data.Entity.Database.SetInitializer(new DropCreateDatabaseIfModelChanges<ExpenseDbContext>());
+        }
 
         /// <summary>
         /// Badges DbSet
@@ -66,6 +69,11 @@ namespace ExpenseManager.Database
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<CostTypeModel>()
+                .HasRequired(c => c.Account)
+                .WithMany()
+                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<BadgeModel>().ToTable("Badges");
             modelBuilder.Entity<CostInfoModel>().ToTable("CostInfos");

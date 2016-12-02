@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ExpenseManager.Presentation.Models.Expense
+namespace ExpenseManager.Presentation.Models.PermanentExpense
 {
     /// <summary>
     /// ViewModel for permanent expenses

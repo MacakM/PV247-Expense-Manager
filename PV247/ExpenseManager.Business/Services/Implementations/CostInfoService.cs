@@ -72,6 +72,11 @@ namespace ExpenseManager.Business.Services.Implementations
                     throw new InvalidOperationException("Account of type doesn't exists");
                 }
 
+                if (type.AccountId != account.Id)
+                {
+                    throw new InvalidOperationException("Cost type doesn't belong to given account");
+                }
+
                 costInfoModel.Account = account;
                 costInfoModel.Type = type;
 

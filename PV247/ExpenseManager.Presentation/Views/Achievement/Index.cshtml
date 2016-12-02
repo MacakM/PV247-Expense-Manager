@@ -1,52 +1,30 @@
+@model ExpenseManager.Presentation.Models.Achievement.IndexViewModel
+
 @section title
 {
     Achievements
 }
 
-<div class="col-sm-9 content-holder">
+<div class="col-md-9 content-holder">
     <h1>Achievements</h1>
-    <div class="achievement-zoom">
-        <img src="~/images/badge.png" />
-        <span>Some achievement</span>
-    </div>
-    <div class="achievement-zoom">
-        <img src="~/images/badge.png" />
-        <span>Some achievement</span>
-    </div>
-    <div class="achievement-zoom">
-        <img src="~/images/badge.png" />
-        <span>Some achievement</span>
-    </div>
-    <div class="achievement-zoom">
-        <img src="~/images/badge.png" />
-        <span>Some achievement</span>
-    </div>
-    <div class="achievement-zoom">
-        <img src="~/images/badge.png" />
-        <span>Some achievement</span>
-    </div>
-    <div class="achievement-zoom">
-        <img src="~/images/badge.png" />
-        <span>Some achievement</span>
-    </div>
-    <div class="achievement-zoom">
-        <img src="~/images/badge.png" />
-        <span>Some achievement</span>
-    </div>
-    <div class="achievement-zoom">
-        <img src="~/images/badge.png" />
-        <span>Some achievement</span>
-    </div>
-    <div class="achievement-zoom">
-        <img src="~/images/badge.png" />
-        <span>Some achievement</span>
-    </div>
-    <div class="achievement-zoom">
-        <img src="~/images/badge.png" />
-        <span>Some achievement</span>
-    </div>
-    <div class="achievement-zoom">
-        <img src="~/images/badge.png" />
-        <span>Some achievement</span>
-    </div>
+    @foreach (var badge in Model.AchievedBadges)
+    {
+        <div class="achievement-zoom">
+            <img src="~/images/badge.png" />
+            <span>@badge.BadgeDescription</span>
+        </div>
+    }
+    
+    <h2 style="clear: both">Not achieved</h2>
+    <table class="table">
+        <tr>
+            <th>Description</th>
+        </tr>
+        @foreach (var badge in Model.NotAchievedBadges)
+        {
+            <tr>
+                <td>@badge.Description</td>
+            </tr>
+        }
+    </table>
 </div>

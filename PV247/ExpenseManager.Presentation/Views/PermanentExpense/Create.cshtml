@@ -1,20 +1,14 @@
-@model ExpenseManager.Presentation.Models.Expense.CreatePermanentExpenseViewModel
+@model ExpenseManager.Presentation.Models.PermanentExpense.CreatePermanentExpenseViewModel
 
 @section title
 {
     Create new permanent expense
 }
 
-<div class="col-sm-9 content-holder">
+<div class="col-md-9 content-holder">
     <h2>New permanent expense</h2>
-    @if (Model.ErrorMessage != null)
-    {
-        <div class="alert alert-danger">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            @Model.ErrorMessage
-        </div>
-    }
-    <form asp-action="StorePermanentExpense">
+    @await Component.InvokeAsync("InlineErrorMessage")
+    <form asp-action="Store">
         <div class="form-horizontal">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">

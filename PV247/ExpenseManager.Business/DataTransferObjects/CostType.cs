@@ -12,7 +12,12 @@ namespace ExpenseManager.Business.DataTransferObjects
         /// Name of this type.
         /// </summary>
         public string Name { get; set; }
-       
+
+        /// <summary>
+        /// Account id.
+        /// </summary>
+        public Guid AccountId { get; set; }
+
         /// <summary>
         /// All costs of this type.
         /// </summary>

@@ -148,7 +148,7 @@ namespace ExpenseManager.Presentation.Controllers
             var user = await GetCurrentUserAsync();
             if (user == null)
             {
-                return View("Error");
+                return RedirectToAction("Index", "Error");
             }
             var userLogins = await _userManager.GetLoginsAsync(user);
             var otherLogins = _signInManager.GetExternalAuthenticationSchemes().Where(auth => userLogins.All(ul => auth.AuthenticationScheme != ul.LoginProvider)).ToList();
@@ -187,7 +187,7 @@ namespace ExpenseManager.Presentation.Controllers
             var user = await GetCurrentUserAsync();
             if (user == null)
             {
-                return View("Error");
+                return RedirectToAction("Index", "Error");
             }
             var info = await _signInManager.GetExternalLoginInfoAsync(await _userManager.GetUserIdAsync(user));
             if (info == null)
@@ -199,7 +199,6 @@ namespace ExpenseManager.Presentation.Controllers
             return RedirectToAction(nameof(ManageLogins), new { Message = message });
         }
 
-        #region Helpers
 
         private void AddErrors(IdentityResult result)
         {
@@ -253,6 +252,5 @@ namespace ExpenseManager.Presentation.Controllers
             return _userManager.GetUserAsync(HttpContext.User);
         }
 
-        #endregion
     }
 }

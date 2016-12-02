@@ -7,34 +7,7 @@
     Expenses
 }
 
-<div class="col-sm-3 sidebar left">
-    <form asp-action="Index">
-        @Html.AntiForgeryToken()
-        <!--<label asp-for="DateFrom"></label>
-        <input asp-for="DateFrom" class="form-control"/>
-        <span asp-validation-for="DateFrom" class="text-danger" />-->
-        <label for="date-from">Created from: </label>
-        <input name="DateFrom" class="form-control" id="date-from" type="text" @(Model.DateFrom != null ? "value=" + Model.DateFrom : "") placeholder="DD.MM.YYYY"/>
-        <!--<br class="datepicker-separator"/>-->
-        <label for="date-to">Created to: </label><input name="DateTo" class="form-control" id="date-to" type="text" @(Model.DateTo != null ? "value=" + Model.DateTo : "") placeholder="DD.MM.YYYY"/>
-        <br/>
-        <label for="money-from">Minimal ammount: </label><input name="MoneyFrom" class="form-control" id="money-from" type="text" @(Model.MoneyFrom != null ? "value=" + Model.MoneyFrom : "") />
-        <label for="money-to">Maximal ammount: </label><input name="MoneyTo" class="form-control" id="money-to" type="text" @(Model.MoneyTo != null ? "value=" + Model.MoneyTo : "") />
-        <div class="form-group">
-            <label>Category:</label> <br/>
-            <select name="CostTypeId" class="form-control">
-                <option value="">All</option>
-                @foreach (var costType in Model.CostTypes)
-                {
-                    @Html.Raw("<option value=" + costType.Id + " " + (Model.CostTypeId == costType.Id ? "selected" : "") + ">" + costType.Name + "</option>")
-                }
-            </select>
-        </div>
-        <input type="hidden" name="PageNumber" value="1"/>
-        <input type="submit" class="search form-control" value="Search"/>
-    </form>
-</div>
-<div class="col-sm-6 main-content">
+<div class="col-md-6 col-md-push-3 main-content">
     <h1>Expenses</h1>
     @if (Model.CurrentUser.HasFullRights)
     {
@@ -99,4 +72,32 @@
             </ul>
         </div>
     }
+</div>
+
+<div class="col-md-3 col-md-pull-6 sidebar left">
+    <form asp-action="Index">
+        @Html.AntiForgeryToken()
+        <!--<label asp-for="DateFrom"></label>
+        <input asp-for="DateFrom" class="form-control"/>
+        <span asp-validation-for="DateFrom" class="text-danger" />-->
+        <label for="date-from">Created from: </label>
+        <input name="DateFrom" class="form-control" id="date-from" type="text" @(Model.DateFrom != null ? "value=" + Model.DateFrom : "") placeholder="DD.MM.YYYY" />
+        <!--<br class="datepicker-separator"/>-->
+        <label for="date-to">Created to: </label><input name="DateTo" class="form-control" id="date-to" type="text" @(Model.DateTo != null ? "value=" + Model.DateTo : "") placeholder="DD.MM.YYYY" />
+        <br />
+        <label for="money-from">Minimal ammount: </label><input name="MoneyFrom" class="form-control" id="money-from" type="text" @(Model.MoneyFrom != null ? "value=" + Model.MoneyFrom : "") />
+        <label for="money-to">Maximal ammount: </label><input name="MoneyTo" class="form-control" id="money-to" type="text" @(Model.MoneyTo != null ? "value=" + Model.MoneyTo : "") />
+        <div class="form-group">
+            <label>Category:</label> <br />
+            <select name="CostTypeId" class="form-control">
+                <option value="">All</option>
+                @foreach (var costType in Model.CostTypes)
+                {
+                    @Html.Raw("<option value=" + costType.Id + " " + (Model.CostTypeId == costType.Id ? "selected" : "") + ">" + costType.Name + "</option>")
+                }
+            </select>
+        </div>
+        <input type="hidden" name="PageNumber" value="1" />
+        <input type="submit" class="search form-control" value="Search" />
+    </form>
 </div>

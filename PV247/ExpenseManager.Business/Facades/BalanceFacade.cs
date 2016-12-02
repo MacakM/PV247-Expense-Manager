@@ -5,6 +5,7 @@ using ExpenseManager.Business.DataTransferObjects.Enums;
 using ExpenseManager.Business.DataTransferObjects.Factories;
 using ExpenseManager.Business.Infrastructure.CastleWindsor;
 using ExpenseManager.Business.Services.Interfaces;
+using ExpenseManager.Database.DataAccess.FilterInterfaces;
 using ExpenseManager.Database.Entities;
 
 namespace ExpenseManager.Business.Facades
@@ -22,7 +23,32 @@ namespace ExpenseManager.Business.Facades
 
         private readonly IPlanService _planService = BusinessLayerDIManager.Resolve<IPlanService>();
 
-        private readonly IGraphService _graphService = BusinessLayerDIManager.Resolve<IGraphService>();
+        private readonly IGraphService _graphService;
+        private readonly IAccountBadgeService _accountBadgeService;
+
+        /// <summary>
+        /// Balance facade construtor
+        /// </summary>
+        /// <param name="badgeService">Badge service</param>
+        /// <param name="costInfoService">Cost info service</param>
+        /// <param name="costTypeService">Cost type service</param>
+        /// <param name="planService">Plan service</param>
+        /// <param name="graphService"></param>
+        /// <param name="accountBadgeService"></param>
+        public BalanceFacade(IBadgeService badgeService, 
+            ICostInfoService costInfoService, 
+            ICostTypeService costTypeService, 
+            IPlanService planService, 
+            IGraphService graphService,
+            IAccountBadgeService accountBadgeService)
+        {
+            _badgeService = badgeService;
+            _costInfoService = costInfoService;
+            _costTypeService = costTypeService;
+            _planService = planService;
+            _graphService = graphService;
+            _accountBadgeService = accountBadgeService;
+        }
 
         #region Business operations
         /// <summary>
@@ -284,6 +310,17 @@ namespace ExpenseManager.Business.Facades
         }
 
         /// <summary>
+        /// Lists all cost types for given account id
+        /// </summary>
+        /// <param name="accountId"></param>
+        /// <returns></returns>
+        public List<CostType> ListItemTypes(Guid accountId)
+        {
+            var filters = FilterFactory.GetCostTypeFilters(accountId);
+            return _costTypeService.ListCostTypes(filters, null);
+        }
+
+        /// <summary>
         /// List cost types specified by filter
         /// </summary>
         /// <param name="costTypeName"></param>
@@ -340,10 +377,46 @@ namespace ExpenseManager.Business.Facades
         /// <param name="badgeName"></param>
         /// <param name="pageInfo"></param>
         /// <returns></returns>
-        public List<Badge> ListBadges(string badgeName,PageInfo pageInfo)
+        public List<Badge> ListBadges(string badgeName, PageInfo pageInfo)
         {
             var filters = FilterFactory.GetBadgeFilters(badgeName);
             return _badgeService.ListBadges(filters, FilterFactory.GetPageAndOrderable<BadgeModel>(pageInfo));
+        }
+
+        /// <summary>
+        /// Lists all achieved badges for given accountId
+        /// </summary>
+        /// <param name="accountId"></param>
+        /// <param name="ammount"></param>
+        /// <returns></returns>
+        public List<AccountBadge> ListAchievedAccountBadges(Guid accountId, int? ammount = null)
+        {
+            var filters = FilterFactory.GetAccountBadgeFilters(accountId);
+            
+            var pageInfo = new PageInfo()
+            {
+                OrderByDesc = true,
+                OrderByPropertyName = nameof(AccountBadgeModel.Achieved),
+            };
+            if (ammount != null)
+            {
+                pageInfo.PageNumber = 1;
+                pageInfo.PageSize = ammount.Value;
+            }
+
+            var pageFilter = FilterFactory.GetPageAndOrderable<AccountBadgeModel>(pageInfo);
+            
+            return _accountBadgeService.ListAccountBadges(filters, pageFilter);
+        }
+
+        /// <summary>
+        /// Lists all yet not achieved badges for given accountId
+        /// </summary>
+        /// <param name="accountId"></param>
+        /// <returns></returns>
+        public List<Badge> ListNotAchievedBadges(Guid accountId)
+        {
+            return _badgeService.ListNotAchievedBadges(accountId);
         }
 
        

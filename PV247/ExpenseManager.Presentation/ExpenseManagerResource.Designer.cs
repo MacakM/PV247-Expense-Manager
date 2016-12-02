@@ -96,6 +96,24 @@ namespace ExpenseManager.Presentation {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to Category was successfully created.
+        /// </summary>
+        public static string CategoryCreated {
+            get {
+                return ResourceManager.GetString("CategoryCreated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Category with given name already exists.
+        /// </summary>
+        public static string CategoryExists {
+            get {
+                return ResourceManager.GetString("CategoryExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to User with given email does not exist.
         /// </summary>
         public static string EmailDoesntExist {

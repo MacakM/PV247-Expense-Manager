@@ -34,8 +34,6 @@ namespace ExpenseManager.Presentation.Controllers
             _balanceFacade = balanceFacade;
         }
 
-        #region Nonpermanent expenses
-
         /// <summary>
         /// Displays expenses for loged-in user
         /// </summary>
@@ -44,21 +42,16 @@ namespace ExpenseManager.Presentation.Controllers
         {
             var account = CurrentAccountProvider.GetCurrentAccount(HttpContext.User);
 
-
             PageInfo pageInfo = new PageInfo
             {
                 PageNumber = filterModel.PageNumber ?? 1,
-                PageSize = NumberOfExpensesPerPage
+                PageSize = NumberOfExpensesPerPage,
+                OrderByPropertyName = nameof(CostInfo.Created),
+                OrderByDesc = true
             };
-
 
             filterModel.Expenses = GetFilteredExpenses(account.Id, Periodicity.None, filterModel.DateFrom, filterModel.DateTo, filterModel.MoneyFrom, filterModel.MoneyTo, filterModel.CostTypeId, null, pageInfo);
             filterModel.PageCount = (int)Math.Ceiling(_balanceFacade.GetCostInfosCount(account.Id, Periodicity.None, filterModel.DateFrom, filterModel.DateTo, filterModel.MoneyFrom, filterModel.MoneyTo, filterModel.CostTypeId, null) / (double)NumberOfExpensesPerPage);
-
-
-
-            
-
             filterModel.CostTypes = GetAllCostTypes();
             filterModel.CurrentUser = Mapper.Map<Models.User.IndexViewModel>(CurrentAccountProvider.GetCurrentUser(HttpContext.User));
             return View(filterModel);
@@ -70,12 +63,11 @@ namespace ExpenseManager.Presentation.Controllers
         /// Displays form for creating new expense
         /// </summary>
         [Authorize(Policy = "HasFullRights")]
-        public IActionResult Create([FromQuery] string errorMessage = null)
+        public IActionResult Create()
         {
             var model = new CreateViewModel
             {
                 CostTypes = GetAllCostTypes(),
-                ErrorMessage = errorMessage
             };
             return View(model);
         }
@@ -90,15 +82,15 @@ namespace ExpenseManager.Presentation.Controllers
         public IActionResult Store(CreateViewModel costInfoViewModel)
         {
             var costType = _balanceFacade.GetItemType(costInfoViewModel.TypeId);
+            var account = CurrentAccountProvider.GetCurrentAccount(HttpContext.User);
 
-            if (!ModelState.IsValid || costType == null)
+            if (!ModelState.IsValid || costType == null || costType.AccountId != account.Id)
             {
                 return RedirectToAction("Create", new { errorMessage = ExpenseManagerResource.InvalidInputData });
             }
 
             var costInfo = Mapper.Map<CostInfo>(costInfoViewModel);
 
-            var account = CurrentAccountProvider.GetCurrentAccount(HttpContext.User);
 
             costInfo.AccountId = account.Id;
             costInfo.Created = DateTime.Now;
@@ -108,79 +100,6 @@ namespace ExpenseManager.Presentation.Controllers
 
             return RedirectToAction("Index", new { successMessage = ExpenseManagerResource.ExpenseCreated });
         }
-
-        private List<IndexPermanentExpenseViewModel> GetAllPermanentExpenses(Account account)
-        {
-            var expenses = _balanceFacade.ListItems(account.Id, Periodicity.Day, null);
-            expenses.AddRange(_balanceFacade.ListItems(account.Id, Periodicity.Week, null));
-            expenses.AddRange(_balanceFacade.ListItems(account.Id, Periodicity.Month, null));
-            return Mapper.Map<List<IndexPermanentExpenseViewModel>>(expenses);
-        }
-
-        #endregion
-
-        #region Permanent expenses
-
-        /// <summary>
-        /// Displays permanent expenses
-        /// </summary>
-        /// <returns></returns>
-        [Authorize(Policy = "HasAccount")]
-        public IActionResult PermanentExpensesIndex()
-        {
-            var account = CurrentAccountProvider.GetCurrentAccount(HttpContext.User);
-            var currentUserModel = Mapper.Map<Models.User.IndexViewModel>(CurrentAccountProvider.GetCurrentUser(HttpContext.User));
-
-            var model = new PermanentExpensesIndexViewModel()
-            {
-                Expenses = GetAllPermanentExpenses(account),
-                CurrentUser = currentUserModel
-            };
-
-            return View(model);
-        }
-
-        /// <summary>
-        /// Displays form for creating permanent expenses
-        /// </summary>
-        [Authorize(Policy = "HasFullRights")]
-        public IActionResult CreatePermanentExpense([FromQuery] string errorMessage = null)
-        {
-            var model = new CreatePermanentExpenseViewModel
-            {
-                CostTypes = GetAllCostTypes(),
-                ErrorMessage = errorMessage
-            };
-            return View(model);
-        }
-
-        /// <summary>
-        /// Stores permanent expense
-        /// </summary>
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [Authorize(Policy = "HasFullRights")]
-        public IActionResult StorePermanentExpense(CreatePermanentExpenseViewModel costInfoViewModel)
-        {
-            var costType = _balanceFacade.GetItemType(costInfoViewModel.TypeId);
-
-            if (!ModelState.IsValid || costType == null)
-            {
-                return RedirectToAction("CreatePermanentExpense", new { errorMessage = ExpenseManagerResource.InvalidInputData });
-            }
-
-            var costInfo = Mapper.Map<CostInfo>(costInfoViewModel);
-
-            var account = CurrentAccountProvider.GetCurrentAccount(HttpContext.User);
-
-            costInfo.AccountId = account.Id;
-
-            _balanceFacade.CreateItem(costInfo);
-
-            return RedirectToAction("PermanentExpensesIndex", new { successMessage = ExpenseManagerResource.ExpenseCreated });
-        }
-
-        #endregion
 
         /// <summary>
         /// Deletes expense with given id
@@ -205,19 +124,18 @@ namespace ExpenseManager.Presentation.Controllers
             return Redirect(returnRedirect);
         }
 
-        #region Helpers
         private List<IndexViewModel> GetFilteredExpenses(Guid accountId, Periodicity periodicity, DateTime? dateFrom, DateTime? dateTo, decimal? moneyFrom, decimal? moneyTo, Guid? costTypeId, bool? isIncome, PageInfo pageInfo)
         {
             var expenses = _balanceFacade.ListItems(accountId, periodicity, dateFrom, dateTo,  moneyFrom, moneyTo, costTypeId,isIncome, pageInfo);
             return Mapper.Map<List<IndexViewModel>>(expenses);
         }
 
-        private List<Models.CostType.IndexViewModel> GetAllCostTypes()
+        private List<Models.CostType.CategoryViewModel> GetAllCostTypes()
         {
-            var costTypes = _balanceFacade.ListItemTypes(null, null);
-            var costTypeViewModels = Mapper.Map<List<Models.CostType.IndexViewModel>>(costTypes);
+            var accountId = CurrentAccountProvider.GetCurrentAccount(HttpContext.User).Id;
+            var costTypes = _balanceFacade.ListItemTypes(accountId);
+            var costTypeViewModels = Mapper.Map<List<Models.CostType.CategoryViewModel>>(costTypes);
             return costTypeViewModels;
         }
-        #endregion
     }
 }
