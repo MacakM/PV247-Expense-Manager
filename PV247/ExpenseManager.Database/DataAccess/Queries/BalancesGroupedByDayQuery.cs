@@ -22,7 +22,7 @@ namespace ExpenseManager.Database.DataAccess.Queries
         /// constructor
         /// </summary>
         /// <param name="provider"></param>
-        public BalancesGroupedByDayQuery(IUnitOfWorkProvider provider) : base(provider)
+        internal BalancesGroupedByDayQuery(IUnitOfWorkProvider provider) : base(provider)
         {
         }
 

@@ -8,13 +8,13 @@ namespace ExpenseManager.Database.DataAccess.Queries
     /// <summary>
     /// Implementation of Query for user's plans.
     /// </summary>
-    public class ListPlansQuery : ExpenseManagerQuery<PlanModel>
+    internal class ListPlansQuery : ExpenseManagerQuery<PlanModel>
     {
         /// <summary>
         /// Create query.
         /// </summary>
         /// <param name="provider">unitOfWork provider</param>
-        public ListPlansQuery(IUnitOfWorkProvider provider) : base(provider) { }
+        internal ListPlansQuery(IUnitOfWorkProvider provider) : base(provider) { }
 
         /// <summary>
         /// Return IQueryable.

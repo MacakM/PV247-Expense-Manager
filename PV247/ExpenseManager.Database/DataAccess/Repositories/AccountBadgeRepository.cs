@@ -14,6 +14,6 @@ namespace ExpenseManager.Database.DataAccess.Repositories
         /// Create repository.
         /// </summary>
         /// <param name="provider">unitOfWork provider</param>
-        public AccountBadgeRepository(IUnitOfWorkProvider provider) : base(provider) { }
+        internal AccountBadgeRepository(IUnitOfWorkProvider provider) : base(provider) { }
     }
 }

@@ -9,13 +9,13 @@ namespace ExpenseManager.Database.DataAccess.Queries
     /// <summary>
     /// Implementation of Query for users.
     /// </summary>
-    public class ListUsersQuery : ExpenseManagerQuery<UserModel>
+    internal class ListUsersQuery : ExpenseManagerQuery<UserModel>
     {
         /// <summary>
         /// Create query.
         /// </summary>
         /// <param name="provider">unitOfWork provider</param>
-        public ListUsersQuery(IUnitOfWorkProvider provider) : base(provider)
+        internal ListUsersQuery(IUnitOfWorkProvider provider) : base(provider)
         {
         }
 

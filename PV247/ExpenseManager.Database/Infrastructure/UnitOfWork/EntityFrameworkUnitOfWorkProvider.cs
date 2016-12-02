@@ -2,7 +2,6 @@ using System;
 using System.Data.Entity;
 using System.Runtime.CompilerServices;
 using ExpenseManager.Database.Infrastructure.ConnectionConfiguration;
-using Microsoft.Extensions.Options;
 using Riganti.Utils.Infrastructure.Core;
 
 [assembly: InternalsVisibleTo("ExpenseManager.Business.Tests")]

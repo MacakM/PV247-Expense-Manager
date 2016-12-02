@@ -19,13 +19,13 @@ namespace ExpenseManager.Business.Infrastructure.CastleWindsor
                 .ToList();
             var registrations = new IRegistration[typesToRegister.Count];
 
+            var baseTypes = typesToRegister.Select(type => type.BaseType).ToList();
 
             for (var i = 0; i < typesToRegister.Count; i++)
             {
                 var usingFactoryMethod = typeof(RegisterExtensionMethods)
                     .GetMethod(nameof(RegisterComponentForProxy), BindingFlags.NonPublic | BindingFlags.Static);
-                var usingFactoryMethodRef = usingFactoryMethod.MakeGenericMethod(typesToRegister[i],
-                    TypesFromCurrentAssembly.First(type => type.GetInterfaces().Contains(typesToRegister[i]) && type.IsClass));
+                var usingFactoryMethodRef = usingFactoryMethod.MakeGenericMethod(baseTypes[i], typesToRegister[i]);
                 registrations[i] = usingFactoryMethodRef
                     .Invoke(new BusinessLayerInstaller(), new object[] { containerKernel, asSingletons }) as IRegistration;
             }
@@ -129,10 +129,12 @@ namespace ExpenseManager.Business.Infrastructure.CastleWindsor
             {
                 return Component.For<TBase>()
                     .UsingFactoryMethod(kernel => Activator.CreateInstance(typeof(TImplementation), BindingFlags.Instance | BindingFlags.NonPublic, null, ctorArgs.Any() ? ctorArgs : null, null, null) as TImplementation)
+                    .Named(Guid.NewGuid().ToString())
                     .LifestyleSingleton();
             }
             return Component.For<TBase>()
                 .UsingFactoryMethod(kernel => Activator.CreateInstance(typeof(TImplementation), BindingFlags.Instance | BindingFlags.NonPublic, null, ctorArgs.Any() ? ctorArgs : null, null, null) as TImplementation)
+                .Named(Guid.NewGuid().ToString())
                 .LifestyleTransient();
         }
 
