@@ -9,7 +9,7 @@ namespace ExpenseManager.Business.Services.Interfaces
     /// <summary>
     /// Service handles Badge entity operations
     /// </summary>
-    public interface IBadgeService : IService
+    internal interface IBadgeService : IService
     {
         /// <summary>
         /// Creates new Badge object in database

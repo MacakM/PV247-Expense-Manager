@@ -13,14 +13,14 @@ namespace ExpenseManager.Business.Infrastructure
     /// <typeparam name="TEntity"></typeparam>
     /// <typeparam name="TKey"></typeparam>
     /// <typeparam name="T"></typeparam>
-    public abstract class ExpenseManagerQueryAndCrudServiceBase<TEntity, TKey, T> : ExpenseManagerCrudServiceBase<TEntity, TKey, T> 
+    internal abstract class ExpenseManagerQueryAndCrudServiceBase<TEntity, TKey, T> : ExpenseManagerCrudServiceBase<TEntity, TKey, T> 
         where TEntity : class, IEntity<TKey>, new() 
         where T : BusinessObject<TKey>, new() 
     {
         /// <summary>
         /// Gets the query object used to populate the list or records.
         /// </summary>
-        public ExpenseManagerQuery<TEntity> Query { get; }
+        internal ExpenseManagerQuery<TEntity> Query { get; }
 
         /// <summary>
         /// Service base class
@@ -37,7 +37,7 @@ namespace ExpenseManager.Business.Infrastructure
         /// <summary>
         /// Gets the list of the s using the Query object.
         /// </summary>
-        public virtual IList<T> GetList()
+        internal virtual IList<T> GetList()
         {
             return ExpenseManagerMapper.Map<IList<TEntity>, IList<T>>(Query.Execute());
         }

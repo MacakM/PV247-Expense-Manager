@@ -23,7 +23,7 @@ namespace ExpenseManager.Database.Infrastructure.Repository
         /// <summary>
         /// Initializes a new instance of the <see cref="ExpenseManagerRepository{TEntity, TKey}"/> class.
         /// </summary>
-        public ExpenseManagerRepository(IUnitOfWorkProvider provider)
+        internal ExpenseManagerRepository(IUnitOfWorkProvider provider)
         {
             _provider = provider;
         }

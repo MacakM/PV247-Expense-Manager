@@ -6,11 +6,11 @@ using ExpenseManager.Database.Entities;
 
 namespace ExpenseManager.Business.Services.Interfaces
 {
-    
+
     /// <summary>
     /// Service handles cost type entity operations
     /// </summary>
-    public interface ICostTypeService : IService
+    internal interface ICostTypeService : IService
     {
         /// <summary>
         /// Creaates new cost type

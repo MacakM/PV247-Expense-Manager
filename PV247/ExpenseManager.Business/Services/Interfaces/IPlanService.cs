@@ -9,7 +9,7 @@ namespace ExpenseManager.Business.Services.Interfaces
     /// <summary>
     /// Service handles plan entity operations
     /// </summary>
-    public interface IPlanService : IService
+    internal interface IPlanService : IService
     {
         /// <summary>
         /// Creates new plan in databse

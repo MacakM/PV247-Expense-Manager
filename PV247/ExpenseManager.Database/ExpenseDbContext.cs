@@ -9,7 +9,7 @@ namespace ExpenseManager.Database
     /// <summary>
     /// Database context
     /// </summary>
-    public class ExpenseDbContext : DbContext
+    internal class ExpenseDbContext : DbContext
     {
         /// <summary>
         /// Context construstor
