@@ -5,6 +5,7 @@ using AutoMapper;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Enums;
 using ExpenseManager.Business.Facades;
+using ExpenseManager.Business.Tests.Bootstrap;
 using ExpenseManager.Database;
 using ExpenseManager.Database.Entities;
 using NUnit.Framework;

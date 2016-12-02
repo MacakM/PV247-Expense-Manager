@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using AutoMapper;
 using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.Resolvers.SpecializedResolvers;
@@ -14,10 +17,13 @@ using ExpenseManager.Database.Infrastructure.Repository;
 using ExpenseManager.Database.Infrastructure.UnitOfWork;
 using Riganti.Utils.Infrastructure.Core;
 
+[assembly: InternalsVisibleTo("ExpenseManager.DataSeeding")]
 namespace ExpenseManager.Business.Infrastructure.CastleWindsor
 {
     internal class BusinessLayerInstaller : IWindsorInstaller
     {
+        private static readonly IList<IRegistration> CustomComponents = new List<IRegistration>(); 
+
         /// <summary>
         /// Installer for all business layer dependencies
         /// </summary>
@@ -25,11 +31,28 @@ namespace ExpenseManager.Business.Infrastructure.CastleWindsor
         /// <param name="store">Contract for storing information used in windsor kernel</param>
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
+            RegisterCustomComponent(container);
             RegisterThirdPartyDependencies(container);
             RegisterAllRepositories(container);
             RegisterAllQueryObjects(container);
             RegisterBadgeCertification(container);
             RegisterAllServices(container);
+        }
+
+        internal static void AddCustomComponent(IRegistration registration)
+        {
+            if (!CustomComponents.Contains(registration))
+            {
+                CustomComponents.Add(registration);
+            }
+        }
+
+        private static void RegisterCustomComponent(IWindsorContainer container)
+        {
+            if (CustomComponents.Any())
+            {
+                container.Register(CustomComponents.ToArray());
+            }
         }
 
         private static void RegisterAllServices(IWindsorContainer container)

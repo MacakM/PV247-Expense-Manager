@@ -11,13 +11,13 @@ namespace ExpenseManager.DataSeeding
     /// <summary>
     /// Demo data for ExpenseDbContext
     /// </summary>
-    public class ExpenseDbInitializer : IDatabaseInitializer<ExpenseDbContext>
+    internal static class ExpenseDbInitializer
     {
         /// <summary>
         /// Performs ExpenseDB initialization
         /// </summary>
         /// <param name="context">ExpenseDbContext to initialize the db</param>
-        public void InitializeDatabase(ExpenseDbContext context)
+        internal static void InitializeDatabase(ExpenseDbContext context)
         {
             TruncateDB(context);
 
@@ -238,7 +238,7 @@ namespace ExpenseManager.DataSeeding
             context.SaveChanges();
         }
 
-        private void TruncateDB(ExpenseDbContext context)
+        private static void TruncateDB(ExpenseDbContext context)
         {
             DeleteAll<PlanModel>(context);
             DeleteAll<CostInfoModel>(context);

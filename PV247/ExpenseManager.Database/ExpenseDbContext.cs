@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using ExpenseManager.Database.Entities;
 
 [assembly: InternalsVisibleTo("ExpenseManager.Business.Tests")]
+[assembly: InternalsVisibleTo("ExpenseManager.DataSeeding")]
 namespace ExpenseManager.Database
 {
     /// <summary>

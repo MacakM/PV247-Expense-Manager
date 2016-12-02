@@ -1,12 +1,14 @@
-﻿using AutoMapper;
+﻿using System.Runtime.CompilerServices;
+using AutoMapper;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Database.Entities;
 
+[assembly: InternalsVisibleTo("ExpenseManager.Business.Tests")]
 namespace ExpenseManager.Business.Infrastructure.Mapping.Profiles
 {
     /// <summary>
     /// Standard mapping profile.
-    /// </summary>
+    /// </summary>   
     internal class DatabaseToBusinessStandardMapping : Profile
     {
         /// <summary>
