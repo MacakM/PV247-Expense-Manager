@@ -8,12 +8,12 @@ namespace ExpenseManager.Database.DataAccess.Repositories
     /// <summary>
     /// Implementation of Repository for Account entity.
     /// </summary>
-    public class AccountRepository : ExpenseManagerRepository<AccountModel, Guid>
+    internal class AccountRepository : ExpenseManagerRepository<AccountModel, Guid>
     {
         /// <summary>
         /// Create repository.
         /// </summary>
         /// <param name="provider">unitOfWork provider</param>
-        public AccountRepository(IUnitOfWorkProvider provider) : base(provider) { }
+        internal AccountRepository(IUnitOfWorkProvider provider) : base(provider) { }
     }
 }

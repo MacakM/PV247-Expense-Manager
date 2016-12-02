@@ -8,12 +8,12 @@ namespace ExpenseManager.Database.DataAccess.Repositories
     /// <summary>
     /// Implementation of Repository for UserBadge entity.
     /// </summary>
-    public class AccountBadgeRepository : ExpenseManagerRepository<AccountBadgeModel, Guid>
+    internal class AccountBadgeRepository : ExpenseManagerRepository<AccountBadgeModel, Guid>
     {
         /// <summary>
         /// Create repository.
         /// </summary>
         /// <param name="provider">unitOfWork provider</param>
-        public AccountBadgeRepository(IUnitOfWorkProvider provider) : base(provider) { }
+        internal AccountBadgeRepository(IUnitOfWorkProvider provider) : base(provider) { }
     }
 }

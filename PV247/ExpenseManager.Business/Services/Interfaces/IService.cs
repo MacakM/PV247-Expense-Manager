@@ -3,5 +3,5 @@
     /// <summary>
     /// Base interface for any Expense Manager Service
     /// </summary>
-    public interface IService { }
+    internal interface IService { }
 }

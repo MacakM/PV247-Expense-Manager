@@ -9,6 +9,7 @@ namespace ExpenseManager.Database.DataAccess.Queries
 {
     /// <summary>
     /// Query for retrieving balance for each of last 10 days
+    /// This class is public since its directly used within services (due to exposed AccountId property)
     /// </summary>
     public class BalancesGroupedByDayQuery : ExpenseManagerQuery<DayBalance>
     {
@@ -22,7 +23,7 @@ namespace ExpenseManager.Database.DataAccess.Queries
         /// constructor
         /// </summary>
         /// <param name="provider"></param>
-        public BalancesGroupedByDayQuery(IUnitOfWorkProvider provider) : base(provider)
+        internal BalancesGroupedByDayQuery(IUnitOfWorkProvider provider) : base(provider)
         {
         }
 

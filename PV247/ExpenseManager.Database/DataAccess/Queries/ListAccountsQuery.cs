@@ -8,13 +8,13 @@ namespace ExpenseManager.Database.DataAccess.Queries
     /// <summary>
     /// Implementation of Query for accounts.
     /// </summary>
-    public class ListAccountsQuery : ExpenseManagerQuery<AccountModel>
+    internal class ListAccountsQuery : ExpenseManagerQuery<AccountModel>
     {
         /// <summary>
         /// Create query.
         /// </summary>
         /// <param name="provider">unitOfWork provider</param>
-        public ListAccountsQuery(IUnitOfWorkProvider provider) : base(provider)
+        internal ListAccountsQuery(IUnitOfWorkProvider provider) : base(provider)
         {
         }
         /// <summary>

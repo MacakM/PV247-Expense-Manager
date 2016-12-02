@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Enums;
 using ExpenseManager.Business.DataTransferObjects.Factories;
+using ExpenseManager.Business.Infrastructure.CastleWindsor;
 using ExpenseManager.Business.Services.Interfaces;
 using ExpenseManager.Database.DataAccess.FilterInterfaces;
 using ExpenseManager.Database.Entities;
@@ -14,40 +15,17 @@ namespace ExpenseManager.Business.Facades
     /// </summary>
     public class BalanceFacade
     {
-        private readonly IBadgeService _badgeService;
+        private readonly IBadgeService _badgeService = BusinessLayerDIManager.Resolve<IBadgeService>();
 
-        private readonly ICostInfoService _costInfoService;
+        private readonly ICostInfoService _costInfoService = BusinessLayerDIManager.Resolve<ICostInfoService>();
 
-        private readonly ICostTypeService _costTypeService;
+        private readonly ICostTypeService _costTypeService = BusinessLayerDIManager.Resolve<ICostTypeService>();
 
-        private readonly IPlanService _planService;
+        private readonly IPlanService _planService = BusinessLayerDIManager.Resolve<IPlanService>();
 
-        private readonly IGraphService _graphService;
-        private readonly IAccountBadgeService _accountBadgeService;
+        private readonly IGraphService _graphService = BusinessLayerDIManager.Resolve<IGraphService>();
 
-        /// <summary>
-        /// Balance facade construtor
-        /// </summary>
-        /// <param name="badgeService">Badge service</param>
-        /// <param name="costInfoService">Cost info service</param>
-        /// <param name="costTypeService">Cost type service</param>
-        /// <param name="planService">Plan service</param>
-        /// <param name="graphService"></param>
-        /// <param name="accountBadgeService"></param>
-        public BalanceFacade(IBadgeService badgeService, 
-            ICostInfoService costInfoService, 
-            ICostTypeService costTypeService, 
-            IPlanService planService, 
-            IGraphService graphService,
-            IAccountBadgeService accountBadgeService)
-        {
-            _badgeService = badgeService;
-            _costInfoService = costInfoService;
-            _costTypeService = costTypeService;
-            _planService = planService;
-            _graphService = graphService;
-            _accountBadgeService = accountBadgeService;
-        }
+        private readonly IAccountBadgeService _accountBadgeService = BusinessLayerDIManager.Resolve<IAccountBadgeService>();
 
         #region Business operations
         /// <summary>
@@ -115,7 +93,8 @@ namespace ExpenseManager.Business.Facades
         /// </summary>
         public List<DayTotalBalance> GetDailyBalanceGraphData(Guid accountId)
         {
-            return _graphService.GetTotalDailyBalanceGraphData(accountId);
+            var totalBalance = _costInfoService.GetBalance(accountId);
+            return _graphService.GetTotalDailyBalanceGraphData(accountId, totalBalance);
         }
 
         #endregion

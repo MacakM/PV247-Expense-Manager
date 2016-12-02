@@ -10,7 +10,7 @@ namespace ExpenseManager.Business.Services.Interfaces
     /// <summary>
     /// Service handles user entity operations
     /// </summary>
-    public interface IUserService : IService
+    internal interface IUserService : IService
     {
         /// <summary>
         /// Registers user according to provided information

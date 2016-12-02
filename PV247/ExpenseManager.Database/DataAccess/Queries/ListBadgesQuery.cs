@@ -8,13 +8,13 @@ namespace ExpenseManager.Database.DataAccess.Queries
     /// <summary>
     /// Implementation of Query for badges.
     /// </summary>
-    public class ListBadgesQuery : ExpenseManagerQuery<BadgeModel>
+    internal class ListBadgesQuery : ExpenseManagerQuery<BadgeModel>
     {
         /// <summary>
         /// Create query.
         /// </summary>
         /// <param name="provider">unitOfWork provider</param>
-        public ListBadgesQuery(IUnitOfWorkProvider provider) : base(provider)
+        internal ListBadgesQuery(IUnitOfWorkProvider provider) : base(provider)
         {
         }
 

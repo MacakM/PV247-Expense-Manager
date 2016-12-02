@@ -30,7 +30,7 @@ namespace ExpenseManager.DataSeeding
         {
             using (var expenseDbContext = new ExpenseDbContext("Server=(localdb)\\mssqllocaldb;Database=ExpenseManagerDB;Trusted_Connection=True;MultipleActiveResultSets=true"))
             {
-                new ExpenseDbInitializer().InitializeDatabase(expenseDbContext);
+                ExpenseDbInitializer.InitializeDatabase(expenseDbContext);
             }
         }
 

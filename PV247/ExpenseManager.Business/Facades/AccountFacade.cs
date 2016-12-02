@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Enums;
 using ExpenseManager.Business.DataTransferObjects.Factories;
+using ExpenseManager.Business.Infrastructure.CastleWindsor;
 using ExpenseManager.Business.Services.Interfaces;
 using ExpenseManager.Database.Entities;
 
@@ -13,20 +14,9 @@ namespace ExpenseManager.Business.Facades
     /// </summary>
     public class AccountFacade
     {
-        private readonly IUserService _userService;
+        private readonly IUserService _userService = BusinessLayerDIManager.Resolve<IUserService>();
 
-        private readonly IAccountService _accountService;
-        
-        /// <summary>
-        /// Accont Facade constructor
-        /// </summary>
-        /// <param name="userService">User service</param>
-        /// <param name="accountService">Accounet service</param>
-        public AccountFacade(IUserService userService, IAccountService accountService)
-        {
-            _userService = userService;
-            _accountService = accountService;
-        }
+        private readonly IAccountService _accountService = BusinessLayerDIManager.Resolve<IAccountService>();
 
         #region User CRUD
         /// <summary>

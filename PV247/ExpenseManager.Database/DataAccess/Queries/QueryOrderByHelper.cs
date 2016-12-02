@@ -6,6 +6,7 @@ namespace ExpenseManager.Database.DataAccess.Queries
 {
     /// <summary>
     /// Helps to order queryable by property name
+    /// Unfortunately this entire class must stay public since the new filter implementation uses it
     /// </summary>
     public class QueryOrderByHelper
     {
@@ -52,7 +53,7 @@ namespace ExpenseManager.Database.DataAccess.Queries
         /// <param name="source"></param>
         /// <param name="propertyName"></param>
         /// <returns></returns>
-        public static IQueryable OrderByDesc(IQueryable source, string propertyName)
+        internal static IQueryable OrderByDesc(IQueryable source, string propertyName)
         {
             var x = Expression.Parameter(source.ElementType);
             var selector = Expression.Lambda(Expression.PropertyOrField(x, propertyName), x);
