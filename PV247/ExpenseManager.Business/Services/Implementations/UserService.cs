@@ -19,7 +19,7 @@ namespace ExpenseManager.Business.Services.Implementations
     /// <summary>
     /// Provides user related functionality
     /// </summary>
-    public class UserService : ExpenseManagerQueryAndCrudServiceBase<UserModel, Guid, User>, IUserService
+    internal class UserService : ExpenseManagerQueryAndCrudServiceBase<UserModel, Guid, User>, IUserService
     {
         private readonly UserRepository _userRepository;
 
@@ -30,7 +30,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="repository"></param>
         /// <param name="expenseManagerMapper"></param>
         /// <param name="unitOfWorkProvider"></param>
-        public UserService(ExpenseManagerQuery<UserModel> query, UserRepository repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
+        internal UserService(ExpenseManagerQuery<UserModel> query, UserRepository repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
         {
             _userRepository = repository;
         }

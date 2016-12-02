@@ -2,7 +2,7 @@ using ExpenseManager.Database.Entities;
 
 namespace ExpenseManager.Business.Utilities.BadgeCertification.BadgeCertifiers
 {
-    public interface IBadgeCertifier
+    internal interface IBadgeCertifier
     {
         /// <summary>
         /// Gets name of the corresponding badge

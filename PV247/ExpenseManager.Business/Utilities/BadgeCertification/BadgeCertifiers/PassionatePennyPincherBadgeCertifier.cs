@@ -7,7 +7,7 @@ namespace ExpenseManager.Business.Utilities.BadgeCertification.BadgeCertifiers
     /// <summary>
     /// Decides whether user account can be assigned PassionatePennyPincher Badge
     /// </summary>
-    public class PassionatePennyPincherBadgeCertifier : IBadgeCertifier
+    internal class PassionatePennyPincherBadgeCertifier : IBadgeCertifier
     {
         private const decimal PlannedMoney = 20000;
 

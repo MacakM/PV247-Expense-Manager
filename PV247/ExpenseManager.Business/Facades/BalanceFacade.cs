@@ -90,7 +90,8 @@ namespace ExpenseManager.Business.Facades
         /// </summary>
         public List<DayTotalBalance> GetDailyBalanceGraphData(Guid accountId)
         {
-            return _graphService.GetTotalDailyBalanceGraphData(accountId);
+            var totalBalance = _costInfoService.GetBalance(accountId);
+            return _graphService.GetTotalDailyBalanceGraphData(accountId, totalBalance);
         }
 
         #endregion

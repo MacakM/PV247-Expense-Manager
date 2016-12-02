@@ -19,7 +19,7 @@ namespace ExpenseManager.Business.Services.Implementations
     /// <summary>
     /// Service handles AccountBadge entity operations
     /// </summary>
-    public class CostInfoService : ExpenseManagerQueryAndCrudServiceBase<CostInfoModel, Guid, CostInfo>, ICostInfoService
+    internal class CostInfoService : ExpenseManagerQueryAndCrudServiceBase<CostInfoModel, Guid, CostInfo>, ICostInfoService
     {
         private readonly ExpenseManagerRepository<CostTypeModel, Guid> _costTypeRepository;
 
@@ -43,7 +43,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="unitOfWorkProvider">Unit of work provider</param>
         /// <param name="costTypeRepository">Cost type repository</param>
         /// <param name="accountRepository">Account repository</param>
-        public CostInfoService(
+        internal CostInfoService(
             ExpenseManagerQuery<CostInfoModel> query,
             ExpenseManagerRepository<CostInfoModel, Guid> repository,
             Mapper expenseManagerMapper,

@@ -16,7 +16,7 @@ namespace ExpenseManager.Business.Services.Implementations
     /// <summary>
     /// Service handles AccountBadge entity operations
     /// </summary>
-    public class AccountBadgeService : ExpenseManagerQueryAndCrudServiceBase<AccountBadgeModel, Guid, AccountBadge>, IAccountBadgeService
+    internal class AccountBadgeService : ExpenseManagerQueryAndCrudServiceBase<AccountBadgeModel, Guid, AccountBadge>, IAccountBadgeService
     {
         /// <summary>
         /// Service constructor takes service specific query base class props
@@ -25,7 +25,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="repository">Repository</param>
         /// <param name="expenseManagerMapper">Mapper</param>
         /// <param name="unitOfWorkProvider">Unit of work provider</param>
-        public AccountBadgeService(ExpenseManagerQuery<AccountBadgeModel> query, ExpenseManagerRepository<AccountBadgeModel, Guid> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
+        internal AccountBadgeService(ExpenseManagerQuery<AccountBadgeModel> query, ExpenseManagerRepository<AccountBadgeModel, Guid> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
         {
         }
 

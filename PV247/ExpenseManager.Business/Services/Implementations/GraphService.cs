@@ -16,30 +16,25 @@ namespace ExpenseManager.Business.Services.Implementations
     {
         private readonly BalancesGroupedByDayQuery _balancesGroupedByDayQuery;
         private readonly IUnitOfWorkProvider _unitOfWorkProvider;
-        private readonly ICostInfoService _costInfoService;
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="balancesGroupedByDayQuery"></param>
         /// <param name="unitOfWorkProvider"></param>
-        /// <param name="costInfoService"></param>
         internal GraphService(ExpenseManagerQuery<DayBalance> balancesGroupedByDayQuery,
-            IUnitOfWorkProvider unitOfWorkProvider,
-            ICostInfoService costInfoService)
+            IUnitOfWorkProvider unitOfWorkProvider)
         {
             _balancesGroupedByDayQuery = balancesGroupedByDayQuery as BalancesGroupedByDayQuery;
             _unitOfWorkProvider = unitOfWorkProvider;
-            _costInfoService = costInfoService;
         }
 
         /// <inheritdoc />
-        public List<DayTotalBalance> GetTotalDailyBalanceGraphData(Guid accountId)
+        public List<DayTotalBalance> GetTotalDailyBalanceGraphData(Guid accountId, decimal totalBalance)
         {
             _balancesGroupedByDayQuery.AccountId = accountId;
             using (_unitOfWorkProvider.Create())
             {
-                var totalBalance = _costInfoService.GetBalance(accountId);
                 var dailyBalances = _balancesGroupedByDayQuery.Execute();
                 return CreateDailyTotalBalances(totalBalance, dailyBalances);
             }

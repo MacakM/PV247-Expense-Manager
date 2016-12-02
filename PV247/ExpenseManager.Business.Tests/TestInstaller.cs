@@ -32,6 +32,7 @@ namespace ExpenseManager.Business.Tests
         /// <param name="store">Provides a contract to obtain external configuration</param>
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
+            /*
             var config = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile<DatabaseToBusinessStandardMapping>();
@@ -89,6 +90,7 @@ namespace ExpenseManager.Business.Tests
                     .WithServiceDefaultInterfaces()
                     .LifestyleTransient()
             );
+            */
         }
     }
 }

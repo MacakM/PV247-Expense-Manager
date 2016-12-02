@@ -6,7 +6,7 @@ namespace ExpenseManager.Business.Utilities.BadgeCertification.BadgeCertifiers
     /// <summary>
     /// Decides whether user account can be assigned PlanCompleter Badge
     /// </summary>
-    public class PlanCompleterBadgeCertifier : IBadgeCertifier
+    internal class PlanCompleterBadgeCertifier : IBadgeCertifier
     {
         private const int RequiredPlansToAssignBadge = 5;
 

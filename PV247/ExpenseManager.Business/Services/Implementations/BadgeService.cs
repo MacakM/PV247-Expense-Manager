@@ -17,7 +17,7 @@ namespace ExpenseManager.Business.Services.Implementations
     /// <summary>
     /// Service handles Badge entity operations
     /// </summary>
-    public class BadgeService : ExpenseManagerQueryAndCrudServiceBase<BadgeModel, Guid, Badge>, IBadgeService
+    internal class BadgeService : ExpenseManagerQueryAndCrudServiceBase<BadgeModel, Guid, Badge>, IBadgeService
     {
         private readonly IBadgeCertifierResolver _certifierResolver;
 
@@ -43,7 +43,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="certifierResolver">Resolves badge certifiers according to badge name</param>
         /// <param name="accountBadgeRepository">Repository for accountBadges</param>
         /// <param name="accountsQuery">Query object for retrieving accounts</param>
-        public BadgeService(ExpenseManagerQuery<BadgeModel> query, ExpenseManagerRepository<BadgeModel, Guid> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider, ExpenseManagerQuery<AccountModel> accountsQuery, IBadgeCertifierResolver certifierResolver, ExpenseManagerRepository<AccountBadgeModel, Guid> accountBadgeRepository) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
+        internal BadgeService(ExpenseManagerQuery<BadgeModel> query, ExpenseManagerRepository<BadgeModel, Guid> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider, ExpenseManagerQuery<AccountModel> accountsQuery, IBadgeCertifierResolver certifierResolver, ExpenseManagerRepository<AccountBadgeModel, Guid> accountBadgeRepository) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
         {
             _accountsQuery = accountsQuery;
             _certifierResolver = certifierResolver;

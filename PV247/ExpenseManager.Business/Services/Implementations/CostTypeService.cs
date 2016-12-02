@@ -16,7 +16,7 @@ namespace ExpenseManager.Business.Services.Implementations
     /// <summary>
     /// Service handles AccountBadge entity operations
     /// </summary>
-    public class CostTypeService : ExpenseManagerQueryAndCrudServiceBase<CostTypeModel, Guid, CostType>, ICostTypeService
+    internal class CostTypeService : ExpenseManagerQueryAndCrudServiceBase<CostTypeModel, Guid, CostType>, ICostTypeService
     {
         /// <summary>
         /// Entity includes
@@ -30,7 +30,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="repository">Repository</param>
         /// <param name="expenseManagerMapper">Mapper</param>
         /// <param name="unitOfWorkProvider">Unit of work provider</param>
-        public CostTypeService(ExpenseManagerQuery<CostTypeModel> query, ExpenseManagerRepository<CostTypeModel, Guid> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
+        internal CostTypeService(ExpenseManagerQuery<CostTypeModel> query, ExpenseManagerRepository<CostTypeModel, Guid> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
         {
         }
 

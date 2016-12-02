@@ -7,7 +7,7 @@ namespace ExpenseManager.Business.Utilities.BadgeCertification
     /// <summary>
     /// Manages all implementations of IBadgeCertifier
     /// </summary>
-    public class BadgeCertifierResolver : IBadgeCertifierResolver
+    internal class BadgeCertifierResolver : IBadgeCertifierResolver
     {
         private readonly IEnumerable<IBadgeCertifier> _badgeCertifiers;
 
@@ -15,7 +15,7 @@ namespace ExpenseManager.Business.Utilities.BadgeCertification
         /// For now the badge certifier resolver, instantiates all its dependencies (classes implementing IBadgeCertifier),
         /// however this should be done by some proper DI framwork as mentioned in comment inside the ctor.
         /// </summary>
-        public BadgeCertifierResolver(IEnumerable<IBadgeCertifier> badgeCertifiers)
+        internal BadgeCertifierResolver(IEnumerable<IBadgeCertifier> badgeCertifiers)
         {
             _badgeCertifiers = badgeCertifiers;
         }
