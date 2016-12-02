@@ -64,27 +64,7 @@
         </div>
         <hr/>
         <div class="achievements">
-            <h3>Latest achievements</h3>
-            <div class="achievement">
-                <img src="~/images/badge.png"/>
-                <span>Ušetrenie 5000kč</span>
-            </div>
-            <div class="achievement">
-                <img src="~/images/badge.png"/>
-                <span>Minutie menej než 15000kč</span>
-            </div>
-            <div class="achievement">
-                <img src="~/images/badge.png"/>
-                <span>Ušetrenie 5000kč</span>
-            </div>
-            <div class="achievement">
-                <img src="~/images/badge.png"/>
-                <span>Minutie menej než 15000kč</span>
-            </div>
-            <div class="achievement">
-                <div class="img-holder"></div>
-                <span><a class="more" href="@Url.Action("Index", "Achievement")">More...</a></span>
-            </div>
+            @await Component.InvokeAsync("AchievedBadges")
         </div>
         <hr/>
         @await Component.InvokeAsync("InProgressPlans")

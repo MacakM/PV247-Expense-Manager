@@ -390,18 +390,19 @@ namespace ExpenseManager.Business.Facades
         public List<AccountBadge> ListAchievedAccountBadges(Guid accountId, int? ammount = null)
         {
             var filters = FilterFactory.GetAccountBadgeFilters(accountId);
-            IPageAndOrderable<AccountBadgeModel> pageFilter = null;
+            
+            var pageInfo = new PageInfo()
+            {
+                OrderByDesc = true,
+                OrderByPropertyName = nameof(AccountBadgeModel.Achieved),
+            };
             if (ammount != null)
             {
-                var pageInfo = new PageInfo()
-                {
-                    OrderByDesc = true,
-                    OrderByPropertyName = nameof(AccountBadgeModel.Achieved),
-                    PageNumber = 1,
-                    PageSize = ammount.Value
-                };
-                pageFilter = FilterFactory.GetPageAndOrderable<AccountBadgeModel>(pageInfo);
+                pageInfo.PageNumber = 1;
+                pageInfo.PageSize = ammount.Value;
             }
+
+            var pageFilter = FilterFactory.GetPageAndOrderable<AccountBadgeModel>(pageInfo);
             
             return _accountBadgeService.ListAccountBadges(filters, pageFilter);
         }
