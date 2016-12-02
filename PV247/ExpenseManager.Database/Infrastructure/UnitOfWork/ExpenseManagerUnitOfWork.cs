@@ -15,7 +15,7 @@ namespace ExpenseManager.Database.Infrastructure.UnitOfWork
         /// <summary>
         /// Gets the <see cref="DbContext"/>.
         /// </summary>
-        internal ExpenseDbContext Context { get; }
+        internal ExpenseDbContext Context { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ExpenseManagerUnitOfWork"/> class.

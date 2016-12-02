@@ -1,9 +1,11 @@
 using System;
 using System.Data.Entity;
+using System.Runtime.CompilerServices;
 using ExpenseManager.Database.Infrastructure.ConnectionConfiguration;
 using Microsoft.Extensions.Options;
 using Riganti.Utils.Infrastructure.Core;
 
+[assembly: InternalsVisibleTo("ExpenseManager.Business.Tests")]
 namespace ExpenseManager.Database.Infrastructure.UnitOfWork
 {
     /// <summary>
@@ -32,7 +34,7 @@ namespace ExpenseManager.Database.Infrastructure.UnitOfWork
         /// </summary>
         /// <param name="dbContextFactory">db context factory</param>
         /// <param name="registry">Storage for unitOfWork instances</param>
-        public ExpenseManagerUnitOfWorkProvider(Func<DbContext> dbContextFactory, IUnitOfWorkRegistry registry)            
+        internal ExpenseManagerUnitOfWorkProvider(Func<DbContext> dbContextFactory, IUnitOfWorkRegistry registry)            
             : base(registry)
         {
             DbContextFactory = dbContextFactory;

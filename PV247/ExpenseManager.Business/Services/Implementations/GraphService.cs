@@ -12,7 +12,7 @@ namespace ExpenseManager.Business.Services.Implementations
     /// <summary>
     /// Service providing data for graphs
     /// </summary>
-    public class GraphService : IGraphService
+    internal class GraphService : IGraphService
     {
         private readonly BalancesGroupedByDayQuery _balancesGroupedByDayQuery;
         private readonly IUnitOfWorkProvider _unitOfWorkProvider;
@@ -24,7 +24,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="balancesGroupedByDayQuery"></param>
         /// <param name="unitOfWorkProvider"></param>
         /// <param name="costInfoService"></param>
-        public GraphService(ExpenseManagerQuery<DayBalance> balancesGroupedByDayQuery,
+        internal GraphService(ExpenseManagerQuery<DayBalance> balancesGroupedByDayQuery,
             IUnitOfWorkProvider unitOfWorkProvider,
             ICostInfoService costInfoService)
         {
