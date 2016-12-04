@@ -199,8 +199,6 @@ namespace ExpenseManager.Presentation.Controllers
             return RedirectToAction(nameof(ManageLogins), new { Message = message });
         }
 
-        #region Helpers
-
         private void AddErrors(IdentityResult result)
         {
             foreach (var error in result.Errors)
@@ -252,7 +250,5 @@ namespace ExpenseManager.Presentation.Controllers
         {
             return _userManager.GetUserAsync(HttpContext.User);
         }
-
-        #endregion
     }
 }

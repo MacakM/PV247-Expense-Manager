@@ -38,8 +38,6 @@ namespace ExpenseManager.Presentation.Controllers
             _balanceFacade = balanceFacade;
         }
 
-        #region Nonpermanent expenses
-
         /// <summary>
         /// Displays expenses for loged-in user
         /// </summary>
@@ -88,8 +86,7 @@ namespace ExpenseManager.Presentation.Controllers
             filterModel.CurrentUser = Mapper.Map<Models.User.IndexViewModel>(CurrentAccountProvider.GetCurrentUser(HttpContext.User));
             return View(filterModel);
         }
-
-
+        
         /// <summary>
         /// Displays form for creating new expense
         /// </summary>
@@ -103,7 +100,6 @@ namespace ExpenseManager.Presentation.Controllers
             };
             return View(model);
         }
-
 
         /// <summary>
         /// Stores new expense
@@ -161,10 +157,6 @@ namespace ExpenseManager.Presentation.Controllers
 
             return Mapper.Map<List<IndexPermanentExpenseViewModel>>(expenses);
         }
-
-        #endregion
-
-        #region Permanent expenses
 
         /// <summary>
         /// Displays permanent expenses
@@ -225,8 +217,6 @@ namespace ExpenseManager.Presentation.Controllers
             return RedirectToAction("PermanentExpensesIndex", new { successMessage = ExpenseManagerResource.ExpenseCreated });
         }
 
-        #endregion
-
         /// <summary>
         /// Deletes expense with given id
         /// </summary>
@@ -250,7 +240,6 @@ namespace ExpenseManager.Presentation.Controllers
             return Redirect(returnRedirect);
         }
 
-        #region Helpers
         private List<IndexViewModel> GetFilteredExpenses(List<IFilter<CostInfoModel>> filters, IPageAndOrderable<CostInfoModel> pageAndOrder)
         {
             var expenses = _balanceFacade.ListItems(filters, pageAndOrder);
@@ -263,6 +252,5 @@ namespace ExpenseManager.Presentation.Controllers
             var costTypeViewModels = Mapper.Map<List<Models.CostType.IndexViewModel>>(costTypes);
             return costTypeViewModels;
         }
-        #endregion
     }
 }
