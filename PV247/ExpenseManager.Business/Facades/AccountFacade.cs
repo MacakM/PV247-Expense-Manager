@@ -17,8 +17,7 @@ namespace ExpenseManager.Business.Facades
         private readonly IUserService _userService = BusinessLayerDIManager.Resolve<IUserService>();
 
         private readonly IAccountService _accountService = BusinessLayerDIManager.Resolve<IAccountService>();
-
-        #region User CRUD
+        
         /// <summary>
         /// Registers user according to provided information
         /// </summary>
@@ -85,9 +84,7 @@ namespace ExpenseManager.Business.Facades
             var filters = FilterFactory.GetUserFilters(accountId,accessType, email);
             return _userService.ListUsers(filters, FilterFactory.GetPageAndOrderable<UserModel>(pageInfo));
         }
-
-        #endregion
-        #region Account CRUD
+        
         /// <summary>
         /// Creates new account
         /// </summary>
@@ -155,6 +152,5 @@ namespace ExpenseManager.Business.Facades
         {
             _accountService.AttachAccountToUser(userId, accountId, accessType);
         }
-        #endregion
     }
 }
