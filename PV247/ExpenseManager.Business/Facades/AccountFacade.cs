@@ -28,8 +28,7 @@ namespace ExpenseManager.Business.Facades
             _userService = userService;
             _accountService = accountService;
         }
-
-        #region User CRUD
+        
         /// <summary>
         /// Registers user according to provided information
         /// </summary>
@@ -93,9 +92,7 @@ namespace ExpenseManager.Business.Facades
         {
             return _userService.ListUsers(filters, pageAndOrder);
         }
-
-        #endregion
-        #region Account CRUD
+        
         /// <summary>
         /// Creates new account
         /// </summary>
@@ -162,6 +159,5 @@ namespace ExpenseManager.Business.Facades
         {
             _accountService.AttachAccountToUser(userId, accountId, accessType);
         }
-        #endregion
     }
 }
