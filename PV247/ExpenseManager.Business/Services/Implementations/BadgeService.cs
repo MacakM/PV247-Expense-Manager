@@ -4,6 +4,7 @@ using System.Linq;
 using AutoMapper;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.Infrastructure;
+using ExpenseManager.Business.Infrastructure.CastleWindsor;
 using ExpenseManager.Database.Entities;
 using ExpenseManager.Database.Infrastructure.Repository;
 using Riganti.Utils.Infrastructure.Core;
@@ -39,7 +40,6 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <summary>
         /// Badge service constructor
         /// </summary>
-        /// <param name="query">Query</param>
         /// <param name="repository">Repository</param>
         /// <param name="expenseManagerMapper">Mapper</param>
         /// <param name="unitOfWorkProvider">Unit of work provider</param>
@@ -47,7 +47,8 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="accountBadgeRepository">Repository for accountBadges</param>
         /// <param name="accountsQuery">Query object for retrieving accounts</param>
         /// <param name="notAchievedBadgesQuery">Query for not achieved badges</param>
-        internal BadgeService(ExpenseManagerQuery<BadgeModel> query, ExpenseManagerRepository<BadgeModel, Guid> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider, ExpenseManagerQuery<AccountModel> accountsQuery, IBadgeCertifierResolver certifierResolver, ExpenseManagerRepository<AccountBadgeModel, Guid> accountBadgeRepository, ExpenseManagerQuery<BadgeModel> notAchievedBadgesQuery) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
+        internal BadgeService(ExpenseManagerRepository<BadgeModel, Guid> repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider, ExpenseManagerQuery<AccountModel> accountsQuery, IBadgeCertifierResolver certifierResolver, ExpenseManagerRepository<AccountBadgeModel, Guid> accountBadgeRepository, ExpenseManagerQuery<BadgeModel> notAchievedBadgesQuery) 
+            : base(BusinessLayerDIManager.Resolve<ExpenseManagerQuery<BadgeModel>>("ListBadgesQuery"), repository, expenseManagerMapper, unitOfWorkProvider)
         {
             _accountsQuery = accountsQuery;
             _certifierResolver = certifierResolver;

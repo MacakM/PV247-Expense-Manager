@@ -1,4 +1,6 @@
-﻿using Castle.MicroKernel.Registration;
+﻿using System;
+using System.Linq;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using ExpenseManager.Database.Infrastructure.ConnectionConfiguration;
 
@@ -23,6 +25,13 @@ namespace ExpenseManager.Business.Infrastructure.CastleWindsor
             Container.Install(new BusinessLayerInstaller());
         }
 
-        internal static T Resolve<T>() => Container.Resolve<T>();       
+        internal static T Resolve<T>() => Container.Resolve<T>();
+
+        internal static T Resolve<T>(string typeName) where T : class
+        {
+            var allDependencies = Container.ResolveAll<T>();
+            return allDependencies.FirstOrDefault(dependency => dependency.GetType().Name.Equals(typeName)) ?? allDependencies.First();
+        }
+
     }
 }
