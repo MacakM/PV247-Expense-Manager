@@ -101,6 +101,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Facades\ExpenseFacadeTests.cs" />
     <Compile Include="GlobalTestInitializer.cs" />
     <Compile Include="Bootstrap\TestInstaller.cs" />
     <Compile Include="Facades\AccountFacadeTests.cs" />

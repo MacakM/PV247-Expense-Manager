@@ -19,19 +19,19 @@ namespace ExpenseManager.Presentation.Controllers
     [Authorize(Policy = "HasAccount")]
     public class ExpenseController : BaseController
     {
-        private readonly BalanceFacade _balanceFacade;
+        private readonly ExpenseFacade _expenseFacade;
 
         private const int NumberOfExpensesPerPage = 10;
 
         /// <summary>
         /// Constructor for ExpenseController
         /// </summary>
-        /// <param name="balanceFacade"></param>
+        /// <param name="expenseFacade"></param>
         /// <param name="mapper"></param>
         /// <param name="currentAccountProvider"></param>
-        public ExpenseController(BalanceFacade balanceFacade, Mapper mapper, ICurrentAccountProvider currentAccountProvider) : base(currentAccountProvider, mapper)
+        public ExpenseController(ExpenseFacade expenseFacade, Mapper mapper, ICurrentAccountProvider currentAccountProvider) : base(currentAccountProvider, mapper)
         {
-            _balanceFacade = balanceFacade;
+            _expenseFacade = expenseFacade;
         }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace ExpenseManager.Presentation.Controllers
             };
 
             filterModel.Expenses = GetFilteredExpenses(account.Id, Periodicity.None, filterModel.DateFrom, filterModel.DateTo, filterModel.MoneyFrom, filterModel.MoneyTo, filterModel.CostTypeId, null, pageInfo);
-            filterModel.PageCount = (int)Math.Ceiling(_balanceFacade.GetCostInfosCount(account.Id, Periodicity.None, filterModel.DateFrom, filterModel.DateTo, filterModel.MoneyFrom, filterModel.MoneyTo, filterModel.CostTypeId, null) / (double)NumberOfExpensesPerPage);
+            filterModel.PageCount = (int)Math.Ceiling(_expenseFacade.GetCostInfosCount(account.Id, Periodicity.None, filterModel.DateFrom, filterModel.DateTo, filterModel.MoneyFrom, filterModel.MoneyTo, filterModel.CostTypeId, null) / (double)NumberOfExpensesPerPage);
             filterModel.CostTypes = GetAllCostTypes();
             filterModel.CurrentUser = Mapper.Map<Models.User.IndexViewModel>(CurrentAccountProvider.GetCurrentUser(HttpContext.User));
             return View(filterModel);
@@ -81,7 +81,7 @@ namespace ExpenseManager.Presentation.Controllers
         [Authorize(Policy = "HasFullRights")]
         public IActionResult Store(CreateViewModel costInfoViewModel)
         {
-            var costType = _balanceFacade.GetItemType(costInfoViewModel.TypeId);
+            var costType = _expenseFacade.GetItemType(costInfoViewModel.TypeId);
             var account = CurrentAccountProvider.GetCurrentAccount(HttpContext.User);
 
             if (!ModelState.IsValid || costType == null || costType.AccountId != account.Id)
@@ -96,7 +96,7 @@ namespace ExpenseManager.Presentation.Controllers
             costInfo.Created = DateTime.Now;
             costInfo.Periodicity = Periodicity.None;
 
-            _balanceFacade.CreateItem(costInfo);
+            _expenseFacade.CreateItem(costInfo);
 
             return RedirectToAction("Index", new { successMessage = ExpenseManagerResource.ExpenseCreated });
         }
@@ -111,7 +111,7 @@ namespace ExpenseManager.Presentation.Controllers
             [FromForm] Guid id,
             [FromForm] string returnRedirect)
         {
-            var costInfo = _balanceFacade.GetItem(id);
+            var costInfo = _expenseFacade.GetItem(id);
             var account = CurrentAccountProvider.GetCurrentAccount(HttpContext.User);
 
             if (costInfo == null || costInfo.AccountId != account.Id)
@@ -119,21 +119,21 @@ namespace ExpenseManager.Presentation.Controllers
                 return RedirectWithError(ExpenseManagerResource.ExpenseNotDeleted);
             }
 
-            _balanceFacade.DeleteItem(id);
+            _expenseFacade.DeleteItem(id);
 
             return Redirect(returnRedirect);
         }
 
         private List<IndexViewModel> GetFilteredExpenses(Guid accountId, Periodicity periodicity, DateTime? dateFrom, DateTime? dateTo, decimal? moneyFrom, decimal? moneyTo, Guid? costTypeId, bool? isIncome, PageInfo pageInfo)
         {
-            var expenses = _balanceFacade.ListItems(accountId, periodicity, dateFrom, dateTo,  moneyFrom, moneyTo, costTypeId,isIncome, pageInfo);
+            var expenses = _expenseFacade.ListItems(accountId, periodicity, dateFrom, dateTo,  moneyFrom, moneyTo, costTypeId,isIncome, pageInfo);
             return Mapper.Map<List<IndexViewModel>>(expenses);
         }
 
         private List<Models.CostType.CategoryViewModel> GetAllCostTypes()
         {
             var accountId = CurrentAccountProvider.GetCurrentAccount(HttpContext.User).Id;
-            var costTypes = _balanceFacade.ListItemTypes(accountId);
+            var costTypes = _expenseFacade.ListItemTypes(accountId);
             var costTypeViewModels = Mapper.Map<List<Models.CostType.CategoryViewModel>>(costTypes);
             return costTypeViewModels;
         }

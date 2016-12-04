@@ -18,6 +18,7 @@ namespace ExpenseManager.Presentation.Controllers
     public class PlanController : BaseController
     {
         private readonly BalanceFacade _balanceFacade;
+        private readonly ExpenseFacade _expenseFacade;
 
         /// <summary>
         /// Constructor
@@ -25,9 +26,11 @@ namespace ExpenseManager.Presentation.Controllers
         /// <param name="currentAccountProvider"></param>
         /// <param name="mapper"></param>
         /// <param name="balanceFacade"></param>
-        public PlanController(ICurrentAccountProvider currentAccountProvider, Mapper mapper, BalanceFacade balanceFacade) : base(currentAccountProvider, mapper)
+        /// <param name="expenseFacade"></param>
+        public PlanController(ICurrentAccountProvider currentAccountProvider, Mapper mapper, BalanceFacade balanceFacade, ExpenseFacade expenseFacade) : base(currentAccountProvider, mapper)
         {
             _balanceFacade = balanceFacade;
+            _expenseFacade = expenseFacade;
         }
 
         /// <summary>
@@ -84,7 +87,7 @@ namespace ExpenseManager.Presentation.Controllers
         [Authorize(Policy = "HasFullRights")]
         public IActionResult Store(CreateViewModel model)
         {
-            var costType = _balanceFacade.GetItemType(model.PlannedTypeId);
+            var costType = _expenseFacade.GetItemType(model.PlannedTypeId);
             var account = CurrentAccountProvider.GetCurrentAccount(HttpContext.User);
 
             if (!ModelState.IsValid || costType == null || costType.AccountId != account.Id)
@@ -130,7 +133,7 @@ namespace ExpenseManager.Presentation.Controllers
         private List<Models.CostType.CategoryViewModel> GetAllCostTypes()
         {
             var accountId = CurrentAccountProvider.GetCurrentAccount(HttpContext.User).Id;
-            var costTypes = _balanceFacade.ListItemTypes(accountId);
+            var costTypes = _expenseFacade.ListItemTypes(accountId);
             var costTypeViewModels = Mapper.Map<List<Models.CostType.CategoryViewModel>>(costTypes);
             return costTypeViewModels;
         }

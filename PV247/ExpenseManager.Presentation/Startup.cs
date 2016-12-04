@@ -76,6 +76,7 @@ namespace ExpenseManager.Presentation
             BusinessLayerDIManager.BootstrapContainer(new ConnectionOptions { ConnectionString = Configuration.GetConnectionString("DefaultConnection") });
             services.AddTransient<AccountFacade>();
             services.AddTransient<BalanceFacade>();
+            services.AddTransient<ExpenseFacade>();
 
             // Configure Presentation layer
             services.AddTransient<ICurrentAccountProvider, CurrentAccountProvider>();

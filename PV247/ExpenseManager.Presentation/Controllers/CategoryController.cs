@@ -20,17 +20,17 @@ namespace ExpenseManager.Presentation.Controllers
     [Authorize(Policy = "HasAccount")]
     public class CategoryController : BaseController
     {
-        private readonly BalanceFacade _balanceFacade;
+        private readonly ExpenseFacade _expenseFacade;
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="currentAccountProvider"></param>
         /// <param name="mapper"></param>
-        /// <param name="balanceFacade"></param>
-        public CategoryController(ICurrentAccountProvider currentAccountProvider, Mapper mapper, BalanceFacade balanceFacade) : base(currentAccountProvider, mapper)
+        /// <param name="expenseFacade"></param>
+        public CategoryController(ICurrentAccountProvider currentAccountProvider, Mapper mapper, ExpenseFacade expenseFacade) : base(currentAccountProvider, mapper)
         {
-            _balanceFacade = balanceFacade;
+            _expenseFacade = expenseFacade;
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace ExpenseManager.Presentation.Controllers
             var account = CurrentAccountProvider.GetCurrentAccount(HttpContext.User);
             var model = new IndexViewModel()
             {
-                Categories = Mapper.Map<List<CategoryViewModel>>(_balanceFacade.ListItemTypes(account.Id)),
+                Categories = Mapper.Map<List<CategoryViewModel>>(_expenseFacade.ListItemTypes(account.Id)),
                 CurrentUser = GetCurrentUser()
             };
             return View(model);
@@ -72,7 +72,7 @@ namespace ExpenseManager.Presentation.Controllers
                 return RedirectToAction("Index", "Error", new {errorMessage = ExpenseManagerResource.InvalidInputData});
             }
 
-            var existingCategories = _balanceFacade.ListItemTypes(model.Name, null);
+            var existingCategories = _expenseFacade.ListItemTypes(model.Name, null);
 
             if (existingCategories.Count != 0)
             {
@@ -83,7 +83,7 @@ namespace ExpenseManager.Presentation.Controllers
             var costType = Mapper.Map<CostType>(model);
             costType.AccountId = account.Id;
 
-            _balanceFacade.CreateItemType(costType);
+            _expenseFacade.CreateItemType(costType);
 
             return RedirectToAction("Index", new {successMessage = ExpenseManagerResource.CategoryCreated});
         }

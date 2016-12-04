@@ -19,6 +19,7 @@ namespace ExpenseManager.Presentation.Controllers
     {
 
         private readonly BalanceFacade _balanceFacade;
+        private readonly ExpenseFacade _expenseFacade;
 
 
         /// <summary>
@@ -27,9 +28,11 @@ namespace ExpenseManager.Presentation.Controllers
         /// <param name="balanceFacade"></param>
         /// <param name="mapper"></param>
         /// <param name="currentAccountProvider"></param>
-        public PermanentExpenseController(BalanceFacade balanceFacade, Mapper mapper, ICurrentAccountProvider currentAccountProvider) : base(currentAccountProvider, mapper)
+        /// <param name="expenseFacade"></param>
+        public PermanentExpenseController(BalanceFacade balanceFacade, ExpenseFacade expenseFacade, Mapper mapper, ICurrentAccountProvider currentAccountProvider) : base(currentAccountProvider, mapper)
         {
             _balanceFacade = balanceFacade;
+            _expenseFacade = expenseFacade;
         }
 
         /// <summary>
@@ -72,7 +75,7 @@ namespace ExpenseManager.Presentation.Controllers
         [Authorize(Policy = "HasFullRights")]
         public IActionResult Store(CreatePermanentExpenseViewModel costInfoViewModel)
         {
-            var costType = _balanceFacade.GetItemType(costInfoViewModel.TypeId);
+            var costType = _expenseFacade.GetItemType(costInfoViewModel.TypeId);
             var account = CurrentAccountProvider.GetCurrentAccount(HttpContext.User);
 
             if (!ModelState.IsValid || costType == null || costType.AccountId != account.Id)
@@ -85,7 +88,7 @@ namespace ExpenseManager.Presentation.Controllers
 
             costInfo.AccountId = account.Id;
 
-            _balanceFacade.CreateItem(costInfo);
+            _expenseFacade.CreateItem(costInfo);
 
             return RedirectToAction("Index", new { successMessage = ExpenseManagerResource.ExpenseCreated });
         }
@@ -93,16 +96,16 @@ namespace ExpenseManager.Presentation.Controllers
         private List<Models.CostType.CategoryViewModel> GetAllCostTypes()
         {
             var accountId = CurrentAccountProvider.GetCurrentAccount(HttpContext.User).Id;
-            var costTypes = _balanceFacade.ListItemTypes(accountId);
+            var costTypes = _expenseFacade.ListItemTypes(accountId);
             var costTypeViewModels = Mapper.Map<List<Models.CostType.CategoryViewModel>>(costTypes);
             return costTypeViewModels;
         }
 
         private List<IndexPermanentExpenseViewModel> GetAllPermanentExpenses(Account account)
         {
-            var expenses = _balanceFacade.ListItems(account.Id, Periodicity.Day, null);
-            expenses.AddRange(_balanceFacade.ListItems(account.Id, Periodicity.Week, null));
-            expenses.AddRange(_balanceFacade.ListItems(account.Id, Periodicity.Month, null));
+            var expenses = _expenseFacade.ListItems(account.Id, Periodicity.Day, null);
+            expenses.AddRange(_expenseFacade.ListItems(account.Id, Periodicity.Week, null));
+            expenses.AddRange(_expenseFacade.ListItems(account.Id, Periodicity.Month, null));
             return Mapper.Map<List<IndexPermanentExpenseViewModel>>(expenses);
         }
     }

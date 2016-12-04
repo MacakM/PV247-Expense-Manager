@@ -60,6 +60,8 @@ namespace ExpenseManager.Business.Tests.Bootstrap
                     .LifestyleSingleton(),
                 Component.For<AccountFacade>()
                 .LifestyleTransient(),
+                Component.For<ExpenseFacade>()
+                .LifestyleTransient(),
                 Component.For<BalanceFacade>()
                     .LifestyleTransient());              
         }

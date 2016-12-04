@@ -117,6 +117,7 @@
     <Compile Include="DataTransferObjects\User.cs" />
     <Compile Include="Facades\BalanceFacade.cs" />
     <Compile Include="Facades\AccountFacade.cs" />
+    <Compile Include="Facades\ExpenseFacade.cs" />
     <Compile Include="Infrastructure\CastleWindsor\BusinessLayerDIManager.cs" />
     <Compile Include="Infrastructure\CastleWindsor\BusinessLayerInstaller.cs" />
     <Compile Include="Infrastructure\CastleWindsor\RegisterExtensionMethods.cs" />
