@@ -4,7 +4,6 @@ using System.Linq;
 using AutoMapper;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Enums;
-using ExpenseManager.Business.DataTransferObjects.Filters;
 using ExpenseManager.Business.DataTransferObjects.Filters.CostInfos;
 using ExpenseManager.Business.Infrastructure;
 using ExpenseManager.Business.Services.Interfaces;
@@ -20,7 +19,7 @@ namespace ExpenseManager.Business.Services.Implementations
     /// <summary>
     /// Service handles AccountBadge entity operations
     /// </summary>
-    public class CostInfoService : ExpenseManagerQueryAndCrudServiceBase<CostInfoModel, Guid, CostInfo>, ICostInfoService
+    internal class CostInfoService : ExpenseManagerQueryAndCrudServiceBase<CostInfoModel, Guid, CostInfo>, ICostInfoService
     {
         private readonly ExpenseManagerRepository<CostTypeModel, Guid> _costTypeRepository;
 
@@ -44,7 +43,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="unitOfWorkProvider">Unit of work provider</param>
         /// <param name="costTypeRepository">Cost type repository</param>
         /// <param name="accountRepository">Account repository</param>
-        public CostInfoService(
+        internal CostInfoService(
             ExpenseManagerQuery<CostInfoModel> query,
             ExpenseManagerRepository<CostInfoModel, Guid> repository,
             Mapper expenseManagerMapper,
@@ -71,6 +70,11 @@ namespace ExpenseManager.Business.Services.Implementations
                 if (account == null || type == null)
                 {
                     throw new InvalidOperationException("Account of type doesn't exists");
+                }
+
+                if (type.AccountId != account.Id)
+                {
+                    throw new InvalidOperationException("Cost type doesn't belong to given account");
                 }
 
                 costInfoModel.Account = account;
@@ -181,19 +185,19 @@ namespace ExpenseManager.Business.Services.Implementations
             {
                 Query.Filters = new List<IFilter<CostInfoModel>>
                 {
-                    new CostInfosByIsIncome(true),
-                    new CostInfosByPeriodicity(PeriodicityModel.None),
-                    new CostInfosByCreatedTo(DateTime.Now),
-                    new CostInfosByAccountId(accountId)
+                    new CostInfosByIsIncome { IsIncome = true},
+                    new CostInfosByPeriodicity {Periodicity = PeriodicityModel.None },
+                    new CostInfosByCreatedTo { CreatedTo = DateTime.Now },
+                    new CostInfosByAccountId {AccountId = accountId}
                 }; 
                 
                 incomes = GetList();
                 Query.Filters = new List<IFilter<CostInfoModel>>
                 {
-                    new CostInfosByIsIncome(false),
-                    new CostInfosByPeriodicity(PeriodicityModel.None),
-                    new CostInfosByCreatedTo(DateTime.Now),
-                    new CostInfosByAccountId(accountId)
+                   new CostInfosByIsIncome { IsIncome = false},
+                    new CostInfosByPeriodicity {Periodicity = PeriodicityModel.None },
+                    new CostInfosByCreatedTo { CreatedTo = DateTime.Now },
+                    new CostInfosByAccountId {AccountId = accountId}
                 };
                 
                 outcomes = GetList();
@@ -205,7 +209,7 @@ namespace ExpenseManager.Business.Services.Implementations
         private void CheckMonthPeriodicities()
         {
 
-            CostInfosByPeriodicity filter = new CostInfosByPeriodicity(PeriodicityModel.Month);
+            CostInfosByPeriodicity filter = new CostInfosByPeriodicity { Periodicity = PeriodicityModel.Month};
 
             Query.Filters = new List<IFilter<CostInfoModel>> { filter };
 
@@ -234,7 +238,7 @@ namespace ExpenseManager.Business.Services.Implementations
         private void CheckWeekPeriodicities()
         {
 
-            CostInfosByPeriodicity filter = new CostInfosByPeriodicity(PeriodicityModel.Week);
+            CostInfosByPeriodicity filter = new CostInfosByPeriodicity { Periodicity = PeriodicityModel.Week };
 
             Query.Filters = new List<IFilter<CostInfoModel>> { filter };
             using (var unitOfWork = UnitOfWorkProvider.Create())
@@ -260,7 +264,7 @@ namespace ExpenseManager.Business.Services.Implementations
 
         private void CheckDayPeriodicites()
         {
-            CostInfosByPeriodicity filter = new CostInfosByPeriodicity(PeriodicityModel.Day);
+            CostInfosByPeriodicity filter = new CostInfosByPeriodicity { Periodicity = PeriodicityModel.Day};
 
             Query.Filters = new List<IFilter<CostInfoModel>> { filter};
             using (var unitOfWork = UnitOfWorkProvider.Create())

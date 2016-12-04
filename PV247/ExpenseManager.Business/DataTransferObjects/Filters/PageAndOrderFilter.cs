@@ -8,7 +8,7 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters
     /// <summary>
     /// Filter that handles pages and ordering
     /// </summary>
-    public class PageAndOrderFilter<T> : IPageAndOrderable<T>
+    internal class PageAndOrderFilter<T> : IPageAndOrderable<T>
     {
         private int _pageSize = 10;
 

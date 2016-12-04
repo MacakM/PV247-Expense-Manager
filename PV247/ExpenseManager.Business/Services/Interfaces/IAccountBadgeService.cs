@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using ExpenseManager.Business.DataTransferObjects;
-using ExpenseManager.Business.DataTransferObjects.Filters;
 using ExpenseManager.Database.DataAccess.FilterInterfaces;
 using ExpenseManager.Database.Entities;
 
 namespace ExpenseManager.Business.Services.Interfaces
-{ 
+{
     /// <summary>
     /// Service handles AccountBadge entity operations
     /// </summary>
-    public interface IAccountBadgeService : IService
+    internal interface IAccountBadgeService : IService
     {
         /// <summary>
         /// Add new badge to account by creating new AccountBadge object in database

@@ -89,6 +89,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataAccess\Queries\NotAchievedBadgesQuery.cs" />
     <Compile Include="DataAccess\Queries\BalancesGroupedByDayQuery.cs" />
     <Compile Include="DataAccess\Queries\ListAccountsQuery.cs" />
     <Compile Include="DataAccess\Queries\ListAccountBadgesQuery.cs" />

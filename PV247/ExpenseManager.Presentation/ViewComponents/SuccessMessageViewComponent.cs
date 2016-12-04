@@ -11,17 +11,11 @@ namespace ExpenseManager.Presentation.ViewComponents
         /// <summary>
         /// Invokes componet
         /// </summary>
-        /// <param name="successMessage"></param>
         /// <returns></returns>
-        public IViewComponentResult Invoke([FromQuery] string successMessage = null)
+        public IViewComponentResult Invoke()
         {
-            successMessage = HttpContext.Request.Query["successMessage"]; // since getting it as method parameter doesn't seem to work
-            var model = new SuccessMessageViewModel()
-            {
-                Message = successMessage
-            };
-
-            return View("~/Views/Partial/_SuccessMessage.cshtml", model);
+            string successMessage = HttpContext.Request.Query["successMessage"];
+            return View<string>(successMessage);
         }
     }
 }

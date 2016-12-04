@@ -47,7 +47,7 @@ namespace ExpenseManager.Presentation.ViewComponents
             {
                 Plans = _mapper.Map<List<PlanViewModel>>(_balanceFacade.ListPlansInProgress(account.Id))
             };
-            return View("~/Views/Partial/_InProgressPlans.cshtml", model);
+            return View(model);
         }
     }
 }

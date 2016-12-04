@@ -1,15 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using AutoMapper;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Enums;
 using ExpenseManager.Business.Facades;
 using ExpenseManager.Business.Infrastructure;
+using ExpenseManager.Business.Infrastructure.CastleWindsor;
 using ExpenseManager.Business.Infrastructure.Mapping.Profiles;
 using ExpenseManager.Business.Services.Implementations;
 using ExpenseManager.Business.Services.Interfaces;
 using ExpenseManager.Business.Utilities.BadgeCertification;
-using ExpenseManager.Business.Utilities.BadgeCertification.BadgeCertifiers;
 using ExpenseManager.Database.DataAccess.Queries;
 using ExpenseManager.Database.DataAccess.Repositories;
 using ExpenseManager.Database.Entities;
@@ -27,8 +26,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using NuGet.Packaging;
 using Riganti.Utils.Infrastructure.Core;
+using Hangfire;
+using Hangfire.SqlServer;
+using Microsoft.Extensions.Options;
 
 namespace ExpenseManager.Presentation
 {
@@ -67,20 +68,31 @@ namespace ExpenseManager.Presentation
         /// </summary>
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
-        {  
-            services.Configure<ConnectionOptions>(options => options.ConnectionString = Configuration.GetConnectionString("DefaultConnection"));
-
+        {
             // Configure Identity persistence         
             IdentityDatabaseInstaller.Install(services, Configuration.GetConnectionString("IdentityConnection"));
 
-            // Configure BL
-            RegisterBusinessLayerDependencies(services);
+            // Configure Business Logic Layer
+            BusinessLayerDIManager.BootstrapContainer(new ConnectionOptions { ConnectionString = Configuration.GetConnectionString("DefaultConnection") });
+            services.AddTransient<AccountFacade>();
+            services.AddTransient<BalanceFacade>();
 
-            // Configure PL
+            // Configure Presentation layer
+            services.AddTransient<ICurrentAccountProvider, CurrentAccountProvider>();
+
             services.AddSession();
 
             services.AddSingleton<IAuthorizationHandler, HasAccountHandler>();
             services.AddSingleton<IAuthorizationHandler, HasAccessRightsHandler>();
+
+            services.AddSingleton(typeof(Mapper),
+                provider => {
+                    var config = new MapperConfiguration(cfg =>
+                    {
+                        cfg.AddProfile<BussinessToViewModelMapping>();
+                    });
+                    return config.CreateMapper();
+                });
 
             services.AddAuthorization(options =>
             {
@@ -89,6 +101,13 @@ namespace ExpenseManager.Presentation
                 options.AddPolicy("HasFullRights",
                                   policy => policy.Requirements.Add(new HasAccessRightsRequirement(AccountAccessType.Full)));
             });
+
+            var connectionString = Configuration.GetConnectionString("HangfireConnection");
+            //Used for periodic events management
+            services.AddHangfire(cfg =>
+                cfg.UseSqlServerStorage(connectionString,
+                    new SqlServerStorageOptions { QueuePollInterval = TimeSpan.FromSeconds(60) }));
+
             services.AddMvc(options =>
             {
                 options.Filters.Add(new RequireHttpsAttribute());
@@ -123,7 +142,18 @@ namespace ExpenseManager.Presentation
 
             app.UseIdentity();
 
-            var x = Configuration.GetSection("FacebookAuthentication")["ClientId"];
+            app.UseHangfireDashboard();
+            app.UseHangfireServer();
+
+            // Periodic launching of CheckAllMaxSpendDeadlines
+            RecurringJob.AddOrUpdate(
+                () => app.ApplicationServices.GetService<BalanceFacade>().CheckAllMaxSpendDeadlines(),
+                Cron.Hourly);
+
+            // Periodic launching of CheckBadgesRequirements
+            RecurringJob.AddOrUpdate(
+                () => app.ApplicationServices.GetService<BalanceFacade>().CheckBadgesRequirements(),
+                Cron.Hourly);
 
             app.UseFacebookAuthentication(new FacebookOptions
             {
@@ -145,21 +175,21 @@ namespace ExpenseManager.Presentation
         /// <param name="services">Collection of the service descriptions</param>
         private static void RegisterBusinessLayerDependencies(IServiceCollection services)
         {
-            services.AddSingleton<IUnitOfWorkRegistry>(new HttpContextUnitOfWorkRegistry(new ThreadLocalUnitOfWorkRegistry()));
+            /*services.AddSingleton<IUnitOfWorkRegistry>(new HttpContextUnitOfWorkRegistry(new ThreadLocalUnitOfWorkRegistry()));
 
             services.AddSingleton<IUnitOfWorkProvider, ExpenseManagerUnitOfWorkProvider>();
 
-            services.AddTransient(typeof(IRepository<,>),typeof(ExpenseManagerRepository<,>));
+            services.AddTransient(typeof(IRepository<,>), typeof(ExpenseManagerRepository<,>));
 
-            services.AddSingleton(typeof(Mapper), 
+            services.AddSingleton(typeof(Mapper),
                 provider => {
-                    var config = new MapperConfiguration(cfg => 
+                    var config = new MapperConfiguration(cfg =>
                     {
                         cfg.AddProfile<DatabaseToBusinessStandardMapping>();
                         cfg.AddProfile<BussinessToViewModelMapping>();
                     });
                     return config.CreateMapper();
-            });
+                });
 
             services.AddSingleton<IBadgeCertifierResolver, BadgeCertifierResolver>();
 
@@ -196,6 +226,7 @@ namespace ExpenseManager.Presentation
             services.AddTransient<ListUsersQuery>();
             services.AddTransient<ExpenseManagerQuery<DayBalance>, BalancesGroupedByDayQuery>();
             services.AddTransient<BalancesGroupedByDayQuery>();
+            services.AddTransient<NotAchievedBadgesQuery>();
             //TODO add more query objects
 
             // Register all services
@@ -223,13 +254,7 @@ namespace ExpenseManager.Presentation
             services.AddTransient<IGraphService, GraphService>();
             //TODO add more services
 
-            // Register all facades
-            services.AddTransient<AccountFacade>();
-            services.AddTransient<BalanceFacade>();
-            //TODO add more facades
-
-            // Presentation layer
-            services.AddTransient<ICurrentAccountProvider, CurrentAccountProvider>();
+    */
 
 
         }

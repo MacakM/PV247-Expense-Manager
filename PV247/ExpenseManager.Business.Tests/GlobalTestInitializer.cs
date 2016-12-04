@@ -1,5 +1,6 @@
 ﻿using System.Data.Entity;
 using Castle.Windsor;
+using ExpenseManager.Business.Tests.Bootstrap;
 using ExpenseManager.Database;
 using NUnit.Framework;
 

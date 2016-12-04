@@ -36,14 +36,15 @@
     </div>
     <a href="@Url.Action("Index", "Expense")" class="project-name">Expense Manager</a>
     <span class="right-part">
-            @await Component.InvokeAsync("UserEmail")
-            <a href="@Url.Action("LogOff", "Account")" class="logout"><i class="fa fa-power-off" aria-hidden="true"></i></a>
-        </span>
+        <span class="username">@User.Identity.Name</span>
+        <a href="@Url.Action("LogOff", "Account")" class="logout"><i class="fa fa-power-off" aria-hidden="true"></i></a>
+    </span>
 </header>
 <div id="left-menu">
     <ul>
         <li><a href="@Url.Action("Index", "Expense")">Expenses</a></li>
-        <li><a href="@Url.Action("PermanentExpensesIndex", "Expense")">Permanent expenses</a></li>
+        <li><a href="@Url.Action("Index", "PermanentExpense")">Permanent expenses</a></li>
+        <li><a href="@Url.Action("Index", "Category")">Categories</a></li>
         <!--<li><a href="#">Permanent expenses</a></li>
         <!--<li><a href="#">Categories</a></li>-->
         <li><a href="@Url.Action("Index", "Plan")">Plans</a></li>
@@ -53,7 +54,7 @@
 </div>
 <div class="container-fluid">
     @RenderBody()
-    <div class="col-sm-3 sidebar right">
+    <div class="col-md-3 sidebar right">
         <div class="money-info">
             @await Component.InvokeAsync("Balance")
         </div>
@@ -63,27 +64,7 @@
         </div>
         <hr/>
         <div class="achievements">
-            <h3>Latest achievements</h3>
-            <div class="achievement">
-                <img src="~/images/badge.png"/>
-                <span>Ušetrenie 5000kč</span>
-            </div>
-            <div class="achievement">
-                <img src="~/images/badge.png"/>
-                <span>Minutie menej než 15000kč</span>
-            </div>
-            <div class="achievement">
-                <img src="~/images/badge.png"/>
-                <span>Ušetrenie 5000kč</span>
-            </div>
-            <div class="achievement">
-                <img src="~/images/badge.png"/>
-                <span>Minutie menej než 15000kč</span>
-            </div>
-            <div class="achievement">
-                <div class="img-holder"></div>
-                <span><a class="more" href="@Url.Action("Index", "Achievement")">More...</a></span>
-            </div>
+            @await Component.InvokeAsync("AchievedBadges")
         </div>
         <hr/>
         @await Component.InvokeAsync("InProgressPlans")

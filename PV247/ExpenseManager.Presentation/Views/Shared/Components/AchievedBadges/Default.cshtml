@@ -1,0 +1,14 @@
+﻿@model List<ExpenseManager.Presentation.Models.Achievement.AccountBadgeViewModel>
+
+<h3>Latest achievements</h3>
+@foreach (var badge in Model)
+{
+    <div class="achievement">
+        <img src="~/images/badge.png" />
+        <span>@badge.BadgeDescription</span>
+    </div>
+}
+<div class="achievement">
+    <div class="img-holder"></div>
+    <span><a class="more" href="@Url.Action("Index", "Achievement")">More...</a></span>
+</div>

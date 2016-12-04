@@ -1,19 +1,15 @@
-﻿using AutoMapper;
+﻿using System.Runtime.CompilerServices;
+using AutoMapper;
 using ExpenseManager.Business.DataTransferObjects;
-using ExpenseManager.Business.DataTransferObjects.Filters.Accounts;
-using ExpenseManager.Business.DataTransferObjects.Filters.Badges;
-using ExpenseManager.Business.DataTransferObjects.Filters.CostInfos;
-using ExpenseManager.Business.DataTransferObjects.Filters.CostTypes;
-using ExpenseManager.Business.DataTransferObjects.Filters.Plans;
-using ExpenseManager.Business.DataTransferObjects.Filters.Users;
 using ExpenseManager.Database.Entities;
 
+[assembly: InternalsVisibleTo("ExpenseManager.Business.Tests")]
 namespace ExpenseManager.Business.Infrastructure.Mapping.Profiles
 {
     /// <summary>
     /// Standard mapping profile.
-    /// </summary>
-    public class DatabaseToBusinessStandardMapping : Profile
+    /// </summary>   
+    internal class DatabaseToBusinessStandardMapping : Profile
     {
         /// <summary>
         /// Creates mapping.

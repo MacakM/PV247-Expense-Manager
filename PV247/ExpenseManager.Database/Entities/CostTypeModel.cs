@@ -24,6 +24,18 @@ namespace ExpenseManager.Database.Entities
         public string Name { get; set; }
 
         /// <summary>
+        /// Account id.
+        /// </summary>
+        public Guid AccountId { get; set; }
+
+        /// <summary>
+        /// Account whom this costtype belongs.
+        /// </summary>
+        [Required]
+        [ForeignKey("AccountId")]
+        public AccountModel Account { get; set; }
+
+        /// <summary>
         /// All costs of this type.
         /// </summary>
         public virtual List<CostInfoModel> CostInfoList { get; set; }

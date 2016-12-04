@@ -15,7 +15,7 @@ namespace ExpenseManager.Database.Infrastructure.UnitOfWork
         /// <summary>
         /// Gets the <see cref="DbContext"/>.
         /// </summary>
-        internal ExpenseDbContext Context { get; }
+        internal ExpenseDbContext Context { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ExpenseManagerUnitOfWork"/> class.
@@ -37,7 +37,7 @@ namespace ExpenseManager.Database.Infrastructure.UnitOfWork
             Context = unitOfWorkProvider.ConnectionOptions == null
                 ? unitOfWorkProvider.DbContextFactory?.Invoke() as ExpenseDbContext 
                 // internal DbContext shall not be injected in some scenarios in order to increase persistence separation
-                : new ExpenseDbContext(unitOfWorkProvider.ConnectionOptions.Value.ConnectionString);
+                : new ExpenseDbContext(unitOfWorkProvider.ConnectionOptions.ConnectionString);
 
             _hasOwnContext = true;
         }

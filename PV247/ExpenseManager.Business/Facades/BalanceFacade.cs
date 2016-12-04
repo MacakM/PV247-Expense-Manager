@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using ExpenseManager.Business.DataTransferObjects;
-using ExpenseManager.Business.DataTransferObjects.Filters;
+using ExpenseManager.Business.DataTransferObjects.Enums;
+using ExpenseManager.Business.DataTransferObjects.Factories;
+using ExpenseManager.Business.Infrastructure.CastleWindsor;
 using ExpenseManager.Business.Services.Interfaces;
 using ExpenseManager.Database.DataAccess.FilterInterfaces;
 using ExpenseManager.Database.Entities;
@@ -13,42 +15,17 @@ namespace ExpenseManager.Business.Facades
     /// </summary>
     public class BalanceFacade
     {
-        private readonly IAccountBadgeService _accountBadgeService;
+        private readonly IBadgeService _badgeService = BusinessLayerDIManager.Resolve<IBadgeService>();
 
-        private readonly IBadgeService _badgeService;
+        private readonly ICostInfoService _costInfoService = BusinessLayerDIManager.Resolve<ICostInfoService>();
 
-        private readonly ICostInfoService _costInfoService;
+        private readonly ICostTypeService _costTypeService = BusinessLayerDIManager.Resolve<ICostTypeService>();
 
-        private readonly ICostTypeService _costTypeService;
+        private readonly IPlanService _planService = BusinessLayerDIManager.Resolve<IPlanService>();
 
-        private readonly IPlanService _planService;
+        private readonly IGraphService _graphService = BusinessLayerDIManager.Resolve<IGraphService>();
 
-        private readonly IGraphService _graphService;
-
-        /// <summary>
-        /// Balance facade construtor
-        /// </summary>
-        /// <param name="accountBadgeService">Account Badge service</param>
-        /// <param name="badgeService">Badge service</param>
-        /// <param name="costInfoService">Cost info service</param>
-        /// <param name="costTypeService">Cost type service</param>
-        /// <param name="planService">Plan service</param>
-        /// <param name="graphService"></param>
-        public BalanceFacade(
-            IAccountBadgeService accountBadgeService, 
-            IBadgeService badgeService, 
-            ICostInfoService costInfoService, 
-            ICostTypeService costTypeService, 
-            IPlanService planService, 
-            IGraphService graphService)
-        {
-            _accountBadgeService = accountBadgeService;
-            _badgeService = badgeService;
-            _costInfoService = costInfoService;
-            _costTypeService = costTypeService;
-            _planService = planService;
-            _graphService = graphService;
-        }
+        private readonly IAccountBadgeService _accountBadgeService = BusinessLayerDIManager.Resolve<IAccountBadgeService>();
 
         #region Business operations
         /// <summary>
@@ -116,7 +93,8 @@ namespace ExpenseManager.Business.Facades
         /// </summary>
         public List<DayTotalBalance> GetDailyBalanceGraphData(Guid accountId)
         {
-            return _graphService.GetTotalDailyBalanceGraphData(accountId);
+            var totalBalance = _costInfoService.GetBalance(accountId);
+            return _graphService.GetTotalDailyBalanceGraphData(accountId, totalBalance);
         }
 
         #endregion
@@ -159,26 +137,64 @@ namespace ExpenseManager.Business.Facades
         }
 
         /// <summary>
+        /// List cost infos
+        /// </summary>
+        /// <param name="typeId"></param>
+        /// <param name="pageInfo"></param>
+        /// <returns></returns>
+        public List<CostInfo> ListItems(Guid typeId, PageInfo pageInfo)
+        {
+            return ListItems(null, null, null, null, null, null, typeId, null, pageInfo);
+        }
+
+        /// <summary>
+        /// List cost infos
+        /// </summary>
+        /// <param name="accountId"></param>
+        /// <param name="periodicity"></param>
+        /// <param name="pageInfo"></param>
+        /// <returns></returns>
+        public List<CostInfo> ListItems(Guid? accountId, Periodicity? periodicity,  PageInfo pageInfo)
+        {
+            return ListItems(accountId, periodicity, null, null, null, null, null, null, pageInfo);
+        }
+
+        /// <summary>
         /// List cost types based on filter
         /// </summary>
-        /// <param name="filters">Filters cost infos</param>
-        /// <param name="pageAndOrder"></param>
+        /// <param name="periodicity"></param>
+        /// <param name="isIncome"></param>
+        /// <param name="accountId"></param>
+        /// <param name="dateFrom"></param>
+        /// <param name="dateTo"></param>
+        /// <param name="moneyFrom"></param>
+        /// <param name="moneyTo"></param>
+        /// <param name="costTypeId"></param>
+        /// <param name="pageInfo"></param>
         /// <returns>List of cost infos</returns>
-        public List<CostInfo> ListItems(List<IFilter<CostInfoModel>> filters, IPageAndOrderable<CostInfoModel> pageAndOrder)
+        public List<CostInfo> ListItems(Guid? accountId, Periodicity? periodicity, DateTime? dateFrom, DateTime? dateTo, decimal? moneyFrom, decimal? moneyTo, Guid? costTypeId, bool? isIncome, PageInfo pageInfo)
         {
-            return _costInfoService.ListCostInfos(filters, pageAndOrder);
+            var filters = FilterFactory.GetCostItemsFilters(accountId, periodicity, dateFrom, dateTo, moneyFrom, moneyTo, costTypeId,isIncome);
+            return _costInfoService.ListCostInfos(filters, FilterFactory.GetPageAndOrderable<CostInfoModel>(pageInfo));
         }
 
         /// <summary>
         /// Gets the count of rows in database filtered by filter
         /// Used for pagination
         /// </summary>
-        /// <param name="filters"></param>
-        /// <param name="pageAndOrder"></param>
+        /// <param name="accountId"></param>
+        /// <param name="periodicity"></param>
+        /// <param name="dateFrom"></param>
+        /// <param name="dateTo"></param>
+        /// <param name="moneyFrom"></param>
+        /// <param name="moneyTo"></param>
+        /// <param name="costTypeId"></param>
+        /// <param name="isIncome"></param>
         /// <returns></returns>
-        public int GetCostInfosCount(List<IFilter<CostInfoModel>> filters, IPageAndOrderable<CostInfoModel> pageAndOrder)
+        public int GetCostInfosCount(Guid? accountId, Periodicity? periodicity, DateTime? dateFrom, DateTime? dateTo, decimal? moneyFrom, decimal? moneyTo, Guid? costTypeId, bool? isIncome)
         {
-            return _costInfoService.GetCostInfosCount(filters, pageAndOrder);
+            var filters = FilterFactory.GetCostItemsFilters(accountId, periodicity, dateFrom, dateTo, moneyFrom, moneyTo, costTypeId, isIncome);
+            return _costInfoService.GetCostInfosCount(filters, null);
         }
 
         #endregion
@@ -222,12 +238,13 @@ namespace ExpenseManager.Business.Facades
         /// <summary>
         /// Lists all plans that match filters criterias
         /// </summary>
-        /// <param name="filters">Filters plans</param>
-        /// <param name="pageAndOrder"></param>
+        /// <param name="accountId"></param>
+        /// <param name="pageInfo"></param>
         /// <returns></returns>
-        public List<Plan> ListPlans(List<IFilter<PlanModel>> filters, IPageAndOrderable<PlanModel> pageAndOrder)
+        public List<Plan> ListPlans(Guid? accountId, PageInfo pageInfo)
         {
-            return _planService.ListPlans(filters, pageAndOrder);
+            var filters = FilterFactory.GetPlanFilters(accountId);
+            return _planService.ListPlans(filters, FilterFactory.GetPageAndOrderable<PlanModel>(pageInfo));
         }
 
         #endregion
@@ -270,14 +287,26 @@ namespace ExpenseManager.Business.Facades
         }
 
         /// <summary>
+        /// Lists all cost types for given account id
+        /// </summary>
+        /// <param name="accountId"></param>
+        /// <returns></returns>
+        public List<CostType> ListItemTypes(Guid accountId)
+        {
+            var filters = FilterFactory.GetCostTypeFilters(accountId);
+            return _costTypeService.ListCostTypes(filters, null);
+        }
+
+        /// <summary>
         /// List cost types specified by filter
         /// </summary>
-        /// <param name="filters">Filters cost types</param>
-        /// <param name="pageAndOrder"></param>
+        /// <param name="costTypeName"></param>
+        /// <param name="pageInfo"></param>
         /// <returns>List of cost typer</returns>
-        public List<CostType> ListItemTypes(List<IFilter<CostTypeModel>> filters, IPageAndOrderable<CostTypeModel> pageAndOrder)
+        public List<CostType> ListItemTypes(string costTypeName, PageInfo pageInfo)
         {
-            return _costTypeService.ListCostTypes(filters, pageAndOrder);
+            var filters = FilterFactory.GetCostTypeFilters(costTypeName);
+            return _costTypeService.ListCostTypes(filters, FilterFactory.GetPageAndOrderable<CostTypeModel>(pageInfo));
         }
 
         #endregion
@@ -322,14 +351,54 @@ namespace ExpenseManager.Business.Facades
         /// <summary>
         /// Lists filtered badges
         /// </summary>
-        /// <param name="filters">Filters badges</param>
-        /// <param name="pageAndOrder"></param>
+        /// <param name="badgeName"></param>
+        /// <param name="pageInfo"></param>
         /// <returns></returns>
-        public List<Badge> ListBadges(List<IFilter<BadgeModel>> filters, IPageAndOrderable<BadgeModel> pageAndOrder)
+        public List<Badge> ListBadges(string badgeName, PageInfo pageInfo)
         {
-            return _badgeService.ListBadges(filters, pageAndOrder);
+            var filters = FilterFactory.GetBadgeFilters(badgeName);
+            return _badgeService.ListBadges(filters, FilterFactory.GetPageAndOrderable<BadgeModel>(pageInfo));
         }
 
+        /// <summary>
+        /// Lists all achieved badges for given accountId
+        /// </summary>
+        /// <param name="accountId"></param>
+        /// <param name="ammount"></param>
+        /// <returns></returns>
+        public List<AccountBadge> ListAchievedAccountBadges(Guid accountId, int? ammount = null)
+        {
+            var filters = FilterFactory.GetAccountBadgeFilters(accountId);
+            
+            var pageInfo = new PageInfo()
+            {
+                OrderByDesc = true,
+                OrderByPropertyName = nameof(AccountBadgeModel.Achieved),
+            };
+            if (ammount != null)
+            {
+                pageInfo.PageNumber = 1;
+                pageInfo.PageSize = ammount.Value;
+            }
+
+            var pageFilter = FilterFactory.GetPageAndOrderable<AccountBadgeModel>(pageInfo);
+            
+            return _accountBadgeService.ListAccountBadges(filters, pageFilter);
+        }
+
+        /// <summary>
+        /// Lists all yet not achieved badges for given accountId
+        /// </summary>
+        /// <param name="accountId"></param>
+        /// <returns></returns>
+        public List<Badge> ListNotAchievedBadges(Guid accountId)
+        {
+            return _badgeService.ListNotAchievedBadges(accountId);
+        }
+
+       
         #endregion
+
+
     }
 }

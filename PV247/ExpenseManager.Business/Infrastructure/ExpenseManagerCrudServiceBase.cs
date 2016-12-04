@@ -11,24 +11,24 @@ namespace ExpenseManager.Business.Infrastructure
     /// <typeparam name="TKey">The type of the entity primary key.</typeparam>
     /// <typeparam name="T">The type of the  used in the detail form.</typeparam>
     /// <typeparam name="TEntity"></typeparam>
-    public abstract class ExpenseManagerCrudServiceBase<TEntity, TKey, T> 
+    internal abstract class ExpenseManagerCrudServiceBase<TEntity, TKey, T> 
         where TEntity : class, IEntity<TKey>, new() 
         where T : BusinessObject<TKey>, new()
     {
         /// <summary>
         /// Unit of work provider
         /// </summary>
-        public IUnitOfWorkProvider UnitOfWorkProvider { get; }
+        internal IUnitOfWorkProvider UnitOfWorkProvider { get; }
 
         /// <summary>
         /// Gets the repository used to perform database operations with the entity.
         /// </summary>
-        public ExpenseManagerRepository<TEntity, TKey> Repository { get; }
+        internal ExpenseManagerRepository<TEntity, TKey> Repository { get; }
 
         /// <summary>
         /// Gets the service that can map entities to s and populate entities with changes made on s.
         /// </summary>
-        public IRuntimeMapper ExpenseManagerMapper { get; }
+        internal IRuntimeMapper ExpenseManagerMapper { get; }
 
         /// <summary>
         /// Ctor for ExpenseManagerCrudServiceBase
@@ -46,7 +46,7 @@ namespace ExpenseManager.Business.Infrastructure
         /// <summary>
         /// Gets the detail  for an entity with the specified ID.
         /// </summary>
-        public virtual T GetDetail(TKey id)
+        internal virtual T GetDetail(TKey id)
         {
             var entity = Repository.GetById(id, EntityIncludes);
             return ExpenseManagerMapper.Map<TEntity, T>(entity);
@@ -55,7 +55,7 @@ namespace ExpenseManager.Business.Infrastructure
         /// <summary>
         /// Deletes the entity with the specified ID.
         /// </summary>
-        public virtual void Delete(TKey id)
+        internal virtual void Delete(TKey id)
         {
             Repository.Delete(id);
         }
@@ -63,7 +63,7 @@ namespace ExpenseManager.Business.Infrastructure
         /// <summary>
         /// Saves the changes on the specified  to the database.
         /// </summary>
-        public virtual void Save(T item)
+        internal virtual void Save(T item)
         {        
             var isNew = item.Id.Equals(default(TKey));
             if (isNew)

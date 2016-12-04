@@ -44,6 +44,6 @@ namespace ExpenseManager.Presentation.Models.Plan
         /// <summary>
         /// Cost types to choose from
         /// </summary>
-        public List<CostType.IndexViewModel> CostTypes { get; set; }
+        public List<CostType.CategoryViewModel> CostTypes { get; set; }
     }
 }

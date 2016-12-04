@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Enums;
-using ExpenseManager.Business.DataTransferObjects.Filters;
+using ExpenseManager.Business.DataTransferObjects.Factories;
+using ExpenseManager.Business.Infrastructure.CastleWindsor;
 using ExpenseManager.Business.Services.Interfaces;
-using ExpenseManager.Database.DataAccess.FilterInterfaces;
 using ExpenseManager.Database.Entities;
 
 namespace ExpenseManager.Business.Facades
@@ -14,21 +14,11 @@ namespace ExpenseManager.Business.Facades
     /// </summary>
     public class AccountFacade
     {
-        private readonly IUserService _userService;
+        private readonly IUserService _userService = BusinessLayerDIManager.Resolve<IUserService>();
 
-        private readonly IAccountService _accountService;
-        
-        /// <summary>
-        /// Accont Facade constructor
-        /// </summary>
-        /// <param name="userService">User service</param>
-        /// <param name="accountService">Accounet service</param>
-        public AccountFacade(IUserService userService, IAccountService accountService)
-        {
-            _userService = userService;
-            _accountService = accountService;
-        }
-        
+        private readonly IAccountService _accountService = BusinessLayerDIManager.Resolve<IAccountService>();
+
+        #region User CRUD
         /// <summary>
         /// Registers user according to provided information
         /// </summary>
@@ -85,14 +75,19 @@ namespace ExpenseManager.Business.Facades
         /// <summary>
         /// List users that match parameters given in filter 
         /// </summary>
-        /// <param name="filters"></param>
-        /// <param name="pageAndOrder"></param>
+        /// <param name="accessType"></param>
+        /// <param name="email"></param>
+        /// <param name="accountId"></param>
+        /// <param name="pageInfo"></param>
         /// <returns></returns>
-        public List<User> ListUsers(List<IFilter<UserModel>> filters, IPageAndOrderable<UserModel> pageAndOrder)
+        public List<User> ListUsers(Guid? accountId, AccountAccessType? accessType, string email, PageInfo pageInfo)
         {
-            return _userService.ListUsers(filters, pageAndOrder);
+            var filters = FilterFactory.GetUserFilters(accountId,accessType, email);
+            return _userService.ListUsers(filters, FilterFactory.GetPageAndOrderable<UserModel>(pageInfo));
         }
-        
+
+        #endregion
+        #region Account CRUD
         /// <summary>
         /// Creates new account
         /// </summary>
@@ -141,12 +136,13 @@ namespace ExpenseManager.Business.Facades
         /// <summary>
         /// List filtered accounts
         /// </summary>
-        /// <param name="filters">Filters accounts</param>
-        /// <param name="pageAndOrder"></param>
+        /// <param name="accountName"></param>
+        /// <param name="pageInfo"></param>
         /// <returns></returns>
-        public List<Account> ListAccounts(List<IFilter<AccountModel>> filters, IPageAndOrderable<AccountModel> pageAndOrder)
+        public List<Account> ListAccounts(string accountName, PageInfo pageInfo)
         {
-            return _accountService.ListAccounts(filters, pageAndOrder);
+            var filters = FilterFactory.GetAccountFilters(accountName);
+            return _accountService.ListAccounts(filters, FilterFactory.GetPageAndOrderable<AccountModel>(pageInfo));
         }
 
         /// <summary>
@@ -159,5 +155,6 @@ namespace ExpenseManager.Business.Facades
         {
             _accountService.AttachAccountToUser(userId, accountId, accessType);
         }
+        #endregion
     }
 }

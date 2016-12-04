@@ -7,21 +7,12 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.CostInfos
     /// <summary>
     /// Filters cost by its income type
     /// </summary>
-    public class CostInfosByIsIncome : IFilter<CostInfoModel>
+    internal class CostInfosByIsIncome : IFilter<CostInfoModel>
     {
         /// <summary>
         /// If cost type is income or ourcome
         /// </summary>
         public bool IsIncome { get; set; }
-
-        /// <summary>
-        /// Filters constructor
-        /// </summary>
-        /// <param name="isIncome"></param>
-        public CostInfosByIsIncome(bool isIncome)
-        {
-            IsIncome = isIncome;
-        }
 
         /// <summary>
         /// Filters query

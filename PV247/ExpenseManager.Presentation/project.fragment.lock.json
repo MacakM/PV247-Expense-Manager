@@ -9,6 +9,8 @@
       },
       "runtime": {
         "../packages/AutoMapper.5.1.1/lib/net45/AutoMapper.dll": {},
+        "../packages/Castle.Core.3.3.0/lib/net45/Castle.Core.dll": {},
+        "../packages/Castle.Windsor.3.3.0/lib/net45/Castle.Windsor.dll": {},
         "../packages/EnterpriseLibrary.TransientFaultHandling.6.0.1304.0/lib/portable-net45+win+wp8/Microsoft.Practices.EnterpriseLibrary.TransientFaultHandling.dll": {},
         "../packages/EnterpriseLibrary.TransientFaultHandling.Data.6.0.1304.1/lib/NET45/Microsoft.Practices.EnterpriseLibrary.TransientFaultHandling.Data.dll": {},
         "../packages/Riganti.Utils.Infrastructure.Core.1.0.3/lib/net45/Riganti.Utils.Infrastructure.Core.dll": {},

@@ -8,21 +8,12 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.Plans
     /// <summary>
     /// Filters plans based on deadline 
     /// </summary>
-    public class PlansByDeadlineFrom : IFilter<PlanModel>
+    internal class PlansByDeadlineFrom : IFilter<PlanModel>
     {
         /// <summary>
         /// Left edge of deadline range
         /// </summary>
         public DateTime? DeadlineFrom { get; set; }
-
-        /// <summary>
-        /// Filter constructor
-        /// </summary>
-        /// <param name="deadlineFrom"></param>
-        public PlansByDeadlineFrom(DateTime deadlineFrom)
-        {
-            DeadlineFrom = deadlineFrom;
-        }
 
         /// <summary>
         /// Filters query

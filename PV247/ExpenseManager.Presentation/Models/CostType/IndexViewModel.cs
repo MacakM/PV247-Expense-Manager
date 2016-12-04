@@ -1,13 +1,23 @@
-﻿namespace ExpenseManager.Presentation.Models.CostType
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace ExpenseManager.Presentation.Models.CostType
 {
     /// <summary>
-    /// Presentation layer representation of CostTypeModel object
+    /// View model for index method
     /// </summary>
-    public class IndexViewModel : ViewModelId
+    public class IndexViewModel
     {
         /// <summary>
-        /// Name of this type.
+        /// Categories to display
         /// </summary>
-        public string Name { get; set; }
+        public List<CategoryViewModel> Categories { get; set; }
+
+        /// <summary>
+        /// Currently loged-in user
+        /// </summary>
+        public User.IndexViewModel CurrentUser { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using ExpenseManager.Database;
+using ExpenseManager.DataSeeding.Hangfire;
 using ExpenseManager.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,6 +15,7 @@ namespace ExpenseManager.DataSeeding
         {
             InitializeIdentityStoreDb();
             PerformExpenseDbContextSeed();
+            InitializeHangfireDb();
         }
 
         private static void InitializeIdentityStoreDb()
@@ -28,7 +30,15 @@ namespace ExpenseManager.DataSeeding
         {
             using (var expenseDbContext = new ExpenseDbContext("Server=(localdb)\\mssqllocaldb;Database=ExpenseManagerDB;Trusted_Connection=True;MultipleActiveResultSets=true"))
             {
-                new ExpenseDbInitializer().InitializeDatabase(expenseDbContext);
+                ExpenseDbInitializer.InitializeDatabase(expenseDbContext);
+            }
+        }
+
+        private static void InitializeHangfireDb()
+        {
+            using (var hangfireDbContext = new HangfireDbContext())
+            {
+                // Just need to create hangfire db context here to ensure the DB gets created
             }
         }
     }

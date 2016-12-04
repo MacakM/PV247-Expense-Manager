@@ -8,13 +8,13 @@ namespace ExpenseManager.Database.DataAccess.Queries
     /// <summary>
     /// Implementation of Query for cost types.
     /// </summary>
-    public class ListCostTypesQuery : ExpenseManagerQuery<CostTypeModel>
+    internal class ListCostTypesQuery : ExpenseManagerQuery<CostTypeModel>
     {
         /// <summary>
         /// Create query.
         /// </summary>
         /// <param name="provider">unitOfWork provider</param>
-        public ListCostTypesQuery(IUnitOfWorkProvider provider) : base(provider)
+        internal ListCostTypesQuery(IUnitOfWorkProvider provider) : base(provider)
         {
         }
 

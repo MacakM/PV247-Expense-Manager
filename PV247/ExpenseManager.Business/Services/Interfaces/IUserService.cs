@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using ExpenseManager.Business.DataTransferObjects;
-using ExpenseManager.Business.DataTransferObjects.Filters;
 using ExpenseManager.Database.DataAccess.FilterInterfaces;
 using ExpenseManager.Database.Entities;
 
@@ -11,7 +10,7 @@ namespace ExpenseManager.Business.Services.Interfaces
     /// <summary>
     /// Service handles user entity operations
     /// </summary>
-    public interface IUserService : IService
+    internal interface IUserService : IService
     {
         /// <summary>
         /// Registers user according to provided information

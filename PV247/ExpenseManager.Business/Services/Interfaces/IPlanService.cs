@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using ExpenseManager.Business.DataTransferObjects;
-using ExpenseManager.Business.DataTransferObjects.Filters;
 using ExpenseManager.Database.DataAccess.FilterInterfaces;
 using ExpenseManager.Database.Entities;
 
@@ -10,7 +9,7 @@ namespace ExpenseManager.Business.Services.Interfaces
     /// <summary>
     /// Service handles plan entity operations
     /// </summary>
-    public interface IPlanService : IService
+    internal interface IPlanService : IService
     {
         /// <summary>
         /// Creates new plan in databse

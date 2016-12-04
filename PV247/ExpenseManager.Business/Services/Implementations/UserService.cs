@@ -5,7 +5,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using AutoMapper;
 using ExpenseManager.Business.DataTransferObjects;
-using ExpenseManager.Business.DataTransferObjects.Filters;
 using ExpenseManager.Business.Infrastructure;
 using ExpenseManager.Database.DataAccess.Repositories;
 using ExpenseManager.Database.Entities;
@@ -20,7 +19,7 @@ namespace ExpenseManager.Business.Services.Implementations
     /// <summary>
     /// Provides user related functionality
     /// </summary>
-    public class UserService : ExpenseManagerQueryAndCrudServiceBase<UserModel, Guid, User>, IUserService
+    internal class UserService : ExpenseManagerQueryAndCrudServiceBase<UserModel, Guid, User>, IUserService
     {
         private readonly UserRepository _userRepository;
 
@@ -31,7 +30,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="repository"></param>
         /// <param name="expenseManagerMapper"></param>
         /// <param name="unitOfWorkProvider"></param>
-        public UserService(ExpenseManagerQuery<UserModel> query, UserRepository repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
+        internal UserService(ExpenseManagerQuery<UserModel> query, UserRepository repository, Mapper expenseManagerMapper, IUnitOfWorkProvider unitOfWorkProvider) : base(query, repository, expenseManagerMapper, unitOfWorkProvider)
         {
             _userRepository = repository;
         }
@@ -50,11 +49,13 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="userRegistration">User registration information</param>
         public void RegisterNewUser(User userRegistration)
         {
+            var userEntity = ExpenseManagerMapper.Map<UserModel>(userRegistration);
             using (var unitOfWork = UnitOfWorkProvider.Create())
             {
-                Save(userRegistration);
+                Repository.Insert(userEntity);
                 unitOfWork.Commit();
             }
+            userRegistration.Id = userEntity.Id;
         }
 
         /// <summary>

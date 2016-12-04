@@ -8,12 +8,12 @@ namespace ExpenseManager.Database.DataAccess.Repositories
     /// <summary>
     /// Implementation of Repository for CostInfo entity.
     /// </summary>
-    public class CostInfoRepository : ExpenseManagerRepository<CostInfoModel, Guid>
+    internal class CostInfoRepository : ExpenseManagerRepository<CostInfoModel, Guid>
     {
         /// <summary>
         /// Create repository.
         /// </summary>
         /// <param name="provider">unitOfWork provider</param>
-        public CostInfoRepository(IUnitOfWorkProvider provider) : base(provider) { }
+        internal CostInfoRepository(IUnitOfWorkProvider provider) : base(provider) { }
     }
 }

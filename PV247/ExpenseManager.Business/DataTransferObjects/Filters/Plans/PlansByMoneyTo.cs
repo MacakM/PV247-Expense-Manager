@@ -7,21 +7,12 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.Plans
     /// <summary>
     /// Filters plans by planned money
     /// </summary>
-    public class PlansByMoneyTo : IFilter<PlanModel>
+    internal class PlansByMoneyTo : IFilter<PlanModel>
     {
         /// <summary>
         /// Right edge of planned money range
         /// </summary>
         public decimal PlannedMoneyTo { get; set; }
-
-        /// <summary>
-        /// Filter constructor
-        /// </summary>
-        /// <param name="plannedMoneyTo"></param>
-        public PlansByMoneyTo(decimal plannedMoneyTo)
-        {
-            PlannedMoneyTo = plannedMoneyTo;
-        }
 
         /// <summary>
         /// Filters query

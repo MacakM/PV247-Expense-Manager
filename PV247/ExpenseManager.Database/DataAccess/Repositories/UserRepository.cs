@@ -9,6 +9,7 @@ namespace ExpenseManager.Database.DataAccess.Repositories
 {
     /// <summary>
     /// Implementation of Repository for User entity.
+    /// This type needs to stay public as it extends the base public class
     /// </summary>
     public class UserRepository : ExpenseManagerRepository<UserModel, Guid>
     {

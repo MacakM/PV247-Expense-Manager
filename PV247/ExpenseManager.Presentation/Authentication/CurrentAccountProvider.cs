@@ -34,7 +34,7 @@ namespace ExpenseManager.Presentation.Authentication
             var user = GetCurrentUser(principal);
             if (user == null)
             {
-                throw new InvalidOperationException("Logged-in user doesn't exists in expensemanagerDB");
+                return null;
             }
 
             return _accountFacade.GetAccount(user.AccountId);

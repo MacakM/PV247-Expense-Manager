@@ -4,12 +4,13 @@ using System.Runtime.CompilerServices;
 using ExpenseManager.Database.Entities;
 
 [assembly: InternalsVisibleTo("ExpenseManager.Business.Tests")]
+[assembly: InternalsVisibleTo("ExpenseManager.DataSeeding")]
 namespace ExpenseManager.Database
 {
     /// <summary>
     /// Database context
     /// </summary>
-    public class ExpenseDbContext : DbContext
+    internal class ExpenseDbContext : DbContext
     {
         /// <summary>
         /// Context construstor
@@ -21,7 +22,10 @@ namespace ExpenseManager.Database
         /// Context constructor
         /// </summary>
         /// <param name="nameOrConnectionString"></param>
-        public ExpenseDbContext(string nameOrConnectionString) : base(nameOrConnectionString) { }
+        public ExpenseDbContext(string nameOrConnectionString) : base(nameOrConnectionString)
+        {
+            System.Data.Entity.Database.SetInitializer(new DropCreateDatabaseIfModelChanges<ExpenseDbContext>());
+        }
 
         /// <summary>
         /// Badges DbSet
@@ -65,6 +69,11 @@ namespace ExpenseManager.Database
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<CostTypeModel>()
+                .HasRequired(c => c.Account)
+                .WithMany()
+                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<BadgeModel>().ToTable("Badges");
             modelBuilder.Entity<CostInfoModel>().ToTable("CostInfos");

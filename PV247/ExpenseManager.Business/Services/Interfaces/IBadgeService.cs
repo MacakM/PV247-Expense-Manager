@@ -9,7 +9,7 @@ namespace ExpenseManager.Business.Services.Interfaces
     /// <summary>
     /// Service handles Badge entity operations
     /// </summary>
-    public interface IBadgeService : IService
+    internal interface IBadgeService : IService
     {
         /// <summary>
         /// Creates new Badge object in database
@@ -43,6 +43,13 @@ namespace ExpenseManager.Business.Services.Interfaces
         /// <param name="pageAndOrder"></param>
         /// <returns></returns>s
         List<Badge> ListBadges(List<IFilter<BadgeModel>> filters, IPageAndOrderable<BadgeModel> pageAndOrder);
+
+        /// <summary>
+        /// Lists all not achieved badges for given accountId
+        /// </summary>
+        /// <param name="accountId"></param>
+        /// <returns></returns>
+        List<Badge> ListNotAchievedBadges(Guid accountId);
 
         /// <summary>
         /// Check all accounts if they dont deserve some badges

@@ -8,6 +8,7 @@ namespace ExpenseManager.Database.Infrastructure.Repository
 {
     /// <summary>
     /// A base implementation of a repository.
+    /// This class must stay public as its used by Services within BL
     /// </summary>
     public class ExpenseManagerRepository<TEntity, TKey> 
         where TEntity : class, IEntity<TKey>, new() 
@@ -22,7 +23,7 @@ namespace ExpenseManager.Database.Infrastructure.Repository
         /// <summary>
         /// Initializes a new instance of the <see cref="ExpenseManagerRepository{TEntity, TKey}"/> class.
         /// </summary>
-        public ExpenseManagerRepository(IUnitOfWorkProvider provider)
+        internal ExpenseManagerRepository(IUnitOfWorkProvider provider)
         {
             _provider = provider;
         }

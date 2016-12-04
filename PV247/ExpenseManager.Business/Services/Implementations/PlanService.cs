@@ -9,8 +9,6 @@ using ExpenseManager.Business.DataTransferObjects.Filters.Plans;
 using ExpenseManager.Business.Infrastructure;
 using ExpenseManager.Business.Services.Interfaces;
 using ExpenseManager.Database.DataAccess.FilterInterfaces;
-using ExpenseManager.Database.DataAccess.Queries;
-using ExpenseManager.Database.DataAccess.Repositories;
 using ExpenseManager.Database.Entities;
 using ExpenseManager.Database.Enums;
 using ExpenseManager.Database.Infrastructure.Query;
@@ -22,7 +20,7 @@ namespace ExpenseManager.Business.Services.Implementations
     /// <summary>
     /// Service handles plan entity operations
     /// </summary>
-    public class PlanService : ExpenseManagerQueryAndCrudServiceBase<PlanModel, Guid, Plan>, IPlanService
+    internal class PlanService : ExpenseManagerQueryAndCrudServiceBase<PlanModel, Guid, Plan>, IPlanService
     {
         private readonly ExpenseManagerRepository<CostInfoModel, Guid> _costInfoRepository;
 
@@ -55,7 +53,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="costInfosQuery">Cost info query</param>
         /// <param name="costTypeRepository">Cost type repository</param>
         /// <param name="accountRepository">Account repository</param>
-        public PlanService(ExpenseManagerQuery<PlanModel> query, 
+        internal PlanService(ExpenseManagerQuery<PlanModel> query, 
             ExpenseManagerRepository<PlanModel, Guid> repository,
             Mapper expenseManagerMapper, 
             IUnitOfWorkProvider unitOfWorkProvider,
@@ -89,6 +87,11 @@ namespace ExpenseManager.Business.Services.Implementations
                     if (account == null || type == null)
                     {
                         throw new InvalidOperationException("Account of type doesn't exists");
+                    }
+
+                    if (type.AccountId != account.Id)
+                    {
+                        throw new InvalidOperationException("Cost type doesn't belong to given account");
                     }
 
                     planModel.Account = account;
@@ -213,10 +216,10 @@ namespace ExpenseManager.Business.Services.Implementations
 
             Query.Filters = new List<IFilter<PlanModel>>
             {
-                new PlansByAccountId(accountId),
-                new PlansByMoneyTo(accountBalance),
-                new PlansByType(PlanTypeModel.Save),
-                new PlansByCompletition(false),
+                new PlansByAccountId { AccountId = accountId },
+                new PlansByMoneyTo {PlannedMoneyTo = accountBalance },
+                new PlansByType { PlanType = PlanTypeModel.Save },
+                new PlansByCompletition { IsCompleted = false}
             };
             using (UnitOfWorkProvider.Create())
             {
@@ -229,9 +232,9 @@ namespace ExpenseManager.Business.Services.Implementations
         {
             Query.Filters = new List<IFilter<PlanModel>>
             {
-                new PlansByAccountId(accountId),
-                new PlansByCompletition(false),
-                new PlansByDeadlineFrom(DateTime.Now)
+                new PlansByAccountId{ AccountId = accountId },
+                new PlansByCompletition { IsCompleted = false},
+                new PlansByDeadlineFrom {DeadlineFrom = DateTime.Now }
             };
             using (UnitOfWorkProvider.Create())
             {
@@ -252,10 +255,10 @@ namespace ExpenseManager.Business.Services.Implementations
                 {
                     Query.Filters = new  List<IFilter<PlanModel>>
                     {
-                           new PlansByAccountId(account.Id),
-                            new PlansByType(PlanTypeModel.MaxSpend),
-                         new PlansByCompletition(false),
-                            new PlansByDeadlineFrom(DateTime.Now)
+                           new PlansByAccountId {AccountId = account.Id },
+                            new PlansByType { PlanType = PlanTypeModel.MaxSpend },
+                         new PlansByCompletition {IsCompleted = false },
+                            new PlansByDeadlineFrom { DeadlineFrom = DateTime.Now }
                     };
                     var maxSpendPlans = GetList();
                     foreach (var plan in maxSpendPlans) // CHECK EVERY MAX SPEND PLAN THAT IS NO COMPLETED YET, REACHED ITS DEADLINE
@@ -263,9 +266,9 @@ namespace ExpenseManager.Business.Services.Implementations
                         if (plan.Deadline != null)
                             _costInfosQuery.Filters = new List<IFilter<CostInfoModel>> // USES EVERY COST OF PLANNED TYPE FROM START TO DEADLINE
                             {
-                                new CostInfosByTypeId(plan.PlannedTypeId),
-                                new CostInfosByCreatedFrom(plan.Start),
-                                new CostInfosByCreatedTo(plan.Deadline.Value)
+                                new CostInfosByTypeId { TypeId = plan.PlannedTypeId },
+                                new CostInfosByCreatedFrom {CreatedFrom = plan.Start },
+                                new CostInfosByCreatedTo { CreatedTo = plan.Deadline.Value }
                             };
                         var costInfos = _costInfosQuery.Execute();
                         if (costInfos.Sum(x => x.Money) <= plan.PlannedMoney)

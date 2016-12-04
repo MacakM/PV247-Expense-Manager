@@ -3,6 +3,8 @@
 
   "dependencies": {
     "AutoMapper": "5.1.1",
+    "Hangfire.AspNetCore": "1.6.7",
+    "Hangfire.SqlServer": "1.6.7",
     "Microsoft.AspNetCore.Authentication.Cookies": "1.0.0",
     "Microsoft.AspNetCore.Authentication.Facebook": "1.0.0",
     "Microsoft.AspNetCore.Diagnostics": "1.0.0",

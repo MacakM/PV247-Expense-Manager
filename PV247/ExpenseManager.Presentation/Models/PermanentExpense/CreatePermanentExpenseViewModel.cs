@@ -1,42 +1,50 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using ExpenseManager.Business.DataTransferObjects.Enums;
 
-namespace ExpenseManager.Presentation.Models.Expense
+namespace ExpenseManager.Presentation.Models.PermanentExpense
 {
     /// <summary>
-    /// Presentation layer representation of permanent CostInfoModel object
+    /// Model for creating expenses
     /// </summary>
-    public class IndexPermanentExpenseViewModel : ViewModelId
+    public class CreatePermanentExpenseViewModel
     {
         /// <summary>
         /// How much money has changed.
         /// </summary>
+        [Required]
         public decimal Money { get; set; }
 
         /// <summary>
         /// More concrete description of the cost
         /// </summary>
+        [Required]
         public string Description { get; set; }
 
         /// <summary>
         /// Type of the cost.
         /// </summary>
-        public string TypeName { get; set; }
+        [Required]
+        public Guid TypeId { get; set; }
 
         /// <summary>
-        /// Periodicity of cost
+        /// Periodicty of expense
         /// </summary>
+        [Required]
         public Periodicity Periodicity { get; set; }
 
         /// <summary>
         /// Mulptiplies periodicity
         /// </summary>
+        [Required]
+        [Range(0, int.MaxValue)]
         public int PeriodicMultiplicity { get; set; }
 
         /// <summary>
-        /// Date when the cost will be applied next time
+        /// Date when the cost will be first applied
         /// </summary>
+        [Required]
         public DateTime Created { get; set; }
 
         /// <summary>
@@ -44,5 +52,10 @@ namespace ExpenseManager.Presentation.Models.Expense
         /// </summary>
         [Required]
         public bool IsIncome { get; set; }
+
+        /// <summary>
+        /// Cost types to choose
+        /// </summary>
+        public List<CostType.CategoryViewModel> CostTypes { get; set; }
     }
 }

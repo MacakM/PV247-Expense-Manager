@@ -11,33 +11,17 @@ namespace ExpenseManager.DataSeeding
     /// <summary>
     /// Demo data for ExpenseDbContext
     /// </summary>
-    public class ExpenseDbInitializer : IDatabaseInitializer<ExpenseDbContext>
+    internal static class ExpenseDbInitializer
     {
         /// <summary>
         /// Performs ExpenseDB initialization
         /// </summary>
         /// <param name="context">ExpenseDbContext to initialize the db</param>
-        public void InitializeDatabase(ExpenseDbContext context)
+        internal static void InitializeDatabase(ExpenseDbContext context)
         {
             TruncateDB(context);
 
             context.Users.AddOrUpdate(new UserModel { Name = "Demo user", Email = "demo@demo.com" });
-
-            context.Badges.AddOrUpdate(new BadgeModel
-            {
-                Accounts = new List<AccountBadgeModel>(),
-                BadgeImgUri = "badge.png",
-                Name = "PassionatePennyPincher",
-                Description = "Save >=20k CZK within all completed plans"
-            });
-
-            context.Badges.AddOrUpdate(new BadgeModel
-            {
-                Accounts = new List<AccountBadgeModel>(),
-                BadgeImgUri = "badge.png",
-                Name = "PlanCompleter",
-                Description = "Complete at least 5 plans"
-            });
 
             Random random = new Random();
 
@@ -47,6 +31,32 @@ namespace ExpenseManager.DataSeeding
             };
 
             context.Accounts.AddOrUpdate(account);
+
+            var badge1 = new BadgeModel
+            {
+                Accounts = new List<AccountBadgeModel>(),
+                BadgeImgUri = "badge.png",
+                Name = "PassionatePennyPincher",
+                Description = "Save >=20k CZK within all completed plans"
+            };
+            context.Badges.AddOrUpdate(badge1);
+
+            context.Badges.AddOrUpdate(new BadgeModel
+            {
+                Accounts = new List<AccountBadgeModel>(),
+                BadgeImgUri = "badge.png",
+                Name = "PlanCompleter",
+                Description = "Complete at least 5 plans"
+            });
+
+            var accountBadge = new AccountBadgeModel()
+            {
+                Account = account,
+                Badge = badge1,
+                Achieved = DateTime.Now
+            };
+
+            context.AccountBadges.AddOrUpdate(accountBadge);
 
             var user = new UserModel()
             {
@@ -68,12 +78,14 @@ namespace ExpenseManager.DataSeeding
 
             var costType1 = new CostTypeModel()
             {
-                Name = "Strava"
+                Name = "Strava",
+                Account = account
             };
 
             var costType2 = new CostTypeModel()
             {
-                Name = "Zábava"
+                Name = "Zábava",
+                Account = account
             };
 
             context.CostTypes.AddOrUpdate(costType1);
@@ -157,7 +169,7 @@ namespace ExpenseManager.DataSeeding
                 var cost = new CostInfoModel()
                 {
                     Account = account,
-                    Created = DateTime.Now,
+                    Created = DateTime.UtcNow.AddDays(- random.Next(0,14)),
                     Description = "Seeded expense",
                     IsIncome = false,
                     Periodicity = PeriodicityModel.None,
@@ -233,12 +245,12 @@ namespace ExpenseManager.DataSeeding
             context.Plans.AddOrUpdate(plan4);
             context.Plans.AddOrUpdate(plan5);
 
-            context.CostTypes.AddOrUpdate(new CostTypeModel {CostInfoList = new List<CostInfoModel>(), Name = "Food"});
+            context.CostTypes.AddOrUpdate(new CostTypeModel {CostInfoList = new List<CostInfoModel>(), Name = "Food", Account = account});
 
             context.SaveChanges();
         }
 
-        private void TruncateDB(ExpenseDbContext context)
+        private static void TruncateDB(ExpenseDbContext context)
         {
             DeleteAll<PlanModel>(context);
             DeleteAll<CostInfoModel>(context);

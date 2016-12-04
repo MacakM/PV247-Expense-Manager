@@ -418,6 +418,7 @@ namespace ExpenseManager.Presentation.Controllers
                 return View(model);
             }
         }
+
         private void AddErrors(IdentityResult result)
         {
             foreach (var error in result.Errors)
