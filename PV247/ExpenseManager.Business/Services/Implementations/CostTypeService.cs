@@ -69,7 +69,16 @@ namespace ExpenseManager.Business.Services.Implementations
         {
             using (var unitOfWork = UnitOfWorkProvider.Create())
             {
-                Save(costType);
+                var account = _accountRepository.GetById(costType.AccountId);
+                if (account == null)
+                {
+                    throw new InvalidOperationException("Account with given id doesn't exist");
+                }
+
+                var costTypeModel = ExpenseManagerMapper.Map<CostTypeModel>(costType);
+                costTypeModel.Account = account;
+
+                Repository.Update(costTypeModel);
                 unitOfWork.Commit();
             }
         }

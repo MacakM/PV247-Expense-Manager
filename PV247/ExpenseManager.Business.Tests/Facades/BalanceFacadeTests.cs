@@ -52,7 +52,8 @@ namespace ExpenseManager.Business.Tests.Facades
             var type = new CostTypeModel
             {
                 Name = typeName,
-                CostInfoList = new EditableList<CostInfoModel>()
+                CostInfoList = new EditableList<CostInfoModel>(),
+                Account = account
             };
             var plan = new PlanModel
             {
@@ -111,7 +112,8 @@ namespace ExpenseManager.Business.Tests.Facades
             var type = new CostTypeModel
             {
                 Name = typeName,
-                CostInfoList = new EditableList<CostInfoModel>()
+                CostInfoList = new EditableList<CostInfoModel>(),
+                Account = account
             };
             var plan = new PlanModel
             {
@@ -173,7 +175,8 @@ namespace ExpenseManager.Business.Tests.Facades
             var type = new CostTypeModel
             {
                 Name = typeName,
-                CostInfoList = new EditableList<CostInfoModel>()
+                CostInfoList = new EditableList<CostInfoModel>(),
+                Account = account
             };
             var plan = new PlanModel
             {
@@ -317,7 +320,8 @@ namespace ExpenseManager.Business.Tests.Facades
             var type = new CostTypeModel
             {
                 Name = typeName,
-                CostInfoList = new EditableList<CostInfoModel>()
+                CostInfoList = new EditableList<CostInfoModel>(),
+                Account = account
             };
             var plan = new PlanModel
             {
@@ -381,7 +385,8 @@ namespace ExpenseManager.Business.Tests.Facades
             var type = new CostTypeModel
             {
                 Name = typeName,
-                CostInfoList = new EditableList<CostInfoModel>()
+                CostInfoList = new EditableList<CostInfoModel>(),
+                Account = account
             };
             using (
                 var db =
@@ -439,7 +444,8 @@ namespace ExpenseManager.Business.Tests.Facades
             var type = new CostTypeModel
             {
                 Name = typeName,
-                CostInfoList = new EditableList<CostInfoModel>()
+                CostInfoList = new EditableList<CostInfoModel>(),
+                Account = account
             };
             using (
                 var db =
@@ -489,7 +495,8 @@ namespace ExpenseManager.Business.Tests.Facades
             var type = new CostTypeModel
             {
                 Name = typeName,
-                CostInfoList = new EditableList<CostInfoModel>()
+                CostInfoList = new EditableList<CostInfoModel>(),
+                Account = account
             };
             var info = new CostInfoModel
             {
@@ -543,7 +550,8 @@ namespace ExpenseManager.Business.Tests.Facades
             var type = new CostTypeModel
             {
                 Name = typeName,
-                CostInfoList = new EditableList<CostInfoModel>()
+                CostInfoList = new EditableList<CostInfoModel>(),
+                Account = account
             };
             var info = new CostInfoModel
             {
@@ -603,7 +611,8 @@ namespace ExpenseManager.Business.Tests.Facades
             var type = new CostTypeModel
             {
                 Name = typeName,
-                CostInfoList = new EditableList<CostInfoModel>()
+                CostInfoList = new EditableList<CostInfoModel>(),
+                Account = account
             };
             var info = new CostInfoModel
             {
@@ -654,12 +663,14 @@ namespace ExpenseManager.Business.Tests.Facades
             var type1 = new CostTypeModel
             {
                 Name = typeName1,
-                CostInfoList = new EditableList<CostInfoModel>()
+                CostInfoList = new EditableList<CostInfoModel>(),
+                Account = account
             };
             var type2 = new CostTypeModel
             {
                 Name = typeName2,
-                CostInfoList = new EditableList<CostInfoModel>()
+                CostInfoList = new EditableList<CostInfoModel>(),
+                Account = account
             };
             using (
                 var db =
@@ -721,12 +732,14 @@ namespace ExpenseManager.Business.Tests.Facades
             var type1 = new CostTypeModel
             {
                 Name = typeName1,
-                CostInfoList = new EditableList<CostInfoModel>()
+                CostInfoList = new EditableList<CostInfoModel>(),
+                Account = account
             };
             var type2 = new CostTypeModel
             {
                 Name = typeName2,
-                CostInfoList = new EditableList<CostInfoModel>()
+                CostInfoList = new EditableList<CostInfoModel>(),
+                Account = account
             };
             using (
                 var db =
@@ -787,7 +800,8 @@ namespace ExpenseManager.Business.Tests.Facades
             var type = new CostTypeModel
             {
                 Name = typeName,
-                CostInfoList = new EditableList<CostInfoModel>()
+                CostInfoList = new EditableList<CostInfoModel>(),
+                Account = account
             };
             using (
                 var db =
@@ -838,7 +852,8 @@ namespace ExpenseManager.Business.Tests.Facades
             var type = new CostTypeModel
             {
                 Name = typeName,
-                CostInfoList = new EditableList<CostInfoModel>()
+                CostInfoList = new EditableList<CostInfoModel>(),
+                Account = account
             };
             var plan = new PlanModel
             {
@@ -892,7 +907,8 @@ namespace ExpenseManager.Business.Tests.Facades
             var type = new CostTypeModel
             {
                 Name = typeName,
-                CostInfoList = new EditableList<CostInfoModel>()
+                CostInfoList = new EditableList<CostInfoModel>(),
+                Account = account
             };
             var plan = new PlanModel
             {
@@ -956,7 +972,8 @@ namespace ExpenseManager.Business.Tests.Facades
             var type = new CostTypeModel
             {
                 Name = typeName,
-                CostInfoList = new EditableList<CostInfoModel>()
+                CostInfoList = new EditableList<CostInfoModel>(),
+                Account = account
             };
             var plan = new PlanModel
             {
@@ -1006,7 +1023,8 @@ namespace ExpenseManager.Business.Tests.Facades
             var type = new CostTypeModel
             {
                 Name = typeName,
-                CostInfoList = new EditableList<CostInfoModel>()
+                CostInfoList = new EditableList<CostInfoModel>(),
+                Account = account
             };
             var plan = new PlanModel
             {
@@ -1040,12 +1058,29 @@ namespace ExpenseManager.Business.Tests.Facades
         public void CreateItemTypeTest()
         {
             // Arrange
+            const string accountName = "ExpenseManagerAccount01";
             const string typeName = "Food";
+            var account = new AccountModel
+            {
+                Badges = new List<AccountBadgeModel>(),
+                Costs = new List<CostInfoModel>(),
+                Name = accountName
+            };
+
+            using (
+                var db =
+                    new ExpenseDbContext(
+                        Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
+            {
+                db.Accounts.Add(account);
+                db.SaveChanges();
+            }
 
             var type = new CostType()
             {
                 Name = typeName,
-                CostInfoList = new EditableList<CostInfo>()
+                CostInfoList = new EditableList<CostInfo>(),
+                AccountId = account.Id
             };
 
             // Act
@@ -1064,17 +1099,28 @@ namespace ExpenseManager.Business.Tests.Facades
         {
             // Arrange
             Guid typeId;
+            const string accountName = "ExpenseManagerAccount01";
             const string typeName = "Food";
+            var account = new AccountModel
+            {
+                Badges = new List<AccountBadgeModel>(),
+                Costs = new List<CostInfoModel>(),
+                Name = accountName
+            };
+
             var type = new CostTypeModel
             {
                 Name = typeName,
-                CostInfoList = new EditableList<CostInfoModel>()
+                CostInfoList = new EditableList<CostInfoModel>(),
+                Account = account
             };
+
             using (
                 var db =
                     new ExpenseDbContext(
                         Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
             {
+                db.Accounts.Add(account);
                 db.CostTypes.Add(type);
                 db.SaveChanges();
                 typeId = type.Id;
@@ -1095,19 +1141,28 @@ namespace ExpenseManager.Business.Tests.Facades
         public void UpdateItemTypeTest()
         {
             // Arrange
+            const string accountName = "ExpenseManagerAccount01";
+            var account = new AccountModel
+            {
+                Badges = new List<AccountBadgeModel>(),
+                Costs = new List<CostInfoModel>(),
+                Name = accountName
+            };
             const string typeName1 = "Food";
             const string typeName2 = "PC";
             Guid typeId;
             var type = new CostTypeModel
             {
                 Name = typeName1,
-                CostInfoList = new EditableList<CostInfoModel>()
+                CostInfoList = new EditableList<CostInfoModel>(),
+                Account = account
             };
             using (
                 var db =
                     new ExpenseDbContext(
                         Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
             {
+                db.Accounts.Add(account);
                 db.CostTypes.Add(type);
                 db.SaveChanges();
                 typeId = type.Id;
@@ -1118,7 +1173,8 @@ namespace ExpenseManager.Business.Tests.Facades
             {
                 Id = typeId,
                 Name = typeName2,
-                CostInfoList = new EditableList<CostInfo>()
+                CostInfoList = new EditableList<CostInfo>(),
+                AccountId = account.Id
             });
 
             // Assert
@@ -1133,18 +1189,28 @@ namespace ExpenseManager.Business.Tests.Facades
         public void GetItemTypeTest()
         {
             // Arrange
+            const string accountName = "ExpenseManagerAccount01";
+            var account = new AccountModel
+            {
+                Badges = new List<AccountBadgeModel>(),
+                Costs = new List<CostInfoModel>(),
+                Name = accountName
+            };
+
             const string typeName = "Food";
             Guid typeId;
             var type = new CostTypeModel
             {
                 Name = typeName,
-                CostInfoList = new EditableList<CostInfoModel>()
+                CostInfoList = new EditableList<CostInfoModel>(),
+                Account = account
             };
             using (
                 var db =
                     new ExpenseDbContext(
                         Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
             {
+                db.Accounts.Add(account);
                 db.CostTypes.Add(type);
                 db.SaveChanges();
                 typeId = type.Id;
@@ -1164,17 +1230,27 @@ namespace ExpenseManager.Business.Tests.Facades
         public void ListItemTypesTest1()
         {
             // Arrange
+            const string accountName = "ExpenseManagerAccount01";
+            var account = new AccountModel
+            {
+                Badges = new List<AccountBadgeModel>(),
+                Costs = new List<CostInfoModel>(),
+                Name = accountName
+            };
+
             const string typeName1 = "Food";
             const string typeName2 = "PC";
             var type1 = new CostTypeModel
             {
                 Name = typeName1,
-                CostInfoList = new EditableList<CostInfoModel>()
+                CostInfoList = new EditableList<CostInfoModel>(),
+                Account = account
             };
             var type2 = new CostTypeModel
             {
                 Name = typeName2,
-                CostInfoList = new EditableList<CostInfoModel>()
+                CostInfoList = new EditableList<CostInfoModel>(),
+                Account = account
             };
             using (
                 var db =
@@ -1200,17 +1276,27 @@ namespace ExpenseManager.Business.Tests.Facades
         public void ListItemTypesTest2()
         {
             // Arrange
+            const string accountName = "ExpenseManagerAccount01";
+            var account = new AccountModel
+            {
+                Badges = new List<AccountBadgeModel>(),
+                Costs = new List<CostInfoModel>(),
+                Name = accountName
+            };
+
             const string typeName1 = "Food";
             const string typeName2 = "PC";
             var type1 = new CostTypeModel
             {
                 Name = typeName1,
-                CostInfoList = new EditableList<CostInfoModel>()
+                CostInfoList = new EditableList<CostInfoModel>(),
+                Account = account
             };
             var type2 = new CostTypeModel
             {
                 Name = typeName2,
-                CostInfoList = new EditableList<CostInfoModel>()
+                CostInfoList = new EditableList<CostInfoModel>(),
+                Account = account
             };
             using (
                 var db =
