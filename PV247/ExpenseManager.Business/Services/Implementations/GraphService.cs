@@ -36,8 +36,33 @@ namespace ExpenseManager.Business.Services.Implementations
             using (_unitOfWorkProvider.Create())
             {
                 var dailyBalances = _balancesGroupedByDayQuery.Execute();
-                return CreateDailyTotalBalances(totalBalance, dailyBalances);
+                var dailyBalancesWithZeros = GetDailyBalancesWithZeros(dailyBalances);
+                return CreateDailyTotalBalances(totalBalance, dailyBalancesWithZeros);
             }
+        }
+
+        // since not in all days there was some expense it would miss in the list
+        // this method adds zeros to the list
+        private List<DayBalance> GetDailyBalancesWithZeros(IList<DayBalance> dailyBalances)
+        {
+            var dictionaryBalances = new Dictionary<DateTime, decimal>();
+            foreach (var dayBalance in dailyBalances)
+            {
+                dictionaryBalances.Add(dayBalance.Date, dayBalance.Balance);
+            }
+
+            var dailyBalancesWithZeros = new List<DayBalance>();
+            for (int i = 9; i >= 0; i--)
+            {
+                var date = DateTime.UtcNow.AddDays(-i).Date;
+                dailyBalancesWithZeros.Add(new DayBalance() {
+                    Date = date,
+                    Balance = dictionaryBalances.ContainsKey(date) ?
+                                dictionaryBalances[date] : 0
+                });
+            }
+
+            return dailyBalancesWithZeros;
         }
 
         private List<DayTotalBalance> CreateDailyTotalBalances(decimal totalBalance, IList<DayBalance> dailyBalances)
