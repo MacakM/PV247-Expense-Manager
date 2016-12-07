@@ -12,7 +12,7 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.Plans
         /// <summary>
         /// Right edge of planned money range
         /// </summary>
-        public decimal PlannedMoneyTo { get; set; }
+        public readonly decimal? PlannedMoneyTo;
 
         /// <summary>
         /// Filters query
@@ -21,7 +21,12 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.Plans
         /// <returns></returns>
         public IQueryable<PlanModel> FilterQuery(IQueryable<PlanModel> queryable)
         {
-            return queryable.Where(plan => plan.PlannedMoney <= PlannedMoneyTo);
+            return PlannedMoneyTo != null ? queryable.Where(plan => plan.PlannedMoney <= PlannedMoneyTo) : queryable;
+        }
+
+        public PlansByMoneyTo(decimal? plannedMoneyTo)
+        {
+            PlannedMoneyTo = plannedMoneyTo;
         }
     }
 }

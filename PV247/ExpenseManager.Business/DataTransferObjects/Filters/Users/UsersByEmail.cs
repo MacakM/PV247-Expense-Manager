@@ -12,7 +12,7 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.Users
         /// <summary>
         /// Specifies users email to filter with
         /// </summary>
-        public string Email { get; set; }
+        public readonly string Email;
 
         /// <summary>
         /// Filters users by their email
@@ -21,7 +21,12 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.Users
         /// <returns></returns>
         public IQueryable<UserModel> FilterQuery(IQueryable<UserModel> queryable)
         {
-            return queryable.Where(user => user.Email.Contains(Email));
+            return Email != null ? queryable.Where(user => user.Email.Contains(Email)) : queryable;
+        }
+
+        public UsersByEmail(string email)
+        {
+            Email = email;
         }
     }
 }

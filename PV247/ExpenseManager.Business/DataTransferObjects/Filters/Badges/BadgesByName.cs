@@ -12,7 +12,7 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.Badges
         /// <summary>
         /// Name of Badge
         /// </summary>
-        public string Name { get; set; }
+        public readonly string Name;
 
         /// <summary>
         /// Filters given query
@@ -20,7 +20,12 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.Badges
         /// <param name="queryable">Query to be filtered</param>
         public IQueryable<BadgeModel> FilterQuery(IQueryable<BadgeModel> queryable)
         {
-            return queryable.Where(badge => badge.Name.Contains(Name));
+            return Name != null ? queryable.Where(badge => badge.Name.Contains(Name)) : queryable;
+        }
+
+        public BadgesByName(string name)
+        {
+            Name = name;
         }
     }
 }

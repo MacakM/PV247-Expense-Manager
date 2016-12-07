@@ -13,7 +13,7 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.CostInfos
         /// <summary>
         /// Type id to be filtered with
         /// </summary>
-        public Guid TypeId { get; set; }
+        public readonly Guid? TypeId;
 
         /// <summary>
         /// Filters query
@@ -22,7 +22,12 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.CostInfos
         /// <returns></returns>
         public IQueryable<CostInfoModel> FilterQuery(IQueryable<CostInfoModel> queryable)
         {
-            return queryable.Where(costInfo => costInfo.TypeId == TypeId);
+            return TypeId != null ? queryable.Where(costInfo => costInfo.TypeId == TypeId) : queryable;
+        }
+
+        public CostInfosByTypeId(Guid? typeId)
+        {
+            TypeId = typeId;
         }
     }
 }

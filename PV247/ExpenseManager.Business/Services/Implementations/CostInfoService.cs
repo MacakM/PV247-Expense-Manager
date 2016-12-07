@@ -185,19 +185,19 @@ namespace ExpenseManager.Business.Services.Implementations
             {
                 Query.Filters = new List<IFilter<CostInfoModel>>
                 {
-                    new CostInfosByIsIncome { IsIncome = true},
-                    new CostInfosByPeriodicity {Periodicity = PeriodicityModel.None },
-                    new CostInfosByCreatedTo { CreatedTo = DateTime.Now },
-                    new CostInfosByAccountId {AccountId = accountId}
+                    new CostInfosByIsIncome(true),
+                    new CostInfosByPeriodicity(PeriodicityModel.None),
+                    new CostInfosByCreatedTo(DateTime.Now),
+                    new CostInfosByAccountId(accountId)
                 }; 
                 
                 incomes = GetList();
                 Query.Filters = new List<IFilter<CostInfoModel>>
                 {
-                   new CostInfosByIsIncome { IsIncome = false},
-                    new CostInfosByPeriodicity {Periodicity = PeriodicityModel.None },
-                    new CostInfosByCreatedTo { CreatedTo = DateTime.Now },
-                    new CostInfosByAccountId {AccountId = accountId}
+                   new CostInfosByIsIncome(false),
+                    new CostInfosByPeriodicity(PeriodicityModel.None),
+                    new CostInfosByCreatedTo (DateTime.Now),
+                    new CostInfosByAccountId(accountId)
                 };
                 
                 outcomes = GetList();
@@ -209,7 +209,7 @@ namespace ExpenseManager.Business.Services.Implementations
         private void CheckMonthPeriodicities()
         {
 
-            CostInfosByPeriodicity filter = new CostInfosByPeriodicity { Periodicity = PeriodicityModel.Month};
+            CostInfosByPeriodicity filter = new CostInfosByPeriodicity (PeriodicityModel.Month);
 
             Query.Filters = new List<IFilter<CostInfoModel>> { filter };
 
@@ -238,7 +238,7 @@ namespace ExpenseManager.Business.Services.Implementations
         private void CheckWeekPeriodicities()
         {
 
-            CostInfosByPeriodicity filter = new CostInfosByPeriodicity { Periodicity = PeriodicityModel.Week };
+            CostInfosByPeriodicity filter = new CostInfosByPeriodicity(PeriodicityModel.Week);
 
             Query.Filters = new List<IFilter<CostInfoModel>> { filter };
             using (var unitOfWork = UnitOfWorkProvider.Create())
@@ -264,7 +264,7 @@ namespace ExpenseManager.Business.Services.Implementations
 
         private void CheckDayPeriodicites()
         {
-            CostInfosByPeriodicity filter = new CostInfosByPeriodicity { Periodicity = PeriodicityModel.Day};
+            CostInfosByPeriodicity filter = new CostInfosByPeriodicity(PeriodicityModel.Day);
 
             Query.Filters = new List<IFilter<CostInfoModel>> { filter};
             using (var unitOfWork = UnitOfWorkProvider.Create())

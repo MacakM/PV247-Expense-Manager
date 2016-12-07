@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using ExpenseManager.Business.DataTransferObjects.Enums;
 using ExpenseManager.Database.DataAccess.FilterInterfaces;
 using ExpenseManager.Database.Entities;
 using ExpenseManager.Database.Enums;
@@ -13,7 +14,7 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.Users
         /// <summary>
         /// Specifies users access type to filter with
         /// </summary>
-        public AccountAccessTypeModel AccessType { get; set; }
+        public readonly AccountAccessTypeModel? AccessType;
 
         /// <summary>
         /// Filters query by access type
@@ -22,7 +23,17 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.Users
         /// <returns></returns>
         public IQueryable<UserModel> FilterQuery(IQueryable<UserModel> queryable)
         {
-            return queryable.Where(user => user.AccessType == AccessType);
+            return AccessType != null ? queryable.Where(user => user.AccessType == AccessType) : queryable;
+        }
+
+        public UsersByAccessType(AccountAccessTypeModel? accessType)
+        {
+            AccessType = accessType;
+        }
+
+        public UsersByAccessType(AccountAccessType? accessType)
+        {
+            if (accessType != null) AccessType = (AccountAccessTypeModel) accessType;
         }
     }
 }

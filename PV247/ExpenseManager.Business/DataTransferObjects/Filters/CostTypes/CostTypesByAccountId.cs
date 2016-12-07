@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ExpenseManager.Database.DataAccess.FilterInterfaces;
 using ExpenseManager.Database.Entities;
 
@@ -13,7 +10,7 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.CostTypes
         /// <summary>
         /// Account id to be used in filter
         /// </summary>
-        public Guid AccountId { get; set; }
+        public readonly Guid? AccountId;
 
         /// <summary>
         /// Filters query
@@ -22,7 +19,12 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.CostTypes
         /// <returns></returns>
         public IQueryable<CostTypeModel> FilterQuery(IQueryable<CostTypeModel> queryable)
         {
-            return queryable.Where(costType => costType.AccountId == AccountId);
+            return AccountId!= null ? queryable.Where(costType => costType.AccountId == AccountId) : queryable;
+        }
+
+        public CostTypesByAccountId(Guid? accountId)
+        {
+            AccountId = accountId;
         }
     }
 }

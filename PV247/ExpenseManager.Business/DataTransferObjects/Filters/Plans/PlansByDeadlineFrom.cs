@@ -13,7 +13,7 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.Plans
         /// <summary>
         /// Left edge of deadline range
         /// </summary>
-        public DateTime? DeadlineFrom { get; set; }
+        public readonly DateTime? DeadlineFrom;
 
         /// <summary>
         /// Filters query
@@ -22,7 +22,12 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.Plans
         /// <returns></returns>
         public IQueryable<PlanModel> FilterQuery(IQueryable<PlanModel> queryable)
         {
-            return queryable.Where(plan => plan.Deadline >= DeadlineFrom);
+            return DeadlineFrom != null ? queryable.Where(plan => plan.Deadline >= DeadlineFrom) : queryable;
+        }
+
+        public PlansByDeadlineFrom(DateTime? deadlineFrom)
+        {
+            DeadlineFrom = deadlineFrom;
         }
     }
 }

@@ -12,7 +12,7 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.CostTypes
         /// <summary>
         /// Used for filtering based on cost type name
         /// </summary>
-        public string Name { get; set; }
+        public readonly string Name;
 
         /// <summary>
         /// Filters query
@@ -21,7 +21,12 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.CostTypes
         /// <returns></returns>
         public IQueryable<CostTypeModel> FilterQuery(IQueryable<CostTypeModel> queryable)
         {
-            return queryable.Where(costType => costType.Name.Contains(Name));
+            return Name != null ? queryable.Where(costType => costType.Name.Contains(Name)) : queryable;
+        }
+
+        public CostTypesByName(string name)
+        {
+            Name = name;
         }
     }
 }

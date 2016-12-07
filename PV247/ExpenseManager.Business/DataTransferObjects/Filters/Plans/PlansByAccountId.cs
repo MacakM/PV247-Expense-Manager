@@ -13,7 +13,7 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.Plans
         /// <summary>
         /// Account id to be used in filter
         /// </summary>
-        public Guid AccountId { get; set; }
+        public readonly Guid? AccountId;
 
         /// <summary>
         /// Filters query
@@ -22,7 +22,12 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.Plans
         /// <returns></returns>
         public IQueryable<PlanModel> FilterQuery(IQueryable<PlanModel> queryable)
         {
-            return queryable.Where(plan => plan.AccountId == AccountId);
+            return AccountId != null ? queryable.Where(plan => plan.AccountId == AccountId) : queryable;
+        }
+
+        public PlansByAccountId(Guid? accountId)
+        {
+            AccountId = accountId;
         }
     }
 }

@@ -12,7 +12,7 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.Plans
         /// <summary>
         /// If plan is completed
         /// </summary>
-        public bool IsCompleted { get; set; }
+        public readonly bool? IsCompleted;
 
         /// <summary>
         /// Filters query
@@ -21,7 +21,12 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.Plans
         /// <returns></returns>
         public IQueryable<PlanModel> FilterQuery(IQueryable<PlanModel> queryable)
         {
-            return queryable.Where(plan => plan.IsCompleted == IsCompleted);
+            return IsCompleted != null ? queryable.Where(plan => plan.IsCompleted == IsCompleted) : queryable;
+        }
+
+        public PlansByCompletition(bool? isCompleted)
+        {
+            IsCompleted = isCompleted;
         }
     }
 }

@@ -12,7 +12,7 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.CostInfos
         /// <summary>
         /// If cost type is income or ourcome
         /// </summary>
-        public bool IsIncome { get; set; }
+        public readonly bool? IsIncome;
 
         /// <summary>
         /// Filters query
@@ -21,7 +21,13 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.CostInfos
         /// <returns></returns>
         public IQueryable<CostInfoModel> FilterQuery(IQueryable<CostInfoModel> queryable)
         {
-            return queryable.Where(x => x.IsIncome == IsIncome);
+            return IsIncome != null ? queryable.Where(x => x.IsIncome == IsIncome) : queryable;
         }
+
+        public CostInfosByIsIncome(bool? isIncome)
+        {
+            IsIncome = isIncome;
+        }
+
     }
 }

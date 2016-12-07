@@ -13,7 +13,7 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.CostInfos
         /// <summary>
         /// Right edge of created range
         /// </summary>
-        public DateTime CreatedTo { get; set; }
+        public readonly DateTime? CreatedTo;
 
         /// <summary>
         /// Filters query
@@ -22,7 +22,12 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.CostInfos
         /// <returns></returns>
         public IQueryable<CostInfoModel> FilterQuery(IQueryable<CostInfoModel> queryable)
         {
-            return queryable.Where(costInfo => costInfo.Created <= CreatedTo);
+            return CreatedTo!= null ? queryable.Where(costInfo => costInfo.Created <= CreatedTo) : queryable;
+        }
+
+        public CostInfosByCreatedTo(DateTime? createdTo)
+        {
+            CreatedTo = createdTo;
         }
     }
 }

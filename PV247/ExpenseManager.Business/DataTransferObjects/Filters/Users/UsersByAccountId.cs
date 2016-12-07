@@ -13,7 +13,7 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.Users
         /// <summary>
         /// Specifies account id to filter with
         /// </summary>
-        public Guid AccountId { get; set; }
+        public readonly Guid? AccountId;
 
         /// <summary>
         ///  Filters by account id
@@ -22,7 +22,12 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.Users
         /// <returns></returns>
         public IQueryable<UserModel> FilterQuery(IQueryable<UserModel> queryable)
         {
-            return queryable.Where(user => user.Account.Id == AccountId);
+            return AccountId != null ? queryable.Where(user => user.Account.Id == AccountId) : queryable;
+        }
+
+        public UsersByAccountId(Guid? accountId)
+        {
+            AccountId = accountId;
         }
     }
 }

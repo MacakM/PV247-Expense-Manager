@@ -13,7 +13,7 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.CostInfos
         /// <summary>
         /// Account id
         /// </summary>
-        public Guid AccountId { get; set; }
+        public readonly Guid? AccountId;
 
         /// <summary>
         /// Filters query
@@ -22,7 +22,12 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.CostInfos
         /// <returns></returns>
         public IQueryable<CostInfoModel> FilterQuery(IQueryable<CostInfoModel> queryable)
         {
-            return queryable.Where(x => x.AccountId == AccountId);
+             return AccountId == null ? queryable : queryable.Where(x => x.AccountId == AccountId);
+        }
+
+        public CostInfosByAccountId(Guid? accountId)
+        {
+            AccountId = accountId;
         }
     }
 }

@@ -12,7 +12,7 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.CostInfos
         /// <summary>
         /// Money from
         /// </summary>
-        public decimal MoneyFrom { get; set; }
+        public readonly decimal? MoneyFrom;
 
         /// <summary>
         /// Filters query
@@ -21,8 +21,12 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.CostInfos
         /// <returns></returns>
         public IQueryable<CostInfoModel> FilterQuery(IQueryable<CostInfoModel> queryable)
         {
-            return queryable.Where(x => x.Money >= MoneyFrom);
+            return MoneyFrom != null ? queryable.Where(x => x.Money >= MoneyFrom) : queryable;
         }
 
+        public CostInfosByMoneyFrom(decimal? moneyFrom)
+        {
+            MoneyFrom = moneyFrom;
+        }
     }
 }

@@ -13,7 +13,7 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.Plans
         /// <summary>
         /// Plan type to be used in filter
         /// </summary>
-        public PlanTypeModel PlanType { get; set; }
+        public readonly PlanTypeModel? PlanType;
 
         /// <summary>
         /// Filters query
@@ -22,7 +22,12 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.Plans
         /// <returns></returns>
         public IQueryable<PlanModel> FilterQuery(IQueryable<PlanModel> queryable)
         {
-            return queryable.Where(plan => plan.PlanType == PlanType);
+            return PlanType != null ? queryable.Where(plan => plan.PlanType == PlanType) : queryable;
+        }
+
+        public PlansByType(PlanTypeModel? planType)
+        {
+            PlanType = planType;
         }
     }
 }

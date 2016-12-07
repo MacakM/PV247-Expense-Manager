@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using ExpenseManager.Business.DataTransferObjects.Enums;
 using ExpenseManager.Database.DataAccess.FilterInterfaces;
 using ExpenseManager.Database.Entities;
 using ExpenseManager.Database.Enums;
@@ -13,7 +14,7 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.CostInfos
         /// <summary>
         /// Periodicity of cost 
         /// </summary>
-        public PeriodicityModel Periodicity { get; set; }
+        public readonly PeriodicityModel? Periodicity;
 
         /// <summary>
         /// Filters query
@@ -22,7 +23,16 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.CostInfos
         /// <returns></returns>
         public IQueryable<CostInfoModel> FilterQuery(IQueryable<CostInfoModel> queryable)
         {
-            return queryable.Where(x => x.Periodicity == Periodicity);
+            return Periodicity != null ? queryable.Where(x => x.Periodicity == Periodicity) : queryable;
+        }
+
+        public CostInfosByPeriodicity(PeriodicityModel? periodicity)
+        {
+            Periodicity = periodicity;
+        }
+        public CostInfosByPeriodicity(Periodicity? periodicity)
+        {
+            if (periodicity != null) Periodicity = (PeriodicityModel) periodicity;
         }
     }
 }

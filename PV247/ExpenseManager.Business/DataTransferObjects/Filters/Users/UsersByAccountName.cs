@@ -12,7 +12,7 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.Users
         /// <summary>
         /// Specifies account name to filter with
         /// </summary>
-        public string AccountName { get; set; }
+        public readonly string AccountName;
 
         /// <summary>
         /// Filters by user name
@@ -21,7 +21,12 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.Users
         /// <returns></returns>
         public IQueryable<UserModel> FilterQuery(IQueryable<UserModel> queryable)
         {
-            return queryable.Where(user => user.Account.Name.Contains(AccountName));
+            return AccountName != null ? queryable.Where(user => user.Account.Name.Contains(AccountName)) : queryable;
+        }
+
+        public UsersByAccountName(string accountName)
+        {
+            AccountName = accountName;
         }
     }
 }

@@ -12,7 +12,7 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.Users
         /// <summary>
         /// User name
         /// </summary>
-        public string Name { get; set; }
+        public readonly string Name;
 
         /// <summary>
         /// Filters by user name
@@ -21,7 +21,12 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.Users
         /// <returns></returns>
         public IQueryable<UserModel> FilterQuery(IQueryable<UserModel> queryable)
         {
-            return queryable.Where(user => user.Name.Contains(Name));
+            return Name != null ? queryable.Where(user => user.Name.Contains(Name)) : queryable;
+        }
+
+        public UserModelsByName(string name)
+        {
+            Name = name;
         }
     }
 }
