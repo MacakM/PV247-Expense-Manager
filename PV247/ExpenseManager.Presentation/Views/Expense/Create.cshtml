@@ -7,55 +7,80 @@
 
 <div class="col-md-9 content-holder">
     <h2>New expense</h2>
-    @await Component.InvokeAsync("InlineErrorMessage")
-    <form asp-action="Store">
-        <div class="form-horizontal">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Money" class="col-md-2 control-label">Ammount in dollars</label>
-                <div class="col-md-10">
-                    <input asp-for="Money" class="form-control" />
-                    <span asp-validation-for="Money" class="text-danger" />
-                </div>
+    @if (Model.CostTypes.Count == 0)
+    {
+        <span>You don't have any category. First, you need to <a href="@Url.Action("Create", "Category")">create</a> one</span>
+        <br /><br />
+    }
+    else
+    {
+        if (Model.Errors != null && Model.Errors.Any())
+        {
+            <div class="alert alert-danger">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                @foreach (var error in Model.Errors)
+                {
+                    <span>@error</span><br />
+                }
             </div>
-            <div class="form-group">
-                <label asp-for="Description" class="col-md-2 control-label"></label>
-                <div class="col-md-10">
-                    <input asp-for="Description" class="form-control" />
-                    <span asp-validation-for="Description" class="text-danger" />
+        }
+        <form asp-action="Store">
+            <div class="form-horizontal">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Money" class="col-md-2 control-label">Ammount in dollars</label>
+                    <div class="col-md-10">
+                        <input asp-for="Money" class="form-control" />
+                        <span asp-validation-for="Money" class="text-danger" />
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                
-                <label asp-for="TypeId" class="col-md-2 control-label">Category</label>
-                <div class="col-md-10">
-                    <select class="form-control" name="TypeId">
-                        @foreach (var costType in Model.CostTypes)
-                        {
-                            <option value="@costType.Id">@costType.Name</option>
-                        }
-                    </select>
-                    <span asp-validation-for="TypeId" class="text-danger" />
+                <div class="form-group">
+                    <label asp-for="Description" class="col-md-2 control-label"></label>
+                    <div class="col-md-10">
+                        <input asp-for="Description" class="form-control" />
+                        <span asp-validation-for="Description" class="text-danger" />
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-2 control-label"></label>
-                <div class="col-md-10">
-                    <div class="checkbox">
-                        <input class="income-switch" data-on-color="success" data-off-color="danger" data-on-text="Income" data-off-text="Outcome" asp-for="IsIncome" style="margin-left:0px"/>
+                <div class="form-group">
+                    <label asp-for="Created" class="col-md-2 control-label"></label>
+                    <div class="col-md-10">
+                        <input asp-for="Created" class="form-control" value="@DateTime.UtcNow.ToShortDateString()" />
+                        <span asp-validation-for="Created" class="text-danger" />
+                    </div>
+                </div>
+                <div class="form-group">
+
+                    <label asp-for="TypeId" class="col-md-2 control-label">Category</label>
+                    <div class="col-md-10">
+                        <select class="form-control" name="TypeId">
+                            @foreach (var costType in Model.CostTypes)
+                            {
+                                <option value="@costType.Id">@costType.Name</option>
+                            }
+                        </select>
+                        <span asp-validation-for="TypeId" class="text-danger" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label"></label>
+                    <div class="col-md-10">
+                        <div class="checkbox">
+                            <input class="income-switch" data-on-color="success" data-off-color="danger" data-on-text="Income" data-off-text="Expense" asp-for="IsIncome" style="margin-left:0px" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Create" class="btn" />
                     </div>
                 </div>
             </div>
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn" />
-                </div>
-            </div>
-        </div>
-    </form>
+        </form>
+    }
+    
 
     <div>
-        <a asp-action="Index">Back to List</a>
+        <a asp-action="Index">Back to account statement</a>
     </div>
 </div>
 

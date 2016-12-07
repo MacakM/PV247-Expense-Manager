@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Enums;
@@ -86,14 +87,19 @@ namespace ExpenseManager.Presentation.Controllers
 
             if (!ModelState.IsValid || costType == null || costType.AccountId != account.Id)
             {
-                return RedirectToAction("Create", new { errorMessage = ExpenseManagerResource.InvalidInputData });
+                var model = new CreateViewModel()
+                {
+                    CostTypes = GetAllCostTypes(),
+                    Errors = ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage)
+                };
+
+                return View("Create", model);
             }
 
             var costInfo = Mapper.Map<CostInfo>(costInfoViewModel);
 
 
             costInfo.AccountId = account.Id;
-            costInfo.Created = DateTime.Now;
             costInfo.Periodicity = Periodicity.None;
 
             _expenseFacade.CreateItem(costInfo);

@@ -14,6 +14,7 @@ namespace ExpenseManager.Presentation.Models.PermanentExpense
         /// How much money has changed.
         /// </summary>
         [Required]
+        [Range(0.0001, Double.MaxValue)]
         public decimal Money { get; set; }
 
         /// <summary>
