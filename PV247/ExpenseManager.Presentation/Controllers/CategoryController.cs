@@ -72,14 +72,14 @@ namespace ExpenseManager.Presentation.Controllers
                 return RedirectToAction("Index", "Error", new {errorMessage = ExpenseManagerResource.InvalidInputData});
             }
 
-            var existingCategories = _expenseFacade.ListItemTypes(model.Name, null);
+            var account = CurrentAccountProvider.GetCurrentAccount(HttpContext.User);
+            var existingCategories = _expenseFacade.ListItemTypes(model.Name, account.Id, null);
 
             if (existingCategories.Count != 0)
             {
                 return RedirectToAction("Index", "Error", new {errorMessage = ExpenseManagerResource.CategoryExists});
             }
 
-            var account = CurrentAccountProvider.GetCurrentAccount(HttpContext.User);
             var costType = Mapper.Map<CostType>(model);
             costType.AccountId = account.Id;
 

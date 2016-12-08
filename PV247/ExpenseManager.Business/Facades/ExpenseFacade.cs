@@ -168,11 +168,12 @@ namespace ExpenseManager.Business.Facades
         /// List cost types specified by filter
         /// </summary>
         /// <param name="costTypeName"></param>
+        /// <param name="accountId"></param>
         /// <param name="pageInfo"></param>
         /// <returns>List of cost typer</returns>
-        public List<CostType> ListItemTypes(string costTypeName, PageInfo pageInfo)
+        public List<CostType> ListItemTypes(string costTypeName, Guid accountId, PageInfo pageInfo)
         {
-            var filters = FilterFactory.GetCostTypeFilters(costTypeName);
+            var filters = FilterFactory.GetCostTypeFilters(costTypeName, accountId);
             return _costTypeService.ListCostTypes(filters, FilterFactory.GetPageAndOrderable<CostTypeModel>(pageInfo));
         }
     }

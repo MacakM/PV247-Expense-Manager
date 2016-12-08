@@ -604,7 +604,7 @@ namespace ExpenseManager.Business.Tests.Facades
             }
 
             // Act
-            var types = _expenseFacade.ListItemTypes(null, null);
+            var types = _expenseFacade.ListItemTypes(null, account.Id, null);
 
             // Assert
             Assert.That(types.Count == 2, "Types were not listed.");
@@ -650,7 +650,7 @@ namespace ExpenseManager.Business.Tests.Facades
             }
 
             // Act
-            var types = _expenseFacade.ListItemTypes("PC", null);
+            var types = _expenseFacade.ListItemTypes("PC", account.Id, null);
 
             // Assert
             Assert.That(types.Count == 1, "Type was not listed.");

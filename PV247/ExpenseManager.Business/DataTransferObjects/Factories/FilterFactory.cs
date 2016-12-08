@@ -50,9 +50,13 @@ namespace ExpenseManager.Business.DataTransferObjects.Factories
            return new List<IFilter<PlanModel>> { new PlansByAccountId(accountId)};
         }
 
-        public static List<IFilter<CostTypeModel>> GetCostTypeFilters(string costTypeName)
+        public static List<IFilter<CostTypeModel>> GetCostTypeFilters(string costTypeName, Guid accountId)
         {
-            return new List<IFilter<CostTypeModel>> { new CostTypesByName(costTypeName)};
+            return new List<IFilter<CostTypeModel>>
+            {
+                new CostTypesByName(costTypeName),
+                new CostTypesByAccountId(accountId)
+            };
         }
 
         public static List<IFilter<CostTypeModel>> GetCostTypeFilters(Guid accountId)
