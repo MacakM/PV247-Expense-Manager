@@ -393,6 +393,281 @@ namespace ExpenseManager.Business.Tests.Facades
         }
 
         /// <summary>
+        /// Tests getting number of incomes.
+        /// </summary>
+        [Test]
+        public void GetItemCountTest1()
+        {
+            // Arrange
+            const string accountName = "ExpenseManagerAccount01";
+            const string typeName1 = "Food";
+            const string typeName2 = "PC";
+            var account = new AccountModel
+            {
+                Badges = new List<AccountBadgeModel>(),
+                Costs = new List<CostInfoModel>(),
+                Name = accountName
+            };
+            var type1 = new CostTypeModel
+            {
+                Name = typeName1,
+                CostInfoList = new EditableList<CostInfoModel>(),
+                Account = account
+            };
+            var type2 = new CostTypeModel
+            {
+                Name = typeName2,
+                CostInfoList = new EditableList<CostInfoModel>(),
+                Account = account
+            };
+            using (
+                var db =
+                    new ExpenseDbContext(
+                        Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
+            {
+                db.Accounts.Add(account);
+                db.CostTypes.Add(type1);
+                db.CostTypes.Add(type2);
+                db.SaveChanges();
+                var accountId = account.Id;
+                var typeId1 = type1.Id;
+                var typeId2 = type2.Id;
+                db.CostInfos.Add(new CostInfoModel
+                {
+                    Description = "bread",
+                    AccountId = accountId,
+                    TypeId = typeId1,
+                    IsIncome = true,
+                    Money = 25,
+                    Created = DateTime.Now
+                });
+                db.CostInfos.Add(new CostInfoModel
+                {
+                    Description = "WoW",
+                    AccountId = accountId,
+                    TypeId = typeId2,
+                    IsIncome = false,
+                    Money = 1500,
+                    Created = DateTime.Now
+                });
+                db.SaveChanges();
+            }
+
+            // Act
+            var incomeCount = _expenseFacade.GetCostInfosCount(null, null, null, null, null,null, null, true);
+
+            // Assert
+            Assert.That(incomeCount == 1, "Number of incomes is not correct.");
+        }
+
+        /// <summary>
+        /// Tests getting number of cost information for given account.
+        /// </summary>
+        [Test]
+        public void GetItemCountTest2()
+        {
+            // Arrange
+            Guid accountId;
+            const string accountName = "ExpenseManagerAccount01";
+            const string typeName1 = "Food";
+            const string typeName2 = "PC";
+            var account = new AccountModel
+            {
+                Badges = new List<AccountBadgeModel>(),
+                Costs = new List<CostInfoModel>(),
+                Name = accountName
+            };
+            var type1 = new CostTypeModel
+            {
+                Name = typeName1,
+                CostInfoList = new EditableList<CostInfoModel>(),
+                Account = account
+            };
+            var type2 = new CostTypeModel
+            {
+                Name = typeName2,
+                CostInfoList = new EditableList<CostInfoModel>(),
+                Account = account
+            };
+            using (
+                var db =
+                    new ExpenseDbContext(
+                        Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
+            {
+                db.Accounts.Add(account);
+                db.CostTypes.Add(type1);
+                db.CostTypes.Add(type2);
+                db.SaveChanges();
+                accountId = account.Id;
+                var typeId1 = type1.Id;
+                var typeId2 = type2.Id;
+                db.CostInfos.Add(new CostInfoModel
+                {
+                    Description = "bread",
+                    AccountId = accountId,
+                    TypeId = typeId1,
+                    IsIncome = true,
+                    Money = 25,
+                    Created = DateTime.Now
+                });
+                db.CostInfos.Add(new CostInfoModel
+                {
+                    Description = "WoW",
+                    AccountId = accountId,
+                    TypeId = typeId2,
+                    IsIncome = false,
+                    Money = 1500,
+                    Created = DateTime.Now
+                });
+                db.SaveChanges();
+            }
+
+            // Act
+            var accountItemsCount = _expenseFacade.GetCostInfosCount(accountId, null, null, null, null, null, null, null);
+
+            // Assert
+            Assert.That(accountItemsCount == 2, "Number of items for given account is not correct.");
+        }
+
+        /// <summary>
+        /// Tests getting number of cost information beetween money range.
+        /// </summary>
+        [Test]
+        public void GetItemCountTest3()
+        {
+            // Arrange
+            const string accountName = "ExpenseManagerAccount01";
+            const string typeName1 = "Food";
+            const string typeName2 = "PC";
+            var account = new AccountModel
+            {
+                Badges = new List<AccountBadgeModel>(),
+                Costs = new List<CostInfoModel>(),
+                Name = accountName
+            };
+            var type1 = new CostTypeModel
+            {
+                Name = typeName1,
+                CostInfoList = new EditableList<CostInfoModel>(),
+                Account = account
+            };
+            var type2 = new CostTypeModel
+            {
+                Name = typeName2,
+                CostInfoList = new EditableList<CostInfoModel>(),
+                Account = account
+            };
+            using (
+                var db =
+                    new ExpenseDbContext(
+                        Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
+            {
+                db.Accounts.Add(account);
+                db.CostTypes.Add(type1);
+                db.CostTypes.Add(type2);
+                db.SaveChanges();
+                var accountId = account.Id;
+                var typeId1 = type1.Id;
+                var typeId2 = type2.Id;
+                db.CostInfos.Add(new CostInfoModel
+                {
+                    Description = "bread",
+                    AccountId = accountId,
+                    TypeId = typeId1,
+                    IsIncome = true,
+                    Money = 25,
+                    Created = DateTime.Now
+                });
+                db.CostInfos.Add(new CostInfoModel
+                {
+                    Description = "WoW",
+                    AccountId = accountId,
+                    TypeId = typeId2,
+                    IsIncome = false,
+                    Money = 1500,
+                    Created = DateTime.Now
+                });
+                db.SaveChanges();
+            }
+
+            // Act
+            var cheapItemsCount = _expenseFacade.GetCostInfosCount(null, null, null, null, 25, 200, null, null);
+
+            // Assert
+            Assert.That(cheapItemsCount == 1, "Number of cheap items is not correct.");
+        }
+
+        /// <summary>
+        /// Tests getting number of cost information with many constraints.
+        /// </summary>
+        [Test]
+        public void GetItemCountTest4()
+        {
+            // Arrange
+            Guid accountId;
+            Guid typeId1;
+            const string accountName = "ExpenseManagerAccount01";
+            const string typeName1 = "Food";
+            const string typeName2 = "PC";
+            var account = new AccountModel
+            {
+                Badges = new List<AccountBadgeModel>(),
+                Costs = new List<CostInfoModel>(),
+                Name = accountName
+            };
+            var type1 = new CostTypeModel
+            {
+                Name = typeName1,
+                CostInfoList = new EditableList<CostInfoModel>(),
+                Account = account
+            };
+            var type2 = new CostTypeModel
+            {
+                Name = typeName2,
+                CostInfoList = new EditableList<CostInfoModel>(),
+                Account = account
+            };
+            using (
+                var db =
+                    new ExpenseDbContext(
+                        Effort.DbConnectionFactory.CreatePersistent(TestInstaller.ExpenseManagerTestDbConnection)))
+            {
+                db.Accounts.Add(account);
+                db.CostTypes.Add(type1);
+                db.CostTypes.Add(type2);
+                db.SaveChanges();
+                accountId = account.Id;
+                typeId1 = type1.Id;
+                var typeId2 = type2.Id;
+                db.CostInfos.Add(new CostInfoModel
+                {
+                    Description = "bread",
+                    AccountId = accountId,
+                    TypeId = typeId1,
+                    IsIncome = true,
+                    Money = 25,
+                    Created = DateTime.Now
+                });
+                db.CostInfos.Add(new CostInfoModel
+                {
+                    Description = "WoW",
+                    AccountId = accountId,
+                    TypeId = typeId2,
+                    IsIncome = false,
+                    Money = 1500,
+                    Created = DateTime.Now
+                });
+                db.SaveChanges();
+            }
+
+            // Act
+            var mixedItemsCount = _expenseFacade.GetCostInfosCount(accountId, null, null, null, 25, 2000, typeId1, true);
+
+            // Assert
+            Assert.That(mixedItemsCount == 1, "Number of mixed items is not correct.");
+        }
+
+        /// <summary>
         /// Tests creation of CostType.
         /// </summary>
         [Test]
