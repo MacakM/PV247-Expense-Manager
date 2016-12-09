@@ -37,7 +37,7 @@ namespace ExpenseManager.DataSeeding
                 Accounts = new List<AccountBadgeModel>(),
                 BadgeImgUri = "badge.png",
                 Name = "PassionatePennyPincher",
-                Description = "Save >=20k CZK within all completed plans"
+                Description = "Save >=20k $ within all completed plans"
             };
             context.Badges.AddOrUpdate(badge1);
 
