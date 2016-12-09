@@ -17,12 +17,10 @@
     
     <h2 style="clear: both">Not achieved</h2>
     <table class="table">
-        <tr>
-            <th>Description</th>
-        </tr>
         @foreach (var badge in Model.NotAchievedBadges)
         {
             <tr>
+                <td style="width: 20px"><img class="small-achievement-image" src="~/images/badge.png" /></td>
                 <td>@badge.Description</td>
             </tr>
         }

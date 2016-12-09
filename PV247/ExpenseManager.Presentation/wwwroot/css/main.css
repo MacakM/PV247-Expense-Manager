@@ -243,6 +243,10 @@ a:focus {
   text-decoration: none;
   color: #00A65A;
 }
+.small-achievement-image {
+  width: 20px;
+  min-height: 1px;
+}
 .add-new {
   position: absolute;
   right: 30px;

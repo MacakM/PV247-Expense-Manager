@@ -15,11 +15,13 @@
     <table class="table">
         <tr>
             <th>Name</th>
+            <th></th>
         </tr>
         @foreach (var category in Model.Categories)
         {
             <tr>
                 <td>@category.Name</td>
+                <td><a href="@Url.Action("Edit", "Category", new { id = category.Id })">Edit</a></td>
             </tr>
         }
     </table>

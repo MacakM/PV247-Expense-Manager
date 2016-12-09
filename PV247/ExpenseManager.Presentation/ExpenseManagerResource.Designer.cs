@@ -105,6 +105,15 @@ namespace ExpenseManager.Presentation {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to Category was successfully edited.
+        /// </summary>
+        public static string CategoryEdited {
+            get {
+                return ResourceManager.GetString("CategoryEdited", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to Category with given name already exists.
         /// </summary>
         public static string CategoryExists {

@@ -92,5 +92,66 @@ namespace ExpenseManager.Presentation.Controllers
         {
             return Mapper.Map<Models.User.IndexViewModel>(CurrentAccountProvider.GetCurrentUser(HttpContext.User));
         }
+
+        /// <summary>
+        /// Displays form for editing
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Authorize(Policy = "HasFullRights")]
+        public IActionResult Edit(Guid id)
+        {
+            var account = CurrentAccountProvider.GetCurrentAccount(HttpContext.User);
+            var category = _expenseFacade.GetItemType(id);
+
+            if (category == null || category.AccountId != account.Id)
+            {
+                return RedirectWithError(ExpenseManagerResource.UnknownError);
+            }
+
+            var model = new EditViewModel()
+            {
+                Id = category.Id,
+                Name = category.Name
+            };
+
+            return View(model);
+        }
+
+        /// <summary>
+        /// Updates category
+        /// </summary>
+        /// <returns></returns>
+        [Authorize(Policy = "HasFullRights")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Update(EditViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return RedirectWithError(ExpenseManagerResource.UnknownError);
+            }
+
+            var account = CurrentAccountProvider.GetCurrentAccount(HttpContext.User);
+            var category = _expenseFacade.GetItemType(model.Id);
+
+            if (category == null || category.AccountId != account.Id)
+            {
+                return RedirectWithError(ExpenseManagerResource.UnknownError);
+            }
+
+            var existingCategories = _expenseFacade.ListItemTypes(model.Name, account.Id, null);
+
+            if (existingCategories.Count > 0 && existingCategories.First().Id != category.Id)
+            {
+                return RedirectToAction("Index", "Error", new {errorMessage = ExpenseManagerResource.CategoryExists});
+            }
+
+            category.Name = model.Name;
+
+            _expenseFacade.UpdateItemType(category);
+
+            return RedirectToAction("Index", new {successMessage = ExpenseManagerResource.CategoryEdited});
+        }
     }
 }

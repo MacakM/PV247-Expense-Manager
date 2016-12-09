@@ -198,6 +198,9 @@
   <data name="CategoryCreated" xml:space="preserve">
     <value>Category was successfully created</value>
   </data>
+  <data name="CategoryEdited" xml:space="preserve">
+    <value>Category was successfully edited</value>
+  </data>
   <data name="InvalidInputData" xml:space="preserve">
     <value>Invalid input data</value>
   </data>
