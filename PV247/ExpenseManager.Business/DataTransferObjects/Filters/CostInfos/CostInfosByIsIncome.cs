@@ -1,5 +1,5 @@
-﻿using System.Linq;
-using ExpenseManager.Database.DataAccess.FilterInterfaces;
+﻿using System;
+using System.Linq.Expressions;
 using ExpenseManager.Database.Entities;
 
 namespace ExpenseManager.Business.DataTransferObjects.Filters.CostInfos
@@ -7,27 +7,9 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.CostInfos
     /// <summary>
     /// Filters cost by its income type
     /// </summary>
-    internal class CostInfosByIsIncome : IFilter<CostInfoModel>
+    internal class CostInfosByIsIncome : FilterValueBase<CostInfoModel, bool>
     {
-        /// <summary>
-        /// If cost type is income or ourcome
-        /// </summary>
-        public readonly bool? IsIncome;
-
-        /// <summary>
-        /// Filters query
-        /// </summary>
-        /// <param name="queryable"></param>
-        /// <returns></returns>
-        public IQueryable<CostInfoModel> FilterQuery(IQueryable<CostInfoModel> queryable)
-        {
-            return IsIncome != null ? queryable.Where(x => x.IsIncome == IsIncome) : queryable;
-        }
-
-        public CostInfosByIsIncome(bool? isIncome)
-        {
-            IsIncome = isIncome;
-        }
-
+        public override Expression<Func<CostInfoModel, bool>> GetWhereCondition(bool value)
+            => costInfo => costInfo.IsIncome == value;
     }
 }

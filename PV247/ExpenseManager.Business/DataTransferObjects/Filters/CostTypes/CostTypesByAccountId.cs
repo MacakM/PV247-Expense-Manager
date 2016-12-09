@@ -1,30 +1,12 @@
 ﻿using System;
-using System.Linq;
-using ExpenseManager.Database.DataAccess.FilterInterfaces;
+using System.Linq.Expressions;
 using ExpenseManager.Database.Entities;
 
 namespace ExpenseManager.Business.DataTransferObjects.Filters.CostTypes
 {
-    internal class CostTypesByAccountId : IFilter<CostTypeModel>
+    internal class CostTypesByAccountId : FilterValueBase<CostTypeModel, Guid>
     {
-        /// <summary>
-        /// Account id to be used in filter
-        /// </summary>
-        public readonly Guid? AccountId;
-
-        /// <summary>
-        /// Filters query
-        /// </summary>
-        /// <param name="queryable"></param>
-        /// <returns></returns>
-        public IQueryable<CostTypeModel> FilterQuery(IQueryable<CostTypeModel> queryable)
-        {
-            return AccountId!= null ? queryable.Where(costType => costType.AccountId == AccountId) : queryable;
-        }
-
-        public CostTypesByAccountId(Guid? accountId)
-        {
-            AccountId = accountId;
-        }
+        public override Expression<Func<CostTypeModel, bool>> GetWhereCondition(Guid value)
+            => costType => costType.AccountId == value;
     }
 }

@@ -115,7 +115,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="filters"></param>
         /// <param name="pageAndOrder"></param>
         /// <returns></returns>
-        public List<User> ListUsers(List<IFilter<UserModel>> filters, IPageAndOrderable<UserModel> pageAndOrder)
+        public List<User> ListUsers(IEnumerable<IFilter<UserModel>> filters, IPageAndOrderable<UserModel> pageAndOrder)
         {
             Query.Filters = filters;
             Query.PageAndOrderModelFilterModel = pageAndOrder;

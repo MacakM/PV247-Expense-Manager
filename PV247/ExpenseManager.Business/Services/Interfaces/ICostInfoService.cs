@@ -42,7 +42,7 @@ namespace ExpenseManager.Business.Services.Interfaces
         /// <param name="filters">Filters cost infos</param>
         /// <param name="pageAndOrder"></param>
         /// <returns>List of cost infos</returns>
-        List<CostInfo> ListCostInfos(List<IFilter<CostInfoModel>> filters, IPageAndOrderable<CostInfoModel> pageAndOrder);
+        List<CostInfo> ListCostInfos(IEnumerable<IFilter<CostInfoModel>> filters, IPageAndOrderable<CostInfoModel> pageAndOrder);
 
         /// <summary>
         /// Recompute periodic costs and make them as new cost infos
@@ -53,7 +53,7 @@ namespace ExpenseManager.Business.Services.Interfaces
         /// Gets the count of rows in database filtered by filter
         /// Used for pagination
         /// </summary>
-        int GetCostInfosCount(List<IFilter<CostInfoModel>> filters, IPageAndOrderable<CostInfoModel> pageAndOrder);
+        int GetCostInfosCount(IEnumerable<IFilter<CostInfoModel>> filters, IPageAndOrderable<CostInfoModel> pageAndOrder);
 
         ///<summary>
         /// Returns balance of aacount

@@ -4,8 +4,7 @@ using System.Linq;
 using AutoMapper;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Enums;
-using ExpenseManager.Business.DataTransferObjects.Filters.CostInfos;
-using ExpenseManager.Business.DataTransferObjects.Filters.Plans;
+using ExpenseManager.Business.DataTransferObjects.Factories;
 using ExpenseManager.Business.Infrastructure;
 using ExpenseManager.Business.Services.Interfaces;
 using ExpenseManager.Database.DataAccess.FilterInterfaces;
@@ -149,7 +148,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="filters">Filters plans</param>
         /// <param name="pageAndOrder">Orders</param>
         /// <returns></returns>
-        public List<Plan> ListPlans(List<IFilter<PlanModel>> filters, IPageAndOrderable<PlanModel> pageAndOrder)
+        public List<Plan> ListPlans(IEnumerable<IFilter<PlanModel>> filters, IPageAndOrderable<PlanModel> pageAndOrder)
         {
             Query.Filters = filters;
             Query.PageAndOrderModelFilterModel = pageAndOrder;
@@ -214,13 +213,7 @@ namespace ExpenseManager.Business.Services.Implementations
         public List<Plan> ListAllCloseablePlans(Guid accountId, decimal accountBalance)
         {
 
-            Query.Filters = new List<IFilter<PlanModel>>
-            {
-                new PlansByAccountId(accountId),
-                new PlansByMoneyTo (accountBalance),
-                new PlansByType (PlanTypeModel.Save),
-                new PlansByCompletition (false)
-            };
+            Query.Filters = FilterFactory.GetPlanFilters(accountId, accountBalance, PlanType.Save, false,null);
             using (UnitOfWorkProvider.Create())
             {
                 return GetList().ToList();
@@ -230,12 +223,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <inheritdoc />
         public List<Plan> ListPlansInProgress(Guid accountId)
         {
-            Query.Filters = new List<IFilter<PlanModel>>
-            {
-                new PlansByAccountId(accountId),
-                new PlansByCompletition(false),
-                new PlansByDeadlineFrom(DateTime.Now)
-            };
+            Query.Filters = FilterFactory.GetPlanFilters(accountId, null, PlanType.Save, null, DateTime.Now);
             using (UnitOfWorkProvider.Create())
             {
                 return GetList().ToList();
@@ -253,23 +241,13 @@ namespace ExpenseManager.Business.Services.Implementations
                 var accounts = _accountsQuery.Execute();
                 foreach (var account in accounts) // FOR EACH ACCOUNT 
                 {
-                    Query.Filters = new  List<IFilter<PlanModel>>
-                    {
-                           new PlansByAccountId(account.Id),
-                            new PlansByType(PlanTypeModel.MaxSpend),
-                         new PlansByCompletition(false),
-                            new PlansByDeadlineFrom(DateTime.Now)
-                    };
+                    Query.Filters = FilterFactory.GetPlanFilters(account.Id, null, PlanType.MaxSpend, false, DateTime.Today);
                     var maxSpendPlans = GetList();
                     foreach (var plan in maxSpendPlans) // CHECK EVERY MAX SPEND PLAN THAT IS NO COMPLETED YET, REACHED ITS DEADLINE
                     {
                         if (plan.Deadline != null)
-                            _costInfosQuery.Filters = new List<IFilter<CostInfoModel>> // USES EVERY COST OF PLANNED TYPE FROM START TO DEADLINE
-                            {
-                                new CostInfosByTypeId (plan.PlannedTypeId ),
-                                new CostInfosByCreatedFrom (plan.Start ),
-                                new CostInfosByCreatedTo (plan.Deadline.Value)
-                            };
+                            _costInfosQuery.Filters = FilterFactory.GetCostItemsFilters(null, null, plan.Start,
+                                plan.Deadline, null, null, plan.PlannedTypeId, null); // USES EVERY COST OF PLANNED TYPE FROM START TO DEADLINE
                         var costInfos = _costInfosQuery.Execute();
                         if (costInfos.Sum(x => x.Money) <= plan.PlannedMoney)
                         {

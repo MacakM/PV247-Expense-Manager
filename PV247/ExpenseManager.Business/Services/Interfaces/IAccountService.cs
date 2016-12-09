@@ -43,7 +43,7 @@ namespace ExpenseManager.Business.Services.Interfaces
         /// <param name="filters">Filters accounts</param>
         /// <param name="pageAndOrder"></param>
         /// <returns></returns>
-        List<Account> ListAccounts(List<IFilter<AccountModel>> filters, IPageAndOrderable<AccountModel> pageAndOrder);
+        List<Account> ListAccounts(IEnumerable<IFilter<AccountModel>> filters, IPageAndOrderable<AccountModel> pageAndOrder);
 
         /// <summary>
         /// Creates account for user with given id

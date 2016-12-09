@@ -138,7 +138,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="filters">Filters accounts</param>
         /// <param name="pageAndOrder"></param>
         /// <returns></returns>
-        public List<Account> ListAccounts(List<IFilter<AccountModel>> filters, IPageAndOrderable<AccountModel> pageAndOrder)
+        public List<Account> ListAccounts(IEnumerable<IFilter<AccountModel>> filters, IPageAndOrderable<AccountModel> pageAndOrder)
         {
             Query.Filters = filters;
             Query.PageAndOrderModelFilterModel = pageAndOrder;

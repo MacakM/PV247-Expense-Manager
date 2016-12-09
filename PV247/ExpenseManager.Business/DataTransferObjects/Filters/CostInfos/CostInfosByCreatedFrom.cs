@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Linq;
-using ExpenseManager.Database.DataAccess.FilterInterfaces;
+using System.Linq.Expressions;
 using ExpenseManager.Database.Entities;
 
 namespace ExpenseManager.Business.DataTransferObjects.Filters.CostInfos
@@ -8,26 +7,9 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.CostInfos
     /// <summary>
     /// Filters cost info by its creation time
     /// </summary>
-    internal class CostInfosByCreatedFrom : IFilter<CostInfoModel>
+    internal class CostInfosByCreatedFrom : FilterValueBase<CostInfoModel, DateTime>
     {
-        /// <summary>
-        /// Left edge of created range
-        /// </summary>
-        public readonly DateTime? CreatedFrom;
-
-        /// <summary>
-        /// Filters query
-        /// </summary>
-        /// <param name="queryable"></param>
-        /// <returns></returns>
-        public IQueryable<CostInfoModel> FilterQuery(IQueryable<CostInfoModel> queryable)
-        {
-            return CreatedFrom!= null ? queryable.Where(costInfo => costInfo.Created >= CreatedFrom) : queryable;
-        }
-
-        public CostInfosByCreatedFrom(DateTime? createdFrom)
-        {
-            CreatedFrom = createdFrom;
-        }
+        public override Expression<Func<CostInfoModel, bool>> GetWhereCondition(DateTime value)
+            => costInfo => costInfo.Created >= value;
     }
 }

@@ -42,7 +42,7 @@ namespace ExpenseManager.Business.Services.Interfaces
         /// <param name="filters">Filters badges</param>
         /// <param name="pageAndOrder"></param>
         /// <returns></returns>s
-        List<Badge> ListBadges(List<IFilter<BadgeModel>> filters, IPageAndOrderable<BadgeModel> pageAndOrder);
+        List<Badge> ListBadges(IEnumerable<IFilter<BadgeModel>> filters, IPageAndOrderable<BadgeModel> pageAndOrder);
 
         /// <summary>
         /// Lists all not achieved badges for given accountId

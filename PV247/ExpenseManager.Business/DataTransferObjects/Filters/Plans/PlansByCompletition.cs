@@ -1,5 +1,5 @@
-﻿using System.Linq;
-using ExpenseManager.Database.DataAccess.FilterInterfaces;
+﻿using System;
+using System.Linq.Expressions;
 using ExpenseManager.Database.Entities;
 
 namespace ExpenseManager.Business.DataTransferObjects.Filters.Plans
@@ -7,26 +7,9 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.Plans
     /// <summary>
     /// Filter plans by its completetions
     /// </summary>
-    internal class PlansByCompletition : IFilter<PlanModel>
+    internal class PlansByCompletition : FilterValueBase<PlanModel, bool>
     {
-        /// <summary>
-        /// If plan is completed
-        /// </summary>
-        public readonly bool? IsCompleted;
-
-        /// <summary>
-        /// Filters query
-        /// </summary>
-        /// <param name="queryable"></param>
-        /// <returns></returns>
-        public IQueryable<PlanModel> FilterQuery(IQueryable<PlanModel> queryable)
-        {
-            return IsCompleted != null ? queryable.Where(plan => plan.IsCompleted == IsCompleted) : queryable;
-        }
-
-        public PlansByCompletition(bool? isCompleted)
-        {
-            IsCompleted = isCompleted;
-        }
+        public override Expression<Func<PlanModel, bool>> GetWhereCondition(bool value)
+            => plan => plan.IsCompleted == value;
     }
 }

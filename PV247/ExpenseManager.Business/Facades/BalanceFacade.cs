@@ -138,7 +138,7 @@ namespace ExpenseManager.Business.Facades
         /// <returns></returns>
         public List<Plan> ListPlans(Guid? accountId, PageInfo pageInfo)
         {
-            var filters = FilterFactory.GetPlanFilters(accountId);
+            var filters = FilterFactory.GetPlanFilters(accountId, null, null, null, null);
             return _planService.ListPlans(filters, FilterFactory.GetPageAndOrderable<PlanModel>(pageInfo));
         }
 

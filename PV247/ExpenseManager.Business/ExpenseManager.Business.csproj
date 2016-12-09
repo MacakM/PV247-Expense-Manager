@@ -89,7 +89,7 @@
     <Compile Include="DataTransferObjects\Factories\FilterFactory.cs" />
     <Compile Include="DataTransferObjects\Factories\PageInfo.cs" />
     <Compile Include="DataTransferObjects\Filters\Accounts\AccountsByName.cs" />
-    <Compile Include="DataTransferObjects\Filters\Badges\AccountBadgesByAccountId.cs" />
+    <Compile Include="DataTransferObjects\Filters\AccountBadges\AccountBadgesByAccountId.cs" />
     <Compile Include="DataTransferObjects\Filters\Badges\BadgesByName.cs" />
     <Compile Include="DataTransferObjects\Filters\CostInfos\CostInfosByIsIncome.cs" />
     <Compile Include="DataTransferObjects\Filters\CostInfos\CostInfosByAccountId.cs" />
@@ -101,6 +101,7 @@
     <Compile Include="DataTransferObjects\Filters\CostInfos\CostInfosByTypeId.cs" />
     <Compile Include="DataTransferObjects\Filters\CostTypes\CostTypesByAccountId.cs" />
     <Compile Include="DataTransferObjects\Filters\CostTypes\CostTypesByName.cs" />
+    <Compile Include="DataTransferObjects\Filters\FilterValueBase.cs" />
     <Compile Include="DataTransferObjects\Filters\PageAndOrderFilter.cs" />
     <Compile Include="DataTransferObjects\Filters\Plans\PlansByAccountId.cs" />
     <Compile Include="DataTransferObjects\Filters\Plans\PlansByCompletition.cs" />
@@ -152,9 +153,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DataTransferObjects\Filters\AccountBadges\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\ExpenseManager.Database\ExpenseManager.Database.csproj">
       <Project>{dc7d8469-e72e-46b6-9d12-f5102efd49b1}</Project>

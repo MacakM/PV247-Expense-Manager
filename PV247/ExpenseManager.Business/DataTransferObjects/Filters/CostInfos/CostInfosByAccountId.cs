@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Linq;
-using ExpenseManager.Database.DataAccess.FilterInterfaces;
+using System.Linq.Expressions;
 using ExpenseManager.Database.Entities;
 
 namespace ExpenseManager.Business.DataTransferObjects.Filters.CostInfos
@@ -8,26 +7,10 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.CostInfos
     /// <summary>
     /// Filters by account id
     /// </summary>
-    internal class CostInfosByAccountId : IFilter<CostInfoModel>
+    internal class CostInfosByAccountId : FilterValueBase<CostInfoModel, Guid>
     {
-        /// <summary>
-        /// Account id
-        /// </summary>
-        public readonly Guid? AccountId;
+        public override Expression<Func<CostInfoModel, bool>> GetWhereCondition(Guid value)
+            => costInfo => costInfo.AccountId == value;
 
-        /// <summary>
-        /// Filters query
-        /// </summary>
-        /// <param name="queryable"></param>
-        /// <returns></returns>
-        public IQueryable<CostInfoModel> FilterQuery(IQueryable<CostInfoModel> queryable)
-        {
-             return AccountId == null ? queryable : queryable.Where(x => x.AccountId == AccountId);
-        }
-
-        public CostInfosByAccountId(Guid? accountId)
-        {
-            AccountId = accountId;
-        }
     }
 }

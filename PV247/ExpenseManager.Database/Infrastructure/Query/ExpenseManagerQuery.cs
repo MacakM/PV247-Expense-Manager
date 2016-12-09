@@ -17,7 +17,7 @@ namespace ExpenseManager.Database.Infrastructure.Query
         /// <summary>
         /// Filters used to determine parameters of query
         /// </summary>
-        public List<IFilter<TResult>> Filters;
+        public IEnumerable<IFilter<TResult>> Filters;
 
         /// <summary>
         /// Filter used for paging and filtering
@@ -43,11 +43,7 @@ namespace ExpenseManager.Database.Infrastructure.Query
         /// <returns>IQueryable</returns>
         protected IQueryable<TResult> ApplyFilters(IQueryable<TResult> queryable)
         {
-            if (Filters != null)
-            {
-                queryable = Filters.Aggregate(queryable, (current, filter) => filter.FilterQuery(current));
-            }
-
+            queryable = Filters == null ? queryable : Filters.Aggregate(queryable, (current, filter) => filter == null ? current : filter.FilterQuery(current));
             return PageAndOrderModelFilterModel == null ? queryable : PageAndOrderModelFilterModel.FilterQuery(queryable);
         }
     }

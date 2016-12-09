@@ -1,5 +1,5 @@
-﻿using System.Linq;
-using ExpenseManager.Database.DataAccess.FilterInterfaces;
+﻿using System;
+using System.Linq.Expressions;
 using ExpenseManager.Database.Entities;
 
 namespace ExpenseManager.Business.DataTransferObjects.Filters.Badges
@@ -7,25 +7,10 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.Badges
     /// <summary>
     /// Filters by badge name
     /// </summary>
-    internal class BadgesByName : IFilter<BadgeModel>
+    internal class BadgesByName : FilterValueBase<BadgeModel, string>
     {
-        /// <summary>
-        /// Name of Badge
-        /// </summary>
-        public readonly string Name;
+        public override Expression<Func<BadgeModel, bool>> GetWhereCondition(string value)
+            => badge => badge.Name.Contains(value);
 
-        /// <summary>
-        /// Filters given query
-        /// </summary>
-        /// <param name="queryable">Query to be filtered</param>
-        public IQueryable<BadgeModel> FilterQuery(IQueryable<BadgeModel> queryable)
-        {
-            return Name != null ? queryable.Where(badge => badge.Name.Contains(Name)) : queryable;
-        }
-
-        public BadgesByName(string name)
-        {
-            Name = name;
-        }
     }
 }

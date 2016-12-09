@@ -46,7 +46,7 @@ namespace ExpenseManager.Business.Services.Interfaces
         /// <param name="filters"></param>
         /// <param name="pageAndOrder"></param>
         /// <returns></returns>
-        List<User> ListUsers(List<IFilter<UserModel>> filters, IPageAndOrderable<UserModel> pageAndOrder);
+        List<User> ListUsers(IEnumerable<IFilter<UserModel>> filters, IPageAndOrderable<UserModel> pageAndOrder);
 
         /// <summary>
         /// Get specific user that had id == userId

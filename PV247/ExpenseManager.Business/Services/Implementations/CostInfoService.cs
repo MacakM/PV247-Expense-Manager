@@ -4,12 +4,11 @@ using System.Linq;
 using AutoMapper;
 using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.DataTransferObjects.Enums;
-using ExpenseManager.Business.DataTransferObjects.Filters.CostInfos;
+using ExpenseManager.Business.DataTransferObjects.Factories;
 using ExpenseManager.Business.Infrastructure;
 using ExpenseManager.Business.Services.Interfaces;
 using ExpenseManager.Database.DataAccess.FilterInterfaces;
 using ExpenseManager.Database.Entities;
-using ExpenseManager.Database.Enums;
 using ExpenseManager.Database.Infrastructure.Query;
 using ExpenseManager.Database.Infrastructure.Repository;
 using Riganti.Utils.Infrastructure.Core;
@@ -131,7 +130,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="filters">Filters cost infos</param>
         /// <param name="pageAndOrder"></param>
         /// <returns>List of cost infos</returns>
-        public List<CostInfo> ListCostInfos(List<IFilter<CostInfoModel>> filters, IPageAndOrderable<CostInfoModel> pageAndOrder)
+        public List<CostInfo> ListCostInfos(IEnumerable<IFilter<CostInfoModel>> filters, IPageAndOrderable<CostInfoModel> pageAndOrder)
         {
             Query.Filters = filters;
             Query.PageAndOrderModelFilterModel = pageAndOrder;
@@ -149,7 +148,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="filters"></param>
         /// <param name="pageAndOrder"></param>
         /// <returns></returns>
-        public int GetCostInfosCount(List<IFilter<CostInfoModel>> filters, IPageAndOrderable<CostInfoModel> pageAndOrder)
+        public int GetCostInfosCount(IEnumerable<IFilter<CostInfoModel>> filters, IPageAndOrderable<CostInfoModel> pageAndOrder)
         {
             Query.Filters = filters;
             Query.PageAndOrderModelFilterModel = pageAndOrder;
@@ -183,23 +182,13 @@ namespace ExpenseManager.Business.Services.Implementations
             IList<CostInfo> outcomes;
             using (UnitOfWorkProvider.Create())
             {
-                Query.Filters = new List<IFilter<CostInfoModel>>
-                {
-                    new CostInfosByIsIncome(true),
-                    new CostInfosByPeriodicity(PeriodicityModel.None),
-                    new CostInfosByCreatedTo(DateTime.Now),
-                    new CostInfosByAccountId(accountId)
-                }; 
+                Query.Filters = FilterFactory.GetCostItemsFilters(accountId, Periodicity.None, null, DateTime.Now, null, null, null,
+                    true);
                 
                 incomes = GetList();
-                Query.Filters = new List<IFilter<CostInfoModel>>
-                {
-                   new CostInfosByIsIncome(false),
-                    new CostInfosByPeriodicity(PeriodicityModel.None),
-                    new CostInfosByCreatedTo (DateTime.Now),
-                    new CostInfosByAccountId(accountId)
-                };
-                
+                Query.Filters = FilterFactory.GetCostItemsFilters(accountId, Periodicity.None, null, DateTime.Now, null, null, null,
+                     false);
+
                 outcomes = GetList();
             }
 
@@ -208,10 +197,7 @@ namespace ExpenseManager.Business.Services.Implementations
 
         private void CheckMonthPeriodicities()
         {
-
-            CostInfosByPeriodicity filter = new CostInfosByPeriodicity (PeriodicityModel.Month);
-
-            Query.Filters = new List<IFilter<CostInfoModel>> { filter };
+            Query.Filters = FilterFactory.GetCostItemsFilters(null, Periodicity.Month, null, null, null, null, null, null);
 
             using (var unitOfWork = UnitOfWorkProvider.Create())
             {
@@ -237,10 +223,8 @@ namespace ExpenseManager.Business.Services.Implementations
 
         private void CheckWeekPeriodicities()
         {
+            Query.Filters = FilterFactory.GetCostItemsFilters(null, Periodicity.Week, null, null, null, null, null, null);
 
-            CostInfosByPeriodicity filter = new CostInfosByPeriodicity(PeriodicityModel.Week);
-
-            Query.Filters = new List<IFilter<CostInfoModel>> { filter };
             using (var unitOfWork = UnitOfWorkProvider.Create())
             {
                 var dayPeriodicityCosts = GetList().ToList();
@@ -264,9 +248,8 @@ namespace ExpenseManager.Business.Services.Implementations
 
         private void CheckDayPeriodicites()
         {
-            CostInfosByPeriodicity filter = new CostInfosByPeriodicity(PeriodicityModel.Day);
+            Query.Filters = FilterFactory.GetCostItemsFilters(null, Periodicity.Day, null, null, null, null, null, null);
 
-            Query.Filters = new List<IFilter<CostInfoModel>> { filter};
             using (var unitOfWork = UnitOfWorkProvider.Create())
             {
                 var dayPeriodicityCosts = GetList().ToList();

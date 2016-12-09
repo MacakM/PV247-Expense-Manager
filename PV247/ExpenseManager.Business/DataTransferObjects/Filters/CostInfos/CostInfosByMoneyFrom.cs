@@ -1,5 +1,5 @@
-﻿using System.Linq;
-using ExpenseManager.Database.DataAccess.FilterInterfaces;
+﻿using System;
+using System.Linq.Expressions;
 using ExpenseManager.Database.Entities;
 
 namespace ExpenseManager.Business.DataTransferObjects.Filters.CostInfos
@@ -7,26 +7,9 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.CostInfos
     /// <summary>
     /// Filtery by money from
     /// </summary>
-    internal class CostInfosByMoneyFrom : IFilter<CostInfoModel>
+    internal class CostInfosByMoneyFrom : FilterValueBase<CostInfoModel, decimal>
     {
-        /// <summary>
-        /// Money from
-        /// </summary>
-        public readonly decimal? MoneyFrom;
-
-        /// <summary>
-        /// Filters query
-        /// </summary>
-        /// <param name="queryable"></param>
-        /// <returns></returns>
-        public IQueryable<CostInfoModel> FilterQuery(IQueryable<CostInfoModel> queryable)
-        {
-            return MoneyFrom != null ? queryable.Where(x => x.Money >= MoneyFrom) : queryable;
-        }
-
-        public CostInfosByMoneyFrom(decimal? moneyFrom)
-        {
-            MoneyFrom = moneyFrom;
-        }
+        public override Expression<Func<CostInfoModel, bool>> GetWhereCondition(decimal value)
+            => costInfo => costInfo.Money >= value;
     }
 }

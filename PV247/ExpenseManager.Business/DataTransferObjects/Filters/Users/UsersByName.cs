@@ -1,5 +1,5 @@
-﻿using System.Linq;
-using ExpenseManager.Database.DataAccess.FilterInterfaces;
+﻿using System;
+using System.Linq.Expressions;
 using ExpenseManager.Database.Entities;
 
 namespace ExpenseManager.Business.DataTransferObjects.Filters.Users
@@ -7,26 +7,9 @@ namespace ExpenseManager.Business.DataTransferObjects.Filters.Users
     /// <summary>
     /// Filters by user name
     /// </summary>
-    internal class UserModelsByName : IFilter<UserModel>
+    internal class UserModelsByName : FilterValueBase<UserModel, string>
     {
-        /// <summary>
-        /// User name
-        /// </summary>
-        public readonly string Name;
-
-        /// <summary>
-        /// Filters by user name
-        /// </summary>
-        /// <param name="queryable"></param>
-        /// <returns></returns>
-        public IQueryable<UserModel> FilterQuery(IQueryable<UserModel> queryable)
-        {
-            return Name != null ? queryable.Where(user => user.Name.Contains(Name)) : queryable;
-        }
-
-        public UserModelsByName(string name)
-        {
-            Name = name;
-        }
+        public override Expression<Func<UserModel, bool>> GetWhereCondition(string value)
+            => user => user.Name.Contains(value);
     }
 }

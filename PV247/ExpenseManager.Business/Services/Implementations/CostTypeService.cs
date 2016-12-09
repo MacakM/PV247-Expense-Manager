@@ -6,7 +6,6 @@ using ExpenseManager.Business.DataTransferObjects;
 using ExpenseManager.Business.Infrastructure;
 using ExpenseManager.Business.Services.Interfaces;
 using ExpenseManager.Database.DataAccess.FilterInterfaces;
-using ExpenseManager.Database.DataAccess.Repositories;
 using ExpenseManager.Database.Entities;
 using ExpenseManager.Database.Infrastructure.Query;
 using ExpenseManager.Database.Infrastructure.Repository;
@@ -115,7 +114,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="filters">Filters cost types</param>
         /// <param name="pageAndOrder"></param>
         /// <returns>List of cost typer</returns>
-        public List<CostType> ListCostTypes(List<IFilter<CostTypeModel>> filters, IPageAndOrderable<CostTypeModel> pageAndOrder)
+        public List<CostType> ListCostTypes(IEnumerable<IFilter<CostTypeModel>> filters, IPageAndOrderable<CostTypeModel> pageAndOrder)
         {
             Query.Filters = filters;
             Query.PageAndOrderModelFilterModel = pageAndOrder;

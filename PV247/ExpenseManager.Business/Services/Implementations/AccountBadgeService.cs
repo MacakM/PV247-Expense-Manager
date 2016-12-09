@@ -96,7 +96,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <param name="filters">Filters account badges</param>
         /// <param name="pageAndOrder"></param>
         /// <returns></returns>
-        public List<AccountBadge> ListAccountBadges(List<IFilter<AccountBadgeModel>> filters, IPageAndOrderable<AccountBadgeModel> pageAndOrder)
+        public List<AccountBadge> ListAccountBadges(IEnumerable<IFilter<AccountBadgeModel>> filters, IPageAndOrderable<AccountBadgeModel> pageAndOrder)
         {
             Query.Filters = filters;
             Query.PageAndOrderModelFilterModel = pageAndOrder;
