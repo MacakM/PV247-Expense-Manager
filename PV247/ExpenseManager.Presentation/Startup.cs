@@ -156,6 +156,11 @@ namespace ExpenseManager.Presentation
                 () => app.ApplicationServices.GetService<BalanceFacade>().CheckBadgesRequirements(),
                 Cron.Hourly);
 
+            // Periodic launching of RecomputePeriodicCosts
+            RecurringJob.AddOrUpdate(
+                () => app.ApplicationServices.GetService<BalanceFacade>().RecomputePeriodicCosts(),
+                Cron.Minutely);
+
             app.UseFacebookAuthentication(new FacebookOptions
             {
                 ClientId = Configuration.GetSection("FacebookAuthentication")["ClientId"],
