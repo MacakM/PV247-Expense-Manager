@@ -182,22 +182,19 @@ namespace ExpenseManager.Business.Services.Implementations
             IList<CostInfo> outcomes;
             using (UnitOfWorkProvider.Create())
             {
-                Query.Filters = FilterFactory.GetCostItemsFilters(accountId, Periodicity.None, null, DateTime.Now, null, null, null,
-                    true);
+                Query.Filters = FilterFactory.GetCostItemsFilters(accountId, Periodicity.None, DateTime.Now, true);
                 
                 incomes = GetList();
-                Query.Filters = FilterFactory.GetCostItemsFilters(accountId, Periodicity.None, null, DateTime.Now, null, null, null,
-                     false);
+                Query.Filters = FilterFactory.GetCostItemsFilters(accountId, Periodicity.None, DateTime.Now, false);
 
                 outcomes = GetList();
             }
-
             return incomes.Sum(x =>  x.Money) - outcomes.Sum(x => x.Money);
         }
 
         private void CheckMonthPeriodicities()
         {
-            Query.Filters = FilterFactory.GetCostItemsFilters(null, Periodicity.Month, null, null, null, null, null, null);
+            Query.Filters = FilterFactory.GetCostItemsFilters(Periodicity.Month);
 
             using (var unitOfWork = UnitOfWorkProvider.Create())
             {
@@ -223,7 +220,7 @@ namespace ExpenseManager.Business.Services.Implementations
 
         private void CheckWeekPeriodicities()
         {
-            Query.Filters = FilterFactory.GetCostItemsFilters(null, Periodicity.Week, null, null, null, null, null, null);
+            Query.Filters = FilterFactory.GetCostItemsFilters(Periodicity.Week);
 
             using (var unitOfWork = UnitOfWorkProvider.Create())
             {
@@ -248,7 +245,7 @@ namespace ExpenseManager.Business.Services.Implementations
 
         private void CheckDayPeriodicites()
         {
-            Query.Filters = FilterFactory.GetCostItemsFilters(null, Periodicity.Day, null, null, null, null, null, null);
+            Query.Filters = FilterFactory.GetCostItemsFilters(Periodicity.Day);
 
             using (var unitOfWork = UnitOfWorkProvider.Create())
             {

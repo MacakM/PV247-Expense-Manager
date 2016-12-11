@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using ExpenseManager.Business.DataTransferObjects.Enums;
 using ExpenseManager.Business.DataTransferObjects.Filters;
 using ExpenseManager.Business.DataTransferObjects.Filters.AccountBadges;
@@ -32,7 +33,7 @@ namespace ExpenseManager.Business.DataTransferObjects.Factories
             };
         }
 
-        public static IEnumerable<IFilter<CostInfoModel>> GetCostItemsFilters(Guid? accountId, Periodicity? periodicity, DateTime? dateFrom, DateTime? dateTo, decimal? moneyFrom, decimal? moneyTo, Guid? costTypeId, bool? isIncome)
+        internal static IEnumerable<IFilter<CostInfoModel>> GetCostItemsFilters(Guid? accountId, Periodicity? periodicity, DateTime? dateFrom, DateTime? dateTo, decimal? moneyFrom, decimal? moneyTo, Guid? costTypeId, bool? isIncome)
         {
             yield return TryCreateFilter<CostInfosByAccountId, Guid>(accountId);
             yield return TryCreateFilter<CostInfosByPeriodicity, PeriodicityModel>((PeriodicityModel?)periodicity);
@@ -44,50 +45,89 @@ namespace ExpenseManager.Business.DataTransferObjects.Factories
             yield return TryCreateFilter<CostInfosByIsIncome, bool>(isIncome);
         }
 
+        internal static IEnumerable<IFilter<CostInfoModel>> GetCostItemsFilters(Guid? accountId, Periodicity? periodicity, DateTime? dateTo, bool? isIncome)
+        {
+            yield return TryCreateFilter<CostInfosByCreatedTo, DateTime>(dateTo);
+            yield return TryCreateFilter<CostInfosByAccountId, Guid>(accountId);
+            yield return TryCreateFilter<CostInfosByIsIncome, bool>(isIncome);
+            yield return TryCreateFilter<CostInfosByPeriodicity, PeriodicityModel>((PeriodicityModel?)periodicity);
+        }
+
+        internal static IEnumerable<IFilter<CostInfoModel>> GetCostItemsFilters(Periodicity? periodicity)
+        {
+            yield return TryCreateFilter<CostInfosByPeriodicity, PeriodicityModel>((PeriodicityModel?)periodicity);
+        }
+
+        internal static IEnumerable<IFilter<CostInfoModel>> GetCostItemsFilters(DateTime? start, DateTime? end, Guid plannedTypeId)
+        {
+            yield return TryCreateFilter<CostInfosByCreatedFrom, DateTime>(start);
+            yield return TryCreateFilter<CostInfosByCreatedTo, DateTime>(end);
+            yield return TryCreateFilter<CostInfosByTypeId, Guid>(plannedTypeId);
+        }
         internal static IEnumerable<IFilter<PlanModel>> GetPlanFilters(Guid? accountId, decimal? moneyTo, PlanType? planType, bool? completed, DateTime? dateTimeFrom)
         {
             yield return TryCreateFilter<PlansByAccountId, Guid>(accountId);
             yield return TryCreateFilter<PlansByMoneyTo, decimal>(moneyTo);
-            yield return TryCreateFilter<PlansByType, PlanTypeModel>((PlanTypeModel?) planType);
-            yield return TryCreateFilter<PlansByCompletition,bool>(completed);
+            yield return TryCreateFilter<PlansByType, PlanTypeModel>((PlanTypeModel?)planType);
+            yield return TryCreateFilter<PlansByCompletition, bool>(completed);
             yield return TryCreateFilter<PlansByDeadlineFrom, DateTime>(dateTimeFrom);
         }
-        public static IEnumerable<IFilter<CostTypeModel>> GetCostTypeFilters(string costTypeName, Guid accountId)
+        internal static IEnumerable<IFilter<PlanModel>> GetPlanFilters(Guid? accountId)
         {
-            yield return TryCreateFilter<CostTypesByName,string>(costTypeName);
-            yield return TryCreateFilter<CostTypesByAccountId,Guid>(accountId);
+            yield return TryCreateFilter<PlansByAccountId, Guid>(accountId);
         }
 
-        public static IEnumerable<IFilter<CostTypeModel>> GetCostTypeFilters(Guid accountId)
+        internal static IEnumerable<IFilter<PlanModel>> GetPlanFilters(Guid? accountId, decimal? moneyTo, PlanType? planType, bool? completed)
         {
-            yield return TryCreateFilter<CostTypesByAccountId,Guid>(accountId);
-        }
-    
-        public static IEnumerable<IFilter<BadgeModel>> GetBadgeFilters(string badgeName)
-        {
-            yield return TryCreateFilter<BadgesByName,string>(badgeName);
+            yield return TryCreateFilter<PlansByAccountId, Guid>(accountId);
+            yield return TryCreateFilter<PlansByMoneyTo, decimal>(moneyTo);
+            yield return TryCreateFilter<PlansByType, PlanTypeModel>((PlanTypeModel?)planType);
+            yield return TryCreateFilter<PlansByCompletition, bool>(completed);
         }
 
-        public static IEnumerable<IFilter<AccountBadgeModel>> GetAccountBadgeFilters(Guid accountId)
+        internal static IEnumerable<IFilter<PlanModel>> GetPlanFilters(Guid? accountId, PlanType? planType, DateTime dateTimeFrom)
         {
-            yield return TryCreateFilter<AccountBadgesByAccountId,Guid>(accountId);
+            yield return TryCreateFilter<PlansByAccountId, Guid>(accountId);
+            yield return TryCreateFilter<PlansByType, PlanTypeModel>((PlanTypeModel?)planType);
+            yield return TryCreateFilter<PlansByDeadlineFrom, DateTime>(dateTimeFrom);
         }
 
-        public static IEnumerable<IFilter<UserModel>> GetUserFilters(Guid? accountId, AccountAccessType? accessType,
+        internal static IEnumerable<IFilter<CostTypeModel>> GetCostTypeFilters(string costTypeName, Guid? accountId)
+        {
+            yield return TryCreateFilter<CostTypesByName, string>(costTypeName);
+            yield return TryCreateFilter<CostTypesByAccountId, Guid>(accountId);
+        }
+
+        internal static IEnumerable<IFilter<CostTypeModel>> GetCostTypeFilters(Guid? accountId)
+        {
+            yield return TryCreateFilter<CostTypesByAccountId, Guid>(accountId);
+        }
+
+        internal static IEnumerable<IFilter<BadgeModel>> GetBadgeFilters(string badgeName)
+        {
+            yield return TryCreateFilter<BadgesByName, string>(badgeName);
+        }
+
+        internal static IEnumerable<IFilter<AccountBadgeModel>> GetAccountBadgeFilters(Guid? accountId)
+        {
+            yield return TryCreateFilter<AccountBadgesByAccountId, Guid>(accountId);
+        }
+
+        internal static IEnumerable<IFilter<UserModel>> GetUserFilters(Guid? accountId, AccountAccessType? accessType,
             string email)
         {
-            yield return TryCreateFilter<UsersByAccountId,Guid>(accountId);
-            yield return TryCreateFilter<UsersByAccessType,AccountAccessTypeModel>((AccountAccessTypeModel?) accessType);
-            yield return TryCreateFilter<UsersByEmail,string>(email);
+            yield return TryCreateFilter<UsersByAccountId, Guid>(accountId);
+            yield return TryCreateFilter<UsersByAccessType, AccountAccessTypeModel>((AccountAccessTypeModel?)accessType);
+            yield return TryCreateFilter<UsersByEmail, string>(email);
         }
 
-        public static IEnumerable<IFilter<AccountModel>> GetAccountFilters(string accountName)
+        internal static IEnumerable<IFilter<AccountModel>> GetAccountFilters(string accountName)
         {
-            yield return TryCreateFilter<AccountsByName,string>(accountName);
+            yield return TryCreateFilter<AccountsByName, string>(accountName);
         }
 
         private static TFilter TryCreateFilter<TFilter, TValue>(TValue value)
-    where TFilter : class, IFilterValue<TValue>, new()
+            where TFilter : class, IFilterValue<TValue>, new()
         {
             return value != null ? new TFilter() { Value = value } : null;
         }

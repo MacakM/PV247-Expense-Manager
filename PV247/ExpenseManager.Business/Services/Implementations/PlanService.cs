@@ -212,8 +212,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <returns></returns>
         public List<Plan> ListAllCloseablePlans(Guid accountId, decimal accountBalance)
         {
-
-            Query.Filters = FilterFactory.GetPlanFilters(accountId, accountBalance, PlanType.Save, false,null);
+            Query.Filters = FilterFactory.GetPlanFilters(accountId, accountBalance, PlanType.Save, false);
             using (UnitOfWorkProvider.Create())
             {
                 return GetList().ToList();
@@ -223,7 +222,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <inheritdoc />
         public List<Plan> ListPlansInProgress(Guid accountId)
         {
-            Query.Filters = FilterFactory.GetPlanFilters(accountId, null, PlanType.Save, null, DateTime.Now);
+            Query.Filters = FilterFactory.GetPlanFilters(accountId, PlanType.Save, DateTime.Now);
             using (UnitOfWorkProvider.Create())
             {
                 return GetList().ToList();
@@ -246,8 +245,7 @@ namespace ExpenseManager.Business.Services.Implementations
                     foreach (var plan in maxSpendPlans) // CHECK EVERY MAX SPEND PLAN THAT IS NO COMPLETED YET, REACHED ITS DEADLINE
                     {
                         if (plan.Deadline != null)
-                            _costInfosQuery.Filters = FilterFactory.GetCostItemsFilters(null, null, plan.Start,
-                                plan.Deadline, null, null, plan.PlannedTypeId, null); // USES EVERY COST OF PLANNED TYPE FROM START TO DEADLINE
+                            _costInfosQuery.Filters = FilterFactory.GetCostItemsFilters(plan.Start, plan.Deadline, plan.PlannedTypeId); // USES EVERY COST OF PLANNED TYPE FROM START TO DEADLINE
                         var costInfos = _costInfosQuery.Execute();
                         if (costInfos.Sum(x => x.Money) <= plan.PlannedMoney)
                         {
