@@ -85,10 +85,10 @@ namespace ExpenseManager.Business.DataTransferObjects.Factories
             yield return TryCreateFilter<PlansByCompletition, bool>(completed);
         }
 
-        internal static IEnumerable<IFilter<PlanModel>> GetPlanFilters(Guid? accountId, PlanType? planType, DateTime dateTimeFrom)
+        internal static IEnumerable<IFilter<PlanModel>> GetPlanFilters(Guid? accountId, bool? completed, DateTime dateTimeFrom)
         {
             yield return TryCreateFilter<PlansByAccountId, Guid>(accountId);
-            yield return TryCreateFilter<PlansByType, PlanTypeModel>((PlanTypeModel?)planType);
+            yield return TryCreateFilter<PlansByCompletition, bool>(completed);
             yield return TryCreateFilter<PlansByDeadlineFrom, DateTime>(dateTimeFrom);
         }
 

@@ -222,7 +222,7 @@ namespace ExpenseManager.Business.Services.Implementations
         /// <inheritdoc />
         public List<Plan> ListPlansInProgress(Guid accountId)
         {
-            Query.Filters = FilterFactory.GetPlanFilters(accountId, PlanType.Save, DateTime.Now);
+            Query.Filters = FilterFactory.GetPlanFilters(accountId, false, DateTime.Now);
             using (UnitOfWorkProvider.Create())
             {
                 return GetList().ToList();
