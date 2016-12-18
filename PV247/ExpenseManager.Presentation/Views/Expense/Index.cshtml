@@ -13,65 +13,54 @@
     {
         @Html.ActionLink("+", "Create", "Expense", null, new { @class = "add-new" })
     }
-    @if (Model.Expenses.Count == 0)
-    {
-        <br />
-        <br />
-        <br />
-        <br />
-        <div>No expenses</div>
-    }
-    else
-    {
-        <table class="table">
+    <table class="table">
+        <tr>
+            <th>Type</th>
+            <th>Description</th>
+            <th class="text-center">Date</th>
+            <th class="text-center">Cost</th>
+            @if (@Model.CurrentUser.HasFullRights)
+            {
+                <th class="text-center">Delete</th>
+            }
+        </tr>
+        @foreach (var expense in Model.Expenses)
+        {
             <tr>
-                <th>Type</th>
-                <th>Description</th>
-                <th class="text-center">Date</th>
-                <th class="text-center">Cost</th>
-                @if (@Model.CurrentUser.HasFullRights)
+                <td>@expense.TypeName</td>
+                <td>@expense.Description</td>
+                <td class="text-center">@expense.Created.ToShortDateString()</td>
+                @if (expense.IsIncome)
                 {
-                    <th class="text-center">Delete</th>
+                    <td class="positive text-center">+@expense.Money&nbsp;$</td>
+                }
+                else
+                {
+                    <td class="negative text-center">-@expense.Money&nbsp;$</td>
+                }
+
+                @if (Model.CurrentUser.HasFullRights)
+                {
+                    <td class="text-center">
+                        <form asp-action="Delete">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="returnRedirect" value="@Url.Action("Index", "Expense", new { successMessage = ExpenseManagerResource.ExpenseDeleted })" />
+                            <input type="hidden" name="id" value="@expense.Id" />
+                            <button class="link-button negative"><i class="fa fa-times" aria-hidden="true"></i></button>
+                        </form>
+                    </td>
                 }
             </tr>
-            @foreach (var expense in Model.Expenses)
-            {
-                <tr>
-                    <td>@expense.TypeName</td>
-                    <td>@expense.Description</td>
-                    <td class="text-center">@expense.Created.ToShortDateString()</td>
-                    @if (expense.IsIncome)
-                    {
-                        <td class="positive text-center">+@expense.Money&nbsp;$</td>
-                    }
-                    else
-                    {
-                        <td class="negative text-center">-@expense.Money&nbsp;$</td>
-                    }
-
-                    @if (Model.CurrentUser.HasFullRights)
-                    {
-                        <td class="text-center">
-                            <form asp-action="Delete">
-                                @Html.AntiForgeryToken()
-                                <input type="hidden" name="returnRedirect" value="@Url.Action("Index", "Expense", new { successMessage = ExpenseManagerResource.ExpenseDeleted })" />
-                                <input type="hidden" name="id" value="@expense.Id" />
-                                <button class="link-button negative"><i class="fa fa-times" aria-hidden="true"></i></button>
-                            </form>
-                        </td>
-                    }
-                </tr>
+        }
+    </table>
+    <div class="expense-pagination">
+        <ul class="pagination">
+            @for (int i = 1; i <= Model.PageCount; i++)
+        {
+                <li @((i == 1 && Model.PageNumber == null) || Model.PageNumber == i ? "class=active" : "")><a href="#">@i</a></li>
             }
-        </table>
-        <div class="expense-pagination">
-            <ul class="pagination">
-                @for (int i = 1; i <= Model.PageCount; i++)
-            {
-                    <li @((i == 1 && Model.PageNumber == null) || Model.PageNumber == i ? "class=active" : "")><a href="#">@i</a></li>
-                }
-            </ul>
-        </div>
-    }
+        </ul>
+    </div>
 </div>
 
 <div class="col-md-3 col-md-pull-6 sidebar left">

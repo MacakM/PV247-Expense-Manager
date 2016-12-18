@@ -42,14 +42,12 @@
 </header>
 <div id="left-menu">
     <ul>
-        <li><a href="@Url.Action("Index", "Expense")">Account statement</a></li>
-        <li><a href="@Url.Action("Index", "PermanentExpense")">Standing orders</a></li>
-        <li><a href="@Url.Action("Index", "Category")">Categories</a></li>
-        <!--<li><a href="#">Permanent expenses</a></li>
-        <!--<li><a href="#">Categories</a></li>-->
-        <li><a href="@Url.Action("Index", "Plan")">Plans</a></li>
-        <li><a href="@Url.Action("Index", "Achievement")">Achievements</a></li>
-        <li><a href="@Url.Action("Index", "AccountSettings")">Account settings</a></li>
+        <li>@Html.ActionLink("Account statment", "Index", "Expense")</li>
+        <li>@Html.ActionLink("Standing orders", "Index", "PermanentExpense")</li>
+        <li>@Html.ActionLink("Categories", "Index", "Category")</li>
+        <li>@Html.ActionLink("Plans", "Index", "Plan")</li>
+        <li>@Html.ActionLink("Achievements", "Index", "Achievement")</li>
+        <li>@Html.ActionLink("Account settings", "Index", "AccountSettings")</li>
     </ul>
 </div>
 <div class="container-fluid">

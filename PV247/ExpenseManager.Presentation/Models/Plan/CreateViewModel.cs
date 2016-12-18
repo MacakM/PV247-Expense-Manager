@@ -39,6 +39,7 @@ namespace ExpenseManager.Presentation.Models.Plan
         /// Date when is the deadline of the plan.
         /// </summary>
         [Required]
+        [Range(typeof(DateTime), "1/1/1900", "1/1/3000")]
         public DateTime Deadline { get; set; }
 
         /// <summary>

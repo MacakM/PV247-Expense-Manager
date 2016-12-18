@@ -1,8 +1,11 @@
-﻿namespace ExpenseManager.Database.Enums
+﻿using System;
+
+namespace ExpenseManager.Database.Enums
 {
     /// <summary>
     /// Represents periodicity of costs
     /// </summary>
+    [Flags]
     public enum PeriodicityModel 
     {
         /// <summary>

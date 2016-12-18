@@ -96,11 +96,29 @@ namespace ExpenseManager.Presentation {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to Back to account statement.
+        /// </summary>
+        public static string BackToAccountStatement {
+            get {
+                return ResourceManager.GetString("BackToAccountStatement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to Category was successfully created.
         /// </summary>
         public static string CategoryCreated {
             get {
                 return ResourceManager.GetString("CategoryCreated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to You don&apos;t have any category. First, you need to create one.
+        /// </summary>
+        public static string CategoryDoesntExist {
+            get {
+                return ResourceManager.GetString("CategoryDoesntExist", resourceCulture);
             }
         }
         
@@ -119,6 +137,15 @@ namespace ExpenseManager.Presentation {
         public static string CategoryExists {
             get {
                 return ResourceManager.GetString("CategoryExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Once a day.
+        /// </summary>
+        public static string Daily {
+            get {
+                return ResourceManager.GetString("Daily", resourceCulture);
             }
         }
         
@@ -209,6 +236,15 @@ namespace ExpenseManager.Presentation {
         public static string InvalidLoginAttempt {
             get {
                 return ResourceManager.GetString("InvalidLoginAttempt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Once a month.
+        /// </summary>
+        public static string Monthly {
+            get {
+                return ResourceManager.GetString("Monthly", resourceCulture);
             }
         }
         
@@ -317,6 +353,15 @@ namespace ExpenseManager.Presentation {
         public static string UnknownError {
             get {
                 return ResourceManager.GetString("UnknownError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Once a week.
+        /// </summary>
+        public static string Weekly {
+            get {
+                return ResourceManager.GetString("Weekly", resourceCulture);
             }
         }
         

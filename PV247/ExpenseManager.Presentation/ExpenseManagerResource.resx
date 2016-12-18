@@ -174,6 +174,15 @@
   <data name="ExpenseNotDeleted" xml:space="preserve">
     <value>Expense could not be deleted, it probably doesn't exist.</value>
   </data>
+  <data name="Daily" xml:space="preserve">
+    <value>Once a day</value>
+  </data>
+  <data name="Weekly" xml:space="preserve">
+    <value>Once a week</value>
+  </data>
+  <data name="Monthly" xml:space="preserve">
+    <value>Once a month</value>
+  </data>
   <data name="PlanCreated" xml:space="preserve">
     <value>Plan was successfully created</value>
   </data>
@@ -200,6 +209,12 @@
   </data>
   <data name="CategoryEdited" xml:space="preserve">
     <value>Category was successfully edited</value>
+  </data>
+  <data name="CategoryDoesntExist" xml:space="preserve">
+    <value>You don't have any category. First, you need to create one</value>
+  </data>
+  <data name="BackToAccountStatement" xml:space="preserve">
+    <value>Back to account statement</value>
   </data>
   <data name="InvalidInputData" xml:space="preserve">
     <value>Invalid input data</value>

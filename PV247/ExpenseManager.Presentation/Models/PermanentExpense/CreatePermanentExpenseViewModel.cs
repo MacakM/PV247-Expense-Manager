@@ -1,33 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using ExpenseManager.Business.DataTransferObjects.Enums;
+using ExpenseManager.Presentation.Models.Expense;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ExpenseManager.Presentation.Models.PermanentExpense
 {
     /// <summary>
     /// Model for creating expenses
     /// </summary>
-    public class CreatePermanentExpenseViewModel
+    public class CreatePermanentExpenseViewModel : CreateViewModel
     {
-        /// <summary>
-        /// How much money has changed.
-        /// </summary>
-        [Required]
-        [Range(0.0001, Double.MaxValue)]
-        public decimal Money { get; set; }
-
-        /// <summary>
-        /// More concrete description of the cost
-        /// </summary>
-        [Required]
-        public string Description { get; set; }
-
-        /// <summary>
-        /// Type of the cost.
-        /// </summary>
-        [Required]
-        public Guid TypeId { get; set; }
 
         /// <summary>
         /// Periodicty of expense
@@ -43,20 +28,31 @@ namespace ExpenseManager.Presentation.Models.PermanentExpense
         public int PeriodicMultiplicity { get; set; }
 
         /// <summary>
-        /// Date when the cost will be first applied
+        /// Periodicities for select box
         /// </summary>
-        [Required]
-        public DateTime Created { get; set; }
-
-        /// <summary>
-        /// State whether set money is income or outcome.
-        /// </summary>
-        [Required]
-        public bool IsIncome { get; set; }
-
-        /// <summary>
-        /// Cost types to choose
-        /// </summary>
-        public List<CostType.CategoryViewModel> CostTypes { get; set; }
+        public IEnumerable<SelectListItem> SelectPeriodicities
+        {
+            get
+            {
+                return new List<SelectListItem>()
+                {
+                    new SelectListItem()
+                    {
+                        Value = ((int) Periodicity.Day).ToString(),
+                        Text = ExpenseManagerResource.Daily
+                    },
+                    new SelectListItem()
+                    {
+                        Value = ((int) Periodicity.Week).ToString(),
+                        Text = ExpenseManagerResource.Weekly
+                    },
+                    new SelectListItem()
+                    {
+                        Value = ((int) Periodicity.Month).ToString(),
+                        Text = ExpenseManagerResource.Monthly
+                    }
+                };
+            }
+        }
     }
 }

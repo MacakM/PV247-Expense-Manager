@@ -66,9 +66,15 @@ namespace ExpenseManager.Presentation.Controllers
         [Authorize(Policy = "HasFullRights")]
         public IActionResult Create()
         {
+            var costTypes = GetAllCostTypes();
+            if (costTypes.Count == 0)
+            {
+                return View("NoCostType");
+            }
+
             var model = new CreateViewModel
             {
-                CostTypes = GetAllCostTypes(),
+                CostTypes = costTypes,
             };
             return View(model);
         }
@@ -90,7 +96,6 @@ namespace ExpenseManager.Presentation.Controllers
                 var model = new CreateViewModel()
                 {
                     CostTypes = GetAllCostTypes(),
-                    Errors = ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage)
                 };
 
                 return View("Create", model);

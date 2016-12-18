@@ -7,86 +7,32 @@
 
 <div class="col-md-9 content-holder">
     <h2>New permanent expense</h2>
-    @if (Model.CostTypes.Count == 0)
-    {
-        <span>You don't have any category. First, you need to <a href="@Url.Action("Create", "Category")">create</a> one</span>
-    }
-    else
-    {
-        @await Component.InvokeAsync("InlineErrorMessage")
-        <form asp-action="Store">
-            <div class="form-horizontal">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="Money" class="col-md-4 control-label">Ammount in dollars</label>
-                    <div class="col-md-6">
-                        <input asp-for="Money" class="form-control" />
-                        <span asp-validation-for="Money" class="text-danger" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Description" class="col-md-4 control-label"></label>
-                    <div class="col-md-6">
-                        <input asp-for="Description" class="form-control" />
-                        <span asp-validation-for="Description" class="text-danger" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label asp-for="TypeId" class="col-md-4 control-label">Category</label>
-                    <div class="col-md-6">
-                        <select class="form-control" name="TypeId">
-                            @foreach (var costType in Model.CostTypes)
-                            {
-                                <option value="@costType.Id">@costType.Name</option>
-                            }
-                        </select>
-                        <span asp-validation-for="TypeId" class="text-danger" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Periodicity" class="col-md-4 control-label">Periodicity</label>
-                    <div class="col-md-6">
-                        <select class="form-control" name="Periodicity">
-                            <option value="2">Daily</option>
-                            <option value="4">Weekly</option>
-                            <option value="8">Monthly</option>
-                        </select>
-                        <span asp-validation-for="Periodicity" class="text-danger" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label asp-for="PeriodicMultiplicity" class="col-md-4 control-label">Periodic multiplicity</label>
-                    <div class="col-md-6">
-                        <input asp-for="PeriodicMultiplicity" class="form-control" value="1" />
-                        <span asp-validation-for="PeriodicMultiplicity" class="text-danger" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Created" class="col-md-4 control-label">Next time to apply</label>
-                    <div class="col-md-6">
-                        <input type="text" name="Created" class="form-control" placeholder="@DateTime.Now.ToShortDateString()" />
-                        <!--
-                        <input asp-for="Created" class="form-control"/>
-                        <span asp-validation-for="Created" class="text-danger" />-->
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-4 control-label"></label>
-                    <div class="col-md-6">
-                        <div class="checkbox">
-                            <!--<input asp-for="IsIncome" style="margin-left:0px" />-->
-                            <input class="income-switch" data-on-color="success" data-off-color="danger" data-on-text="Income" data-off-text="Expense" asp-for="IsIncome" style="margin-left:0px" />
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Create" class="btn" />
-                    </div>
+    @await Component.InvokeAsync("InlineErrorMessage")
+    <form asp-action="Store">
+        <div class="form-horizontal">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @Html.Partial("_BaseExpenseInputs", Model)
+            <div class="form-group">
+                <label asp-for="Periodicity" class="col-md-4 control-label">Periodicity</label>
+                <div class="col-md-6">
+                    <select class="form-control" asp-for="Periodicity" asp-items="Model.SelectPeriodicities"></select>
+                    <span asp-validation-for="Periodicity" class="text-danger" />
                 </div>
             </div>
-        </form>
-    }
+            <div class="form-group">
+                <label asp-for="PeriodicMultiplicity" class="col-md-4 control-label">Periodic multiplicity</label>
+                <div class="col-md-6">
+                    <input asp-for="PeriodicMultiplicity" class="form-control" value="1" />
+                    <span asp-validation-for="PeriodicMultiplicity" class="text-danger" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-4 col-md-8">
+                    <input type="submit" value="Create" class="btn" />
+                </div>
+            </div>
+        </div>
+    </form>
 
     <div>
         <a href="@Url.Action("Index", "AccountSettings")">Back</a>
